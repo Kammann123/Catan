@@ -31,3 +31,23 @@ DevCardPacket::getCard(DevCardId& card, unsigned char indexCard) {
 		return false;
 	}
 }
+
+unsigned char*
+DevCardPacket::getDataStream(unsigned int& length) {
+
+	/* Calculo el largo del buffer */
+	unsigned int bufferLength = 26;
+
+	/* Creo el buffer */
+	unsigned char* buff = new unsigned char[bufferLength];
+
+	/* Guardo y creo el paquete */
+	length = bufferLength;
+	buff[0] = (unsigned char)this->header;
+	for (unsigned int i = 1; i <= 26; i++) {
+		buff[i] = (unsigned char)cards[i - 1];
+	}
+
+	/* Devuelvo */
+	return buff;
+}

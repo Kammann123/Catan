@@ -33,6 +33,11 @@ public:
 	* la referencia dada.
 	*/
 	bool getCard(DevCardId& card, unsigned char indexCard);
+	/*
+	* getDataStream
+	* Arma el paquete de datos a mandar
+	*/
+	virtual unsigned char* getDataStream(unsigned int& length);
 
 private:
 	DevCardId cards[25];
