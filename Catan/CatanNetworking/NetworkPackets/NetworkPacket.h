@@ -1,5 +1,15 @@
 #pragma once
 
+/*
+* ACLARACION: Recordar que la definicion base de NetworkPacket es utilizada
+* tambien por todos los paquetes de datos compuestos unicamente por un header,
+* no asi con aquellos que portan mayor informacion, para quienes se definira
+* clase que herede de NetworkPacket, como NamePacket, TokenPacket... etc.
+*
+* Mientras que mensajes como ACK, NAME, YES.... seran reutilizacion de la
+* clase base directamente.
+*/
+
 /* 
 * PacketHeader
 * Define los diferentes tipos de encabezados que pueden
@@ -100,6 +110,14 @@ public:
 	* Devuelve el header del paquete de datos.
 	*/
 	PacketHeader getHeader(void) const;
+
+	/*
+	* getDataStream
+	* Devuelve los bytes a mandar como paquete de dato
+	* En length se almacena el largo del buffer de bytes.
+	* Se devuelve el puntero con lo que hay que mandar.
+	*/
+	virtual unsigned char* getDataStream(unsigned int& length);
 
 protected:
 	PacketHeader header;
