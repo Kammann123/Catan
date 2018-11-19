@@ -22,3 +22,21 @@ RobberMovePacket::getCoord(void) {
 
 	return this->coord;
 }
+
+unsigned char*
+RobberMovePacket::getDataStream(unsigned int& length) {
+
+	/* Calculo la longitud del buffer */
+	unsigned int bufferLength = 2;
+
+	/* Creo el buffer */
+	unsigned char* buff = new unsigned char[bufferLength];
+
+	/* Armo el paquete */
+	length = bufferLength;
+	buff[0] = (unsigned char)this->header;
+	buff[1] = coord;
+
+	/* Devuelvo */
+	return buff;
+}

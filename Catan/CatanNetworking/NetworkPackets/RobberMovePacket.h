@@ -28,6 +28,13 @@ public:
 	*/
 	unsigned char getCoord(void);
 
+	/*
+	* getDataStream
+	* Arma el paquete de datos a mandar
+	*/
+	virtual unsigned char* getDataStream(unsigned int& length);
+
+
 private:
 	unsigned char coord;
 };
