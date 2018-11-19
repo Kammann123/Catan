@@ -30,6 +30,13 @@ public:
 	* Devuelve los recursos que estan siendo descartados
 	*/
 	list<ResourceId>& getResources(void);
+
+	/*
+	* getDataStream
+	* Arma el paquete de datos a mandar
+	*/
+	virtual unsigned char* getDataStream(unsigned int& length);
+
 private:
 	list<ResourceId> resources;
 };
