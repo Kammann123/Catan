@@ -13,12 +13,12 @@ CityPacket::setCoord(unsigned char coord, unsigned char indexCoord) {
 	if (indexCoord < 3) {
 
 		/* Guardo coordenada */
-		this->coord[indexCoord] = coord;
-		return true;
+		if ((coord >= '0' && coord <= '6') || (coord >= 'A' && coord <= 'S')) {
+			this->coord[indexCoord] = coord;
+			return true;
+		}
 	}
-	else {
-		return false;
-	}
+	return false;
 }
 
 unsigned char
