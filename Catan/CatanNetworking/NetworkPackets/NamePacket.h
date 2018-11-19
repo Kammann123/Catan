@@ -32,6 +32,13 @@ public:
 	*/
 	string& getName(void);
 
+	/*
+	* getDataStream
+	* Arma el paquete de datos a mandar
+	*/
+	virtual unsigned char* getDataStream(unsigned int& length);
+
+
 private:
 	string name;
 };
