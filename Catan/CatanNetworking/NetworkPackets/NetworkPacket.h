@@ -40,11 +40,13 @@ enum class PacketHeader : unsigned char {
 	QUIT
 };
 
+using MapValue = unsigned char;
+
 /*
 * ResourceId
 * Identificadores de cada tipo de recurso en el juego.
 */
-enum class ResourceId : unsigned char {
+enum class ResourceId : MapValue {
 	FOREST = 0x4D,
 	HILL = 0x4C,
 	MOUNTAIN = 0x50,
@@ -57,7 +59,7 @@ enum class ResourceId : unsigned char {
 * SeaId
 * Identificadores de los tipos de puertos en cada mar del mapa.
 */
-enum class SeaId : unsigned char {
+enum class SeaId : MapValue {
 	NORMAL = 'N',	// Cambia 3 cartas por 1
 	WHEAT = 'T',	// Cambia 3 cartas por 1, o 2 trigos por 1
 	SHEEP = 'O',	// Cambia 3 cartas por 1, o 2 ovejas por 1
@@ -70,7 +72,7 @@ enum class SeaId : unsigned char {
 * DevCardId
 * Identificadores de las cartas de desarrollo.
 */
-enum class DevCardId : unsigned char {
+enum class DevCardId : MapValue {
 	KNIGHT = 'K',
 	VICTORY_POINT = 'V',
 	ROAD_BUILD = 'C',
