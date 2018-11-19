@@ -27,6 +27,12 @@ public:
 	unsigned char getFirstDice(void);
 	unsigned char getSecondDice(void);
 
+	/*
+	* getDataStream
+	* Arma el paquete de datos a mandar
+	*/
+	virtual unsigned char* getDataStream(unsigned int& length);
+
 private:
 
 	bool _set_dice(unsigned char dice, Dices diceIndex);

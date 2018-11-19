@@ -42,3 +42,22 @@ DicesPacket::getSecondDice(void) {
 
 	return dices[(unsigned int)DicesPacket::Dices::SECOND];
 }
+
+unsigned char*
+DicesPacket::getDataStream(unsigned int& length) {
+
+	/* Calculo el largo del buffer */
+	unsigned int bufferLength = 3;
+
+	/* Creo el buffer */
+	unsigned char* buff = new unsigned char[bufferLength];
+
+	/* Guardo y armo el paquete */
+	length = bufferLength;
+	buff[0] = (unsigned char)this->header;
+	buff[1] = dices[Dices::FIRST];
+	buff[2] = dices[Dices::SECOND];
+	
+	/* Devuelvo */
+	return buff;
+}
