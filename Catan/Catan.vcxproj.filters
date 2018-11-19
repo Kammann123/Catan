@@ -60,9 +60,6 @@
     <ClInclude Include="CatanNetworking\NetworkPackets\BankPacket.h">
       <Filter>CatanNetworking\NetworkPackets</Filter>
     </ClInclude>
-    <ClInclude Include="CatanNetworking\NetworkPackets\CityPacket.h">
-      <Filter>CatanNetworking\NetworkPackets</Filter>
-    </ClInclude>
     <ClInclude Include="CatanNetworking\NetworkPackets\DevCardPacket.h">
       <Filter>CatanNetworking\NetworkPackets</Filter>
     </ClInclude>
@@ -78,19 +75,16 @@
     <ClInclude Include="CatanNetworking\NetworkPackets\OfferPacket.h">
       <Filter>CatanNetworking\NetworkPackets</Filter>
     </ClInclude>
-    <ClInclude Include="CatanNetworking\NetworkPackets\RoadPacket.h">
-      <Filter>CatanNetworking\NetworkPackets</Filter>
-    </ClInclude>
     <ClInclude Include="CatanNetworking\NetworkPackets\RobberCardPacket.h">
       <Filter>CatanNetworking\NetworkPackets</Filter>
     </ClInclude>
     <ClInclude Include="CatanNetworking\NetworkPackets\RobberMovePacket.h">
       <Filter>CatanNetworking\NetworkPackets</Filter>
     </ClInclude>
-    <ClInclude Include="CatanNetworking\NetworkPackets\SettlementPacket.h">
+    <ClInclude Include="CatanNetworking\NetworkPackets\TokenPacket.h">
       <Filter>CatanNetworking\NetworkPackets</Filter>
     </ClInclude>
-    <ClInclude Include="CatanNetworking\NetworkPackets\TokenPacket.h">
+    <ClInclude Include="CatanNetworking\NetworkPackets\BuildingPacket.h">
       <Filter>CatanNetworking\NetworkPackets</Filter>
     </ClInclude>
   </ItemGroup>
@@ -116,9 +110,6 @@
     <ClCompile Include="CatanNetworking\NetworkPackets\BankPacket.cpp">
       <Filter>CatanNetworking\NetworkPackets</Filter>
     </ClCompile>
-    <ClCompile Include="CatanNetworking\NetworkPackets\CityPacket.cpp">
-      <Filter>CatanNetworking\NetworkPackets</Filter>
-    </ClCompile>
     <ClCompile Include="CatanNetworking\NetworkPackets\DevCardPacket.cpp">
       <Filter>CatanNetworking\NetworkPackets</Filter>
     </ClCompile>
@@ -134,19 +125,16 @@
     <ClCompile Include="CatanNetworking\NetworkPackets\OfferPacket.cpp">
       <Filter>CatanNetworking\NetworkPackets</Filter>
     </ClCompile>
-    <ClCompile Include="CatanNetworking\NetworkPackets\RoadPacket.cpp">
-      <Filter>CatanNetworking\NetworkPackets</Filter>
-    </ClCompile>
     <ClCompile Include="CatanNetworking\NetworkPackets\RobberCardPacket.cpp">
       <Filter>CatanNetworking\NetworkPackets</Filter>
     </ClCompile>
     <ClCompile Include="CatanNetworking\NetworkPackets\RobberMovePacket.cpp">
       <Filter>CatanNetworking\NetworkPackets</Filter>
     </ClCompile>
-    <ClCompile Include="CatanNetworking\NetworkPackets\SettlementPacket.cpp">
+    <ClCompile Include="CatanNetworking\NetworkPackets\TokenPacket.cpp">
       <Filter>CatanNetworking\NetworkPackets</Filter>
     </ClCompile>
-    <ClCompile Include="CatanNetworking\NetworkPackets\TokenPacket.cpp">
+    <ClCompile Include="CatanNetworking\NetworkPackets\BuildingPacket.cpp">
       <Filter>CatanNetworking\NetworkPackets</Filter>
     </ClCompile>
   </ItemGroup>
