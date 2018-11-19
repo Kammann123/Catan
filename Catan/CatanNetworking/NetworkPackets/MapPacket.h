@@ -34,7 +34,13 @@ public:
 	* Devuelve el mapa completo
 	*/
 	map<unsigned char, MapValue>& getMap(void);
-	
+
+	/*
+	* getDataStream
+	* Arma el paquete de datos a mandar
+	*/
+	virtual unsigned char* getDataStream(unsigned int& length);
+
 private:
 	map<unsigned char, MapValue> gameMap;
 };
