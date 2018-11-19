@@ -115,6 +115,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CatanNetworking\NetworkPackets\NetworkPacket.h" />
     <ClInclude Include="FSM\EventGenerator.h" />
     <ClInclude Include="FSM\EventQueue.h" />
     <ClInclude Include="FSM\GenericEvent.h" />
@@ -123,6 +124,7 @@
     <ClInclude Include="MVC\Subject.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CatanNetworking\NetworkPackets\NetworkPacket.cpp" />
     <ClCompile Include="FSM\EventQueue.cpp" />
     <ClCompile Include="FSM\GenericEvent.cpp" />
     <ClCompile Include="FSM\GenericFsm.cpp" />
