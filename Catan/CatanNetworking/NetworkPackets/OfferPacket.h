@@ -34,6 +34,13 @@ public:
 	*/
 	list<ResourceId>& getGivenResources(void);
 	list<ResourceId>& getReceivedResources(void);
+
+	/*
+	* getDataStream
+	* Arma el paquete de datos a mandar
+	*/
+	virtual unsigned char* getDataStream(unsigned int& length);
+
 private:
 	list<ResourceId> givenResources;
 	list<ResourceId> receivedResources;
