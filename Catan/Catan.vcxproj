@@ -115,6 +115,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="FSM\EventGenerator.h" />
+    <ClInclude Include="FSM\EventQueue.h" />
+    <ClInclude Include="FSM\GenericEvent.h" />
+    <ClInclude Include="FSM\GenericFsm.h" />
+    <ClInclude Include="MVC\Observer.h" />
+    <ClInclude Include="MVC\Subject.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="FSM\EventQueue.cpp" />
+    <ClCompile Include="FSM\GenericEvent.cpp" />
+    <ClCompile Include="FSM\GenericFsm.cpp" />
+    <ClCompile Include="MVC\Observer.cpp" />
+    <ClCompile Include="MVC\Subject.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

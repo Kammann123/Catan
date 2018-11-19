@@ -28,5 +28,48 @@
     <Filter Include="CatanNetworking\NetworkParsers">
       <UniqueIdentifier>{20e8d96c-4cd8-4c83-b3e8-a34567a6f2d4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="FSM">
+      <UniqueIdentifier>{d8368093-64a9-44bc-af1b-ed75aa6d5868}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MVC">
+      <UniqueIdentifier>{52d31397-0f4c-4856-a249-b4197d2c2880}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="FSM\EventGenerator.h">
+      <Filter>FSM</Filter>
+    </ClInclude>
+    <ClInclude Include="FSM\EventQueue.h">
+      <Filter>FSM</Filter>
+    </ClInclude>
+    <ClInclude Include="FSM\GenericEvent.h">
+      <Filter>FSM</Filter>
+    </ClInclude>
+    <ClInclude Include="FSM\GenericFsm.h">
+      <Filter>FSM</Filter>
+    </ClInclude>
+    <ClInclude Include="MVC\Observer.h">
+      <Filter>MVC</Filter>
+    </ClInclude>
+    <ClInclude Include="MVC\Subject.h">
+      <Filter>MVC</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="FSM\EventQueue.cpp">
+      <Filter>FSM</Filter>
+    </ClCompile>
+    <ClCompile Include="FSM\GenericEvent.cpp">
+      <Filter>FSM</Filter>
+    </ClCompile>
+    <ClCompile Include="FSM\GenericFsm.cpp">
+      <Filter>FSM</Filter>
+    </ClCompile>
+    <ClCompile Include="MVC\Observer.cpp">
+      <Filter>MVC</Filter>
+    </ClCompile>
+    <ClCompile Include="MVC\Subject.cpp">
+      <Filter>MVC</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
