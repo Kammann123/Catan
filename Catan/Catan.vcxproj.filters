@@ -54,6 +54,18 @@
     <ClInclude Include="MVC\Subject.h">
       <Filter>MVC</Filter>
     </ClInclude>
+    <ClInclude Include="CatanGame\Player.h">
+      <Filter>CatanGame</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGame\ResourceCard.h">
+      <Filter>CatanGame</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGame\Map.h">
+      <Filter>CatanGame</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGame\CatanGame.h">
+      <Filter>CatanGame</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FSM\EventQueue.cpp">
@@ -70,6 +82,18 @@
     </ClCompile>
     <ClCompile Include="MVC\Subject.cpp">
       <Filter>MVC</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGame\Player.cpp">
+      <Filter>CatanGame</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGame\ResourceCard.cpp">
+      <Filter>CatanGame</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGame\Map.cpp">
+      <Filter>CatanGame</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGame\CatanGame.cpp">
+      <Filter>CatanGame</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
