@@ -10,8 +10,8 @@ bool
 DicesPacket::_set_dice(unsigned char dice, Dices diceIndex) {
 
 	/* Verifico valor */
-	if( dice <= 6 ){
-		dices[(unsigned int)diceIndex] = dice;
+	if( isValidDice(dice) ){
+		dices[(unsigned int)diceIndex] = dice - '0';
 		return true;
 	}
 	else {

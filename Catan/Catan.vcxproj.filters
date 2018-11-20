@@ -105,6 +105,9 @@
     <ClInclude Include="CatanNetworking\NetworkParsers\DevCardParser.h">
       <Filter>CatanNetworking\NetworkParsers</Filter>
     </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkParsers\DicesParser.h">
+      <Filter>CatanNetworking\NetworkParsers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FSM\EventQueue.cpp">
@@ -168,6 +171,9 @@
       <Filter>CatanNetworking\NetworkParsers</Filter>
     </ClCompile>
     <ClCompile Include="CatanNetworking\NetworkParsers\DevCardParser.cpp">
+      <Filter>CatanNetworking\NetworkParsers</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkParsers\DicesParser.cpp">
       <Filter>CatanNetworking\NetworkParsers</Filter>
     </ClCompile>
   </ItemGroup>

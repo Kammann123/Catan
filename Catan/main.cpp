@@ -2,6 +2,7 @@
 #include "CatanNetworking/NetworkParsers/MapParser.h"
 #include "CatanNetworking/NetworkParsers/TokenParser.h"
 #include "CatanNetworking/NetworkParsers/DevCardParser.h"
+#include "CatanNetworking/NetworkParsers/DicesParser.h"
 
 #include <iostream>
 #include <string>
@@ -10,8 +11,8 @@ using namespace std;
 
 int main(int argc, char** argv) {
 
-	DevCardParser parser;
-	unsigned char stream[] = { (unsigned char)PacketHeader::DEV_CARDS, (unsigned char)DevCardId::KNIGHT, (unsigned char)DevCardId::KNIGHT, (unsigned char)DevCardId::KNIGHT, (unsigned char)DevCardId::KNIGHT, (unsigned char)DevCardId::KNIGHT, (unsigned char)DevCardId::KNIGHT, (unsigned char)DevCardId::KNIGHT, (unsigned char)DevCardId::KNIGHT, (unsigned char)DevCardId::KNIGHT, (unsigned char)DevCardId::KNIGHT, (unsigned char)DevCardId::KNIGHT, (unsigned char)DevCardId::KNIGHT, (unsigned char)DevCardId::KNIGHT, (unsigned char)DevCardId::KNIGHT, (unsigned char)DevCardId::KNIGHT, (unsigned char)DevCardId::KNIGHT, (unsigned char)DevCardId::KNIGHT, (unsigned char)DevCardId::KNIGHT, (unsigned char)DevCardId::KNIGHT, (unsigned char)DevCardId::KNIGHT, (unsigned char)DevCardId::KNIGHT, (unsigned char)DevCardId::KNIGHT, (unsigned char)DevCardId::KNIGHT, (unsigned char)DevCardId::KNIGHT, (unsigned char)DevCardId::KNIGHT };
+	DicesParser parser;
+	unsigned char stream[] = { (unsigned char)PacketHeader::MAP_IS, '2', '4'};
 
 	for (unsigned char byte : stream) {
 
@@ -30,12 +31,9 @@ int main(int argc, char** argv) {
 			}
 			else {
 				cout << "Se parseo correctamente!" << endl;
-				DevCardPacket* mapPacket = (DevCardPacket*)((DoneEvent*)response)->getPacket();
-				for (unsigned int i = 0; i < 25; i++) {
-					DevCardId card;
-					mapPacket->getCard(card, i);
-					cout << "Carta " << i << " - Valor: " << (unsigned char)card << endl;
-				}
+				DicesPacket* dicesPacket = (DicesPacket*)((DoneEvent*)response)->getPacket();
+				cout << "Primer dado: " << to_string(dicesPacket->getFirstDice()) << endl;
+				cout << "Segundo dado: " << to_string(dicesPacket->getSecondDice()) << endl;
 				getchar();
 				return -1;
 			}

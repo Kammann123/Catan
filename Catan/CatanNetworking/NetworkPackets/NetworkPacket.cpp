@@ -53,6 +53,11 @@ bool isDevCard(unsigned char value) {
 	);
 }
 
+bool isValidDice(unsigned char value) {
+
+	return (value >= '1' && value <= '6');
+}
+
 /* NetworkPacket Metodos Definiciones */
 
 NetworkPacket::

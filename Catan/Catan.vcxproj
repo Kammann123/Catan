@@ -128,6 +128,7 @@
     <ClInclude Include="CatanNetworking\NetworkPackets\TokenPacket.h" />
     <ClInclude Include="CatanNetworking\NetworkParsers\DataPackets.h" />
     <ClInclude Include="CatanNetworking\NetworkParsers\DevCardParser.h" />
+    <ClInclude Include="CatanNetworking\NetworkParsers\DicesParser.h" />
     <ClInclude Include="CatanNetworking\NetworkParsers\MapParser.h" />
     <ClInclude Include="CatanNetworking\NetworkParsers\NameParser.h" />
     <ClInclude Include="CatanNetworking\NetworkParsers\ParserStatus.h" />
@@ -152,6 +153,7 @@
     <ClCompile Include="CatanNetworking\NetworkPackets\RobberMovePacket.cpp" />
     <ClCompile Include="CatanNetworking\NetworkPackets\TokenPacket.cpp" />
     <ClCompile Include="CatanNetworking\NetworkParsers\DevCardParser.cpp" />
+    <ClCompile Include="CatanNetworking\NetworkParsers\DicesParser.cpp" />
     <ClCompile Include="CatanNetworking\NetworkParsers\MapParser.cpp" />
     <ClCompile Include="CatanNetworking\NetworkParsers\NameParser.cpp" />
     <ClCompile Include="CatanNetworking\NetworkParsers\TokenParser.cpp" />
