@@ -83,10 +83,16 @@ NetworkParser::parse(unsigned char byte) {
 		/* Verifico el tipo de dato recibido segun su header */
 		switch ((PacketHeader)byte) {
 			case PacketHeader::MONOPOLY:
+				this->fsmActive = &this->monopolyParser;
+				this->parse(byte);
 				break;
 			case PacketHeader::YEARS_OF_PLENTY:
+				this->fsmActive = &this->yopParser;
+				this->parse(byte);
 				break;
 			case PacketHeader::KNIGHT:
+				this->fsmActive = &this->knightParser;
+				this->parse(byte);
 				break;
 			case PacketHeader::BANK_TRADE:
 				this->fsmActive = &this->bankParser;
@@ -134,4 +140,10 @@ NetworkParser::parse(unsigned char byte) {
 				break;
 		}
 	}
+}
+
+void 
+NetworkParser::cleanError(void) {
+	this->status = Status::OK;
+	this->error = "";
 }

@@ -12,6 +12,9 @@
 #include "RobberCardParser.h"
 #include "RobberMoveParser.h"
 #include "TokenParser.h"
+#include "KnightParser.h"
+#include "YOPParser.h"
+#include "MonopolyParser.h"
 
 #include <deque>
 #include <iostream>
@@ -85,6 +88,9 @@ private:
 	RobberCardParser robberCardParser;
 	RobberMoveParser robberMoveParser;
 	TokenParser tokenParser;
+	MonopolyParser monopolyParser;
+	YOPParser yopParser;
+	KnightParser knightParser;
 
 	ParserFsm* fsmActive;
 	deque<NetworkPacket*> packets;
