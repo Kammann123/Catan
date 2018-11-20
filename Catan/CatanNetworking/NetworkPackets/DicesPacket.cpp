@@ -55,8 +55,8 @@ DicesPacket::getDataStream(unsigned int& length) {
 	/* Guardo y armo el paquete */
 	length = bufferLength;
 	buff[0] = (unsigned char)this->header;
-	buff[1] = dices[Dices::FIRST];
-	buff[2] = dices[Dices::SECOND];
+	buff[1] = dices[(unsigned char)Dices::FIRST];
+	buff[2] = dices[(unsigned char)Dices::SECOND];
 	
 	/* Devuelvo */
 	return buff;

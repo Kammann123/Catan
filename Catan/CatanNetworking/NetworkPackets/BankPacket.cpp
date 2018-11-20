@@ -45,7 +45,7 @@ BankPacket::getDataStream(unsigned int& length) {
 	/* Guardo la informacion y armo el paquete */
 	length = bufferLength;
 	buff[0] = (unsigned char)this->header;
-	buff[1] = givenResources.size();
+	buff[1] = (unsigned char)givenResources.size();
 	unsigned int i = 2;
 	for (ResourceId r : givenResources) {
 		buff[i++] = (unsigned char)r;

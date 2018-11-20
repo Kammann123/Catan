@@ -12,7 +12,7 @@ bool
 MapPacket::setMapValue(unsigned char coord, MapValue value) {
 
 	/* Valido posicion o coordenada */
-	if ((coord >= '0' && coord <= '6') || (coord >= 'A' && coord <= 'S')) {
+	if ((coord >= '0' && coord <= '5') || (coord >= 'A' && coord <= 'S')) {
 		gameMap[coord] = value;
 		return true;
 	}
@@ -40,7 +40,7 @@ MapPacket::getDataStream(unsigned int& length) {
 	length = bufferLength;
 	buff[0] = (unsigned char)this->header;
 	unsigned int ii = 1;
-	for (unsigned char i = 0; i <= 6; i++) {
+	for (unsigned char i = '0'; i <= '5'; i++) {
 		if (gameMap.find(i) != gameMap.end()) {
 			buff[ii++] = gameMap[i];
 		}

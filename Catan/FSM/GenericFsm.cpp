@@ -25,7 +25,7 @@ GenericFsm::cycle(GenericEvent* event) {
 	if (event != nullptr) {
 
 		/* Recupero datos de accion y dato */
-		FsmCell temp = table[static_cast<unsigned int>(state)*rowCount + static_cast<unsigned int>(event->getType())];
+		FsmCell temp = table[static_cast<unsigned int>(state)*columnCount + static_cast<unsigned int>(event->getType())];
 		auto f = bind(temp.action, this, event);
 
 		/* Ejecuto rutina de accion */

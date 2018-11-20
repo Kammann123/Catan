@@ -8,7 +8,6 @@ class GenericFsm;
 
 using StateType = unsigned int;
 
-
 struct FsmCell {
 	StateType nextState;
 	void (GenericFsm::*action)(GenericEvent*);
@@ -36,7 +35,7 @@ public:
 	*/
 	void cycle(GenericEvent* event);
 
-private:
+protected:
 	StateType state;
 	GenericEvent* fsmEvent;
 

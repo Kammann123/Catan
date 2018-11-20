@@ -87,6 +87,18 @@
     <ClInclude Include="CatanNetworking\NetworkPackets\BuildingPacket.h">
       <Filter>CatanNetworking\NetworkPackets</Filter>
     </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkParsers\DataPackets.h">
+      <Filter>CatanNetworking\NetworkParsers</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkParsers\NameParser.h">
+      <Filter>CatanNetworking\NetworkParsers</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkParsers\ParserStatus.h">
+      <Filter>CatanNetworking\NetworkParsers</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkParsers\MapParser.h">
+      <Filter>CatanNetworking\NetworkParsers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FSM\EventQueue.cpp">
@@ -136,6 +148,15 @@
     </ClCompile>
     <ClCompile Include="CatanNetworking\NetworkPackets\BuildingPacket.cpp">
       <Filter>CatanNetworking\NetworkPackets</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkParsers\NameParser.cpp">
+      <Filter>CatanNetworking\NetworkParsers</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkParsers\MapParser.cpp">
+      <Filter>CatanNetworking\NetworkParsers</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
