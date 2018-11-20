@@ -7,6 +7,7 @@
 #include "CatanNetworking/NetworkParsers/RobberMoveParser.h"
 #include "CatanNetworking/NetworkParsers/BuildingParser.h"
 #include "CatanNetworking/NetworkParsers/BankParser.h"
+#include "CatanNetworking/NetworkParsers/OfferParser.h"
 
 #include <iostream>
 #include <string>
@@ -15,8 +16,8 @@ using namespace std;
 
 int main(int argc, char** argv) {
 
-	BankParser parser;
-	unsigned char stream[] = { (unsigned char)PacketHeader::BANK_TRADE, 3, (unsigned char)ResourceId::DESERT, (unsigned char)ResourceId::DESERT, (unsigned char)ResourceId::DESERT, (unsigned char)ResourceId::FOREST };
+	OfferParser parser;
+	unsigned char stream[] = { (unsigned char)PacketHeader::OFFER_TRADE, 2, 3, (unsigned char)ResourceId::DESERT , (unsigned char)ResourceId::DESERT, (unsigned char)ResourceId::FOREST, (unsigned char)ResourceId::FOREST, (unsigned char)ResourceId::FOREST };
 
 	for (unsigned char byte : stream) {
 
@@ -35,12 +36,12 @@ int main(int argc, char** argv) {
 			}
 			else {
 				cout << "Se parseo correctamente!" << endl;
-				BankPacket* building = (BankPacket*)((DoneEvent*)response)->getPacket();
-				for (ResourceId r : building->getGivenResources()) {
+				OfferPacket* offer = (OfferPacket*)((DoneEvent*)response)->getPacket();
+				for (ResourceId r : offer->getGivenResources()) {
 
 					cout << "Cede carta: " << (unsigned char)r << endl;
 				}
-				for (ResourceId r : building->getReceivedResources()) {
+				for (ResourceId r : offer->getReceivedResources()) {
 					
 					cout << "Recibe carta: " << (unsigned char)r << endl;
 				}
