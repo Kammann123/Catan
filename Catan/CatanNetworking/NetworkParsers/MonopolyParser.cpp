@@ -25,7 +25,7 @@ MonopolyParser::init(GenericEvent* event) {
 
 void 
 MonopolyParser::done(GenericEvent* event){
-	this->packet->setResource(((ResourceEvent*)event)->getData());
+	this->packet->setResource((ResourceId)((ResourceEvent*)event)->getData());
 
 	fsmEvent = new DoneEvent(this->packet);
 

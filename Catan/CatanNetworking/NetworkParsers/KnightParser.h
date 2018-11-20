@@ -14,16 +14,19 @@ public:
 	enum Events : EventType { HEADER, COORD, OTHER };
 
 	class HeaderEvent : public Event {
+	public:
 		HeaderEvent(unsigned char byte) : Event(byte) {}
 		EventType getType(void) { return Events::HEADER; }
 	};
 
 	class CoordEvent : public Event {
+	public:
 		CoordEvent(unsigned char byte) : Event(byte) {}
 		EventType getType(void) { return Events::COORD; }
 	};
 
 	class OtherEvent : public Event {
+	public:
 		OtherEvent(unsigned char byte) : Event(byte) {}
 		EventType getType(void) { return Events::OTHER; }
 	};

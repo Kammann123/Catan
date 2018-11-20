@@ -23,12 +23,12 @@ YOPParser::init(GenericEvent* event) {
 
 void 
 YOPParser::setFirstResource(GenericEvent* event) {
-	this->packet->setFirstResource(((ResourceEvent*)event)->getData());
+	this->packet->setFirstResource((ResourceId)((ResourceEvent*)event)->getData());
 }
 
 void 
 YOPParser::done(GenericEvent* event) {
-	this->packet->setSecondResource(((ResourceEvent*)event)->getData());
+	this->packet->setSecondResource((ResourceId)((ResourceEvent*)event)->getData());
 
 	fsmEvent = new DoneEvent(this->packet);
 
