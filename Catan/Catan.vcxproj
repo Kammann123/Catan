@@ -126,6 +126,7 @@
     <ClInclude Include="CatanNetworking\NetworkPackets\RobberCardPacket.h" />
     <ClInclude Include="CatanNetworking\NetworkPackets\RobberMovePacket.h" />
     <ClInclude Include="CatanNetworking\NetworkPackets\TokenPacket.h" />
+    <ClInclude Include="CatanNetworking\NetworkParsers\BuildingParser.h" />
     <ClInclude Include="CatanNetworking\NetworkParsers\DataPackets.h" />
     <ClInclude Include="CatanNetworking\NetworkParsers\DevCardParser.h" />
     <ClInclude Include="CatanNetworking\NetworkParsers\DicesParser.h" />
@@ -154,6 +155,7 @@
     <ClCompile Include="CatanNetworking\NetworkPackets\RobberCardPacket.cpp" />
     <ClCompile Include="CatanNetworking\NetworkPackets\RobberMovePacket.cpp" />
     <ClCompile Include="CatanNetworking\NetworkPackets\TokenPacket.cpp" />
+    <ClCompile Include="CatanNetworking\NetworkParsers\BuildingParser.cpp" />
     <ClCompile Include="CatanNetworking\NetworkParsers\DevCardParser.cpp" />
     <ClCompile Include="CatanNetworking\NetworkParsers\DicesParser.cpp" />
     <ClCompile Include="CatanNetworking\NetworkParsers\MapParser.cpp" />

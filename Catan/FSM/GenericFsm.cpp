@@ -15,7 +15,11 @@ GenericFsm::~GenericFsm() {}
 GenericEvent*
 GenericFsm::getEvent(void) {
 
-	return this->fsmEvent;
+	GenericEvent* temp = this->fsmEvent;
+
+	this->fsmEvent = nullptr;
+
+	return temp;
 }
 
 void

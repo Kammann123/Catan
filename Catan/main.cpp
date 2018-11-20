@@ -5,6 +5,7 @@
 #include "CatanNetworking/NetworkParsers/DicesParser.h"
 #include "CatanNetworking/NetworkParsers/RobberCardParser.h"
 #include "CatanNetworking/NetworkParsers/RobberMoveParser.h"
+#include "CatanNetworking/NetworkParsers/BuildingParser.h"
 
 #include <iostream>
 #include <string>
@@ -13,8 +14,8 @@ using namespace std;
 
 int main(int argc, char** argv) {
 
-	RobberMoveParser parser;
-	unsigned char stream[] = { (unsigned char)PacketHeader::ROBBER_MOVE, 'A'};
+	BuildingParser parser;
+	unsigned char stream[] = { (unsigned char)PacketHeader::SETTLEMENT, 3, 'A', 'B', 'C', (unsigned char)PacketHeader::ROAD, 2, 'A', 'B', (unsigned char)PacketHeader::CITY, 3, 'A', 'B', 'C', (unsigned char)PacketHeader::CITY, 2, 'Z'};
 
 	for (unsigned char byte : stream) {
 
@@ -33,10 +34,9 @@ int main(int argc, char** argv) {
 			}
 			else {
 				cout << "Se parseo correctamente!" << endl;
-				RobberMovePacket* robberMove = (RobberMovePacket*)((DoneEvent*)response)->getPacket();
-				cout << "Posicion del robber: " << robberMove->getCoord() << endl;
+				BuildingPacket* building = (BuildingPacket*)((DoneEvent*)response)->getPacket();
+				cout << "Construccion: " << (unsigned char)building->getHeader() << " Coordenadas: " << building->getCoords() << endl;
 				getchar();
-				return -1;
 			}
 		}
 	}
