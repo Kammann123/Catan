@@ -12,7 +12,7 @@ bool
 TokenPacket::setToken(unsigned char cell, unsigned char token) {
 
 	/* Valido posicion */
-	if (cell >= 'A' && cell <= 'S') {
+	if ( isMapPosition(cell) ) {
 
 		/* Valido valor de token */
 		if ( isValidToken(token) ) {

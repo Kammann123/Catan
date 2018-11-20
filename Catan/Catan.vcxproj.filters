@@ -111,6 +111,9 @@
     <ClInclude Include="CatanNetworking\NetworkParsers\RobberCardParser.h">
       <Filter>CatanNetworking\NetworkParsers</Filter>
     </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkParsers\RobberMoveParser.h">
+      <Filter>CatanNetworking\NetworkParsers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FSM\EventQueue.cpp">
@@ -180,6 +183,9 @@
       <Filter>CatanNetworking\NetworkParsers</Filter>
     </ClCompile>
     <ClCompile Include="CatanNetworking\NetworkParsers\RobberCardParser.cpp">
+      <Filter>CatanNetworking\NetworkParsers</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkParsers\RobberMoveParser.cpp">
       <Filter>CatanNetworking\NetworkParsers</Filter>
     </ClCompile>
   </ItemGroup>

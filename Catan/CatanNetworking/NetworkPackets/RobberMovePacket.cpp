@@ -10,7 +10,7 @@ bool
 RobberMovePacket::setCoord(unsigned char coord) {
 
 	/* Verifico posicion */
-	if (coord >= 'A' && coord >= 'B') {
+	if (isMapPosition(coord)) {
 		this->coord = coord;
 		return true;
 	}

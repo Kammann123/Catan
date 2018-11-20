@@ -99,6 +99,8 @@ bool isResourceValue(unsigned char value);
 bool isValidToken(unsigned char value);
 bool isDevCard(unsigned char value);
 bool isValidDice(unsigned char value);
+bool isMapPosition(unsigned char value);
+bool isSeaPosition(unsigned char value);
 
 /*
 * NetworkPacket

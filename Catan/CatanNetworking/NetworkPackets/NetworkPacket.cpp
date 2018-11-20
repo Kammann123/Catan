@@ -54,8 +54,15 @@ bool isDevCard(unsigned char value) {
 }
 
 bool isValidDice(unsigned char value) {
-
 	return (value >= '1' && value <= '6');
+}
+
+bool isMapPosition(unsigned char value) {
+	return (value >= 'A' && value <= 'S');
+}
+
+bool isSeaPosition(unsigned char value) {
+	return (value >= '0' && value <= '5');
 }
 
 /* NetworkPacket Metodos Definiciones */
