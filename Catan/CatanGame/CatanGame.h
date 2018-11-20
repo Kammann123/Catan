@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "Map.h"
 #include "ResourceCard.h"
+#include "../CatanError/CatanError.h"
 #include <string>
 
 using namespace std;
@@ -14,16 +15,16 @@ class CatanGame {
 public:
 	CatanGame() {};
 	~CatanGame() {};
-	void throwDice(Sources source, PlayerId player, unsigned int diceOne, unsigned int diceTwo);
-	void buildSettlement(Sources source, PlayerId player, string place);
-	void buildRoad(Sources source, PlayerId player, string place);
-	void buildCity(Sources source, PlayerId player, string place);
-	void pass(Sources source, PlayerId player);
-	void playerExchange(Sources source, PlayerId playerFrom, PlayerId playerTo, list<ResourceCard*>& cardsGiven,list<ResourceCard*>& cardsReceived);
-	void dockExchange(Sources source, PlayerId playerFrom, PlayerId playerTo, list<ResourceCard*>& cardsGiven, list<ResourceCard*>& cardsReceived);
-	void bankExchange(Sources source, PlayerId playerFrom, PlayerId playerTo, list<ResourceCard*>& cardsGiven, list<ResourceCard*>& cardsReceived);
-	void robberCards(Sources source, PlayerId player, list<ResourceCard*>& cards);
-	void robberMove(Sources source, PlayerId player,string destination);
+	CatanError& throwDice(Sources source, PlayerId player, unsigned int diceOne, unsigned int diceTwo);
+	CatanError& buildSettlement(Sources source, PlayerId player, string place);
+	CatanError& buildRoad(Sources source, PlayerId player, string place);
+	CatanError& buildCity(Sources source, PlayerId player, string place);
+	CatanError& pass(Sources source, PlayerId player);
+	CatanError& playerExchange(Sources source, PlayerId playerFrom, PlayerId playerTo, list<ResourceCard*>& cardsGiven,list<ResourceCard*>& cardsReceived);
+	CatanError& dockExchange(Sources source, PlayerId playerFrom, PlayerId playerTo, list<ResourceCard*>& cardsGiven, list<ResourceCard*>& cardsReceived);
+	CatanError& bankExchange(Sources source, PlayerId playerFrom, PlayerId playerTo, list<ResourceCard*>& cardsGiven, list<ResourceCard*>& cardsReceived);
+	CatanError& robberCards(Sources source, PlayerId player, list<ResourceCard*>& cards);
+	CatanError& robberMove(Sources source, PlayerId player,string destination);
 
 
 
