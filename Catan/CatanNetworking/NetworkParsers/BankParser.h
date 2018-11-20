@@ -11,7 +11,7 @@
 * Interpreta secuencia de bytes para poder armar el paquete de datos
 * de un intercambio con el banco
 */
-class BankParser : public GenericFsm {
+class BankParser : public ParserFsm {
 
 public:
 	/* Estados del parser */
@@ -65,7 +65,7 @@ public:
 	void done(GenericEvent* event);
 	void error(GenericEvent* event);
 
-	BankParser(void) : GenericFsm(&fsmTable[0][0], 4, 5, States::HEAD), count(0), packet(nullptr) {}
+	BankParser(void) : ParserFsm(&fsmTable[0][0], 4, 5, States::HEAD), count(0), packet(nullptr) {}
 
 private:
 	unsigned int count;

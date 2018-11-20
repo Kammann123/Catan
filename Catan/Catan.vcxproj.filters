@@ -105,9 +105,6 @@
     <ClInclude Include="CatanNetworking\NetworkParsers\BuildingParser.h">
       <Filter>CatanNetworking\NetworkParsers</Filter>
     </ClInclude>
-    <ClInclude Include="CatanNetworking\NetworkParsers\DataPackets.h">
-      <Filter>CatanNetworking\NetworkParsers</Filter>
-    </ClInclude>
     <ClInclude Include="CatanNetworking\NetworkParsers\DevCardParser.h">
       <Filter>CatanNetworking\NetworkParsers</Filter>
     </ClInclude>
@@ -133,6 +130,9 @@
       <Filter>CatanNetworking\NetworkParsers</Filter>
     </ClInclude>
     <ClInclude Include="CatanNetworking\NetworkParsers\TokenParser.h">
+      <Filter>CatanNetworking\NetworkParsers</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkParsers\NetworkParser.h">
       <Filter>CatanNetworking\NetworkParsers</Filter>
     </ClInclude>
   </ItemGroup>
@@ -229,6 +229,9 @@
     </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkParsers\NetworkParser.cpp">
+      <Filter>CatanNetworking\NetworkParsers</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

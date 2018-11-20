@@ -11,7 +11,7 @@
 * Interpreta secuencia de bytes y convierte a paquete de datos dado,
 * avisando si es correcto o si hubo algun tipo de error.
 */
-class DevCardParser : public GenericFsm {
+class DevCardParser : public ParserFsm {
 public:
 
 	/* Eventos del parser */
@@ -58,7 +58,7 @@ public:
 	void error(GenericEvent* event);
 	void done(GenericEvent* event);
 
-	DevCardParser(void) : GenericFsm(&fsmTable[0][0], 2, 4, States::HEAD), nextIndex(0), packet(nullptr) {}
+	DevCardParser(void) : ParserFsm(&fsmTable[0][0], 2, 4, States::HEAD), nextIndex(0), packet(nullptr) {}
 private:
 	unsigned char nextIndex;
 	DevCardPacket* packet;

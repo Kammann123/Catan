@@ -11,7 +11,7 @@
 * Clase que permite parsear un conjunto de bytes como
 * un paquete de datos que contiene el nombre del usuario
 */
-class NameParser : public GenericFsm {
+class NameParser : public ParserFsm {
 public:
 
 	/*
@@ -73,7 +73,7 @@ public:
 	void done(GenericEvent* event);
 	void error(GenericEvent* event);
 
-	NameParser(void) : GenericFsm(&fsmTable[0][0], 3, 5, States::HEAD) , count(0), packet(nullptr) {}
+	NameParser(void) : ParserFsm(&fsmTable[0][0], 3, 5, States::HEAD) , count(0), packet(nullptr) {}
 
 private:
 	unsigned int count;

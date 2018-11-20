@@ -87,7 +87,7 @@ enum class DevCardId : unsigned char {
 	VICTORY_POINT = 'V',
 	ROAD_BUILD = 'C',
 	MONOPOLY = 'M',
-	PLENITY_YEAR = 'P'
+	YEARS_OF_PLENTY = 'P'
 };
 
 /*

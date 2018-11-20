@@ -10,7 +10,7 @@
 * Interpreta una secuencia de bytes conviertiendola en el paquete de 
 * informacion de tokens del mapa!
 */
-class TokenParser : public GenericFsm {
+class TokenParser : public ParserFsm {
 public:
 	/*
 	* Eventos del parser
@@ -61,7 +61,7 @@ public:
 	void done(GenericEvent* event);
 	void error(GenericEvent* event);
 
-	TokenParser(void) : GenericFsm(&fsmTable[0][0], 2, 4, States::HEAD), nextIndex('A'), packet(nullptr) {}
+	TokenParser(void) : ParserFsm(&fsmTable[0][0], 2, 4, States::HEAD), nextIndex('A'), packet(nullptr) {}
 private:
 	unsigned char nextIndex;
 	TokenPacket* packet;

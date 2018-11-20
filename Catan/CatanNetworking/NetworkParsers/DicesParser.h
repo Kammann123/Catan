@@ -10,7 +10,7 @@
 * DicesParser
 * Interpreta una secuencia de bytes y lo convierte al paquete de datos
 */
-class DicesParser : public GenericFsm {
+class DicesParser : public ParserFsm {
 public:
 
 	/* Eventos del parser */
@@ -51,7 +51,7 @@ public:
 	void error(GenericEvent* event);
 	void done(GenericEvent* event);
 
-	DicesParser(void) : GenericFsm(&fsmTable[0][0], 3, 3, States::HEAD), packet(nullptr) {}
+	DicesParser(void) : ParserFsm(&fsmTable[0][0], 3, 3, States::HEAD), packet(nullptr) {}
 
 private:
 	DicesPacket * packet;

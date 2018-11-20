@@ -49,7 +49,7 @@ bool isDevCard(unsigned char value) {
 		IS(value, DevCardId::VICTORY_POINT, unsigned char) ||
 		IS(value, DevCardId::ROAD_BUILD, unsigned char) ||
 		IS(value, DevCardId::MONOPOLY, unsigned char) ||
-		IS(value, DevCardId::PLENITY_YEAR, unsigned char)
+		IS(value, DevCardId::YEARS_OF_PLENTY, unsigned char)
 	);
 }
 

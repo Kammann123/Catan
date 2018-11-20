@@ -10,7 +10,7 @@
 * RobberCardParser
 * Interpreta una secuencia de bytes como el paquete de dato de RobberCard
 */
-class RobberCardParser : public GenericFsm {
+class RobberCardParser : public ParserFsm {
 public:
 	/* Eventos del parser */
 	enum Events : EventType {HEADER, NUMBER, RESOURCE, LAST_RESOURCE, OTHER};
@@ -63,7 +63,7 @@ public:
 	void done(GenericEvent* event);
 	void error(GenericEvent* event);
 
-	RobberCardParser(void) : GenericFsm(&fsmTable[0][0], 3, 5, States::HEAD), count(0), packet(nullptr) {}
+	RobberCardParser(void) : ParserFsm(&fsmTable[0][0], 3, 5, States::HEAD), count(0), packet(nullptr) {}
 
 private:
 	unsigned int count;

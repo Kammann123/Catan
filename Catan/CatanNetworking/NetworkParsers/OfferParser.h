@@ -10,7 +10,7 @@
 * OfferParser
 * Interpreta secuencia de bytes como un paquete de intercambio de cartas
 */
-class OfferParser : public GenericFsm {
+class OfferParser : public ParserFsm {
 public:
 	/* Eventos del parser */
 	enum Events : EventType {HEADER, NUMBER, RESOURCE, LAST_RESOURCE, OTHER};
@@ -63,7 +63,7 @@ public:
 	void done(GenericEvent* event);
 	void error(GenericEvent* event);
 
-	OfferParser(void) : GenericFsm(&fsmTable[0][0], 5, 5, States::HEAD), givenCount(0), recvCount(0), packet(nullptr) {}
+	OfferParser(void) : ParserFsm(&fsmTable[0][0], 5, 5, States::HEAD), givenCount(0), recvCount(0), packet(nullptr) {}
 
 private:
 	unsigned int givenCount;

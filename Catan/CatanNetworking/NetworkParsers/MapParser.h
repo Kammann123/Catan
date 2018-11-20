@@ -10,7 +10,7 @@
 * MapParser
 * Clase para interpretar una secuencia de bytes como un paquete de mapa
 */
-class MapParser : public GenericFsm {
+class MapParser : public ParserFsm {
 public:
 
 	/*
@@ -62,7 +62,7 @@ public:
 	void done(GenericEvent* event);
 	void error(GenericEvent* event);
 
-	MapParser() : GenericFsm(&fsmTable[0][0], 2, 4, States::HEAD), nextIndex('0'), packet(nullptr) {}
+	MapParser() : ParserFsm(&fsmTable[0][0], 2, 4, States::HEAD), nextIndex('0'), packet(nullptr) {}
 
 private:
 	unsigned char nextIndex;

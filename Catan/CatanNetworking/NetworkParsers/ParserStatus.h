@@ -1,6 +1,8 @@
 #pragma once
 
 #include "../../FSM/GenericEvent.h"
+#include "../../FSM/GenericFsm.h"
+
 #include "../NetworkPackets/NetworkPacket.h"
 
 #include <iostream>
@@ -48,4 +50,18 @@ public:
 	NetworkPacket* getPacket(void) { return this->packet; }
 private:
 	NetworkPacket * packet;
+};
+
+/*
+* ParserFsm
+* Forma general de las fsm de los parsers para paquetes de datos
+*/
+class ParserFsm : public GenericFsm {
+public:
+	ParserFsm(const FsmCell* const _table, const unsigned int rows, const unsigned int columns, StateType initState) : GenericFsm(_table, rows, columns, initState) {}
+
+	/*
+	* generateEvent
+	*/
+	virtual GenericEvent* generateEvent(unsigned char byte) = 0;
 };

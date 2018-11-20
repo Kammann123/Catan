@@ -11,7 +11,7 @@
 * Interpreta una secuencia de bytes que se toma como un paquete de datos que 
 * representa la construccion de alguna de las entidades validas.
 */
-class BuildingParser : public GenericFsm {
+class BuildingParser : public ParserFsm {
 public:
 	/* Eventos del parser */
 	enum Events : EventType { HEADER, NUMBER, COORD, LAST_COORD, OTHER };
@@ -64,7 +64,7 @@ public:
 	void done(GenericEvent* event);
 	void error(GenericEvent* event);
 
-	BuildingParser(void) : GenericFsm(&fsmTable[0][0], 3, 5, States::HEAD), count(0), packet(nullptr) {}
+	BuildingParser(void) : ParserFsm(&fsmTable[0][0], 3, 5, States::HEAD), count(0), packet(nullptr) {}
 
 private:
 	unsigned int count;

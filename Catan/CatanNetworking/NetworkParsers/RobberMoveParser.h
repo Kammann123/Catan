@@ -10,7 +10,7 @@
 * RobberMoveParser
 * Interpreta secuencia de bytes en paquete de datos con movimiento del robber
 */
-class RobberMoveParser : public GenericFsm {
+class RobberMoveParser : public ParserFsm {
 public:
 	/* Eventos del parser */
 	enum Events : EventType {HEADER, POSITION, OTHER};
@@ -49,7 +49,7 @@ public:
 	void done(GenericEvent* event);
 	void error(GenericEvent* event);
 
-	RobberMoveParser(void) : GenericFsm(&fsmTable[0][0], 2, 3, States::HEAD), packet(nullptr) {}
+	RobberMoveParser(void) : ParserFsm(&fsmTable[0][0], 2, 3, States::HEAD), packet(nullptr) {}
 
 private:
 	RobberMovePacket * packet;
