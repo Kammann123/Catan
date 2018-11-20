@@ -97,6 +97,7 @@ bool isMapValue(unsigned char value);
 bool isSeaValue(unsigned char value);
 bool isResourceValue(unsigned char value);
 bool isValidToken(unsigned char value);
+bool isDevCard(unsigned char value);
 
 /*
 * NetworkPacket

@@ -1,6 +1,7 @@
 #include "CatanNetworking/NetworkParsers/NameParser.h"
 #include "CatanNetworking/NetworkParsers/MapParser.h"
 #include "CatanNetworking/NetworkParsers/TokenParser.h"
+#include "CatanNetworking/NetworkParsers/DevCardParser.h"
 
 #include <iostream>
 #include <string>
@@ -9,8 +10,8 @@ using namespace std;
 
 int main(int argc, char** argv) {
 
-	TokenParser parser;
-	unsigned char stream[] = { (unsigned char)PacketHeader::CIRCULAR_TOKENS, 0, 2, 3, 6, 5, 7, 9, 8, 8, 8, 12, 11, 11, 10 , 10 , 10 , 10 , 10, 5 };
+	DevCardParser parser;
+	unsigned char stream[] = { (unsigned char)PacketHeader::DEV_CARDS, (unsigned char)DevCardId::KNIGHT, (unsigned char)DevCardId::KNIGHT, (unsigned char)DevCardId::KNIGHT, (unsigned char)DevCardId::KNIGHT, (unsigned char)DevCardId::KNIGHT, (unsigned char)DevCardId::KNIGHT, (unsigned char)DevCardId::KNIGHT, (unsigned char)DevCardId::KNIGHT, (unsigned char)DevCardId::KNIGHT, (unsigned char)DevCardId::KNIGHT, (unsigned char)DevCardId::KNIGHT, (unsigned char)DevCardId::KNIGHT, (unsigned char)DevCardId::KNIGHT, (unsigned char)DevCardId::KNIGHT, (unsigned char)DevCardId::KNIGHT, (unsigned char)DevCardId::KNIGHT, (unsigned char)DevCardId::KNIGHT, (unsigned char)DevCardId::KNIGHT, (unsigned char)DevCardId::KNIGHT, (unsigned char)DevCardId::KNIGHT, (unsigned char)DevCardId::KNIGHT, (unsigned char)DevCardId::KNIGHT, (unsigned char)DevCardId::KNIGHT, (unsigned char)DevCardId::KNIGHT, (unsigned char)DevCardId::KNIGHT };
 
 	for (unsigned char byte : stream) {
 
@@ -29,10 +30,11 @@ int main(int argc, char** argv) {
 			}
 			else {
 				cout << "Se parseo correctamente!" << endl;
-				TokenPacket* mapPacket = (TokenPacket*)((DoneEvent*)response)->getPacket();
-				map<unsigned char, unsigned char> tokenMap = mapPacket->getTokens();
-				for (auto mapValue : tokenMap) {
-					cout << "Posicion: " << mapValue.first << " Token: " << to_string(mapValue.second) << endl;
+				DevCardPacket* mapPacket = (DevCardPacket*)((DoneEvent*)response)->getPacket();
+				for (unsigned int i = 0; i < 25; i++) {
+					DevCardId card;
+					mapPacket->getCard(card, i);
+					cout << "Carta " << i << " - Valor: " << (unsigned char)card << endl;
 				}
 				getchar();
 				return -1;

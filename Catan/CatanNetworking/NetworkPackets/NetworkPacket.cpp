@@ -42,6 +42,17 @@ bool isValidToken(unsigned char value) {
 	}
 }
 
+bool isDevCard(unsigned char value) {
+
+	return(
+		IS(value, DevCardId::KNIGHT, unsigned char) ||
+		IS(value, DevCardId::VICTORY_POINT, unsigned char) ||
+		IS(value, DevCardId::ROAD_BUILD, unsigned char) ||
+		IS(value, DevCardId::MONOPOLY, unsigned char) ||
+		IS(value, DevCardId::PLENITY_YEAR, unsigned char)
+	);
+}
+
 /* NetworkPacket Metodos Definiciones */
 
 NetworkPacket::
