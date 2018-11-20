@@ -49,6 +49,23 @@ NetworkParser::getNextPacket(void) {
 }
 
 void 
+NetworkParser::parse(string bytes) {
+
+	this->parse((unsigned char*)bytes.c_str(), bytes.size());
+}
+
+void
+NetworkParser::parse(unsigned char* bytes, unsigned int length) {
+
+	while (length) {
+
+		this->parse(*bytes);
+		bytes++;
+		length--;
+	}
+}
+
+void 
 NetworkParser::parse(unsigned char byte) {
 
 	/* Me fijo si alguna fsm esta activa */
