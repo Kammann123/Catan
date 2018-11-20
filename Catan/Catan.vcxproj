@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -115,6 +115,33 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CatanGame\CatanGame.h" />
+    <ClInclude Include="CatanGame\Map.h" />
+    <ClInclude Include="CatanGame\Player.h" />
+    <ClInclude Include="CatanGame\ResourceCard.h" />
+    <ClInclude Include="CatanNetworking\NetworkPackets\BankPacket.h" />
+    <ClInclude Include="CatanNetworking\NetworkPackets\BuildingPacket.h" />
+    <ClInclude Include="CatanNetworking\NetworkPackets\DevCardPacket.h" />
+    <ClInclude Include="CatanNetworking\NetworkPackets\DicesPacket.h" />
+    <ClInclude Include="CatanNetworking\NetworkPackets\MapPacket.h" />
+    <ClInclude Include="CatanNetworking\NetworkPackets\NamePacket.h" />
+    <ClInclude Include="CatanNetworking\NetworkPackets\NetworkPacket.h" />
+    <ClInclude Include="CatanNetworking\NetworkPackets\OfferPacket.h" />
+    <ClInclude Include="CatanNetworking\NetworkPackets\RobberCardPacket.h" />
+    <ClInclude Include="CatanNetworking\NetworkPackets\RobberMovePacket.h" />
+    <ClInclude Include="CatanNetworking\NetworkPackets\TokenPacket.h" />
+    <ClInclude Include="CatanNetworking\NetworkParsers\BankParser.h" />
+    <ClInclude Include="CatanNetworking\NetworkParsers\BuildingParser.h" />
+    <ClInclude Include="CatanNetworking\NetworkParsers\DataPackets.h" />
+    <ClInclude Include="CatanNetworking\NetworkParsers\DevCardParser.h" />
+    <ClInclude Include="CatanNetworking\NetworkParsers\DicesParser.h" />
+    <ClInclude Include="CatanNetworking\NetworkParsers\MapParser.h" />
+    <ClInclude Include="CatanNetworking\NetworkParsers\NameParser.h" />
+    <ClInclude Include="CatanNetworking\NetworkParsers\OfferParser.h" />
+    <ClInclude Include="CatanNetworking\NetworkParsers\ParserStatus.h" />
+    <ClInclude Include="CatanNetworking\NetworkParsers\RobberCardParser.h" />
+    <ClInclude Include="CatanNetworking\NetworkParsers\RobberMoveParser.h" />
+    <ClInclude Include="CatanNetworking\NetworkParsers\TokenParser.h" />
     <ClInclude Include="FSM\EventGenerator.h" />
     <ClInclude Include="FSM\EventQueue.h" />
     <ClInclude Include="FSM\GenericEvent.h" />
@@ -123,6 +150,31 @@
     <ClInclude Include="MVC\Subject.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CatanGame\CatanGame.cpp" />
+    <ClCompile Include="CatanGame\Map.cpp" />
+    <ClCompile Include="CatanGame\Player.cpp" />
+    <ClCompile Include="CatanGame\ResourceCard.cpp" />
+    <ClCompile Include="CatanNetworking\NetworkPackets\BankPacket.cpp" />
+    <ClCompile Include="CatanNetworking\NetworkPackets\BuildingPacket.cpp" />
+    <ClCompile Include="CatanNetworking\NetworkPackets\DevCardPacket.cpp" />
+    <ClCompile Include="CatanNetworking\NetworkPackets\DicesPacket.cpp" />
+    <ClCompile Include="CatanNetworking\NetworkPackets\MapPacket.cpp" />
+    <ClCompile Include="CatanNetworking\NetworkPackets\NamePacket.cpp" />
+    <ClCompile Include="CatanNetworking\NetworkPackets\NetworkPacket.cpp" />
+    <ClCompile Include="CatanNetworking\NetworkPackets\OfferPacket.cpp" />
+    <ClCompile Include="CatanNetworking\NetworkPackets\RobberCardPacket.cpp" />
+    <ClCompile Include="CatanNetworking\NetworkPackets\RobberMovePacket.cpp" />
+    <ClCompile Include="CatanNetworking\NetworkPackets\TokenPacket.cpp" />
+    <ClCompile Include="CatanNetworking\NetworkParsers\BankParser.cpp" />
+    <ClCompile Include="CatanNetworking\NetworkParsers\BuildingParser.cpp" />
+    <ClCompile Include="CatanNetworking\NetworkParsers\DevCardParser.cpp" />
+    <ClCompile Include="CatanNetworking\NetworkParsers\DicesParser.cpp" />
+    <ClCompile Include="CatanNetworking\NetworkParsers\MapParser.cpp" />
+    <ClCompile Include="CatanNetworking\NetworkParsers\NameParser.cpp" />
+    <ClCompile Include="CatanNetworking\NetworkParsers\OfferParser.cpp" />
+    <ClCompile Include="CatanNetworking\NetworkParsers\RobberCardParser.cpp" />
+    <ClCompile Include="CatanNetworking\NetworkParsers\RobberMoveParser.cpp" />
+    <ClCompile Include="CatanNetworking\NetworkParsers\TokenParser.cpp" />
     <ClCompile Include="FSM\EventQueue.cpp" />
     <ClCompile Include="FSM\GenericEvent.cpp" />
     <ClCompile Include="FSM\GenericFsm.cpp" />
