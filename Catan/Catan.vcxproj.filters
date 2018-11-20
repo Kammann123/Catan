@@ -66,6 +66,75 @@
     <ClInclude Include="CatanGame\CatanGame.h">
       <Filter>CatanGame</Filter>
     </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkPackets\BankPacket.h">
+      <Filter>CatanNetworking\NetworkPackets</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkPackets\BuildingPacket.h">
+      <Filter>CatanNetworking\NetworkPackets</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkPackets\DevCardPacket.h">
+      <Filter>CatanNetworking\NetworkPackets</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkPackets\DicesPacket.h">
+      <Filter>CatanNetworking\NetworkPackets</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkPackets\MapPacket.h">
+      <Filter>CatanNetworking\NetworkPackets</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkPackets\NamePacket.h">
+      <Filter>CatanNetworking\NetworkPackets</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkPackets\NetworkPacket.h">
+      <Filter>CatanNetworking\NetworkPackets</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkPackets\OfferPacket.h">
+      <Filter>CatanNetworking\NetworkPackets</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkPackets\RobberCardPacket.h">
+      <Filter>CatanNetworking\NetworkPackets</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkPackets\RobberMovePacket.h">
+      <Filter>CatanNetworking\NetworkPackets</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkPackets\TokenPacket.h">
+      <Filter>CatanNetworking\NetworkPackets</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkParsers\BankParser.h">
+      <Filter>CatanNetworking\NetworkParsers</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkParsers\BuildingParser.h">
+      <Filter>CatanNetworking\NetworkParsers</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkParsers\DataPackets.h">
+      <Filter>CatanNetworking\NetworkParsers</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkParsers\DevCardParser.h">
+      <Filter>CatanNetworking\NetworkParsers</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkParsers\DicesParser.h">
+      <Filter>CatanNetworking\NetworkParsers</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkParsers\MapParser.h">
+      <Filter>CatanNetworking\NetworkParsers</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkParsers\NameParser.h">
+      <Filter>CatanNetworking\NetworkParsers</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkParsers\OfferParser.h">
+      <Filter>CatanNetworking\NetworkParsers</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkParsers\ParserStatus.h">
+      <Filter>CatanNetworking\NetworkParsers</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkParsers\RobberCardParser.h">
+      <Filter>CatanNetworking\NetworkParsers</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkParsers\RobberMoveParser.h">
+      <Filter>CatanNetworking\NetworkParsers</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkParsers\TokenParser.h">
+      <Filter>CatanNetworking\NetworkParsers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FSM\EventQueue.cpp">
@@ -94,6 +163,72 @@
     </ClCompile>
     <ClCompile Include="CatanGame\CatanGame.cpp">
       <Filter>CatanGame</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkPackets\BankPacket.cpp">
+      <Filter>CatanNetworking\NetworkPackets</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkPackets\BuildingPacket.cpp">
+      <Filter>CatanNetworking\NetworkPackets</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkPackets\DevCardPacket.cpp">
+      <Filter>CatanNetworking\NetworkPackets</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkPackets\DicesPacket.cpp">
+      <Filter>CatanNetworking\NetworkPackets</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkPackets\MapPacket.cpp">
+      <Filter>CatanNetworking\NetworkPackets</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkPackets\NamePacket.cpp">
+      <Filter>CatanNetworking\NetworkPackets</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkPackets\NetworkPacket.cpp">
+      <Filter>CatanNetworking\NetworkPackets</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkPackets\OfferPacket.cpp">
+      <Filter>CatanNetworking\NetworkPackets</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkPackets\RobberCardPacket.cpp">
+      <Filter>CatanNetworking\NetworkPackets</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkPackets\RobberMovePacket.cpp">
+      <Filter>CatanNetworking\NetworkPackets</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkPackets\TokenPacket.cpp">
+      <Filter>CatanNetworking\NetworkPackets</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkParsers\BankParser.cpp">
+      <Filter>CatanNetworking\NetworkParsers</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkParsers\BuildingParser.cpp">
+      <Filter>CatanNetworking\NetworkParsers</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkParsers\DevCardParser.cpp">
+      <Filter>CatanNetworking\NetworkParsers</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkParsers\DicesParser.cpp">
+      <Filter>CatanNetworking\NetworkParsers</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkParsers\MapParser.cpp">
+      <Filter>CatanNetworking\NetworkParsers</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkParsers\NameParser.cpp">
+      <Filter>CatanNetworking\NetworkParsers</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkParsers\OfferParser.cpp">
+      <Filter>CatanNetworking\NetworkParsers</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkParsers\RobberCardParser.cpp">
+      <Filter>CatanNetworking\NetworkParsers</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkParsers\RobberMoveParser.cpp">
+      <Filter>CatanNetworking\NetworkParsers</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkParsers\TokenParser.cpp">
+      <Filter>CatanNetworking\NetworkParsers</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
