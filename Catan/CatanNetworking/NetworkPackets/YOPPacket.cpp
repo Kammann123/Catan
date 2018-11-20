@@ -31,7 +31,7 @@ YOPPacket::getSecondResource(void) {
 bool 
 YOPPacket::_set_resource(ResourceIndex index, ResourceId resource) {
 
-	if (isResourceValue(resource)) {
+	if (isResourceValue((unsigned char)resource)) {
 		this->resources[index] = resource;
 		return true;
 	}

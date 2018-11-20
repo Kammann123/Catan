@@ -13,7 +13,7 @@ KnightPacket::setCoord(unsigned char coord) {
 		return true;
 	}
 	else {
-		return false,
+		return false;
 	}
 }
 
