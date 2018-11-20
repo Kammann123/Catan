@@ -137,7 +137,9 @@
     <ClInclude Include="CatanNetworking\NetworkParsers\BuildingParser.h" />
     <ClInclude Include="CatanNetworking\NetworkParsers\DevCardParser.h" />
     <ClInclude Include="CatanNetworking\NetworkParsers\DicesParser.h" />
+    <ClInclude Include="CatanNetworking\NetworkParsers\KnightParser.h" />
     <ClInclude Include="CatanNetworking\NetworkParsers\MapParser.h" />
+    <ClInclude Include="CatanNetworking\NetworkParsers\MonopolyParser.h" />
     <ClInclude Include="CatanNetworking\NetworkParsers\NameParser.h" />
     <ClInclude Include="CatanNetworking\NetworkParsers\NetworkParser.h" />
     <ClInclude Include="CatanNetworking\NetworkParsers\OfferParser.h" />
@@ -145,6 +147,7 @@
     <ClInclude Include="CatanNetworking\NetworkParsers\RobberCardParser.h" />
     <ClInclude Include="CatanNetworking\NetworkParsers\RobberMoveParser.h" />
     <ClInclude Include="CatanNetworking\NetworkParsers\TokenParser.h" />
+    <ClInclude Include="CatanNetworking\NetworkParsers\YOPParser.h" />
     <ClInclude Include="FSM\EventGenerator.h" />
     <ClInclude Include="FSM\EventQueue.h" />
     <ClInclude Include="FSM\GenericEvent.h" />
@@ -175,13 +178,16 @@
     <ClCompile Include="CatanNetworking\NetworkParsers\BuildingParser.cpp" />
     <ClCompile Include="CatanNetworking\NetworkParsers\DevCardParser.cpp" />
     <ClCompile Include="CatanNetworking\NetworkParsers\DicesParser.cpp" />
+    <ClCompile Include="CatanNetworking\NetworkParsers\KnightParser.cpp" />
     <ClCompile Include="CatanNetworking\NetworkParsers\MapParser.cpp" />
+    <ClCompile Include="CatanNetworking\NetworkParsers\MonopolyParser.cpp" />
     <ClCompile Include="CatanNetworking\NetworkParsers\NameParser.cpp" />
     <ClCompile Include="CatanNetworking\NetworkParsers\NetworkParser.cpp" />
     <ClCompile Include="CatanNetworking\NetworkParsers\OfferParser.cpp" />
     <ClCompile Include="CatanNetworking\NetworkParsers\RobberCardParser.cpp" />
     <ClCompile Include="CatanNetworking\NetworkParsers\RobberMoveParser.cpp" />
     <ClCompile Include="CatanNetworking\NetworkParsers\TokenParser.cpp" />
+    <ClCompile Include="CatanNetworking\NetworkParsers\YOPParser.cpp" />
     <ClCompile Include="FSM\EventQueue.cpp" />
     <ClCompile Include="FSM\GenericEvent.cpp" />
     <ClCompile Include="FSM\GenericFsm.cpp" />
