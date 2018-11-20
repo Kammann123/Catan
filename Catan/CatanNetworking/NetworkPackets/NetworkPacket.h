@@ -79,13 +79,6 @@ enum class SeaId : MapValue {
 };
 
 /*
-* Funciones de verificacion de valores
-*/
-bool isMapValue(unsigned char value);
-bool isSeaValue(unsigned char value);
-bool isResourceValue(unsigned char value);
-
-/*
 * DevCardId
 * Identificadores de las cartas de desarrollo.
 */
@@ -96,6 +89,14 @@ enum class DevCardId : unsigned char {
 	MONOPOLY = 'M',
 	PLENITY_YEAR = 'P'
 };
+
+/*
+* Funciones de verificacion de valores
+*/
+bool isMapValue(unsigned char value);
+bool isSeaValue(unsigned char value);
+bool isResourceValue(unsigned char value);
+bool isValidToken(unsigned char value);
 
 /*
 * NetworkPacket

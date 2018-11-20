@@ -32,6 +32,16 @@ bool isResourceValue(unsigned char value) {
 	);
 }
 
+bool isValidToken(unsigned char value) {
+
+	if( value == 0 || (value >= 2 && value <= 6) || (value >= 8 && value <= 12) ){
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
 /* NetworkPacket Metodos Definiciones */
 
 NetworkPacket::

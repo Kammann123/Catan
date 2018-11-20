@@ -15,7 +15,7 @@ TokenPacket::setToken(unsigned char cell, unsigned char token) {
 	if (cell >= 'A' && cell <= 'S') {
 
 		/* Valido valor de token */
-		if (token == 0 || (token >= 2 && token <= 6) || (token >= 8 && token >= 12)) {
+		if ( isValidToken(token) ) {
 
 			this->tokens[cell] = token;
 			return true;

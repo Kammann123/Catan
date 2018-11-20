@@ -1,14 +1,16 @@
 #include "CatanNetworking/NetworkParsers/NameParser.h"
 #include "CatanNetworking/NetworkParsers/MapParser.h"
+#include "CatanNetworking/NetworkParsers/TokenParser.h"
 
 #include <iostream>
+#include <string>
 
 using namespace std;
 
 int main(int argc, char** argv) {
 
-	MapParser parser;
-	unsigned char stream[] = { (unsigned char)PacketHeader::MAP_IS, (unsigned char)ResourceId::FIELD, (unsigned char)ResourceId::FIELD, (unsigned char)ResourceId::FIELD, (unsigned char)ResourceId::FIELD, (unsigned char)ResourceId::FIELD, (unsigned char)ResourceId::FIELD, (unsigned char)ResourceId::FIELD, (unsigned char)ResourceId::FIELD, (unsigned char)ResourceId::FIELD, (unsigned char)ResourceId::FIELD, (unsigned char)ResourceId::FIELD, (unsigned char)ResourceId::FIELD, (unsigned char)ResourceId::FIELD, (unsigned char)ResourceId::FIELD, (unsigned char)ResourceId::FIELD, (unsigned char)ResourceId::FIELD, (unsigned char)ResourceId::FIELD, (unsigned char)ResourceId::FIELD, (unsigned char)ResourceId::FIELD, (unsigned char)ResourceId::FIELD, (unsigned char)ResourceId::FIELD, (unsigned char)ResourceId::FIELD, (unsigned char)ResourceId::FIELD, (unsigned char)ResourceId::FIELD, (unsigned char)ResourceId::FIELD, (unsigned char)ResourceId::FIELD };
+	TokenParser parser;
+	unsigned char stream[] = { (unsigned char)PacketHeader::CIRCULAR_TOKENS, 0, 2, 3, 6, 5, 7, 9, 8, 8, 8, 12, 11, 11, 10 , 10 , 10 , 10 , 10, 5 };
 
 	for (unsigned char byte : stream) {
 
@@ -27,10 +29,10 @@ int main(int argc, char** argv) {
 			}
 			else {
 				cout << "Se parseo correctamente!" << endl;
-				MapPacket* mapPacket = (MapPacket*)((DoneEvent*)response)->getPacket();
-				map<unsigned char, MapValue> gameMap = mapPacket->getMap();
-				for (auto mapValue : gameMap) {
-					cout << "Posicion: " << mapValue.first << " Recurso: " << mapValue.second << endl;
+				TokenPacket* mapPacket = (TokenPacket*)((DoneEvent*)response)->getPacket();
+				map<unsigned char, unsigned char> tokenMap = mapPacket->getTokens();
+				for (auto mapValue : tokenMap) {
+					cout << "Posicion: " << mapValue.first << " Token: " << to_string(mapValue.second) << endl;
 				}
 				getchar();
 				return -1;

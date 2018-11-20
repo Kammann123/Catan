@@ -99,6 +99,9 @@
     <ClInclude Include="CatanNetworking\NetworkParsers\MapParser.h">
       <Filter>CatanNetworking\NetworkParsers</Filter>
     </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkParsers\TokenParser.h">
+      <Filter>CatanNetworking\NetworkParsers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FSM\EventQueue.cpp">
@@ -156,6 +159,9 @@
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="CatanNetworking\NetworkParsers\MapParser.cpp">
+      <Filter>CatanNetworking\NetworkParsers</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkParsers\TokenParser.cpp">
       <Filter>CatanNetworking\NetworkParsers</Filter>
     </ClCompile>
   </ItemGroup>
