@@ -32,6 +32,12 @@ public:
 	*/
 	map<unsigned char, unsigned char>& getTokens(void);
 
+	/*
+	* getDataStream
+	* Arma el paquete de datos a mandar
+	*/
+	virtual unsigned char* getDataStream(unsigned int& length);
+
 private:
 	map<unsigned char, unsigned char> tokens;
 };
