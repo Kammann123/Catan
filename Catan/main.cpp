@@ -3,6 +3,7 @@
 #include "CatanNetworking/NetworkParsers/TokenParser.h"
 #include "CatanNetworking/NetworkParsers/DevCardParser.h"
 #include "CatanNetworking/NetworkParsers/DicesParser.h"
+#include "CatanNetworking/NetworkParsers/RobberCardParser.h"
 
 #include <iostream>
 #include <string>
@@ -11,8 +12,8 @@ using namespace std;
 
 int main(int argc, char** argv) {
 
-	DicesParser parser;
-	unsigned char stream[] = { (unsigned char)PacketHeader::MAP_IS, '2', '4'};
+	RobberCardParser parser;
+	unsigned char stream[] = { (unsigned char)PacketHeader::ROBBER_CARDS, 3, (unsigned char)ResourceId::HILL , (unsigned char)ResourceId::FOREST , (unsigned char)ResourceId::FOREST };
 
 	for (unsigned char byte : stream) {
 
@@ -31,9 +32,10 @@ int main(int argc, char** argv) {
 			}
 			else {
 				cout << "Se parseo correctamente!" << endl;
-				DicesPacket* dicesPacket = (DicesPacket*)((DoneEvent*)response)->getPacket();
-				cout << "Primer dado: " << to_string(dicesPacket->getFirstDice()) << endl;
-				cout << "Segundo dado: " << to_string(dicesPacket->getSecondDice()) << endl;
+				RobberCardPacket* robberCards = (RobberCardPacket*)((DoneEvent*)response)->getPacket();
+				for (auto r : robberCards->getResources()) {
+					cout << "Desechando carta: " << (unsigned char)r << endl;
+				}
 				getchar();
 				return -1;
 			}

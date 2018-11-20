@@ -21,7 +21,7 @@ generateEvent(unsigned char byte) {
 			newEvent = new LetterEvent(byte);
 		}
 	}
-	else if (state == States::COUNT) {
+	else if (byte > 0 && state == States::COUNT) {
 		newEvent = new NumberEvent(byte);
 	}
 	else {

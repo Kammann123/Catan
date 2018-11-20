@@ -132,6 +132,7 @@
     <ClInclude Include="CatanNetworking\NetworkParsers\MapParser.h" />
     <ClInclude Include="CatanNetworking\NetworkParsers\NameParser.h" />
     <ClInclude Include="CatanNetworking\NetworkParsers\ParserStatus.h" />
+    <ClInclude Include="CatanNetworking\NetworkParsers\RobberCardParser.h" />
     <ClInclude Include="CatanNetworking\NetworkParsers\TokenParser.h" />
     <ClInclude Include="FSM\EventGenerator.h" />
     <ClInclude Include="FSM\EventQueue.h" />
@@ -156,6 +157,7 @@
     <ClCompile Include="CatanNetworking\NetworkParsers\DicesParser.cpp" />
     <ClCompile Include="CatanNetworking\NetworkParsers\MapParser.cpp" />
     <ClCompile Include="CatanNetworking\NetworkParsers\NameParser.cpp" />
+    <ClCompile Include="CatanNetworking\NetworkParsers\RobberCardParser.cpp" />
     <ClCompile Include="CatanNetworking\NetworkParsers\TokenParser.cpp" />
     <ClCompile Include="FSM\EventQueue.cpp" />
     <ClCompile Include="FSM\GenericEvent.cpp" />
