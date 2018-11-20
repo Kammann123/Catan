@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -115,10 +115,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="CatanGame\CatanGame.h" />
-    <ClInclude Include="CatanGame\Map.h" />
-    <ClInclude Include="CatanGame\Player.h" />
-    <ClInclude Include="CatanGame\ResourceCard.h" />
     <ClInclude Include="FSM\EventGenerator.h" />
     <ClInclude Include="FSM\EventQueue.h" />
     <ClInclude Include="FSM\GenericEvent.h" />
@@ -127,13 +123,10 @@
     <ClInclude Include="MVC\Subject.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CatanGame\CatanGame.cpp" />
-    <ClCompile Include="CatanGame\Map.cpp" />
-    <ClCompile Include="CatanGame\Player.cpp" />
-    <ClCompile Include="CatanGame\ResourceCard.cpp" />
     <ClCompile Include="FSM\EventQueue.cpp" />
     <ClCompile Include="FSM\GenericEvent.cpp" />
     <ClCompile Include="FSM\GenericFsm.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="MVC\Observer.cpp" />
     <ClCompile Include="MVC\Subject.cpp" />
   </ItemGroup>

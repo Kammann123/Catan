@@ -13,26 +13,26 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="CatanNetworking">
-      <UniqueIdentifier>{81173078-15ed-4f67-bb4d-bb157d14aa96}</UniqueIdentifier>
-    </Filter>
     <Filter Include="CatanGame">
       <UniqueIdentifier>{95fba3fa-92c0-4b73-8e04-73ab17b62b00}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CatanGui">
-      <UniqueIdentifier>{ec15f5ca-0991-4943-9f5b-0dd94ece952c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CatanNetworking\NetworkPackets">
-      <UniqueIdentifier>{289f7498-621e-4472-981a-319af063af14}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CatanNetworking\NetworkParsers">
-      <UniqueIdentifier>{20e8d96c-4cd8-4c83-b3e8-a34567a6f2d4}</UniqueIdentifier>
     </Filter>
     <Filter Include="FSM">
       <UniqueIdentifier>{d8368093-64a9-44bc-af1b-ed75aa6d5868}</UniqueIdentifier>
     </Filter>
     <Filter Include="MVC">
       <UniqueIdentifier>{52d31397-0f4c-4856-a249-b4197d2c2880}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CatanGui">
+      <UniqueIdentifier>{d0116734-7ba2-42f8-a896-9021e67f8ccc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CatanNetworking">
+      <UniqueIdentifier>{81173078-15ed-4f67-bb4d-bb157d14aa96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CatanNetworking\NetworkPackets">
+      <UniqueIdentifier>{289f7498-621e-4472-981a-319af063af14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CatanNetworking\NetworkParsers">
+      <UniqueIdentifier>{20e8d96c-4cd8-4c83-b3e8-a34567a6f2d4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -54,18 +54,6 @@
     <ClInclude Include="MVC\Subject.h">
       <Filter>MVC</Filter>
     </ClInclude>
-    <ClInclude Include="CatanGame\Player.h">
-      <Filter>CatanGame</Filter>
-    </ClInclude>
-    <ClInclude Include="CatanGame\ResourceCard.h">
-      <Filter>CatanGame</Filter>
-    </ClInclude>
-    <ClInclude Include="CatanGame\Map.h">
-      <Filter>CatanGame</Filter>
-    </ClInclude>
-    <ClInclude Include="CatanGame\CatanGame.h">
-      <Filter>CatanGame</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FSM\EventQueue.cpp">
@@ -82,18 +70,6 @@
     </ClCompile>
     <ClCompile Include="MVC\Subject.cpp">
       <Filter>MVC</Filter>
-    </ClCompile>
-    <ClCompile Include="CatanGame\Player.cpp">
-      <Filter>CatanGame</Filter>
-    </ClCompile>
-    <ClCompile Include="CatanGame\ResourceCard.cpp">
-      <Filter>CatanGame</Filter>
-    </ClCompile>
-    <ClCompile Include="CatanGame\Map.cpp">
-      <Filter>CatanGame</Filter>
-    </ClCompile>
-    <ClCompile Include="CatanGame\CatanGame.cpp">
-      <Filter>CatanGame</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
