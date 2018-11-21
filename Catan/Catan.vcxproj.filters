@@ -156,15 +156,6 @@
     <ClInclude Include="CatanNetworking\NetworkParsers\YOPParser.h">
       <Filter>CatanNetworking\NetworkParsers</Filter>
     </ClInclude>
-    <ClInclude Include="CatanNetworking\NetworkProtocols\BytePacket.h">
-      <Filter>CatanNetworking\NetworkProtocols</Filter>
-    </ClInclude>
-    <ClInclude Include="CatanNetworking\NetworkProtocols\GenericProtocol.h">
-      <Filter>CatanNetworking\NetworkProtocols</Filter>
-    </ClInclude>
-    <ClInclude Include="CatanNetworking\NetworkProtocols\ProtocolEvent.h">
-      <Filter>CatanNetworking\NetworkProtocols</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FSM\EventQueue.cpp">
