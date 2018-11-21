@@ -34,9 +34,6 @@
     <Filter Include="MVC">
       <UniqueIdentifier>{52d31397-0f4c-4856-a249-b4197d2c2880}</UniqueIdentifier>
     </Filter>
-    <Filter Include="CatanError">
-      <UniqueIdentifier>{3f6bf0ae-c43a-4b6e-955d-10957c18bbc6}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FSM\EventGenerator.h">
@@ -108,9 +105,6 @@
     <ClInclude Include="CatanNetworking\NetworkParsers\BuildingParser.h">
       <Filter>CatanNetworking\NetworkParsers</Filter>
     </ClInclude>
-    <ClInclude Include="CatanNetworking\NetworkParsers\DataPackets.h">
-      <Filter>CatanNetworking\NetworkParsers</Filter>
-    </ClInclude>
     <ClInclude Include="CatanNetworking\NetworkParsers\DevCardParser.h">
       <Filter>CatanNetworking\NetworkParsers</Filter>
     </ClInclude>
@@ -137,9 +131,6 @@
     </ClInclude>
     <ClInclude Include="CatanNetworking\NetworkParsers\TokenParser.h">
       <Filter>CatanNetworking\NetworkParsers</Filter>
-    </ClInclude>
-    <ClInclude Include="CatanError\CatanError.h">
-      <Filter>CatanError</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -235,9 +226,6 @@
     </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="CatanError\CatanError.cpp">
-      <Filter>CatanError</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
