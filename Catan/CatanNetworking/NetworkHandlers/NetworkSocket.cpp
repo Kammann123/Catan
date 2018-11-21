@@ -21,6 +21,7 @@ NetworkSocket() {
 	this->connected = false;
 	this->sendQueue.clear();
 	this->recvQueue.clear();
+	this->socket->non_blocking(true);
 }
 
 NetworkSocket::
@@ -147,10 +148,13 @@ receivePacket(void) {
 		/* Inicializo las variables */
 		asio::error_code error;
 		size_t count;
+		unsigned int length = this->socket->available();
 		unsigned char buff[MAX_BUFFER_SIZE];
 
 		/* Busco bytes recibidos */
-		count = this->socket->read_some(asio::buffer(buff, MAX_BUFFER_SIZE), error);
+		do {
+			count = this->socket->read_some(asio::buffer(buff, MAX_BUFFER_SIZE), error);
+		} while (count < length && error == asio::error::would_block);
 
 		/* Verifico estado de error */
 		if (!handleError(error)) {

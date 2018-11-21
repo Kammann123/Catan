@@ -162,6 +162,12 @@
     <ClInclude Include="CatanNetworking\NetworkPackets\YOPPacket.h">
       <Filter>CatanNetworking\NetworkPackets</Filter>
     </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkHandlers\NetworkClient.h">
+      <Filter>CatanNetworking\NetworkHandlers</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkHandlers\NetworkServer.h">
+      <Filter>CatanNetworking\NetworkHandlers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FSM\EventQueue.cpp">
@@ -280,6 +286,12 @@
     </ClCompile>
     <ClCompile Include="CatanNetworking\NetworkParsers\YOPParser.cpp">
       <Filter>CatanNetworking\NetworkParsers</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkHandlers\NetworkServer.cpp">
+      <Filter>CatanNetworking\NetworkHandlers</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkHandlers\NetworkClient.cpp">
+      <Filter>CatanNetworking\NetworkHandlers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
