@@ -3,13 +3,16 @@
 NetworkClient::
 NetworkClient(void) : NetworkSocket() {
 
-	/* Creo el resolver */
-	this->resolver = new asio::ip::tcp::resolver(this->handler);
+	if (good()) {
 
-	/* Verifico ok */
-	if (!this->resolver) {
-		this->status = false;
-		this->error = "NetworkClient - init - No se pudo abrir el resolver.";
+		/* Creo el resolver */
+		this->resolver = new asio::ip::tcp::resolver(this->handler);
+
+		/* Verifico ok */
+		if (!this->resolver) {
+			this->status = false;
+			this->error = "NetworkClient - init - No se pudo abrir el resolver.";
+		}
 	}
 }
 
@@ -42,7 +45,7 @@ connect(string ip, unsigned int port) {
 
 		/* Verifico errores */
 		if (!handleError(error)) {
-			toggleConnection();
+			if(error != asio::error::would_block)	toggleConnection();
 		}
 	}
 }

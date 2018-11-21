@@ -191,8 +191,5 @@ handleError(asio::error_code error) {
 			return true;
 		}
 	}
-	else {
-
-		return false;
-	}
+	return false;
 }
