@@ -148,6 +148,9 @@
     <ClInclude Include="CatanNetworking\NetworkParsers\RobberMoveParser.h" />
     <ClInclude Include="CatanNetworking\NetworkParsers\TokenParser.h" />
     <ClInclude Include="CatanNetworking\NetworkParsers\YOPParser.h" />
+    <ClInclude Include="CatanNetworking\NetworkProtocols\BytePacket.h" />
+    <ClInclude Include="CatanNetworking\NetworkProtocols\GenericProtocol.h" />
+    <ClInclude Include="CatanNetworking\NetworkProtocols\ProtocolEvent.h" />
     <ClInclude Include="FSM\EventGenerator.h" />
     <ClInclude Include="FSM\EventQueue.h" />
     <ClInclude Include="FSM\GenericEvent.h" />

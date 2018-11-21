@@ -34,6 +34,9 @@
     <Filter Include="MVC">
       <UniqueIdentifier>{52d31397-0f4c-4856-a249-b4197d2c2880}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CatanNetworking\NetworkProtocols">
+      <UniqueIdentifier>{336f56f3-fb14-4365-90df-c28fe7c2b693}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FSM\EventGenerator.h">
@@ -152,6 +155,15 @@
     </ClInclude>
     <ClInclude Include="CatanNetworking\NetworkParsers\YOPParser.h">
       <Filter>CatanNetworking\NetworkParsers</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkProtocols\BytePacket.h">
+      <Filter>CatanNetworking\NetworkProtocols</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkProtocols\GenericProtocol.h">
+      <Filter>CatanNetworking\NetworkProtocols</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkProtocols\ProtocolEvent.h">
+      <Filter>CatanNetworking\NetworkProtocols</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
