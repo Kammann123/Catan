@@ -16,7 +16,8 @@
 * constituir a un mensaje o paquete de datos, para clasificar
 * el tipo del mismo.
 */
-enum class PacketHeader : unsigned char {
+enum PacketHeader : unsigned char {
+	OTHER = 0x00,
 	ACK = 0x01,
 	NAME = 0x10,
 	NAME_IS,
