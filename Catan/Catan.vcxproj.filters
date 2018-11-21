@@ -34,8 +34,8 @@
     <Filter Include="MVC">
       <UniqueIdentifier>{52d31397-0f4c-4856-a249-b4197d2c2880}</UniqueIdentifier>
     </Filter>
-    <Filter Include="CatanNetworking\NetworkProtocols">
-      <UniqueIdentifier>{336f56f3-fb14-4365-90df-c28fe7c2b693}</UniqueIdentifier>
+    <Filter Include="CatanError">
+      <UniqueIdentifier>{3f6bf0ae-c43a-4b6e-955d-10957c18bbc6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -108,6 +108,9 @@
     <ClInclude Include="CatanNetworking\NetworkParsers\BuildingParser.h">
       <Filter>CatanNetworking\NetworkParsers</Filter>
     </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkParsers\DataPackets.h">
+      <Filter>CatanNetworking\NetworkParsers</Filter>
+    </ClInclude>
     <ClInclude Include="CatanNetworking\NetworkParsers\DevCardParser.h">
       <Filter>CatanNetworking\NetworkParsers</Filter>
     </ClInclude>
@@ -135,26 +138,8 @@
     <ClInclude Include="CatanNetworking\NetworkParsers\TokenParser.h">
       <Filter>CatanNetworking\NetworkParsers</Filter>
     </ClInclude>
-    <ClInclude Include="CatanNetworking\NetworkParsers\NetworkParser.h">
-      <Filter>CatanNetworking\NetworkParsers</Filter>
-    </ClInclude>
-    <ClInclude Include="CatanNetworking\NetworkPackets\KnightPacket.h">
-      <Filter>CatanNetworking\NetworkPackets</Filter>
-    </ClInclude>
-    <ClInclude Include="CatanNetworking\NetworkPackets\MonopolyPacket.h">
-      <Filter>CatanNetworking\NetworkPackets</Filter>
-    </ClInclude>
-    <ClInclude Include="CatanNetworking\NetworkPackets\YOPPacket.h">
-      <Filter>CatanNetworking\NetworkPackets</Filter>
-    </ClInclude>
-    <ClInclude Include="CatanNetworking\NetworkParsers\KnightParser.h">
-      <Filter>CatanNetworking\NetworkParsers</Filter>
-    </ClInclude>
-    <ClInclude Include="CatanNetworking\NetworkParsers\MonopolyParser.h">
-      <Filter>CatanNetworking\NetworkParsers</Filter>
-    </ClInclude>
-    <ClInclude Include="CatanNetworking\NetworkParsers\YOPParser.h">
-      <Filter>CatanNetworking\NetworkParsers</Filter>
+    <ClInclude Include="CatanError\CatanError.h">
+      <Filter>CatanError</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -251,26 +236,8 @@
     <ClCompile Include="main.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="CatanNetworking\NetworkParsers\NetworkParser.cpp">
-      <Filter>CatanNetworking\NetworkParsers</Filter>
-    </ClCompile>
-    <ClCompile Include="CatanNetworking\NetworkPackets\KnighPacket.cpp">
-      <Filter>CatanNetworking\NetworkPackets</Filter>
-    </ClCompile>
-    <ClCompile Include="CatanNetworking\NetworkPackets\MonopolyPacket.cpp">
-      <Filter>CatanNetworking\NetworkPackets</Filter>
-    </ClCompile>
-    <ClCompile Include="CatanNetworking\NetworkPackets\YOPPacket.cpp">
-      <Filter>CatanNetworking\NetworkPackets</Filter>
-    </ClCompile>
-    <ClCompile Include="CatanNetworking\NetworkParsers\KnightParser.cpp">
-      <Filter>CatanNetworking\NetworkParsers</Filter>
-    </ClCompile>
-    <ClCompile Include="CatanNetworking\NetworkParsers\MonopolyParser.cpp">
-      <Filter>CatanNetworking\NetworkParsers</Filter>
-    </ClCompile>
-    <ClCompile Include="CatanNetworking\NetworkParsers\YOPParser.cpp">
-      <Filter>CatanNetworking\NetworkParsers</Filter>
+    <ClCompile Include="CatanError\CatanError.cpp">
+      <Filter>CatanError</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
