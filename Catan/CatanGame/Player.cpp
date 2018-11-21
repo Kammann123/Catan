@@ -1,13 +1,42 @@
 #include "Player.h"
 
-Player::Player(string name)
+Player::Player(string name, PlayerId id)
 {
+	this->id = id;
 	this->name = name;
 	victoryPoints = 0;
 	resourceCards = {};
-	settlements = 0;
-	cities = 0;
-	roads = 0;
+	for (int i = 0; i < SETTLEMENTS_QTY; i++)
+	{
+		settlements.push_back(new Building(id, SETTLEMENT));
+	}
+	for (int i = 0; i < ROADS_QTY; i++)
+	{
+		roads.push_back(new Building(id, ROAD));
+	}
+	for (int i = 0; i < CITIES_QTY; i++)
+	{
+		cities.push_back(new Building(id, CITY));
+	}
+}
+
+Player::~Player()
+{
+	while (!cities.empty())
+	{
+		delete cities.front();
+		cities.pop_front();
+	}
+	while (!settlements.empty())
+	{
+		delete settlements.front();
+		settlements.pop_front();
+	}
+	while (!roads.empty())
+	{
+		delete roads.front();
+		roads.pop_front();
+	}
 }
 
 string Player::getName()
@@ -43,4 +72,25 @@ void Player::addResourceCard(ResourceCard * card)
 void Player::removeResourceCard(ResourceCard * card)
 {
 	resourceCards.remove(card);
+}
+
+Building * Player::getSettlement()
+{
+	Building * set = settlements.front();
+	settlements.pop_front();
+	return set;
+}
+
+Building * Player::getCity()
+{
+	Building * set = cities.front();
+	cities.pop_front();
+	return set;
+}
+
+Building * Player::getRoad()
+{
+	Building * set = roads.front();
+	roads.pop_front();
+	return set;
 }
