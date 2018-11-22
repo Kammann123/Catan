@@ -1,16 +1,93 @@
 #include "Player.h"
 
-Player::Player(string name, unsigned int settleCount, unsigned int citiesCount, unsigned int roadsCount)
-{
-	/*
-	 crear los buildings de las listas acá
-	*/
-	this->name = name;
+Player::Player(PlayerId player) {
+
+	unsigned int settleCount = SETTLEMENT_COUNT;
+	unsigned int roadsCount = ROAD_COUNT;
+	unsigned int citiesCount = CITY_COUNT;
+
+	/* Inicializacion */
+	this->name = "";
+	this->player = player;
 	victoryPoints = 0;
 	resourceCards = {};
-	settlements = 0;
-	cities = 0;
-	roads = 0;
+
+	/* Agrego settlements */
+	while (settleCount) {
+		/* Creo el settlement */
+		Building* settlement = new Building(player, BuildingType::SETTLEMENT);
+		this->settlements.push_back(settlement);
+		settleCount--;
+	}
+
+	/* Agrego roads */
+	while (roadsCount) {
+		/* Creo el road */
+		Building* road = new Building(player, BuildingType::ROAD);
+		this->roads.push_back(road);
+		roadsCount--;
+	}
+
+	/* Agrego cities */
+	while (citiesCount) {
+		/* Creo el city */
+		Building* city = new Building(player, BuildingType::CITY);
+		this->cities.push_back(city);
+		citiesCount--;
+	}
+}
+
+Player::Player(PlayerId player, string name, unsigned int settleCount, unsigned int citiesCount, unsigned int roadsCount)
+{
+	/* Inicializacion */
+	this->name = name;
+	this->player = player;
+	victoryPoints = 0;
+	resourceCards = {};
+
+	/* Agrego settlements */
+	while (settleCount) {
+		/* Creo el settlement */
+		Building* settlement = new Building(player, BuildingType::SETTLEMENT);
+		this->settlements.push_back(settlement);
+		settleCount--;
+	}
+
+	/* Agrego roads */
+	while (roadsCount) {
+		/* Creo el road */
+		Building* road = new Building(player, BuildingType::ROAD);
+		this->roads.push_back(road);
+		roadsCount--;
+	}
+
+	/* Agrego cities */
+	while (citiesCount) {
+		/* Creo el city */
+		Building* city = new Building(player, BuildingType::CITY);
+		this->cities.push_back(city);
+		citiesCount--;
+	}
+}
+
+Player::~Player() {
+	for (Building* b : settlements) {
+		delete b;
+	}
+	for (Building* b : roads) {
+		delete b;
+	}
+	for (Building* b : cities) {
+		delete b;
+	}
+	for (ResourceCard* r : resourceCards) {
+		delete r;
+	}
+}
+
+void 
+Player::setName(string name) {
+	this->name = name;
 }
 
 string Player::getName()
@@ -23,9 +100,9 @@ unsigned int Player::getVictoryPoints()
 	return victoryPoints;
 }
 
-list<ResourceCard*>* Player::getResourceCards()
+list<ResourceCard*>& Player::getResourceCards()
 {
-	return &resourceCards;
+	return resourceCards;
 }
 
 void Player::addPoints(unsigned int points)

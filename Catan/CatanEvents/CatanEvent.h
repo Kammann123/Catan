@@ -2,6 +2,8 @@
 
 #include "../CatanGame/Player.h"
 
+#include "../CatanNetworking/NetworkPackets/NetworkPacket.h"
+
 /*
 * CatanEvent
 * Clase base de evento generico de Catan.
@@ -13,8 +15,8 @@ public:
 	* Events
 	* Tipos posibles de eventos de catan
 	*/
-	enum Events : unsigned int {THROW_DICES, ROBBER_CARDS, ROBBER_MOVE, BUILDING, 
-		BANK_TRADE, OFFER_TRADE, PASS
+	enum Events : unsigned int { THROW_DICES, ROBBER_CARDS, ROBBER_MOVE, BUILDING, 
+		BANK_TRADE, OFFER_TRADE, PASS, QUIT, ERROR
 	};
 
 	/*
@@ -24,6 +26,7 @@ public:
 	enum Sources : unsigned int {NETWORKING, GUI};
 
 	/* Constructor y destructores */
+	CatanEvent(NetworkPacket* packet);
 	CatanEvent(Events event, Sources source, PlayerId player);
 	~CatanEvent(void);
 

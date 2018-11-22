@@ -1,12 +1,12 @@
 #pragma once
 
-#include "Player.h"
+enum PlayerId;
 
 /*
 * BuildingType
 * Tipos de construcciones del juego
 */
-enum BuldingType { SETTLEMENT, ROAD, CITY };
+enum BuildingType : unsigned int { SETTLEMENT, ROAD, CITY };
 
 /*
 * Building
@@ -18,7 +18,7 @@ public:
 	/*
 	* Constructor
 	*/
-	Building(PlayerId player, BuldingType type);
+	Building(PlayerId player, BuildingType type);
 
 	/*
 	* getPlace()
@@ -36,7 +36,7 @@ public:
 	* getType
 	* Devuelve el tipo de onstruccion
 	*/
-	BuldingType getType(void);
+	BuildingType getType(void);
 
 	/*
 	* setPlace
@@ -46,7 +46,6 @@ public:
 
 private:
 	string place;
-	BuldingType type;
+	BuildingType type;
 	PlayerId player;
-
 };

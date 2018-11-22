@@ -11,7 +11,7 @@ using namespace std;
 * BankEvent
 * Evento para realizar un cambio de cartas con banco.
 */
-class BankEvent : CatanEvent {
+class BankEvent : public CatanEvent {
 public:
 	/* Constructores y destructores */
 	BankEvent(BankPacket* packet);

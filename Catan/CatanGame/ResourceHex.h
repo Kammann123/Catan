@@ -14,7 +14,13 @@ public:
 	/*
 	* Constructor
 	*/
-	ResourceHex(ResourceId resource_, unsigned int token_);
+	ResourceHex(ResourceId resource_, unsigned int token_, unsigned char coord_);
+
+	/*
+	* getCoord()
+	* Devuelve la coordenada del resourceHex
+	*/
+	unsigned char getCoord(void);
 
 	/*
 	* getToken()
@@ -43,4 +49,5 @@ public:
 private:
 	unsigned int token;
 	ResourceId resource;
+	unsigned char coord;
 };

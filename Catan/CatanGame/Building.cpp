@@ -1,10 +1,12 @@
+#include "Player.h"
 #include "Building.h"
 
 Building::
-Building(PlayerId player, BuldingType type)
+Building(PlayerId player, BuildingType type)
 {
 	this->player = player;
 	this->type = type;
+	this->place = "FFF"; // el string "FFF" significa posición no asignada
 }
 
 string Building::
@@ -19,7 +21,7 @@ getPlayer(void)
 	return player;
 }
 
-BuldingType Building::
+BuildingType Building::
 getType(void)
 {
 	return type;

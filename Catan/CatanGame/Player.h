@@ -1,9 +1,14 @@
 #pragma once
 
+#include "ResourceCard.h"
+#include "Building.h"
+
 #include <string>
 #include <list>
-#include "ResourceCard.h"
-#include "Map.h"
+
+#define SETTLEMENT_COUNT	5
+#define CITY_COUNT			4
+#define ROAD_COUNT			15
 
 using namespace std;
 
@@ -14,13 +19,21 @@ public:
 	/*
 	* Constructor
 	*/
-	Player(string name, unsigned int settleCount, unsigned int citiesCount, unsigned int roadsCount);
+	Player(PlayerId player);
+	Player(PlayerId player, string name, unsigned int settleCount, unsigned int citiesCount, unsigned int roadsCount);
+	~Player();
 
 	/*
 	* getName()
 	* Devuelve el nombre del jugador
 	*/
 	string getName(void);
+
+	/*
+	* setName
+	* Establece el nombre
+	*/
+	void setName(string name);
 
 	/*
 	* getVictoryPoints()
@@ -32,7 +45,7 @@ public:
 	* getResourceCards()
 	* Devuelve una lista con las resource cards del jugador
 	*/
-	list <ResourceCard *> * getResourceCards();
+	list <ResourceCard *>& getResourceCards();
 
 	/*
 	* addPoints()
@@ -94,13 +107,12 @@ public:
 	*/
 	Building* popCity(void);
 
-
 private:
+	PlayerId player;
 	string name;
 	unsigned int victoryPoints;
-	list<ResourceCard * > resourceCards;
+	list<ResourceCard*> resourceCards;
 	list<Building*> settlements;
 	list<Building*> cities;
 	list<Building*> roads;
-
 };

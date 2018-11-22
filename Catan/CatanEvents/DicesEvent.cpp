@@ -11,7 +11,7 @@ DicesEvent(unsigned int firstDice, unsigned int secondDice) : CatanEvent(Events:
 }
 
 DicesEvent::
-DicesEvent(unsigned int dices) : CatanEvent(Events::THROW_DICES, Sources::GUI, PlayerId::PLAYER_ONE)) {
+DicesEvent(unsigned int dices) : CatanEvent(Events::THROW_DICES, Sources::GUI, PlayerId::PLAYER_ONE) {
 	this->dices = dices;
 }
 

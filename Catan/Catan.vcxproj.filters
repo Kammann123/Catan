@@ -43,6 +43,9 @@
     <Filter Include="CatanEvents">
       <UniqueIdentifier>{37c4fdbf-896a-43a3-a1f7-1754d34907b8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CatanGame\States">
+      <UniqueIdentifier>{734a4ef9-e7e5-4c68-a450-30284d0c544f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FSM\EventGenerator.h">
@@ -198,6 +201,18 @@
     <ClInclude Include="CatanGame\ResourceHex.h">
       <Filter>CatanGame</Filter>
     </ClInclude>
+    <ClInclude Include="CatanGame\SeaHex.h">
+      <Filter>CatanGame</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGame\Robber.h">
+      <Filter>CatanGame</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGame\CatanStatus.h">
+      <Filter>CatanGame</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGame\CatanState.h">
+      <Filter>CatanGame</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FSM\EventQueue.cpp">
@@ -345,6 +360,15 @@
       <Filter>CatanGame</Filter>
     </ClCompile>
     <ClCompile Include="CatanGame\ResourceHex.cpp">
+      <Filter>CatanGame</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGame\SeaHex.cpp">
+      <Filter>CatanGame</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGame\Robber.cpp">
+      <Filter>CatanGame</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGame\CatanStatus.cpp">
       <Filter>CatanGame</Filter>
     </ClCompile>
   </ItemGroup>

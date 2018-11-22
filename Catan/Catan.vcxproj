@@ -125,9 +125,13 @@
     <ClInclude Include="CatanEvents\RobberMoveEvent.h" />
     <ClInclude Include="CatanGame\Building.h" />
     <ClInclude Include="CatanGame\CatanGame.h" />
+    <ClInclude Include="CatanGame\CatanState.h" />
+    <ClInclude Include="CatanGame\CatanStatus.h" />
     <ClInclude Include="CatanGame\Player.h" />
     <ClInclude Include="CatanGame\ResourceCard.h" />
     <ClInclude Include="CatanGame\ResourceHex.h" />
+    <ClInclude Include="CatanGame\Robber.h" />
+    <ClInclude Include="CatanGame\SeaHex.h" />
     <ClInclude Include="CatanNetworking\NetworkHandlers\NetworkClient.h" />
     <ClInclude Include="CatanNetworking\NetworkHandlers\NetworkServer.h" />
     <ClInclude Include="CatanNetworking\NetworkHandlers\NetworkSocket.h" />
@@ -177,9 +181,12 @@
     <ClCompile Include="CatanEvents\RobberMoveEvent.cpp" />
     <ClCompile Include="CatanGame\Building.cpp" />
     <ClCompile Include="CatanGame\CatanGame.cpp" />
+    <ClCompile Include="CatanGame\CatanStatus.cpp" />
     <ClCompile Include="CatanGame\Player.cpp" />
     <ClCompile Include="CatanGame\ResourceCard.cpp" />
     <ClCompile Include="CatanGame\ResourceHex.cpp" />
+    <ClCompile Include="CatanGame\Robber.cpp" />
+    <ClCompile Include="CatanGame\SeaHex.cpp" />
     <ClCompile Include="CatanNetworking\NetworkHandlers\NetworkClient.cpp" />
     <ClCompile Include="CatanNetworking\NetworkHandlers\NetworkServer.cpp" />
     <ClCompile Include="CatanNetworking\NetworkHandlers\NetworkSocket.cpp" />
