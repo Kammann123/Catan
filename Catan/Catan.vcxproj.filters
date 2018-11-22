@@ -40,6 +40,9 @@
     <Filter Include="CatanNetworking\NetworkHandlers">
       <UniqueIdentifier>{43641b10-6bb9-4407-8d6a-746bc3d4bb5c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CatanEvents">
+      <UniqueIdentifier>{37c4fdbf-896a-43a3-a1f7-1754d34907b8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FSM\EventGenerator.h">
@@ -64,9 +67,6 @@
       <Filter>CatanGame</Filter>
     </ClInclude>
     <ClInclude Include="CatanGame\ResourceCard.h">
-      <Filter>CatanGame</Filter>
-    </ClInclude>
-    <ClInclude Include="CatanGame\Map.h">
       <Filter>CatanGame</Filter>
     </ClInclude>
     <ClInclude Include="CatanGame\CatanGame.h">
@@ -168,7 +168,34 @@
     <ClInclude Include="CatanNetworking\NetworkHandlers\NetworkServer.h">
       <Filter>CatanNetworking\NetworkHandlers</Filter>
     </ClInclude>
-    <ClInclude Include="CatanGame\CatanEvent.h">
+    <ClInclude Include="CatanEvents\BankEvent.h">
+      <Filter>CatanEvents</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanEvents\BuildingEvent.h">
+      <Filter>CatanEvents</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanEvents\CatanEvent.h">
+      <Filter>CatanEvents</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanEvents\DicesEvent.h">
+      <Filter>CatanEvents</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanEvents\OfferEvent.h">
+      <Filter>CatanEvents</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanEvents\PassEvent.h">
+      <Filter>CatanEvents</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanEvents\RobberCardEvent.h">
+      <Filter>CatanEvents</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanEvents\RobberMoveEvent.h">
+      <Filter>CatanEvents</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGame\Building.h">
+      <Filter>CatanGame</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGame\ResourceHex.h">
       <Filter>CatanGame</Filter>
     </ClInclude>
   </ItemGroup>
@@ -192,9 +219,6 @@
       <Filter>CatanGame</Filter>
     </ClCompile>
     <ClCompile Include="CatanGame\ResourceCard.cpp">
-      <Filter>CatanGame</Filter>
-    </ClCompile>
-    <ClCompile Include="CatanGame\Map.cpp">
       <Filter>CatanGame</Filter>
     </ClCompile>
     <ClCompile Include="CatanGame\CatanGame.cpp">
@@ -296,7 +320,31 @@
     <ClCompile Include="CatanNetworking\NetworkHandlers\NetworkClient.cpp">
       <Filter>CatanNetworking\NetworkHandlers</Filter>
     </ClCompile>
-    <ClCompile Include="CatanGame\CatanEvent.cpp">
+    <ClCompile Include="CatanEvents\CatanEvent.cpp">
+      <Filter>CatanEvents</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanEvents\DicesEvent.cpp">
+      <Filter>CatanEvents</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanEvents\BankEvent.cpp">
+      <Filter>CatanEvents</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanEvents\BuildingEvent.cpp">
+      <Filter>CatanEvents</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanEvents\OfferEvent.cpp">
+      <Filter>CatanEvents</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanEvents\RobberCardEvent.cpp">
+      <Filter>CatanEvents</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanEvents\RobberMoveEvent.cpp">
+      <Filter>CatanEvents</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGame\Building.cpp">
+      <Filter>CatanGame</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGame\ResourceHex.cpp">
       <Filter>CatanGame</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "CatanEvent.h"
+#include "../CatanNetworking/NetworkPackets/DicesPacket.h"
 
 /*
 * DicesEvent
@@ -9,6 +10,7 @@
 class DicesEvent : public CatanEvent {
 public:
 	/* Constructores y destructores */
+	DicesEvent(DicesPacket* packet);
 	DicesEvent(unsigned int firstDice, unsigned int secondDice);
 	DicesEvent(unsigned int dices);
 	~DicesEvent(void);

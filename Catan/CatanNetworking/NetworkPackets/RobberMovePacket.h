@@ -34,7 +34,6 @@ public:
 	*/
 	virtual unsigned char* getDataStream(unsigned int& length);
 
-
 private:
 	unsigned char coord;
 };
