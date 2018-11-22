@@ -1,15 +1,19 @@
 #pragma once
+
 #include <string>
 #include <list>
 #include "ResourceCard.h"
+#include "Map.h"
+
 using namespace std;
 
-enum PlayerId {PLAYER_ONE, PLAYER_TWO};
+enum PlayerId : unsigned int {PLAYER_ONE, PLAYER_TWO};
+
 class Player {
 public:
 	Player(string name);
-	string getName();
-	unsigned int getVictoryPoints();
+	string getName(void);
+	unsigned int getVictoryPoints(void);
 	list <ResourceCard *> * getResourceCards();
 	void addPoints(unsigned int points = 0);
 	void removePoints(unsigned int points = 0);
@@ -19,7 +23,7 @@ private:
 	string name;
 	unsigned int victoryPoints;
 	list <ResourceCard * > resourceCards;
-	unsigned int settlements;
+	list<Building*> settlements;
 	unsigned int cities;
 	unsigned int roads;
 

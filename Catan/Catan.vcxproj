@@ -115,6 +115,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CatanGame\CatanEvent.h" />
     <ClInclude Include="CatanGame\CatanGame.h" />
     <ClInclude Include="CatanGame\Map.h" />
     <ClInclude Include="CatanGame\Player.h" />
@@ -159,6 +160,7 @@
     <ClInclude Include="MVC\Subject.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CatanGame\CatanEvent.cpp" />
     <ClCompile Include="CatanGame\CatanGame.cpp" />
     <ClCompile Include="CatanGame\Map.cpp" />
     <ClCompile Include="CatanGame\Player.cpp" />

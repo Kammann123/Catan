@@ -1,3 +1,5 @@
+#pragma once
+
 class ResourceCard {
 public:
 	ResourceCard();

@@ -168,6 +168,9 @@
     <ClInclude Include="CatanNetworking\NetworkHandlers\NetworkServer.h">
       <Filter>CatanNetworking\NetworkHandlers</Filter>
     </ClInclude>
+    <ClInclude Include="CatanGame\CatanEvent.h">
+      <Filter>CatanGame</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FSM\EventQueue.cpp">
@@ -292,6 +295,9 @@
     </ClCompile>
     <ClCompile Include="CatanNetworking\NetworkHandlers\NetworkClient.cpp">
       <Filter>CatanNetworking\NetworkHandlers</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGame\CatanEvent.cpp">
+      <Filter>CatanGame</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

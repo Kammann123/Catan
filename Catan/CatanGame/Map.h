@@ -1,3 +1,5 @@
+#pragma once
+
 enum BuldingType { SETTLEMENT, ROAD, CITY };
 #include <string>
 #include "Player.h"
@@ -5,7 +7,6 @@ using namespace std;
 class ResourceHex {
 
 };
-
 class Building {
 
 public:
