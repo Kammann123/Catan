@@ -16,7 +16,7 @@
 #include <map>
 #include <deque>
 
-#define BANK_TRANSACTION_CARDS_COUNT 3
+#define BANK_TRANSACTION_CARDS_COUNT 4 
 
 using namespace std;
 
