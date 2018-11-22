@@ -2,31 +2,31 @@
 
 ResourceCard::ResourceCard()
 {
-	resourceId = 0;
-	playerId = 0;
+	resourceId = ResourceId::DESERT; // esto por defecto ?????
+	playerId = PlayerId::PLAYER_ONE; // esto por defecto ?????
 }
 
-ResourceCard::ResourceCard(unsigned int resourceId)
+ResourceCard::ResourceCard(ResourceId resourceId)
 {
 	this->resourceId = resourceId;
 }
 
-unsigned int ResourceCard::getResourceId()
+ResourceId ResourceCard::getResourceId()
 {
 	return resourceId;
 }
 
-unsigned int ResourceCard::getPlayerId()
+PlayerId ResourceCard::getPlayerId()
 {
 	return playerId;
 }
 
-void ResourceCard::setResourceId(unsigned int resourceId)
+void ResourceCard::setResourceId(ResourceId resourceId)
 {
 	this->resourceId = resourceId;
 }
 
-void ResourceCard::setPlayerId(unsigned int playerId)
+void ResourceCard::setPlayerId(PlayerId playerId)
 {
 	this->playerId = playerId;
 }

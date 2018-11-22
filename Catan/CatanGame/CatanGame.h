@@ -16,6 +16,8 @@
 #include <map>
 #include <deque>
 
+#define BANK_TRANSACTION_CARDS_COUNT 3
+
 using namespace std;
 
 /*
@@ -76,6 +78,46 @@ public:
 private:
 
 	friend class CatanState;
+
+	/* VALIDACION DE MOVIMIENTOS */
+
+	/*
+	* isValidxxxxx()
+	* Métodos que nos informan si es válida la construcción de un road, city o settlement, respectivamente.
+	*/
+
+	bool isValidRoad(string coords, PlayerId player) const;
+	bool isValidCity(string coords, PlayerId player) const;
+	bool isValidSettlement(string coords, PlayerId player) const;
+
+	/*
+	* isValidDockTransaction()
+	* Verifica que la transacción propuesta sea coherente en el marco del juego (devuelve true si lo es, false  en caso contrario)
+ 	*/
+	bool isValidDockTransaction(list<ResourceCard*>& offeredCards,ResourceId requestedCard, SeaId dockID);
+	bool isValidPlayerTransaction(list<ResourceCard*>& offeredCards, list<ResourceCard*>& requestedCards, PlayerId srcPlayerID);
+	bool isValidBankTransaction(list<ResourceCard*>& offeredCards, PlayerId playerID) ;
+
+
+	/*
+	* isAvailableDock()
+	* Verifica si el puerto está disponible para una transacción
+	*/
+
+	bool isAvailableDock(SeaId dockID, PlayerId playerID);
+
+	/*
+	* isValidListOfCards()
+	* Devuelve true en el caso que las cartas ofrecidas estén disponibles para el jugador
+	*/
+	bool isValidListOfCards(list<ResourceCard*>& offeredCards, PlayerId playerID);
+
+	/*
+	* getResourceCount()
+	* Devuelve la cantidad de resourceCards de un determinado tipo que tiene un jugador.
+	*/
+	unsigned int getResourceCount(list<ResourceCard*>& cardsList, ResourceId resourceID) const;
+
 
 	/*
 	* addNewEvent

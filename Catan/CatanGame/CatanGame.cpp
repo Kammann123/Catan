@@ -185,4 +185,69 @@ CatanGame::getPrevState(void)
 	return prevState;
 }
 
+bool CatanGame::
+isValidDockTransaction(list<ResourceCard*>& offeredCards, ResourceId requestedCard, SeaId dockID)
+{
+	return false;
+}
 
+bool CatanGame::
+isValidPlayerTransaction(list<ResourceCard*>& offeredCards, list<ResourceCard*>& requestedCards, PlayerId srcPlayerID) 
+{
+	bool ret = false;
+	PlayerId destPlayerID = ((srcPlayerID == PLAYER_ONE) ? PLAYER_TWO : PLAYER_ONE);
+
+	if (isValidListOfCards(offeredCards, srcPlayerID) && isValidListOfCards(requestedCards, destPlayerID))
+	{
+		ret = true;
+	}
+
+	return ret;
+}
+
+bool CatanGame::
+isValidBankTransaction(list<ResourceCard*>& offeredCards, PlayerId playerID)
+{
+	bool ret = false;
+
+	if ((offeredCards.size() == BANK_TRANSACTION_CARDS_COUNT) && isValidListOfCards(offeredCards, playerID))
+	{
+		ret = true;
+	}
+
+	return ret;
+}
+
+bool CatanGame::
+isValidListOfCards(list<ResourceCard*>& offeredCards, PlayerId playerID) 
+{
+	bool ret = false;
+	Player& player = ((playerID == PlayerId::PLAYER_ONE) ? localPlayer : remotePlayer); 
+
+	if (
+		(getResourceCount(player.getResourceCards(), ResourceId::FOREST) >= getResourceCount(offeredCards, ResourceId::FOREST)) &&
+		(getResourceCount(player.getResourceCards(), ResourceId::HILL) >= getResourceCount(offeredCards, ResourceId::HILL)) &&
+		(getResourceCount(player.getResourceCards(), ResourceId::MOUNTAIN) >= getResourceCount(offeredCards, ResourceId::MOUNTAIN)) &&
+		(getResourceCount(player.getResourceCards(), ResourceId::FIELD) >= getResourceCount(offeredCards, ResourceId::FIELD)) &&
+		(getResourceCount(player.getResourceCards(), ResourceId::PASTURES) >= getResourceCount(offeredCards, ResourceId::PASTURES))
+		)
+	{
+		ret = true; // Verifico si las cartas están disponibles
+	}
+
+	return ret;
+}
+
+unsigned int CatanGame::
+getResourceCount(list<ResourceCard*>& cardsList, ResourceId resourceID) const
+{
+	unsigned int resourceCount = 0;
+	for (ResourceCard* resCard : cardsList) // range-based for de la lista de cartas de recursos
+	{
+		if (resCard->getResourceId() == resourceID) // verifico que el recurso sea el correcto
+		{
+			resourceCount++; // si es así, incremento el contador
+		}
+	}
+	return resourceCount;
+}

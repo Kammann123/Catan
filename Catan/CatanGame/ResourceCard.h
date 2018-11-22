@@ -1,4 +1,6 @@
 #pragma once
+#include "Player.h"
+#include "../CatanNetworking/NetworkPackets/NetworkPacket.h"
 
 /*
 * ResourceCard
@@ -9,25 +11,25 @@ public:
 
 	/* Constructores y destructores */
 	ResourceCard();
-	ResourceCard(unsigned int resourceId);
+	ResourceCard(ResourceId resourceId);
 
 	/* 
 	* getResourceId
 	* Devuelve tipo de recurso
 	*/
-	unsigned int getResourceId();
+	ResourceId getResourceId();
 
 	/*
 	* getPlayerId
 	* Devuelve player a quien pertenece la carta
 	*/
-	unsigned int getPlayerId();
+	PlayerId getPlayerId();
 
 	/* Setters de atributos de la clase */
-	void setResourceId(unsigned int resourceId);
-	void setPlayerId(unsigned int playerId);
+	void setResourceId(ResourceId resourceId);
+	void setPlayerId(PlayerId playerId);
 
 private:
-	unsigned int resourceId;
-	unsigned int playerId;
+	ResourceId resourceId;
+	PlayerId playerId;
 };
