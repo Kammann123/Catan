@@ -1,7 +1,10 @@
 #include "Player.h"
 
-Player::Player(string name)
+Player::Player(string name, unsigned int settleCount, unsigned int citiesCount, unsigned int roadsCount)
 {
+	/*
+	 crear los buildings de las listas acá
+	*/
 	this->name = name;
 	victoryPoints = 0;
 	resourceCards = {};
@@ -43,4 +46,10 @@ void Player::addResourceCard(ResourceCard * card)
 void Player::removeResourceCard(ResourceCard * card)
 {
 	resourceCards.remove(card);
+}
+
+bool Player::hasRoads(void)
+{
+	bool ret = true;
+	if()
 }
