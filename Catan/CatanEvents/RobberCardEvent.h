@@ -2,24 +2,15 @@
 
 #include "CatanEvent.h"
 #include "../CatanNetworking/NetworkPackets/RobberCardPacket.h"
-
-#include <list>
-
-using namespace std;
+#include "../CatanData/RobberCardData.h"
 
 /*
 * RobberCardEvent
 * Evento para realizar el descarte de una seleccion de cartas.
 */
-class RobberCardEvent : public CatanEvent {
+class RobberCardEvent : public CatanEvent, public RobberCardData{
 public:
 	/* Constructores y destructores */
 	RobberCardEvent(RobberCardPacket* packet);
 	RobberCardEvent(list<ResourceId> res, PlayerId player);
-	~RobberCardEvent();
-
-	/* Getter */
-	list<ResourceId>& getResources(void);
-private:
-	list<ResourceId> res;
 };
