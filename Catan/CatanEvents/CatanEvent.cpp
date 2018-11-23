@@ -6,6 +6,11 @@ CatanEvent(NetworkPacket* packet) {
 	this->player = PlayerId::PLAYER_TWO;
 
 	switch (packet->getHeader()) {
+		case PacketHeader::DEV_CARD:
+			this->event = Events::DEV_CARD;
+		case PacketHeader::PLAY_AGAIN:
+			this->event = Events::PLAY_AGAIN;
+			break;
 		case PacketHeader::PASS:
 			this->event = Events::PASS;
 			break;

@@ -87,18 +87,17 @@ private:
 	* Métodos que nos informan si es válida la construcción de un road, city o settlement, respectivamente.
 	*/
 
-	bool isValidRoad(string coords, PlayerId player) const;
-	bool isValidCity(string coords, PlayerId player) const;
-	bool isValidSettlement(string coords, PlayerId player) const;
+	bool isValidRoad(string coords, PlayerId playerID) const;
+	bool isValidCity(string coords, PlayerId playerID) const;
+	bool isValidSettlement(string coords, PlayerId playerID) const;
 
 	/*
 	* isValidDockTransaction()
 	* Verifica que la transacción propuesta sea coherente en el marco del juego (devuelve true si lo es, false  en caso contrario)
  	*/
-	bool isValidDockTransaction(list<ResourceCard*>& offeredCards,ResourceId requestedCard, SeaId dockID);
+	bool isValidDockTransaction(list<ResourceCard*>& offeredCards,ResourceId requestedCard, unsigned char seaCoord,unsigned char dockNumber,PlayerId player);
 	bool isValidPlayerTransaction(list<ResourceCard*>& offeredCards, list<ResourceCard*>& requestedCards, PlayerId srcPlayerID);
-	bool isValidBankTransaction(list<ResourceCard*>& offeredCards, PlayerId playerID) ;
-
+	bool isValidBankTransaction(list<ResourceCard*>& offeredCards, PlayerId playerID);
 
 	/*
 	* isAvailableDock()

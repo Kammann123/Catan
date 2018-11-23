@@ -23,8 +23,8 @@ SeaHex::getCoord(void) const {
 	return this->coord;
 }
 
-SeaId
-list<SeaId> getDockList(void) const
+list<SeaId> 
+SeaHex::getDockList(void) const
 {
 	return this->dockList;
 }
@@ -32,27 +32,29 @@ list<SeaId> getDockList(void) const
 string
 SeaHex::getDockAbsCoords(SeaId dockID)
 {
+	string ret = "ERROR";
+
 	if (dockList.size() == 1)
 	{
 		if (dockID == dockList[0])
 		{
-			return externCoords[coords*VERTEX_PER_SEA_PIECE + ONLY_DOCK_OFFSET];
+			ret = externCoords[coords*VERTEX_PER_SEA_PIECE + ONLY_DOCK_OFFSET];
 		}
 	}
 
-	else
+	else // el tamaño entonces es dos (a menos que haya error)
 	{
 		if (dockID == dockList[0])
 		{
-			return externCoords[coords*VERTEX_PER_SEA_PIECE + FIRST_DOCK_OFFSET];
+			ret = externCoords[coords*VERTEX_PER_SEA_PIECE + FIRST_DOCK_OFFSET];
 		}
 
 		else if (dockID == dockList[1])
 		{
-			return externCoords[coords*VERTEX_PER_SEA_PIECE + SECOND_DOCK_OFFSET];
+			ret = externCoords[coords*VERTEX_PER_SEA_PIECE + SECOND_DOCK_OFFSET];
 		}
 	}
 
-	return "ERROR";
+	return ret;
 
 }

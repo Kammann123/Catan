@@ -4,9 +4,13 @@
 #include <string>
 #include <list>
 
+// cada dock tiene dos vértices de acceso
 #define FIRST_DOCK_OFFSET 0
+
 #define SECOND_DOCK_OFFSET 3
+
 #define ONLY_DOCK_OFFSET 2
+
 #define VERTEX_PER_SEA_PIECE 6
 
 using namespace std;
@@ -43,10 +47,12 @@ public:
 	*/
 	string getDockAbsCoords(SeaId dockID);
 
+	string getDockAbsCoords(unsigned char dockNumber); // agregar esta
+
 
 private:
+
 	unsigned char coord;
 	/* Lista de docks, en sentido HORARIO (convención) */
 	list<SeaId> dockList;
-
-};
+};	

@@ -196,11 +196,15 @@ CatanGame::getPrevState(void)
 	return prevState;
 }
 
-bool CatanGame::
-isValidDockTransaction(list<ResourceCard*>& offeredCards, ResourceId requestedCard, SeaId dockID)
-{
-	return false;
-}
+//bool CatanGame::
+//isValidDockTransaction(list<ResourceCard*>& offeredCards, ResourceId requestedCard, unsigned char seaCoord, unsigned char dockNumber, PlayerId player)
+//{
+//	// Busco las coordenadas del dock (?) -> tiene 2 !!!!! (cambiar el método)
+//	SeaHex& mySeaHex = seaMap[seaCoord];
+//	string dockCoords = seaMap[seaCoord].getDockAbsCoords(dockNumber);
+//	// si es así, tendría que chequear si la oferta del jugador se condice con lo requerido por el puerto
+//	//
+//}
 
 bool CatanGame::
 isValidPlayerTransaction(list<ResourceCard*>& offeredCards, list<ResourceCard*>& requestedCards, PlayerId srcPlayerID) 
@@ -261,4 +265,21 @@ getResourceCount(list<ResourceCard*>& cardsList, ResourceId resourceID) const
 		}
 	}
 	return resourceCount;
+}
+
+//bool CatanGame::
+//isValidCity(string coords, PlayerId playerID)
+//{
+//	ret = false;
+//	Player& player = ((playerID == PlayerId::PLAYER_ONE) ? localPlayer : remotePlayer);
+//	for (Building* Settlement : settlements)
+//	{
+//		if (stringMatch(Settlement.getCoords(), coords)) // como no puedo ver los otros archivos, no sé el nombre de los datos/metodos miembro.
+//		{
+//			ret = true;
+//			break; // para optimizar tiempo y no poner múltiples puntos de retorno
+//		}
+//	}
+//
+//	return ret;
 }

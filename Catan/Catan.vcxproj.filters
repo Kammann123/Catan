@@ -264,6 +264,21 @@
     <ClInclude Include="CatanNetworking\NetworkParsers\CardIsParser.h">
       <Filter>CatanNetworking\NetworkParsers</Filter>
     </ClInclude>
+    <ClInclude Include="CatanEvents\CardIsEvent.h">
+      <Filter>CatanEvents</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanEvents\KnightEvent.h">
+      <Filter>CatanEvents</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanEvents\MonopolyEvent.h">
+      <Filter>CatanEvents</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanEvents\SyncEvent.h">
+      <Filter>CatanEvents</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanEvents\YOPEvent.h">
+      <Filter>CatanEvents</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FSM\EventQueue.cpp">
@@ -472,6 +487,21 @@
     </ClCompile>
     <ClCompile Include="CatanNetworking\NetworkParsers\CardIsParser.cpp">
       <Filter>CatanNetworking\NetworkParsers</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanEvents\CardIsEvent.cpp">
+      <Filter>CatanEvents</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanEvents\KnightEvent.cpp">
+      <Filter>CatanEvents</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanEvents\MonopolyEvent.cpp">
+      <Filter>CatanEvents</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanEvents\SyncEvent.cpp">
+      <Filter>CatanEvents</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanEvents\YOPEvent.cpp">
+      <Filter>CatanEvents</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
