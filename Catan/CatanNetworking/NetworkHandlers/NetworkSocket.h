@@ -60,6 +60,13 @@ public:
 	NetworkPacket* receive(void);
 
 	/*
+	* look
+	* Permite ver el proximo paquete de datos a manejar, sin eliminarlo de
+	* la cola de mensajes recibidos
+	*/
+	NetworkPacket* look(void);
+
+	/*
 	* flush
 	* Libera los buffer de entrada de mensajes
 	*/

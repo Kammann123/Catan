@@ -62,15 +62,25 @@ send(NetworkPacket* packet) {
 }
 
 NetworkPacket* NetworkSocket::
-receive(void) {
+look(void) {
 	if (hasReceived()) {
 		NetworkPacket* temp = this->recvQueue.front();
-		this->recvQueue.pop_front();
 		return temp;
 	}
 	else {
 		return nullptr;
 	}
+}
+
+NetworkPacket* NetworkSocket::
+receive(void) {
+	NetworkPacket* temp = look();
+
+	if (temp) {
+		this->recvQueue.pop_front();
+	}
+
+	return temp;
 }
 
 bool NetworkSocket::
