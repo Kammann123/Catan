@@ -2,28 +2,24 @@
 
 #include "ProtocolState.h"
 
-#include <list>
-
-using namespace std;
-
 /*
-* PSSend
-* Estado de protocolo de transmision de mensaje a la 
-* espera de recibir la informacion apropiada.
+* PSRespond
+* Estado de protocolo de respuesta donde se define
+* un mensaje de respuesta sin cuerpo para enviar de forma
+* inmediante, llegado dicho estado durante la comunicacion.
 */
 class PSSend : public ProtocolState {
 public:
-	/*
-	* PSSend
-	* Se construye el estado del protocolo con el callback
-	* para poder notificar y luego los header que son validos
-	* para enviar en esta etapa.
-	*/
-	PSSend(NotifyCallback notify, list<PacketHeader> _expected);
-	PSSend(list<PacketHeader> _expected);
 
 	/*
-	* Implementacion de las rutinas de operacion del
+	* PSRespond
+	* Se construye el estado de respuesta con el header
+	* del mensaje que hay que armar para enviar.
+	*/
+	PSSend(PacketHeader _header);
+
+	/*
+	* Implementacion de las rutinas de operacion del 
 	* estado del protocolo
 	*/
 	virtual ProtocolStatus send(NetworkPacket* packet);
@@ -31,5 +27,5 @@ public:
 	virtual ProtocolStatus solve(void);
 
 private:
-	list<PacketHeader> expected;
+	PacketHeader header;
 };

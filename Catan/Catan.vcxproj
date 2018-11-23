@@ -193,7 +193,7 @@
     <ClInclude Include="CatanNetworking\NetworkProtocols\ProtocolState.h" />
     <ClInclude Include="CatanNetworking\NetworkProtocols\PSRecv.h" />
     <ClInclude Include="CatanNetworking\NetworkProtocols\PSRespond.h" />
-    <ClInclude Include="CatanNetworking\NetworkProtocols\PSSend.h" />
+    <ClInclude Include="CatanNetworking\NetworkProtocols\PSWaitSend.h" />
     <ClInclude Include="FSM\EventGenerator.h" />
     <ClInclude Include="FSM\EventQueue.h" />
     <ClInclude Include="FSM\GenericEvent.h" />
@@ -277,7 +277,7 @@
     <ClCompile Include="CatanNetworking\NetworkProtocols\ProtocolState.cpp" />
     <ClCompile Include="CatanNetworking\NetworkProtocols\PSRecv.cpp" />
     <ClCompile Include="CatanNetworking\NetworkProtocols\PSRespond.cpp" />
-    <ClCompile Include="CatanNetworking\NetworkProtocols\PSSend.cpp" />
+    <ClCompile Include="CatanNetworking\NetworkProtocols\PSWaitSend.cpp" />
     <ClCompile Include="FSM\EventQueue.cpp" />
     <ClCompile Include="FSM\GenericEvent.cpp" />
     <ClCompile Include="FSM\GenericFsm.cpp" />

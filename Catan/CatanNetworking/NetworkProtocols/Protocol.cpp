@@ -12,6 +12,9 @@ Protocol(SendCallback sendCallback, vector<ProtocolState*> states) {
 	for (ProtocolState* p : states) {
 		p->setSendCallback(sendCallback);
 	}
+
+	/* Ejecuto solve del primer estado */
+	transition(this->states[this->currentState]->solve());
 }
 
 ProtocolStatus

@@ -4,6 +4,11 @@ PSRecv::
 PSRecv(NotifyCallback notify, list<PacketHeader> _expected) : ProtocolState(notify), expected(_expected) {}
 
 PSRecv::
+PSRecv(NotifyCallback notify, PacketHeader _expected) : ProtocolState(notify) {
+	expected.push_back(_expected);
+}
+
+PSRecv::
 PSRecv(list<PacketHeader> _expected) : ProtocolState(), expected(_expected) {}
 
 ProtocolStatus

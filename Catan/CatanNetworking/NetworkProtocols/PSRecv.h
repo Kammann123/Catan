@@ -22,6 +22,7 @@ public:
 	* el callback de notificacion del mensaje recibido.
 	*/
 	PSRecv(NotifyCallback notify, list<PacketHeader> _expected);
+	PSRecv(NotifyCallback notify, PacketHeader _expected);
 	PSRecv(list<PacketHeader> _expected);
 
 	/*

@@ -294,9 +294,6 @@
     <ClInclude Include="CatanNetworking\NetworkProtocols\PSRespond.h">
       <Filter>CatanNetworking\NetworkProtocols</Filter>
     </ClInclude>
-    <ClInclude Include="CatanNetworking\NetworkProtocols\PSSend.h">
-      <Filter>CatanNetworking\NetworkProtocols</Filter>
-    </ClInclude>
     <ClInclude Include="CatanNetworking\Networking\Networking.h">
       <Filter>CatanNetworking\Networking</Filter>
     </ClInclude>
@@ -308,6 +305,9 @@
     </ClInclude>
     <ClInclude Include="CatanEvents\KnightEvent.cpp">
       <Filter>CatanEvents</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkProtocols\PSWaitSend.h">
+      <Filter>CatanNetworking\NetworkProtocols</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -542,9 +542,6 @@
     <ClCompile Include="CatanNetworking\NetworkProtocols\PSRespond.cpp">
       <Filter>CatanNetworking\NetworkProtocols</Filter>
     </ClCompile>
-    <ClCompile Include="CatanNetworking\NetworkProtocols\PSSend.cpp">
-      <Filter>CatanNetworking\NetworkProtocols</Filter>
-    </ClCompile>
     <ClCompile Include="CatanNetworking\Networking\Networking.cpp">
       <Filter>CatanNetworking\Networking</Filter>
     </ClCompile>
@@ -556,6 +553,9 @@
     </ClCompile>
     <ClCompile Include="CatanEvents\KnightEvent.h">
       <Filter>CatanEvents</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkProtocols\PSWaitSend.cpp">
+      <Filter>CatanNetworking\NetworkProtocols</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
