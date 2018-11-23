@@ -258,6 +258,9 @@
     <ClInclude Include="CatanData\YOPData.h">
       <Filter>CatanData</Filter>
     </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkPackets\CardIsPacket.h">
+      <Filter>CatanNetworking\NetworkPackets</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FSM\EventQueue.cpp">
@@ -460,6 +463,9 @@
     </ClCompile>
     <ClCompile Include="CatanData\YOPData.cpp">
       <Filter>CatanData</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkPackets\CardIsPacket.cpp">
+      <Filter>CatanNetworking\NetworkPackets</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -151,6 +151,7 @@
     <ClInclude Include="CatanNetworking\NetworkHandlers\NetworkSocket.h" />
     <ClInclude Include="CatanNetworking\NetworkPackets\BankPacket.h" />
     <ClInclude Include="CatanNetworking\NetworkPackets\BuildingPacket.h" />
+    <ClInclude Include="CatanNetworking\NetworkPackets\CardIsPacket.h" />
     <ClInclude Include="CatanNetworking\NetworkPackets\DevCardPacket.h" />
     <ClInclude Include="CatanNetworking\NetworkPackets\DicesPacket.h" />
     <ClInclude Include="CatanNetworking\NetworkPackets\KnightPacket.h" />
@@ -221,6 +222,7 @@
     <ClCompile Include="CatanNetworking\NetworkHandlers\NetworkSocket.cpp" />
     <ClCompile Include="CatanNetworking\NetworkPackets\BankPacket.cpp" />
     <ClCompile Include="CatanNetworking\NetworkPackets\BuildingPacket.cpp" />
+    <ClCompile Include="CatanNetworking\NetworkPackets\CardIsPacket.cpp" />
     <ClCompile Include="CatanNetworking\NetworkPackets\DevCardPacket.cpp" />
     <ClCompile Include="CatanNetworking\NetworkPackets\DicesPacket.cpp" />
     <ClCompile Include="CatanNetworking\NetworkPackets\KnighPacket.cpp" />
