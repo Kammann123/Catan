@@ -1,11 +1,12 @@
 #include "SeaHex.h"
 
 SeaHex::
-SeaHex(unsigned char coord, SeaId id) {
-
+SeaHex(unsigned char coord, SeaId dockOne, SeaId dockTwo)
+{
 	/* Inicializacion */
 	this->coord = coord;
-	this->id = id;
+	this->dockList.push_back(dockOne);
+	this->dockList.pus
 }
 
 unsigned char

@@ -15,6 +15,7 @@
 #include "KnightParser.h"
 #include "YOPParser.h"
 #include "MonopolyParser.h"
+#include "CardIsParser.h"
 
 #include <deque>
 #include <iostream>
@@ -91,6 +92,7 @@ private:
 	MonopolyParser monopolyParser;
 	YOPParser yopParser;
 	KnightParser knightParser;
+	CardIsParser cardIsParser;
 
 	ParserFsm* fsmActive;
 	deque<NetworkPacket*> packets;

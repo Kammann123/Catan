@@ -151,6 +151,9 @@ NetworkParser::parse(unsigned char byte) {
 				this->fsmActive = &this->devCardParser;
 				this->parse(byte);
 				break;
+			case PacketHeader::CARD_IS:
+				this->fsmActive = &this->cardIsParser;
+				this->parse(byte);
 			default:
 				NetworkPacket* packet = new NetworkPacket((PacketHeader)byte);
 				this->packets.push_back(packet);

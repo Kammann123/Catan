@@ -12,6 +12,7 @@
 */
 class CardIdParser : public ParserFsm {
 public:
+
 	/* Eventos del parser */
 	enum Events : EventType { HEADER, RESOURCE, OTHER };
 
@@ -41,7 +42,7 @@ public:
 	* Genera un evento a partir de un byte que interpreta para el parser
 	*/
 	GenericEvent* generateEvent(unsigned char byte);
-
+	
 	/*
 	* Rutinas de accion
 	*/
