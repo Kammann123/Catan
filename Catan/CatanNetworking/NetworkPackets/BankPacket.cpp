@@ -1,40 +1,16 @@
 #include "BankPacket.h"
 
 BankPacket::
-BankPacket(void) : NetworkPacket(PacketHeader::BANK_TRADE) {
-	/* Inicializo */
-	this->givenResources.clear();
-	this->receivedResources.clear();
-}
+BankPacket(void) : NetworkPacket(PacketHeader::BANK_TRADE), BankData() {}
 
 BankPacket::
-~BankPacket() {}
-
-void BankPacket::
-addGivenResources(ResourceId resource) {
-
-	this->givenResources.push_back(resource);
-}
-void BankPacket::
-addReceivedResources(ResourceId resource) {
-
-	this->receivedResources.push_back(resource);
-}
-
-list<ResourceId>& BankPacket::
-getGivenResources(void) {
-
-	return this->givenResources;
-}
-
-list<ResourceId>& BankPacket::
-getReceivedResources(void) {
-
-	return this->receivedResources;
-}
+BankPacket(list<ResourceId> given, list<ResourceId> recv) : NetworkPacket(PacketHeader::BANK_TRADE), BankData(given, recv) {}
 
 unsigned char*
 BankPacket::getDataStream(unsigned int& length) {
+
+	list<ResourceId> givenResources = this->getGiven();
+	list<ResourceId> receivedResources = this->getRecv();
 
 	/* Calculo el largo necesario */
 	unsigned int bufferLength = 2 + givenResources.size() + receivedResources.size();
@@ -44,7 +20,7 @@ BankPacket::getDataStream(unsigned int& length) {
 
 	/* Guardo la informacion y armo el paquete */
 	length = bufferLength;
-	buff[0] = (unsigned char)this->header;
+	buff[0] = (unsigned char)this->getHeader();
 	buff[1] = (unsigned char)givenResources.size();
 	unsigned int i = 2;
 	for (ResourceId r : givenResources) {

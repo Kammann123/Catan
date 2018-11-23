@@ -1,47 +1,13 @@
 #include "DicesPacket.h"
 
 DicesPacket::
-DicesPacket(void) : NetworkPacket(PacketHeader::DICES_ARE) {}
+DicesPacket(void) : NetworkPacket(PacketHeader::DICES_ARE), DicesData() {}
+
+DicesPacket::
+DicesPacket(unsigned int fDice, unsigned int sDice) : NetworkPacket(PacketHeader::DICES_ARE), DicesData(fDice, sDice) {}
 
 DicesPacket::
 ~DicesPacket() {}
-
-bool
-DicesPacket::_set_dice(unsigned char dice, Dices diceIndex) {
-
-	/* Verifico valor */
-	if( isValidDice(dice) ){
-		dices[(unsigned int)diceIndex] = dice - '0';
-		return true;
-	}
-	else {
-		return false;
-	}
-}
-
-bool
-DicesPacket::setFirstDice(unsigned char dice) {
-
-	return _set_dice(dice, DicesPacket::Dices::FIRST);
-}
-
-bool
-DicesPacket::setSecondDice(unsigned char dice) {
-
-	return _set_dice(dice, DicesPacket::Dices::SECOND);
-}
-
-unsigned char
-DicesPacket::getFirstDice(void) {
-
-	return dices[(unsigned int)DicesPacket::Dices::FIRST];
-}
-
-unsigned char
-DicesPacket::getSecondDice(void) {
-
-	return dices[(unsigned int)DicesPacket::Dices::SECOND];
-}
 
 unsigned char*
 DicesPacket::getDataStream(unsigned int& length) {
@@ -55,8 +21,8 @@ DicesPacket::getDataStream(unsigned int& length) {
 	/* Guardo y armo el paquete */
 	length = bufferLength;
 	buff[0] = (unsigned char)this->header;
-	buff[1] = dices[(unsigned char)Dices::FIRST];
-	buff[2] = dices[(unsigned char)Dices::SECOND];
+	buff[1] = this->getFirstDice();
+	buff[2] = this->getSecondDice();
 	
 	/* Devuelvo */
 	return buff;

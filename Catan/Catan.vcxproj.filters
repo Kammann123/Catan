@@ -46,6 +46,9 @@
     <Filter Include="CatanGame\States">
       <UniqueIdentifier>{734a4ef9-e7e5-4c68-a450-30284d0c544f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CatanData">
+      <UniqueIdentifier>{3ea99685-f141-473c-90d5-eafe44ca6dcd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FSM\EventGenerator.h">
@@ -210,6 +213,51 @@
     <ClInclude Include="CatanGame\CatanState.h">
       <Filter>CatanGame</Filter>
     </ClInclude>
+    <ClInclude Include="CatanData\BankData.h">
+      <Filter>CatanData</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanData\BuildingData.h">
+      <Filter>CatanData</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanData\CardIsData.h">
+      <Filter>CatanData</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanData\CatanData.h">
+      <Filter>CatanData</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanData\DevCardsData.h">
+      <Filter>CatanData</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanData\DicesData.h">
+      <Filter>CatanData</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanData\KnightData.h">
+      <Filter>CatanData</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanData\MapData.h">
+      <Filter>CatanData</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanData\MonopolyData.h">
+      <Filter>CatanData</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanData\NameData.h">
+      <Filter>CatanData</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanData\OfferData.h">
+      <Filter>CatanData</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanData\RobberCardData.h">
+      <Filter>CatanData</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanData\RobberMoveData.h">
+      <Filter>CatanData</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanData\TokenData.h">
+      <Filter>CatanData</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanData\YOPData.h">
+      <Filter>CatanData</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FSM\EventQueue.cpp">
@@ -367,6 +415,51 @@
     </ClCompile>
     <ClCompile Include="CatanGame\CatanStatus.cpp">
       <Filter>CatanGame</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanData\BankData.cpp">
+      <Filter>CatanData</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanData\BuildingData.cpp">
+      <Filter>CatanData</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanData\CardIsData.cpp">
+      <Filter>CatanData</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanData\CatanData.cpp">
+      <Filter>CatanData</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanData\DevCardsData.cpp">
+      <Filter>CatanData</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanData\DicesData.cpp">
+      <Filter>CatanData</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanData\KnightData.cpp">
+      <Filter>CatanData</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanData\MapData.cpp">
+      <Filter>CatanData</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanData\MonopolyData.cpp">
+      <Filter>CatanData</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanData\NameData.cpp">
+      <Filter>CatanData</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanData\OfferData.cpp">
+      <Filter>CatanData</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanData\RobberCardData.cpp">
+      <Filter>CatanData</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanData\RobberMoveData.cpp">
+      <Filter>CatanData</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanData\TokenData.cpp">
+      <Filter>CatanData</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanData\YOPData.cpp">
+      <Filter>CatanData</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

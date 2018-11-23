@@ -1,25 +1,18 @@
 #include "RobberCardPacket.h"
 
 RobberCardPacket::
-RobberCardPacket(void) : NetworkPacket(PacketHeader::ROBBER_CARDS) {
-	this->resources.clear();
-}
+RobberCardPacket(void) : NetworkPacket(PacketHeader::ROBBER_CARDS), RobberCardData() {}
+
+RobberCardPacket::
+RobberCardPacket(list<ResourceId> resources) : NetworkPacket(PacketHeader::ROBBER_CARDS), RobberCardData(resources) {}
 
 RobberCardPacket::
 ~RobberCardPacket() {}
 
-void
-RobberCardPacket::addResource(ResourceId resource) {
-	this->resources.push_back(resource);
-}
-
-list<ResourceId>&
-RobberCardPacket::getResources(void) {
-	return this->resources;
-}
-
 unsigned char*
 RobberCardPacket::getDataStream(unsigned int& length) {
+
+	list<ResourceId> resources = this->getResources();
 
 	/* Calculo la longitud del buffer */
 	unsigned int bufferLength = 2 + resources.size();
@@ -29,7 +22,7 @@ RobberCardPacket::getDataStream(unsigned int& length) {
 
 	/* Armo el paquete y guardo */
 	length = bufferLength;
-	buff[0] = (unsigned char)this->header;
+	buff[0] = (unsigned char)this->getHeader();
 	buff[1] = resources.size();
 	unsigned int i = 2;
 	for (ResourceId r : resources) {

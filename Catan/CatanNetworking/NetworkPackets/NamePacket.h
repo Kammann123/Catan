@@ -2,43 +2,25 @@
 
 #include "NetworkPacket.h"
 
-#include <iostream>
-
-using namespace std;
+#include "../../CatanData/NameData.h"
 
 /*
 * NamePacket
 * Paquete de datos con el nombre del usuario
 */
-class NamePacket : public NetworkPacket {
+class NamePacket : public NetworkPacket, public NameData {
 public:
 
 	/*
 	* Constructores y destructores
 	*/
+	NamePacket(string name);
 	NamePacket(void);
 	virtual ~NamePacket();
-
-	/*
-	* setName
-	* Configura o setea el nombre del usuario
-	*/
-	void setName(string& name);
-	void setName(char letter);
 	
-	/*
-	* getName 
-	* Devuelve el nombre del usuario en el paquete
-	*/
-	string& getName(void);
-
 	/*
 	* getDataStream
 	* Arma el paquete de datos a mandar
 	*/
 	virtual unsigned char* getDataStream(unsigned int& length);
-
-
-private:
-	string name;
 };

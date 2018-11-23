@@ -1,34 +1,18 @@
 #include "MapPacket.h"
 
 MapPacket::
-MapPacket(void) : NetworkPacket(PacketHeader::MAP_IS) {
-	this->gameMap.clear();
-}
+MapPacket(void) : NetworkPacket(PacketHeader::MAP_IS), MapData() {}
+
+MapPacket::
+MapPacket(map<unsigned char, MapValue> m) : NetworkPacket(PacketHeader::MAP_IS), MapData(m) {}
 
 MapPacket::
 ~MapPacket(void) {}
 
-bool 
-MapPacket::setMapValue(unsigned char coord, MapValue value) {
-
-	/* Valido posicion o coordenada */
-	if ((coord >= '0' && coord <= '5') || (coord >= 'A' && coord <= 'S')) {
-		gameMap[coord] = value;
-		return true;
-	}
-	else {
-		return false;
-	}
-}
-
-map<unsigned char, MapValue>&
-MapPacket::getMap(void) {
-
-	return this->gameMap;
-}
-
 unsigned char*
 MapPacket::getDataStream(unsigned int& length) {
+
+	map<unsigned char, MapValue> gameMap = this->getMap();
 
 	/* Calculo la longitud de buffer */
 	unsigned int bufferLength = 1 + gameMap.size();
@@ -38,7 +22,7 @@ MapPacket::getDataStream(unsigned int& length) {
 
 	/* Guardo y armo el paquete */
 	length = bufferLength;
-	buff[0] = (unsigned char)this->header;
+	buff[0] = (unsigned char)this->getHeader();
 	unsigned int ii = 1;
 	for (unsigned char i = '0'; i <= '5'; i++) {
 		if (gameMap.find(i) != gameMap.end()) {

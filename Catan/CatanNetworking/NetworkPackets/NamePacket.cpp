@@ -1,34 +1,18 @@
 #include "NamePacket.h"
 
 NamePacket::
-NamePacket(void) : NetworkPacket(PacketHeader::NAME_IS) {
+NamePacket(void) : NetworkPacket(PacketHeader::NAME_IS), NameData() {}
 
-	name.clear();
-}
+NamePacket::
+NamePacket(string name) : NetworkPacket(PacketHeader::NAME_IS), NameData(name) {}
 
 NamePacket::
 ~NamePacket(void) {}
 
-void
-NamePacket::setName(string& name) {
-
-	this->name = name;
-}
-
-void
-NamePacket::setName(char letter) {
-
-	this->name += letter;
-}
-
-string&
-NamePacket::getName(void) {
-
-	return this->name;
-}
-
 unsigned char*
 NamePacket::getDataStream(unsigned int& length) {
+
+	string name = this->getName();
 
 	/* Calculo longitud del buffer */
 	unsigned int bufferLength = 2 + name.size();
@@ -38,7 +22,7 @@ NamePacket::getDataStream(unsigned int& length) {
 
 	/* Armo y guardo */
 	length = bufferLength;
-	buff[0] = (unsigned char)this->header;
+	buff[0] = (unsigned char)this->getHeader();
 	buff[1] = name.size();
 	unsigned int i = 2;
 	for (unsigned char c : name) {

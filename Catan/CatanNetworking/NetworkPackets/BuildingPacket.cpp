@@ -1,34 +1,46 @@
 #include "BuildingPacket.h"
 
 BuildingPacket::
-BuildingPacket(PacketHeader header) : NetworkPacket(header) {
+BuildingPacket(PacketHeader header, string coords) : NetworkPacket(header), BuildingData() {
 
-	coords.clear();
+	this->setCoords(coords);
+
+	switch (header) {
+	case PacketHeader::SETTLEMENT:
+		this->setType(BuildingType::SETTLEMENT);
+		break;
+	case PacketHeader::CITY:
+		this->setType(BuildingType::CITY);
+		break;
+	case PacketHeader::ROAD:
+		this->setType(BuildingType::ROAD);
+		break;
+	}
+}
+
+BuildingPacket::
+BuildingPacket(PacketHeader header) : NetworkPacket(header), BuildingData() {
+
+	switch (header) {
+	case PacketHeader::SETTLEMENT:
+		this->setType(BuildingType::SETTLEMENT);
+		break;
+	case PacketHeader::CITY:
+		this->setType(BuildingType::CITY);
+		break;
+	case PacketHeader::ROAD:
+		this->setType(BuildingType::ROAD);
+		break;
+	}
 }
 
 BuildingPacket::
 ~BuildingPacket() {}
 
-void
-BuildingPacket::setCoords(unsigned char coord) {
-
-	coords += coord;
-}
-
-void
-BuildingPacket::setCoords(string& coords) {
-
-	this->coords = coords;
-}
-
-string&
-BuildingPacket::getCoords(void) {
-
-	return this->coords;
-}
-
 unsigned char*
 BuildingPacket::getDataStream(unsigned int& length) {
+
+	string coords = this->getCoords();
 
 	/* Calculo la cantidad */
 	unsigned int bufferLength = 2 + coords.size();
@@ -38,7 +50,7 @@ BuildingPacket::getDataStream(unsigned int& length) {
 
 	/* Guardo y armo el paquete */
 	length = bufferLength;
-	buff[0] = (unsigned char)this->header;
+	buff[0] = (unsigned char)this->getHeader();
 	buff[1] = coords.size();
 	unsigned int i = 2;
 	for (unsigned char c : coords) {

@@ -2,47 +2,26 @@
 
 #include "NetworkPacket.h"
 
-#include <list>
-
-using namespace std;
+#include "../../CatanData/BankData.h"
 
 /*
 * BankPacket
 * Paquete de datos con informacion sobre cambio con banco.
 */
-class BankPacket : public NetworkPacket {
+class BankPacket : public NetworkPacket, public BankData {
 
 public:
 
 	/*
 	* Constructores y destructores
 	*/
+	BankPacket(list<ResourceId> given, list<ResourceId> recv);
 	BankPacket();
 	virtual ~BankPacket();
-
-	/*
-	* addResources
-	* Se agregan recursos dados o recibidos en la transaccion
-	* con el banco, construyendo el paquete a medida que se 
-	* recibe.
-	*/
-	void addGivenResources(ResourceId resource);
-	void addReceivedResources(ResourceId resource);
-
-	/*
-	* getResources
-	* Devuelve los recursos del paquete
-	*/
-	list<ResourceId>& getGivenResources(void);
-	list<ResourceId>& getReceivedResources(void);
 
 	/* 
 	* getDataStream
 	* Arma el paquete de datos a mandar
 	*/
 	virtual unsigned char* getDataStream(unsigned int& length);
-
-private:
-	list<ResourceId> givenResources;
-	list<ResourceId> receivedResources;
 };

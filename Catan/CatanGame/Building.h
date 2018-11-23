@@ -3,12 +3,6 @@
 enum PlayerId;
 
 /*
-* BuildingType
-* Tipos de construcciones del juego
-*/
-enum BuildingType : unsigned int { SETTLEMENT, ROAD, CITY };
-
-/*
 * Building
 * Clase de construccion del juego, con el tipo, posicion o ubicacion,
 * y usuario a quien pertenece.

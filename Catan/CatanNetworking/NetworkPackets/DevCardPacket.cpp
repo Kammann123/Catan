@@ -1,39 +1,18 @@
 #include "DevCardPacket.h"
 
 DevCardPacket::
-DevCardPacket(void) : NetworkPacket(PacketHeader::DEV_CARDS) {}
+DevCardPacket(void) : NetworkPacket(PacketHeader::DEV_CARDS), DevCardsData() {}
+
+DevCardPacket::
+DevCardPacket(list<DevCardId> cards) : NetworkPacket(PacketHeader::DEV_CARDS), DevCardsData(cards) {}
 
 DevCardPacket::
 ~DevCardPacket(void) {}
 
-bool 
-DevCardPacket::setCard(DevCardId card, unsigned char indexCard) {
-
-	/* Verifico posicion */
-	if (indexCard < 25) {
-		this->cards[indexCard] = card;
-		return true;
-	}
-	else {
-		return false;
-	}
-}
-
-bool
-DevCardPacket::getCard(DevCardId& card, unsigned char indexCard) {
-
-	/* Verifico posicion */
-	if (indexCard < 25) {
-		card = this->cards[indexCard];
-		return true;
-	}
-	else {
-		return false;
-	}
-}
-
 unsigned char*
 DevCardPacket::getDataStream(unsigned int& length) {
+
+	list<DevCardId> cards = this->getCards();
 
 	/* Calculo el largo del buffer */
 	unsigned int bufferLength = 26;

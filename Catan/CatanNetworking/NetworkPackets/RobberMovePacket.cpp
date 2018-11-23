@@ -1,27 +1,13 @@
 #include "RobberMovePacket.h"
 
 RobberMovePacket::
-RobberMovePacket(void) : NetworkPacket(PacketHeader::ROBBER_MOVE) {}
+RobberMovePacket(unsigned char coord) : NetworkPacket(PacketHeader::ROBBER_MOVE), RobberMoveData(coord) {}
+
+RobberMovePacket::
+RobberMovePacket(void) : NetworkPacket(PacketHeader::ROBBER_MOVE), RobberMoveData() {}
 
 RobberMovePacket::
 ~RobberMovePacket() {}
-
-bool 
-RobberMovePacket::setCoord(unsigned char coord) {
-
-	/* Verifico posicion */
-	if (isMapPosition(coord)) {
-		this->coord = coord;
-		return true;
-	}
-	return false;
-}
-
-unsigned char
-RobberMovePacket::getCoord(void) {
-
-	return this->coord;
-}
 
 unsigned char*
 RobberMovePacket::getDataStream(unsigned int& length) {
@@ -34,8 +20,8 @@ RobberMovePacket::getDataStream(unsigned int& length) {
 
 	/* Armo el paquete */
 	length = bufferLength;
-	buff[0] = (unsigned char)this->header;
-	buff[1] = coord;
+	buff[0] = (unsigned char)this->getHeader();
+	buff[1] = (unsigned char)this->getCoord();
 
 	/* Devuelvo */
 	return buff;

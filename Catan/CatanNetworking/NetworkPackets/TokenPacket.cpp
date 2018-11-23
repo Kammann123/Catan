@@ -1,37 +1,18 @@
 #include "TokenPacket.h"
 
 TokenPacket::
-TokenPacket(void) : NetworkPacket(PacketHeader::CIRCULAR_TOKENS) {
-	this->tokens.clear();
-}
+TokenPacket(map<unsigned char, unsigned char> tokens) : NetworkPacket(PacketHeader::CIRCULAR_TOKENS), TokenData(tokens) {}
+
+TokenPacket::
+TokenPacket(void) : NetworkPacket(PacketHeader::CIRCULAR_TOKENS), TokenData() {}
 
 TokenPacket::
 ~TokenPacket() {}
 
-bool
-TokenPacket::setToken(unsigned char cell, unsigned char token) {
-
-	/* Valido posicion */
-	if ( isMapPosition(cell) ) {
-
-		/* Valido valor de token */
-		if ( isValidToken(token) ) {
-
-			this->tokens[cell] = token;
-			return true;
-		}
-	}
-	return false;
-}
-
-map<unsigned char, unsigned char>& 
-TokenPacket::getTokens(void) {
-
-	return this->tokens;
-}
-
 unsigned char*
 TokenPacket::getDataStream(unsigned int& length) {
+
+	map<unsigned char, unsigned char> tokens = this->getTokens();
 
 	/* Longitud del buffer */
 	unsigned int bufferLength = 1 + tokens.size();
@@ -41,7 +22,7 @@ TokenPacket::getDataStream(unsigned int& length) {
 
 	/* Armo el paquete */
 	length = bufferLength;
-	buff[0] = (unsigned char)this->header;
+	buff[0] = (unsigned char)this->getHeader();
 	unsigned int ii = 1;
 	for (unsigned char i = 'A'; i <= 'S'; i++) {
 		if (tokens.find(i) != tokens.end()) {

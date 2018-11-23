@@ -115,6 +115,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CatanData\BankData.h" />
+    <ClInclude Include="CatanData\BuildingData.h" />
+    <ClInclude Include="CatanData\CardIsData.h" />
+    <ClInclude Include="CatanData\CatanData.h" />
+    <ClInclude Include="CatanData\DevCardsData.h" />
+    <ClInclude Include="CatanData\DicesData.h" />
+    <ClInclude Include="CatanData\KnightData.h" />
+    <ClInclude Include="CatanData\MapData.h" />
+    <ClInclude Include="CatanData\MonopolyData.h" />
+    <ClInclude Include="CatanData\NameData.h" />
+    <ClInclude Include="CatanData\OfferData.h" />
+    <ClInclude Include="CatanData\RobberCardData.h" />
+    <ClInclude Include="CatanData\RobberMoveData.h" />
+    <ClInclude Include="CatanData\TokenData.h" />
+    <ClInclude Include="CatanData\YOPData.h" />
     <ClInclude Include="CatanEvents\BankEvent.h" />
     <ClInclude Include="CatanEvents\BuildingEvent.h" />
     <ClInclude Include="CatanEvents\CatanEvent.h" />
@@ -171,6 +186,21 @@
     <ClInclude Include="MVC\Subject.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CatanData\BankData.cpp" />
+    <ClCompile Include="CatanData\BuildingData.cpp" />
+    <ClCompile Include="CatanData\CardIsData.cpp" />
+    <ClCompile Include="CatanData\CatanData.cpp" />
+    <ClCompile Include="CatanData\DevCardsData.cpp" />
+    <ClCompile Include="CatanData\DicesData.cpp" />
+    <ClCompile Include="CatanData\KnightData.cpp" />
+    <ClCompile Include="CatanData\MapData.cpp" />
+    <ClCompile Include="CatanData\MonopolyData.cpp" />
+    <ClCompile Include="CatanData\NameData.cpp" />
+    <ClCompile Include="CatanData\OfferData.cpp" />
+    <ClCompile Include="CatanData\RobberCardData.cpp" />
+    <ClCompile Include="CatanData\RobberMoveData.cpp" />
+    <ClCompile Include="CatanData\TokenData.cpp" />
+    <ClCompile Include="CatanData\YOPData.cpp" />
     <ClCompile Include="CatanEvents\BankEvent.cpp" />
     <ClCompile Include="CatanEvents\BuildingEvent.cpp" />
     <ClCompile Include="CatanEvents\CatanEvent.cpp" />
