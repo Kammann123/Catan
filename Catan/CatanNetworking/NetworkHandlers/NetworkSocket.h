@@ -2,7 +2,7 @@
 
 #include "../NetworkParsers/NetworkParser.h"
 
-#include <asio/ip/tcp.hpp>
+#include "boost/asio.hpp"
 
 #include <string>
 #include <deque>
@@ -115,7 +115,7 @@ protected:
 	*
 	* Si no hubo error devuelve false.
 	*/
-	bool handleError(asio::error_code error);
+	bool handleError(boost::system::error_code error);
 
 	/*
 	* sendPacket
@@ -139,6 +139,6 @@ protected:
 	bool status;
 	string error;
 
-	asio::io_service* handler;
-	asio::ip::tcp::socket* socket;
+	boost::asio::io_service* handler;
+	boost::asio::ip::tcp::socket* socket;
 };

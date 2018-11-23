@@ -23,7 +23,7 @@ SeaHex::getCoord(void) const {
 	return this->coord;
 }
 
-list<SeaId> 
+vector<SeaId> 
 SeaHex::getDockList(void) const
 {
 	return this->dockList;
@@ -38,7 +38,7 @@ SeaHex::getDockAbsCoords(SeaId dockID)
 	{
 		if (dockID == dockList[0])
 		{
-			ret = externCoords[coords*VERTEX_PER_SEA_PIECE + ONLY_DOCK_OFFSET];
+			ret = externCoords[coord*VERTEX_PER_SEA_PIECE + ONLY_DOCK_OFFSET];
 		}
 	}
 
@@ -46,12 +46,12 @@ SeaHex::getDockAbsCoords(SeaId dockID)
 	{
 		if (dockID == dockList[0])
 		{
-			ret = externCoords[coords*VERTEX_PER_SEA_PIECE + FIRST_DOCK_OFFSET];
+			ret = externCoords[coord*VERTEX_PER_SEA_PIECE + FIRST_DOCK_OFFSET];
 		}
 
 		else if (dockID == dockList[1])
 		{
-			ret = externCoords[coords*VERTEX_PER_SEA_PIECE + SECOND_DOCK_OFFSET];
+			ret = externCoords[coord*VERTEX_PER_SEA_PIECE + SECOND_DOCK_OFFSET];
 		}
 	}
 

@@ -1,4 +1,5 @@
 #include "ResourceCard.h"
+#include "Player.h"
 
 ResourceCard::ResourceCard()
 {

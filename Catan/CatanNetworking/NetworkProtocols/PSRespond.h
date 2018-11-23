@@ -27,5 +27,5 @@ public:
 	virtual ProtocolStatus solve(void);
 
 private:
-	PacketHeader header:
+	PacketHeader header;
 };

@@ -32,7 +32,7 @@ public:
 	void listen(void);
 
 private:
-	asio::ip::tcp::acceptor* acceptor;
+	boost::asio::ip::tcp::acceptor* acceptor;
 
 	unsigned int port;
 };

@@ -18,6 +18,7 @@ public:
 
 	/* Setters y getters */
 	void setName(string name);
+	void setName(unsigned char name);
 	string getName(void);
 private:
 	string name;

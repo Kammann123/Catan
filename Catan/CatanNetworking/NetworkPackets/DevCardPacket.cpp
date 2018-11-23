@@ -23,8 +23,9 @@ DevCardPacket::getDataStream(unsigned int& length) {
 	/* Guardo y creo el paquete */
 	length = bufferLength;
 	buff[0] = (unsigned char)this->header;
-	for (unsigned int i = 1; i <= 26; i++) {
-		buff[i] = (unsigned char)cards[i - 1];
+	unsigned int i = 1;
+	for (DevCardId card : this->getCards()) {
+		buff[i++] = (unsigned char)card;
 	}
 
 	/* Devuelvo */

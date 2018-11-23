@@ -18,15 +18,14 @@ CatanEvent(NetworkPacket* packet) {
 			this->event = Events::QUIT;
 			break;
 		case PacketHeader::ERROR: default:
-			this->event = Events::ERROR;
+			this->event = Events::ERROR_EVENT;
 			break;
 	}
 }
 
 CatanEvent::
 CatanEvent(Events event, Sources source, PlayerId player) {
-
-	this->getEvent = event;
+	this->event = event;
 	this->source = source;
 	this->player = player;
 }

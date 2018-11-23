@@ -32,5 +32,5 @@ public:
 	void connect(string ip, unsigned int port);
 
 private:
-	asio::ip::tcp::resolver* resolver;
+	boost::asio::ip::tcp::resolver* resolver;
 };

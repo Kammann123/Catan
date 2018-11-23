@@ -54,12 +54,12 @@ CatanGame::handle(NetworkPacket* packet) {
 
 	CatanEvent* newEvent = this->packetDispatcher(packet);
 
-	this->handle(newEvent);
+	return this->handle(newEvent);
 }
 
 CatanStatus
 CatanGame::handle(CatanEvent* event) {
-	this->state->handle(event);
+	return this->state->handle(event);
 }
 
 bool
@@ -210,7 +210,7 @@ bool CatanGame::
 isValidPlayerTransaction(list<ResourceCard*>& offeredCards, list<ResourceCard*>& requestedCards, PlayerId srcPlayerID) 
 {
 	bool ret = false;
-	PlayerId destPlayerID = ((srcPlayerID == PLAYER_ONE) ? PLAYER_TWO : PLAYER_ONE);
+	PlayerId destPlayerID = ((srcPlayerID == PlayerId::PLAYER_ONE) ? PlayerId::PLAYER_TWO : PlayerId::PLAYER_ONE);
 
 	if (isValidListOfCards(offeredCards, srcPlayerID) && isValidListOfCards(requestedCards, destPlayerID))
 	{
@@ -282,4 +282,3 @@ getResourceCount(list<ResourceCard*>& cardsList, ResourceId resourceID) const
 //	}
 //
 //	return ret;
-}

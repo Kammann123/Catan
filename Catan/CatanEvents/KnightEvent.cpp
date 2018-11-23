@@ -1,16 +1,7 @@
-#pragma once
+#include "KnightEvent.h"
 
-#include "CatanEvent.h"
-#include "../CatanData/KnightData.h
-#include "../CatanNetworking/NetworkPackets/KnightPacket.h"
+KnightEvent::
+KnightEvent(KnightPacket* packet) : CatanEvent(Events::KNIGHT, Sources::NETWORKING, PlayerId::PLAYER_TWO), KnightData(packet->getCoord()) {}
 
-/*
-* KnightEvent
-* Evento de uso de la carta de desarrollo Knight
-*/
-class KnightEvent : public CatanEvent, public KnightData {
-public:
-	/* Constructores */
-	KnightEvent(KnightPacket* packet);
-	KnightEvent(unsigned char coord, PlayerId player);
-};
+KnightEvent::
+KnightEvent(unsigned char coord, PlayerId player) : CatanEvent(Events::KNIGHT, Sources::GUI, player), KnightData(coord) {}

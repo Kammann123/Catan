@@ -15,7 +15,7 @@ MapPacket::getDataStream(unsigned int& length) {
 	map<unsigned char, MapValue> gameMap = this->getMap();
 
 	/* Calculo la longitud de buffer */
-	unsigned int bufferLength = 1 + gameMap.size();
+	unsigned int bufferLength = 1 + (unsigned int)gameMap.size();
 
 	/* Creo el buffer */
 	unsigned char* buff = new unsigned char[bufferLength];

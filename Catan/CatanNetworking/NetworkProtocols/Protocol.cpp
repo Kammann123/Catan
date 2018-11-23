@@ -1,7 +1,7 @@
 #include "Protocol.h"
 
 Protocol::
-Protocol(SendCallback sendCallback, vector<ProtocolState> states) {
+Protocol(SendCallback sendCallback, vector<ProtocolState*> states) {
 	/* Inicializo */
 	this->states = states;
 	this->currentState = 0;
@@ -9,8 +9,8 @@ Protocol(SendCallback sendCallback, vector<ProtocolState> states) {
 	this->error = "";
 
 	/* Configuro el callback */
-	for (ProtocolState& p : states) {
-		p.setSendCallback(sendCallback);
+	for (ProtocolState* p : states) {
+		p->setSendCallback(sendCallback);
 	}
 }
 
@@ -42,8 +42,8 @@ Protocol::transition(ProtocolStatus status, NetworkPacket* packet) {
 	case ProtocolStatus::DONE:
 
 		/* Verifico si debo notificarlo */
-		if (states[currentState].shouldNotify()) {
-			states[currentState].notify(packet);
+		if (states[currentState]->shouldNotify()) {
+			states[currentState]->notify(packet);
 		}
 
 		/* Muevo el protocolo de estado */
@@ -53,7 +53,7 @@ Protocol::transition(ProtocolStatus status, NetworkPacket* packet) {
 			this->error = "";
 		}
 		else {
-			transition(this->states[currentState].solve());
+			transition(this->states[currentState]->solve());
 		}
 		break;
 
@@ -88,7 +88,7 @@ Protocol::transition(ProtocolStatus status) {
 			this->error = "";
 		}
 		else {
-			transition(this->states[currentState].solve());
+			transition(this->states[currentState]->solve());
 		}
 		break;
 
@@ -110,7 +110,7 @@ void
 Protocol::send(NetworkPacket* packet) {
 	verifyStatus();
 
-	ProtocolStatus response = this->states[currentState].send(packet);
+	ProtocolStatus response = this->states[currentState]->send(packet);
 
 	transition(response, packet);
 }
@@ -119,17 +119,17 @@ void
 Protocol::recv(NetworkPacket* packet) {
 	verifyStatus();
 
-	ProtocolStatus response = this->states[currentState].recv(packet);
+	ProtocolStatus response = this->states[currentState]->recv(packet);
 
 	transition(response, packet);
 }
 
-voi
+void
 Protocol::verifyStatus(void) const {
 	if (status == ProtocolStatus::DONE) {
 		throw exception("Protocol - verifyStatus - El protocolo termino, revisar getStatus!");
 	}
 	else if (status == ProtocolStatus::ERROR ){
 		throw exception("Protocol - verifyStatus - El protocolo tuvo un error, revisar getStatus!");
-	})
+	}
 }

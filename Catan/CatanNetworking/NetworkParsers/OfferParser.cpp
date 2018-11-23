@@ -52,19 +52,19 @@ setRecvCount(GenericEvent* event) {
 
 void OfferParser::
 setGiven(GenericEvent* event) {
-	this->packet->addGivenResource((ResourceId)((ResourceEvent*)event)->getData());
+	this->packet->setGiven((ResourceId)((ResourceEvent*)event)->getData());
 	this->givenCount--;
 }
 
 void OfferParser::
 setRecv(GenericEvent* event) {
-	this->packet->addReceivedResource((ResourceId)((ResourceEvent*)event)->getData());
+	this->packet->setRecv((ResourceId)((ResourceEvent*)event)->getData());
 	this->recvCount--;
 }
 
 void OfferParser::
 done(GenericEvent* event) {
-	this->packet->addReceivedResource((ResourceId)((ResourceEvent*)event)->getData());
+	this->packet->setRecv((ResourceId)((ResourceEvent*)event)->getData());
 
 	fsmEvent = new DoneEvent(this->packet);
 

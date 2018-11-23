@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../CatanEvents/CatanEvent.h"
+
 class CatanGame;
 
 /*

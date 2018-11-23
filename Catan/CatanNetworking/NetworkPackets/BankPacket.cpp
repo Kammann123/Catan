@@ -6,6 +6,9 @@ BankPacket(void) : NetworkPacket(PacketHeader::BANK_TRADE), BankData() {}
 BankPacket::
 BankPacket(list<ResourceId> given, list<ResourceId> recv) : NetworkPacket(PacketHeader::BANK_TRADE), BankData(given, recv) {}
 
+BankPacket::
+~BankPacket() {}
+
 unsigned char*
 BankPacket::getDataStream(unsigned int& length) {
 

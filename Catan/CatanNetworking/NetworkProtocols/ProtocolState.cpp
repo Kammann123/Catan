@@ -26,24 +26,24 @@ ProtocolState(SendCallback callback) {
 
 ProtocolState::
 ProtocolState(void) {
-	this->hasCallback = false;
+	this->hasNotify = false;
+	this->hasSend = false;
 }
 
-virtual
 ProtocolState::~ProtocolState(void) {}
 
 bool
 ProtocolState::shouldNotify(void) const {
-	return this->hasCallback;
+	return this->hasNotify;
 }
 
 CatanStatus
 ProtocolState::notify(NetworkPacket* packet) {
-	if (!hasCallback) {
-		throw excepction("ProtocolState - notify - Configuracion de protocolo erronea, no deberia notificar!");
+	if (!hasNotify) {
+		throw exception("ProtocolState - notify - Configuracion de protocolo erronea, no deberia notificar!");
 	}
 
-	return this->callback(packet);
+	return this->notifyCallback(packet);
 }
 
 void

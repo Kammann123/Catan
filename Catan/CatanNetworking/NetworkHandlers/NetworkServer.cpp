@@ -6,8 +6,8 @@ NetworkServer(unsigned int port) : NetworkSocket() {
 	if (good()) {
 
 		/* Creo y abro el acceptor y endpoint del server */
-		asio::ip::tcp::endpoint endpoint(asio::ip::tcp::v4(), port);
-		this->acceptor = new asio::ip::tcp::acceptor(*this->handler, endpoint);
+		boost::asio::ip::tcp::endpoint endpoint(boost::asio::ip::tcp::v4(), port);
+		this->acceptor = new boost::asio::ip::tcp::acceptor(*this->handler, endpoint);
 	
 		/* Verifico ok! */
 		if (this->acceptor) {
@@ -40,15 +40,15 @@ listen(void) {
 	if (!isConnected()) {
 
 		/* Inicializacion */
-		asio::error_code error;
-		asio::ip::tcp::endpoint endpoint;
+		boost::system::error_code error;
+		boost::asio::ip::tcp::endpoint endpoint;
 
 		/* Acepto nueva conexion */
 		this->acceptor->accept(*socket, endpoint, error);
 
 		/* Valido error */
 		if (!handleError(error)) {
-			if (error != asio::error::would_block)	toggleConnection();
+			if (error != boost::asio::error::would_block)	toggleConnection();
 		}
 	}
 }

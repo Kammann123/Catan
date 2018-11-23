@@ -51,7 +51,7 @@ NetworkParser::getNextPacket(void) {
 void 
 NetworkParser::parse(string bytes) {
 
-	this->parse((unsigned char*)bytes.c_str(), bytes.size());
+	this->parse((unsigned char*)bytes.c_str(), (unsigned int)bytes.size());
 }
 
 void
@@ -83,10 +83,10 @@ NetworkParser::parse(unsigned char byte) {
 		if (event) {
 
 			/* Verifico estado del evento */
-			if (event->getType() == ParserStatus::DONE) {
+			if (event->getType() == (EventType)ParserStatus::DONE) {
 				this->packets.push_back( ((DoneEvent*)event)->getPacket() );
 			}
-			else if( event->getType() == ParserStatus::ERROR ) {
+			else if( event->getType() == (EventType)ParserStatus::ERROR ) {
 				this->status = Status::ERROR;
 				this->error = ((ErrorEvent*)event)->getError();
 			}

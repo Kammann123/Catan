@@ -10,7 +10,7 @@ using namespace std;
 * BuildingType
 * Tipos de construcciones del juego
 */
-enum BuildingType : unsigned int { SETTLEMENT, ROAD, CITY };
+enum class BuildingType : unsigned int { SETTLEMENT, ROAD, CITY };
 
 /*
 * BuildingData

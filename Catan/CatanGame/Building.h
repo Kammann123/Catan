@@ -1,6 +1,12 @@
 #pragma once
 
-enum PlayerId;
+#include "../CatanData/BuildingData.h"
+
+#include <string>
+
+using namespace std;
+
+enum class PlayerId;
 
 /*
 * Building

@@ -12,7 +12,7 @@
 
 using namespace std;
 
-enum PlayerId : unsigned int {PLAYER_ONE, PLAYER_TWO};
+enum class PlayerId : int {PLAYER_ONE, PLAYER_TWO};
 
 class Player {
 public:

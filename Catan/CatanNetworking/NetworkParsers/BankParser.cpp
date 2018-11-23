@@ -41,13 +41,13 @@ setContext(GenericEvent* event) {
 
 void BankParser::
 setGiven(GenericEvent* event) {
-	this->packet->addGivenResources((ResourceId)((ResourceEvent*)event)->getData());
+	this->packet->addGiven((ResourceId)((ResourceEvent*)event)->getData());
 	this->count--;
 }
 
 void BankParser::
 done(GenericEvent* event) {
-	this->packet->addReceivedResources((ResourceId)((ResourceEvent*)event)->getData());
+	this->packet->addReceived((ResourceId)((ResourceEvent*)event)->getData());
 
 	fsmEvent = new DoneEvent(this->packet);
 

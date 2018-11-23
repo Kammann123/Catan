@@ -15,7 +15,7 @@ using namespace std;
 * como posibles eventos de respuesta de los parsers
 * de los que hara uso el DataPackets.
 */
-enum ParserStatus : EventType { DONE, ERROR };
+enum class ParserStatus : EventType { DONE, ERROR };
 
 /*
 * Event
@@ -37,7 +37,7 @@ private:
 class ErrorEvent : public GenericEvent {
 public:
 	ErrorEvent(const char* _error) : GenericEvent(), error(_error) {}
-	EventType getType(void) { return ParserStatus::ERROR; }
+	EventType getType(void) { return (unsigned int)ParserStatus::ERROR; }
 	string& getError(void) { return this->error; }
 private:
 	string error;
@@ -46,7 +46,7 @@ private:
 class DoneEvent : public GenericEvent {
 public:
 	DoneEvent(NetworkPacket* packet) : GenericEvent() { this->packet = packet; }
-	EventType getType(void) { return ParserStatus::DONE; }
+	EventType getType(void) { return (unsigned int)ParserStatus::DONE; }
 	NetworkPacket* getPacket(void) { return this->packet; }
 private:
 	NetworkPacket * packet;

@@ -1,8 +1,9 @@
 #pragma once
 
 #include "../CatanData/CatanData.h"
+
 #include <string>
-#include <list>
+#include <vector>
 
 // cada dock tiene dos vértices de acceso
 #define FIRST_DOCK_OFFSET 0
@@ -38,7 +39,7 @@ public:
 	* getType
 	* Devuelve la lista de docks disponibles en la pieza
 	*/
-	list<SeaId> getDockList(void) const;
+	vector<SeaId> getDockList(void) const;
 
 
 	/*
@@ -54,5 +55,5 @@ private:
 
 	unsigned char coord;
 	/* Lista de docks, en sentido HORARIO (convención) */
-	list<SeaId> dockList;
+	vector<SeaId> dockList;
 };	

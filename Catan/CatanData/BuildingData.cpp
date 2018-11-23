@@ -28,7 +28,7 @@ BuildingData::setCoords(string coords){
 
 bool 
 BuildingData::setCoords(unsigned char coord) {
-	if (isMapPosition(c) || isSeaPosition(c)) {
+	if (isMapPosition(coord) || isSeaPosition(coord)) {
 		this->coords += coord;
 		return true;
 	}

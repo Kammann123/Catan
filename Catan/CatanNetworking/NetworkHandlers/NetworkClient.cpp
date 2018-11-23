@@ -6,7 +6,7 @@ NetworkClient(void) : NetworkSocket() {
 	if (good()) {
 
 		/* Creo el resolver */
-		this->resolver = new asio::ip::tcp::resolver(this->handler);
+		this->resolver = new boost::asio::ip::tcp::resolver(*this->handler);
 
 		/* Verifico ok */
 		if (!this->resolver) {
@@ -37,15 +37,15 @@ connect(string ip, unsigned int port) {
 	if (!isConnected()) {
 
 		/* Inicializo variables */
-		asio::ip::tcp::endpoint endpoint(asio::ip::address::from_string(ip), port);
-		asio::error_code error;
+		boost::asio::ip::tcp::endpoint endpoint(boost::asio::ip::address::from_string(ip), port);
+		boost::system::error_code error;
 
 		/* Intento realizar conexion */
 		this->socket->connect(endpoint, error);
 
 		/* Verifico errores */
 		if (!handleError(error)) {
-			if(error != asio::error::would_block)	toggleConnection();
+			if(error != boost::asio::error::would_block)	toggleConnection();
 		}
 	}
 }

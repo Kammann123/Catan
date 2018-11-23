@@ -12,7 +12,7 @@ class CatanStatus {
 public:
 
 	/* State */
-	enum State : unsigned int {OK, ERROR};
+	enum State : unsigned int {OK, ERROR_STATE};
 
 	/* Constructores */
 	CatanStatus(State state, string error);

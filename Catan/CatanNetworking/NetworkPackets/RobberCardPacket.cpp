@@ -23,7 +23,7 @@ RobberCardPacket::getDataStream(unsigned int& length) {
 	/* Armo el paquete y guardo */
 	length = bufferLength;
 	buff[0] = (unsigned char)this->getHeader();
-	buff[1] = resources.size();
+	buff[1] = (unsigned char)resources.size();
 	unsigned int i = 2;
 	for (ResourceId r : resources) {
 

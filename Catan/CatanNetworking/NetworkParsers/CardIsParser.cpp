@@ -1,7 +1,7 @@
 #include "CardIsParser.h"
 
 GenericEvent*
-CardIdParser::generateEvent(unsigned char byte) {
+CardIsParser::generateEvent(unsigned char byte) {
 
 	GenericEvent* newEvent = nullptr;
 
@@ -19,12 +19,12 @@ CardIdParser::generateEvent(unsigned char byte) {
 }
 
 void
-CardIdParser::init(GenericEvent* event) {
+CardIsParser::init(GenericEvent* event) {
 	this->packet = new CardIsPacket();
 }
 
 void
-CardIdParser::done(GenericEvent* event) {
+CardIsParser::done(GenericEvent* event) {
 	this->packet->setResource((ResourceId)((ResourceEvent*)event)->getData());
 
 	fsmEvent = new DoneEvent(this->packet);
@@ -33,7 +33,7 @@ CardIdParser::done(GenericEvent* event) {
 }
 
 void
-CardIdParser::error(GenericEvent* event) {
+CardIsParser::error(GenericEvent* event) {
 	delete this->packet;
 
 	fsmEvent = new ErrorEvent("CardIsParser - Error en el formato del mensaje!");

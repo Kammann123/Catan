@@ -11,7 +11,6 @@ using namespace std;
 * Protocol
 * Modelizacion de un protocolo de comunicacion, donde se define
 * la secuencia de handshaking que hace a una conversacion.
-*
 */
 class Protocol {
 public:
@@ -24,7 +23,7 @@ public:
 	* - sendCallback: Callback de transmision de paquete
 	* - states: Estados del protocolo
 	*/
-	Protocol(SendCallback sendCallback, vector<ProtocolState> states);
+	Protocol(SendCallback sendCallback, vector<ProtocolState*> states);
 
 	/*
 	* getStatus
@@ -72,6 +71,6 @@ private:
 	ProtocolStatus status;
 	string error;
 
-	vector<ProtocolState> states;
+	vector<ProtocolState*> states;
 	unsigned int currentState;
 };

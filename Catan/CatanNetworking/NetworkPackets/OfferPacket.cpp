@@ -4,7 +4,7 @@ OfferPacket::
 OfferPacket(void) : NetworkPacket(PacketHeader::OFFER_TRADE), OfferData() {}
 
 OfferPacket::
-OfferPacket(list<ResourceId> given, list<ResourceId> recv) : NetworkPacket(PacketHeader::OFFER_TRADE), OfferData(given, recv)) {}
+OfferPacket(list<ResourceId> given, list<ResourceId> recv) : NetworkPacket(PacketHeader::OFFER_TRADE), OfferData(given, recv) {}
 
 OfferPacket::
 ~OfferPacket() {}

@@ -39,7 +39,7 @@ init(GenericEvent* event) {
 
 void MapParser::
 saveMap(GenericEvent* event) {
-	this->packet->setMapValue(this->nextIndex, ((IndexEvent*)event)->getData());
+	this->packet->setMap(this->nextIndex, ((IndexEvent*)event)->getData());
 
 	if (this->nextIndex == '5') {
 		this->nextIndex = 'A';
@@ -51,7 +51,7 @@ saveMap(GenericEvent* event) {
 
 void MapParser::
 done(GenericEvent* event) {
-	this->packet->setMapValue(this->nextIndex, ((LastIndexEvent*)event)->getData());
+	this->packet->setMap(this->nextIndex, ((LastIndexEvent*)event)->getData());
 
 	fsmEvent = new DoneEvent(this->packet);
 

@@ -4,8 +4,8 @@ NetworkSocket::
 NetworkSocket() {
 
 	/* Abro el socket y el service */
-	this->handler = new asio::io_service();
-	this->socket = new asio::ip::tcp::socket(*this->handler);
+	this->handler = new boost::asio::io_service();
+	this->socket = new boost::asio::ip::tcp::socket(*this->handler);
 
 	/* Verifico correcta apertura! */
 	if (this->handler || this->socket) {
@@ -117,16 +117,16 @@ sendPacket(void) {
 			NetworkPacket* packet = this->sendQueue.front();
 
 			/* Inicializo variables de transmision */
-			asio::error_code error;
+			boost::system::error_code error;
 			size_t count;
 			unsigned int length;
 			unsigned char* data = packet->getDataStream(length);
 
 			/* Espero a que se mande todo el paquete de datos */
 			do {
-				count = this->socket->write_some(asio::buffer(data, length), error);
+				count = this->socket->write_some(boost::asio::buffer(data, length), error);
 
-			} while (count < length && error == asio::error::would_block);
+			} while (count < length && error == boost::asio::error::would_block);
 
 			/* Libero el data stream */
 			delete[] data;
@@ -146,20 +146,20 @@ receivePacket(void) {
 	if (isConnected()) {
 
 		/* Inicializo las variables */
-		asio::error_code error;
+		boost::system::error_code error;
 		size_t count;
-		unsigned int length = this->socket->available();
+		unsigned int length = (unsigned int)this->socket->available();
 		unsigned char buff[MAX_BUFFER_SIZE];
 
 		/* Busco bytes recibidos */
 		do {
-			count = this->socket->read_some(asio::buffer(buff, MAX_BUFFER_SIZE), error);
-		} while (count < length && error == asio::error::would_block);
+			count = this->socket->read_some(boost::asio::buffer(buff, MAX_BUFFER_SIZE), error);
+		} while (count < length && error == boost::asio::error::would_block);
 
 		/* Verifico estado de error */
 		if (!handleError(error)) {
 			/* Parseo los bytes recibidos */
-			this->parser.parse(buff, count);
+			this->parser.parse(buff, (unsigned int)count);
 
 			/* Verifico estado */
 			if (this->parser.getStatus() == NetworkParser::Status::OK) {
@@ -178,13 +178,13 @@ receivePacket(void) {
 }
 
 bool NetworkSocket::
-handleError(asio::error_code error) {
+handleError(boost::system::error_code error) {
 
 	/* Si hay algun error */
 	if (error) {
 
 		/* Que no sea que sea bloqueante */
-		if (error != asio::error::would_block) {
+		if (error != boost::asio::error::would_block) {
 
 			this->status = false;
 			this->error = error.message();

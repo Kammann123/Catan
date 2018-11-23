@@ -7,10 +7,10 @@
 #include "../NetworkPackets/CardIsPacket.h"
 
 /*
-* CardIdParser
+* CardIsParser
 * Interpreta secuencia de bytes en paquete de datos de Card iS
 */
-class CardIdParser : public ParserFsm {
+class CardIsParser : public ParserFsm {
 public:
 
 	/* Eventos del parser */
@@ -57,7 +57,7 @@ private:
 
 	const FsmCell fsmTable[2][3] = {
 		//					HEADER									 RESOURCE										 OTHER
-		{ { States::CARD, TX(RobberMoveParser, init) },{ States::HEAD, TX(RobberMoveParser ,error) },{ States::HEAD, TX(RobberMoveParser ,error) } }, // HEADER STATE
-		{ { States::HEAD, TX(RobberMoveParser ,error) },{ States::HEAD, TX(RobberMoveParser, done) },{ States::HEAD, TX(RobberMoveParser ,error) } }, // CARD STATE
+		{ { States::CARD, TX(CardIsParser, init) },{ States::HEAD, TX(CardIsParser ,error) },{ States::HEAD, TX(CardIsParser ,error) } }, // HEADER STATE
+		{ { States::HEAD, TX(CardIsParser ,error) },{ States::HEAD, TX(CardIsParser, done) },{ States::HEAD, TX(CardIsParser ,error) } }, // CARD STATE
 	};
 };

@@ -20,5 +20,5 @@ public:
 	bool setMap(unsigned char coord, MapValue value);
 	map<unsigned char, MapValue>& getMap(void);
 private:
-	map<unsigned char, MapValue>& gameMap;
+	map<unsigned char, MapValue> gameMap;
 };

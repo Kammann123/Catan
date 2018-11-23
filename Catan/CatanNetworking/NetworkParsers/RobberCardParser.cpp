@@ -37,13 +37,13 @@ setContext(GenericEvent* event) {
 
 void RobberCardParser::
 setResource(GenericEvent* event) {
-	this->packet->addResource((ResourceId)((ResourceEvent*)event)->getData());
+	this->packet->setResource((ResourceId)((ResourceEvent*)event)->getData());
 	this->count--;
 }
 
 void RobberCardParser::
 done(GenericEvent* event) {
-	this->packet->addResource((ResourceId)((LastResourceEvent*)event)->getData());
+	this->packet->setResource((ResourceId)((LastResourceEvent*)event)->getData());
 
 	fsmEvent = new DoneEvent(this->packet);
 

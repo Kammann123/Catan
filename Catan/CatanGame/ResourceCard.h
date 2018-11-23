@@ -1,6 +1,8 @@
 #pragma once
-#include "Player.h"
-#include "../CatanNetworking/NetworkPackets/NetworkPacket.h"
+
+#include "../CatanData/CatanData.h"
+
+enum class PlayerId;
 
 /*
 * ResourceCard
@@ -17,7 +19,7 @@ public:
 	* getResourceId
 	* Devuelve tipo de recurso
 	*/
-	ResourceId getResourceId();
+	ResourceId getResourceId(void);
 
 	/*
 	* getPlayerId

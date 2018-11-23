@@ -49,6 +49,9 @@
     <Filter Include="CatanData">
       <UniqueIdentifier>{3ea99685-f141-473c-90d5-eafe44ca6dcd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CatanNetworking\Networking">
+      <UniqueIdentifier>{d7d543b6-d636-42eb-95eb-6327415b7d8d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FSM\EventGenerator.h">
@@ -267,9 +270,6 @@
     <ClInclude Include="CatanEvents\CardIsEvent.h">
       <Filter>CatanEvents</Filter>
     </ClInclude>
-    <ClInclude Include="CatanEvents\KnightEvent.h">
-      <Filter>CatanEvents</Filter>
-    </ClInclude>
     <ClInclude Include="CatanEvents\MonopolyEvent.h">
       <Filter>CatanEvents</Filter>
     </ClInclude>
@@ -277,6 +277,36 @@
       <Filter>CatanEvents</Filter>
     </ClInclude>
     <ClInclude Include="CatanEvents\YOPEvent.h">
+      <Filter>CatanEvents</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkProtocols\NetworkProtocol.h">
+      <Filter>CatanNetworking\NetworkProtocols</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkProtocols\Protocol.h">
+      <Filter>CatanNetworking\NetworkProtocols</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkProtocols\ProtocolState.h">
+      <Filter>CatanNetworking\NetworkProtocols</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkProtocols\PSRecv.h">
+      <Filter>CatanNetworking\NetworkProtocols</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkProtocols\PSRespond.h">
+      <Filter>CatanNetworking\NetworkProtocols</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkProtocols\PSSend.h">
+      <Filter>CatanNetworking\NetworkProtocols</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\Networking\Networking.h">
+      <Filter>CatanNetworking\Networking</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\Networking\NetworkingState.h">
+      <Filter>CatanNetworking\Networking</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\CatanNetworking.h">
+      <Filter>CatanNetworking</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanEvents\KnightEvent.cpp">
       <Filter>CatanEvents</Filter>
     </ClInclude>
   </ItemGroup>
@@ -491,9 +521,6 @@
     <ClCompile Include="CatanEvents\CardIsEvent.cpp">
       <Filter>CatanEvents</Filter>
     </ClCompile>
-    <ClCompile Include="CatanEvents\KnightEvent.cpp">
-      <Filter>CatanEvents</Filter>
-    </ClCompile>
     <ClCompile Include="CatanEvents\MonopolyEvent.cpp">
       <Filter>CatanEvents</Filter>
     </ClCompile>
@@ -501,6 +528,33 @@
       <Filter>CatanEvents</Filter>
     </ClCompile>
     <ClCompile Include="CatanEvents\YOPEvent.cpp">
+      <Filter>CatanEvents</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkProtocols\Protocol.cpp">
+      <Filter>CatanNetworking\NetworkProtocols</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkProtocols\ProtocolState.cpp">
+      <Filter>CatanNetworking\NetworkProtocols</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkProtocols\PSRecv.cpp">
+      <Filter>CatanNetworking\NetworkProtocols</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkProtocols\PSRespond.cpp">
+      <Filter>CatanNetworking\NetworkProtocols</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkProtocols\PSSend.cpp">
+      <Filter>CatanNetworking\NetworkProtocols</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\Networking\Networking.cpp">
+      <Filter>CatanNetworking\Networking</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\Networking\NetworkingState.cpp">
+      <Filter>CatanNetworking\Networking</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\CatanNetworking.cpp">
+      <Filter>CatanNetworking</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanEvents\KnightEvent.h">
       <Filter>CatanEvents</Filter>
     </ClCompile>
   </ItemGroup>

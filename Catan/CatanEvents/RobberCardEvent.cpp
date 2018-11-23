@@ -5,6 +5,3 @@ RobberCardEvent(RobberCardPacket* packet) : CatanEvent(Events::ROBBER_CARDS, Sou
 
 RobberCardEvent::
 RobberCardEvent(list<ResourceId> res, PlayerId player) : CatanEvent(Events::ROBBER_CARDS, Sources::GUI, player), RobberCardData(res) {}
-
-RobberCardEvent::
-~RobberCardEvent(void) {}

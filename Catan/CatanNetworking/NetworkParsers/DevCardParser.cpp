@@ -39,13 +39,13 @@ init(GenericEvent* event) {
 
 void DevCardParser::
 setCard(GenericEvent* event) {
-	this->packet->setCard((DevCardId)((CardEvent*)event)->getData(), this->nextIndex);
+	this->packet->setCard((DevCardId)((CardEvent*)event)->getData());
 	this->nextIndex++;
 }
 
 void DevCardParser::
 done(GenericEvent* event) {
-	this->packet->setCard((DevCardId)((LastCardEvent*)event)->getData(), this->nextIndex);
+	this->packet->setCard((DevCardId)((LastCardEvent*)event)->getData());
 	
 	fsmEvent = new DoneEvent(this->packet);
 

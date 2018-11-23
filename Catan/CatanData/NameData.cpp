@@ -15,6 +15,11 @@ NameData::setName(string name) {
 	this->name = name;
 }
 
+void
+NameData::setName(unsigned char name) {
+	this->name += name;
+}
+
 string 
 NameData::getName(void) {
 	return this->name;

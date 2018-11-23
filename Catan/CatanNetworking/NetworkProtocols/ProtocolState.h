@@ -24,7 +24,7 @@ using SendCallback = function<void(NetworkPacket*)>;
 * ProtocolStatus - Verificacion de ejecucion del protocolo
 * para cada estado al implementar las llamadas.
 */
-enum ProtocolStatus : unsigned int {OK, DONE, ERROR};
+enum class ProtocolStatus : unsigned int {OK, DONE, ERROR};
 
 /*
 * ProtocolState
