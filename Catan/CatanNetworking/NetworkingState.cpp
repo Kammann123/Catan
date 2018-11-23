@@ -2,7 +2,7 @@
 #include "NetworkingState.h"
 
 NetworkingState::
-NetworkingState(Networking& _networking) : networking(_networking) {}
+NetworkingState(CatanNetworking& _networking) : networking(_networking) {}
 
 NetworkingState::
 ~NetworkingState() {}

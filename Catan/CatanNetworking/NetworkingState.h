@@ -1,9 +1,7 @@
 #pragma once
 
-#include "../NetworkPackets/NetworkPacket.h"
-
 /* Declaracion del networking */
-class Networking;
+class CatanNetworking;
 
 /*
 * NetworkingState
@@ -17,7 +15,7 @@ public:
 	/*
 	* Constructor de NetworkingState
 	*/
-	NetworkingState(Networking& _networking);
+	NetworkingState(CatanNetworking& _networking);
 	virtual ~NetworkingState();
 
 	/*
@@ -25,10 +23,12 @@ public:
 	*
 	* -run: Recibe un paquete del extremo de comunicacion
 	* -update: Peticion de mandar un mensaje o paquete
+	* -what: Devuelve una descripcion del estado
 	*/
 	virtual void run(void) = 0;
 	virtual void update(void) = 0;
+	virtual string what(void) = 0;
 
 private:
-	Networking& networking;
+	CatanNetworking& networking;
 };

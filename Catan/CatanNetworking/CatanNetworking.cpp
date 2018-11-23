@@ -23,14 +23,68 @@
 #include "../CatanEvents/YOPEvent.h"
 #include "../CatanEvents/CatanEvent.h"
 
+#include <exception>
+
 CatanNetworking::
-CatanNetworking(CatanGame& _game) : Networking(nullptr), Observer(), game(_game), socket(nullptr) {}
+CatanNetworking(string ip, unsigned int port, CatanGame& _game) : Observer(), game(_game){
+	this->ip = ip;
+	this->port = port;
+	this->socket = nullptr;
+	this->status = false;
+	this->error = "";
+	this->prevState = nullptr;
+	this->currState = nullptr;
+}
 
 CatanNetworking::
 ~CatanNetworking(void) {
-	if (socket) {
+	if (socket)
 		delete socket;
+	if (this->currState)
+		delete this->currState;
+	if (this->prevState)
+		delete this->prevState;
+}
+
+NetworkingState*
+CatanNetworking::getState(void) {
+	return currState;
+}
+
+string
+CatanNetworking::getError(void) {
+	return error;
+}
+
+bool
+CatanNetworking::good(void) {
+	return status;
+}
+
+void
+CatanNetworking::setError(string msg) {
+	this->status = false;
+	this->error = msg;
+}
+
+void
+CatanNetworking::setError(const char* msg) {
+	this->status = false;
+	this->error = msg;
+}
+
+void
+CatanNetworking::verifyStatus(void) const {
+	if (!status) {
+		throw exception("Networking - verifyStatus - Hubo un error en el estado de Networking, revisar!");
 	}
+}
+
+void
+CatanNetworking::changeState(NetworkingState* state) {
+	delete prevState;
+	prevState = currState;
+	currState = state;
 }
 
 void

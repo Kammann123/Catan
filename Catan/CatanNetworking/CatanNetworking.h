@@ -1,16 +1,20 @@
 #pragma once
 
-#include "Networking/Networking.h"
+#include "NetworkingState.h"
 #include "NetworkHandlers/NetworkSocket.h"
 #include "../CatanGame/CatanGame.h"
 #include "../MVC/Observer.h"
 
+#include <string>
+
+using namespace std;
+
 /*
 * CatanNetworking
-* Implementacion de Networking para el juego Catan, con sus estados
-* definidos como las etapas y protocolos necesarios segun lo documentado
+* Clase base para la implementacion de networking con State pattern
+* definiendo los diferentes estados y protocolos que puede ejecutar el mismo
 */
-class CatanNetworking : public Networking, public Observer {
+class CatanNetworking : public Observer {
 public:
 
 	/*
@@ -18,7 +22,7 @@ public:
 	* Se construye el CatanNetworking con una referencia
 	* del juego para acceder a su informacion, ademas por ser observer.
 	*/
-	CatanNetworking(CatanGame& _game);
+	CatanNetworking(string ip, unsigned int port, CatanGame& _game);
 	~CatanNetworking();
 
 	/*
@@ -36,7 +40,27 @@ public:
 	*/
 	void update(void);
 
+	/*
+	* getState
+	* Devuelve el estado actual de Networking
+	*/
+	NetworkingState* getState(void);
+
+	/*
+	* getError
+	* Devuelve el mensaje de error de Networking, si lo hubiera.
+	*/
+	string getError(void);
+
+	/*
+	* good
+	* Devuelve true si Networking carece de errores al momento.
+	*/
+	bool good(void);
+
 private:
+
+	friend class NetworkingState;
 
 	/*
 	* getEventPacket
@@ -44,6 +68,34 @@ private:
 	*/
 	NetworkPacket* getEventPacket(CatanEvent* event);
 
+	/*
+	* verifyStatus
+	* Verifica el estado actual de Networking, en caso de estar
+	* en estado de error, levanta excepcion para indicar error en la
+	* utilizacion de Networking.
+	*/
+	void verifyStatus(void) const;
+
+	/*
+	* changeState
+	* Cambia el estado del Networking
+	*/
+	void changeState(NetworkingState* state);
+
+	/*
+	* setError
+	* Configura un estado de error en el Networking
+	*/
+	void setError(string msg);
+	void setError(const char* msg);
+
+private:
+	string ip;
+	unsigned int port;
+	NetworkingState* prevState;
+	NetworkingState* currState;
+	bool status;
+	string error;
 	NetworkSocket * socket;
 	CatanGame& game;
 };
