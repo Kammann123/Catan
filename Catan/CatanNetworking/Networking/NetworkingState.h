@@ -26,8 +26,8 @@ public:
 	* -run: Recibe un paquete del extremo de comunicacion
 	* -update: Peticion de mandar un mensaje o paquete
 	*/
-	virtual void run(NetworkPacket* packet) = 0;
-	virtual void update(NetworkPacket* packet) = 0;
+	virtual void run(void) = 0;
+	virtual void update(void) = 0;
 
 private:
 	Networking& networking;

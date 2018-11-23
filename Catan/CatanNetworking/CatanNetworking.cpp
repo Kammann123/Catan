@@ -48,18 +48,14 @@ CatanNetworking::run() {
 			socket->run();
 
 			/* Verifico estado del socket */
-			if (socket->good()) {
-
-				/* Verifico mensajes recibidos */
-				if (socket->hasReceived()) {
-					this->currState->run(socket->receive());
-				}
-			}
-			else {
+			if (!socket->good()) {
 				setError(socket->getError());
 			}
 		}
 	}
+
+	/* Ejecuto el run del estado */
+	this->currState->run();
 }
 
 void
@@ -78,7 +74,7 @@ CatanNetworking::update() {
 		if (event->getSource() != CatanEvent::Sources::NETWORKING) {
 
 			/* Ejecuto tarea */
-			this->currState->update( getEventPacket(event) );
+			this->currState->update();
 		}
 	}
 }

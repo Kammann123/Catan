@@ -71,7 +71,6 @@ CatanEvent*
 CatanGame::getNextEvent(void) {
 	if (hasEvents()) {
 		CatanEvent* event = this->eventQueue.front();
-		this->eventQueue.pop_front();
 		return event;
 	}
 	else {

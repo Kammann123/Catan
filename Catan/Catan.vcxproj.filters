@@ -548,9 +548,6 @@
     <ClCompile Include="CatanNetworking\Networking\NetworkingState.cpp">
       <Filter>CatanNetworking\Networking</Filter>
     </ClCompile>
-    <ClCompile Include="CatanNetworking\CatanNetworking.cpp">
-      <Filter>CatanNetworking</Filter>
-    </ClCompile>
     <ClCompile Include="CatanEvents\KnightEvent.h">
       <Filter>CatanEvents</Filter>
     </ClCompile>
@@ -562,6 +559,9 @@
     </ClCompile>
     <ClCompile Include="CatanNetworking\NetworkProtocols\PSSend.cpp">
       <Filter>CatanNetworking\NetworkProtocols</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\CatanNetworking.cpp">
+      <Filter>CatanNetworking</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
