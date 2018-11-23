@@ -1,12 +1,35 @@
 #include "Protocol.h"
 
 Protocol::
+Protocol(SendCallback sendCallback, unsigned int timeout, vector<ProtocolState*> states) {
+	/* Inicializo */
+	this->states = states;
+	this->currentState = 0;
+	this->status = ProtocolStatus::OK;
+	this->error = "";
+	this->timeout = boost::chrono::milliseconds(timeout);
+	this->hasTimeout = true;
+
+	/* Configuro el callback */
+	for (ProtocolState* p : states) {
+		p->setSendCallback(sendCallback);
+	}
+
+	/* Ejecuto solve del primer estado */
+	transition(this->states[this->currentState]->solve());
+
+	/* Reinicio timeout */
+	resetTime();
+}
+
+Protocol::
 Protocol(SendCallback sendCallback, vector<ProtocolState*> states) {
 	/* Inicializo */
 	this->states = states;
 	this->currentState = 0;
 	this->status = ProtocolStatus::OK;
 	this->error = "";
+	this->hasTimeout = false;
 
 	/* Configuro el callback */
 	for (ProtocolState* p : states) {
@@ -24,8 +47,26 @@ Protocol::
 	}
 }
 
+void
+Protocol::resetTime(void) {
+	if (hasTimeout) {
+		start = boost::chrono::steady_clock::now();
+	}
+}
+
 ProtocolStatus
-Protocol::getStatus(void) const {
+Protocol::getStatus(void) {
+
+	/* Verifico timeout */
+	if (status == ProtocolStatus::OK && hasTimeout ) {
+
+		if ((boost::chrono::steady_clock::now() - start) > timeout) {
+
+			this->status = ProtocolStatus::TIMEOUT;
+		}
+	}
+
+	/* Devuelvo estado */
 	return this->status;
 }
 
@@ -63,6 +104,11 @@ Protocol::transition(ProtocolStatus status, NetworkPacket* packet) {
 			this->error = "";
 		}
 		else {
+
+			if (hasTimeout) {
+				resetTime();
+			}
+
 			transition(this->states[currentState]->solve());
 		}
 		break;
@@ -98,6 +144,11 @@ Protocol::transition(ProtocolStatus status) {
 			this->error = "";
 		}
 		else {
+
+			if (hasTimeout) {
+				resetTime();
+			}
+
 			transition(this->states[currentState]->solve());
 		}
 		break;
