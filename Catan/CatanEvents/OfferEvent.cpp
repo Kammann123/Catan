@@ -7,7 +7,7 @@ OfferEvent(OfferPacket* packet) : CatanEvent(Events::OFFER_TRADE, Sources::NETWO
 }
 
 OfferEvent::
-OfferEvent(list<ResourceId> given, list<ResourceId> recv) : CatanEvent(Events::OFFER_TRADE, Sources::GUI, PlayerId::PLAYER_ONE) {
+OfferEvent(list<ResourceId> given, list<ResourceId> recv, PlayerId player) : CatanEvent(Events::OFFER_TRADE, Sources::GUI, player) {
 	this->given = given;
 	this->recv = recv;
 }

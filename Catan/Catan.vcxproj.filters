@@ -186,9 +186,6 @@
     <ClInclude Include="CatanEvents\OfferEvent.h">
       <Filter>CatanEvents</Filter>
     </ClInclude>
-    <ClInclude Include="CatanEvents\PassEvent.h">
-      <Filter>CatanEvents</Filter>
-    </ClInclude>
     <ClInclude Include="CatanEvents\RobberCardEvent.h">
       <Filter>CatanEvents</Filter>
     </ClInclude>

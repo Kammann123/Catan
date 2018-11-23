@@ -120,7 +120,6 @@
     <ClInclude Include="CatanEvents\CatanEvent.h" />
     <ClInclude Include="CatanEvents\DicesEvent.h" />
     <ClInclude Include="CatanEvents\OfferEvent.h" />
-    <ClInclude Include="CatanEvents\PassEvent.h" />
     <ClInclude Include="CatanEvents\RobberCardEvent.h" />
     <ClInclude Include="CatanEvents\RobberMoveEvent.h" />
     <ClInclude Include="CatanGame\Building.h" />

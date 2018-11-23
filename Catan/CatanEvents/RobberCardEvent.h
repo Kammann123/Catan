@@ -15,7 +15,7 @@ class RobberCardEvent : public CatanEvent {
 public:
 	/* Constructores y destructores */
 	RobberCardEvent(RobberCardPacket* packet);
-	RobberCardEvent(list<ResourceId> res);
+	RobberCardEvent(list<ResourceId> res, PlayerId player);
 	~RobberCardEvent();
 
 	/* Getter */

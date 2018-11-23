@@ -12,7 +12,7 @@ class RobberMoveEvent : public CatanEvent {
 public:
 	/* Constructor y destructor */
 	RobberMoveEvent(RobberMovePacket* packet);
-	RobberMoveEvent(unsigned char coord);
+	RobberMoveEvent(unsigned char coord, PlayerId player);
 	~RobberMoveEvent(void);
 
 	/* Getter */

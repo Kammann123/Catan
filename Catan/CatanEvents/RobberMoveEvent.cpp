@@ -6,7 +6,7 @@ RobberMoveEvent(RobberMovePacket* packet) : CatanEvent(Events::ROBBER_MOVE, Sour
 }
 
 RobberMoveEvent::
-RobberMoveEvent(unsigned char coord) : CatanEvent(Events::ROBBER_MOVE, Sources::GUI, PlayerId::PLAYER_ONE) {
+RobberMoveEvent(unsigned char coord, PlayerId player) : CatanEvent(Events::ROBBER_MOVE, Sources::GUI, player) {
 	this->coord = coord;
 }
 

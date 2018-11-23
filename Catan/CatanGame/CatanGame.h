@@ -35,6 +35,7 @@ public:
 	enum States : CatanState::Type {};
 
 	/* Constructor y destructor */
+	CatanGame(string localPlayerName);
 	CatanGame();
 	~CatanGame();
 

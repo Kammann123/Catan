@@ -15,7 +15,7 @@ using namespace std;
 class OfferEvent : public CatanEvent{
 public:
 	OfferEvent(OfferPacket* packet);
-	OfferEvent(list<ResourceId> given, list<ResourceId> recv);
+	OfferEvent(list<ResourceId> given, list<ResourceId> recv, PlayerId player);
 	~OfferEvent(void);
 
 	/* Getter */

@@ -9,6 +9,17 @@
 #include "../CatanEvents/CatanEvent.h"
 
 CatanGame::
+CatanGame(string localPlayerName) : localPlayer(PlayerId::PLAYER_ONE), remotePlayer(PlayerId::PLAYER_TWO) {
+
+	/* Inicializacion */
+	this->prevState = nullptr;
+	this->state = nullptr; // PRIMER ESTADO!!
+
+	/* El nombre del jugador local */
+	this->localPlayer.setName(localPlayerName);
+}
+
+CatanGame::
 CatanGame() : localPlayer(PlayerId::PLAYER_ONE), remotePlayer(PlayerId::PLAYER_TWO) {
 
 	/* Inicializacion */

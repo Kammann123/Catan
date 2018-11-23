@@ -6,12 +6,12 @@ DicesEvent(DicesPacket* packet) : CatanEvent(Events::THROW_DICES, Sources::NETWO
 }
 
 DicesEvent::
-DicesEvent(unsigned int firstDice, unsigned int secondDice) : CatanEvent(Events::THROW_DICES, Sources::GUI, PlayerId::PLAYER_ONE) {
+DicesEvent(unsigned int firstDice, unsigned int secondDice, PlayerId player) : CatanEvent(Events::THROW_DICES, Sources::GUI, player) {
 	this->dices = firstDice + secondDice;
 }
 
 DicesEvent::
-DicesEvent(unsigned int dices) : CatanEvent(Events::THROW_DICES, Sources::GUI, PlayerId::PLAYER_ONE) {
+DicesEvent(unsigned int dices, PlayerId player) : CatanEvent(Events::THROW_DICES, Sources::GUI, player) {
 	this->dices = dices;
 }
 

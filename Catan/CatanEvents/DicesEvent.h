@@ -11,8 +11,8 @@ class DicesEvent : public CatanEvent {
 public:
 	/* Constructores y destructores */
 	DicesEvent(DicesPacket* packet);
-	DicesEvent(unsigned int firstDice, unsigned int secondDice);
-	DicesEvent(unsigned int dices);
+	DicesEvent(unsigned int firstDice, unsigned int secondDice, PlayerId player);
+	DicesEvent(unsigned int dices, PlayerId player);
 	~DicesEvent(void);
 
 	/* Getter */
