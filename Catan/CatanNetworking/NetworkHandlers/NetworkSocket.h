@@ -60,6 +60,12 @@ public:
 	NetworkPacket* receive(void);
 
 	/*
+	* flush
+	* Libera los buffer de entrada de mensajes
+	*/
+	void flush(void);
+
+	/*
 	* hasReceived
 	* Revisa y devuelve si hay mensajes recibidos para tomar de la cosa.
 	*/

@@ -1,31 +1,37 @@
-#include "CatanNetworking/NetworkParsers/NetworkParser.h"
+#include "CatanNetworking/NetworkHandlers/NetworkServer.h"
+#include "CatanNetworking/NetworkHandlers/NetworkClient.h"
+#include "CatanNetworking/NetworkPackets/NetworkPacket.h"
 
 #include <iostream>
 #include <string>
 
 using namespace std;
 
+#define CONSOLE(msg) cout << "[NetworkServer] >> " << msg << endl
+
 int main(int argc, char** argv) {
 
-	NetworkParser parser;
-	unsigned char stream[] = {
-		0x01,
-		0x10,
-		0x11, 3, 'T', 'O', 'M'
-	};
+	NetworkServer myServer(12345);
 
-	for (unsigned char c : stream) {
-		parser.parse(c);
+	CONSOLE("Esperando conexiones al servidor. PUERTO: 12345");
+	
+	while (!myServer.isConnected()) {
 
-		if (parser.getStatus() != NetworkParser::Status::OK) {
-			cout << parser.getError() << endl;
-			getchar();
-			return -1;
-		}
+		myServer.listen();
 	}
+	myServer.flush();
 
-	while (parser.hasPackets()) {
+	CONSOLE("Conexion establecida con el cliente...");
 
-		NetworkPacket* packet = parser.getNextPacket();
+	while (myServer.good()) {
+
+		myServer.run();
+
+		if (myServer.hasReceived()) {
+
+			CONSOLE("Mensaje recibido: ");
+
+			cout << myServer.receive()->getString() << endl;
+		}
 	}
 }

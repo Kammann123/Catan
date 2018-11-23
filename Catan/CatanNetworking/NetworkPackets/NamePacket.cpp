@@ -9,6 +9,13 @@ NamePacket(string name) : NetworkPacket(PacketHeader::NAME_IS), NameData(name) {
 NamePacket::
 ~NamePacket(void) {}
 
+string
+NamePacket::getString(void) {
+	string name = this->getName();
+	string msg = string("[NamePacket] ") + string(HeaderStrings[getHeader()]) + " " + name;
+	return msg;
+}
+
 unsigned char*
 NamePacket::getDataStream(unsigned int& length) {
 

@@ -21,7 +21,6 @@ NetworkSocket() {
 	this->connected = false;
 	this->sendQueue.clear();
 	this->recvQueue.clear();
-	this->socket->non_blocking(true);
 }
 
 NetworkSocket::
@@ -103,6 +102,31 @@ isConnected(void) const {
 void NetworkSocket::
 toggleConnection(void) {
 	this->connected = this->connected ? false : true;
+	if (this->connected) {
+		this->socket->non_blocking(true);
+	}
+}
+
+void
+NetworkSocket::flush(void) {
+
+	if (isConnected()) {
+		/* Inicializo */
+		boost::system::error_code error;
+		unsigned char buff[MAX_BUFFER_SIZE];
+		size_t count, available;
+
+		/* Busco cantidad disponible */
+		available = this->socket->available();
+
+		/* Recibo todo */
+		do {
+			count = this->socket->read_some(boost::asio::buffer(buff, MAX_BUFFER_SIZE), error);
+		} while (count < available && error == boost::asio::error::would_block);
+
+		/* Handle error */
+		handleError(error);
+	}
 }
 
 void NetworkSocket::

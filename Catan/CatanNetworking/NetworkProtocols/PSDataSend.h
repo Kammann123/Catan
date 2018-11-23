@@ -10,7 +10,7 @@ using namespace std;
 * PacketCallback - Callback para hacer peticion de un paquete
 * particular para enviar o transmitir durante la comunicacion
 */
-using PacketCallback = functional<NetworkPacket*(void)>;
+using PacketCallback = function<NetworkPacket*(void)>;
 
 /*
 * PSDataSend

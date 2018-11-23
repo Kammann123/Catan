@@ -1,16 +1,11 @@
 #pragma once
 
-/*
-* ACLARACION: Recordar que la definicion base de NetworkPacket es utilizada
-* tambien por todos los paquetes de datos compuestos unicamente por un header,
-* no asi con aquellos que portan mayor informacion, para quienes se definira
-* clase que herede de NetworkPacket, como NamePacket, TokenPacket... etc.
-*
-* Mientras que mensajes como ACK, NAME, YES.... seran reutilizacion de la
-* clase base directamente.
-*/
+#include <iostream>
+#include <map>
 
-/* 
+using namespace std;
+
+/*
 * PacketHeader
 * Define los diferentes tipos de encabezados que pueden
 * constituir a un mensaje o paquete de datos, para clasificar
@@ -51,6 +46,18 @@ enum PacketHeader : unsigned char {
 	QUIT
 };
 
+extern map<PacketHeader, const char*> HeaderStrings;
+
+/*
+* ACLARACION: Recordar que la definicion base de NetworkPacket es utilizada
+* tambien por todos los paquetes de datos compuestos unicamente por un header,
+* no asi con aquellos que portan mayor informacion, para quienes se definira
+* clase que herede de NetworkPacket, como NamePacket, TokenPacket... etc.
+*
+* Mientras que mensajes como ACK, NAME, YES.... seran reutilizacion de la
+* clase base directamente.
+*/
+
 /*
 * NetworkPacket
 * Clase base para la definicion de los mensajes
@@ -73,6 +80,12 @@ public:
 	PacketHeader getHeader(void) const;
 
 	/*
+	* getString
+	* Devuelve un mensaje string con el paquete formateado
+	*/
+	virtual string getString(void);
+
+	/*
 	* getDataStream
 	* Devuelve los bytes a mandar como paquete de dato
 	* En length se almacena el largo del buffer de bytes.
@@ -81,5 +94,6 @@ public:
 	virtual unsigned char* getDataStream(unsigned int& length);
 
 protected:
+
 	PacketHeader header;
 };

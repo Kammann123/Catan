@@ -17,6 +17,12 @@ public:
 	NamePacket(string name);
 	NamePacket(void);
 	virtual ~NamePacket();
+
+	/*
+	* getStrign
+	* Devuelve string con mensaje formateado
+	*/
+	virtual string getString(void);
 	
 	/*
 	* getDataStream

@@ -20,8 +20,8 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{CB03F482-49FD-4BC8-8A03-E24A5CEED8F1}</ProjectGuid>
-    <RootNamespace>Catan</RootNamespace>
+    <ProjectGuid>{F22E7247-F962-4458-835F-47D095747EF4}</ProjectGuid>
+    <RootNamespace>ClientTest</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -70,7 +70,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup />
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
@@ -78,7 +78,7 @@
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
@@ -115,180 +115,121 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="CatanData\BankData.h" />
-    <ClInclude Include="CatanData\BuildingData.h" />
-    <ClInclude Include="CatanData\CardIsData.h" />
-    <ClInclude Include="CatanData\CatanData.h" />
-    <ClInclude Include="CatanData\DevCardsData.h" />
-    <ClInclude Include="CatanData\DicesData.h" />
-    <ClInclude Include="CatanData\KnightData.h" />
-    <ClInclude Include="CatanData\MapData.h" />
-    <ClInclude Include="CatanData\MonopolyData.h" />
-    <ClInclude Include="CatanData\NameData.h" />
-    <ClInclude Include="CatanData\OfferData.h" />
-    <ClInclude Include="CatanData\RobberCardData.h" />
-    <ClInclude Include="CatanData\RobberMoveData.h" />
-    <ClInclude Include="CatanData\TokenData.h" />
-    <ClInclude Include="CatanData\YOPData.h" />
-    <ClInclude Include="CatanEvents\BankEvent.h" />
-    <ClInclude Include="CatanEvents\BuildingEvent.h" />
-    <ClInclude Include="CatanEvents\CardIsEvent.h" />
-    <ClInclude Include="CatanEvents\CatanEvent.h" />
-    <ClInclude Include="CatanEvents\DicesEvent.h" />
-    <ClInclude Include="CatanEvents\KnightEvent.cpp" />
-    <ClInclude Include="CatanEvents\MonopolyEvent.h" />
-    <ClInclude Include="CatanEvents\OfferEvent.h" />
-    <ClInclude Include="CatanEvents\RobberCardEvent.h" />
-    <ClInclude Include="CatanEvents\RobberMoveEvent.h" />
-    <ClInclude Include="CatanEvents\SyncEvent.h" />
-    <ClInclude Include="CatanEvents\YOPEvent.h" />
-    <ClInclude Include="CatanGame\Building.h" />
-    <ClInclude Include="CatanGame\CatanGame.h" />
-    <ClInclude Include="CatanGame\CatanState.h" />
-    <ClInclude Include="CatanGame\CatanStatus.h" />
-    <ClInclude Include="CatanGame\Player.h" />
-    <ClInclude Include="CatanGame\ResourceCard.h" />
-    <ClInclude Include="CatanGame\ResourceHex.h" />
-    <ClInclude Include="CatanGame\Robber.h" />
-    <ClInclude Include="CatanGame\SeaHex.h" />
-    <ClInclude Include="CatanNetworking\CatanNetworking.h" />
-    <ClInclude Include="CatanNetworking\NetworkHandlers\NetworkClient.h" />
-    <ClInclude Include="CatanNetworking\NetworkHandlers\NetworkServer.h" />
-    <ClInclude Include="CatanNetworking\NetworkHandlers\NetworkSocket.h" />
-    <ClInclude Include="CatanNetworking\Networking\Networking.h" />
-    <ClInclude Include="CatanNetworking\Networking\NetworkingState.h" />
-    <ClInclude Include="CatanNetworking\NetworkPackets\BankPacket.h" />
-    <ClInclude Include="CatanNetworking\NetworkPackets\BuildingPacket.h" />
-    <ClInclude Include="CatanNetworking\NetworkPackets\CardIsPacket.h" />
-    <ClInclude Include="CatanNetworking\NetworkPackets\DevCardPacket.h" />
-    <ClInclude Include="CatanNetworking\NetworkPackets\DicesPacket.h" />
-    <ClInclude Include="CatanNetworking\NetworkPackets\KnightPacket.h" />
-    <ClInclude Include="CatanNetworking\NetworkPackets\MapPacket.h" />
-    <ClInclude Include="CatanNetworking\NetworkPackets\MonopolyPacket.h" />
-    <ClInclude Include="CatanNetworking\NetworkPackets\NamePacket.h" />
-    <ClInclude Include="CatanNetworking\NetworkPackets\NetworkPacket.h" />
-    <ClInclude Include="CatanNetworking\NetworkPackets\OfferPacket.h" />
-    <ClInclude Include="CatanNetworking\NetworkPackets\RobberCardPacket.h" />
-    <ClInclude Include="CatanNetworking\NetworkPackets\RobberMovePacket.h" />
-    <ClInclude Include="CatanNetworking\NetworkPackets\TokenPacket.h" />
-    <ClInclude Include="CatanNetworking\NetworkPackets\YOPPacket.h" />
-    <ClInclude Include="CatanNetworking\NetworkParsers\BankParser.h" />
-    <ClInclude Include="CatanNetworking\NetworkParsers\BuildingParser.h" />
-    <ClInclude Include="CatanNetworking\NetworkParsers\CardIsParser.h" />
-    <ClInclude Include="CatanNetworking\NetworkParsers\DevCardParser.h" />
-    <ClInclude Include="CatanNetworking\NetworkParsers\DicesParser.h" />
-    <ClInclude Include="CatanNetworking\NetworkParsers\KnightParser.h" />
-    <ClInclude Include="CatanNetworking\NetworkParsers\MapParser.h" />
-    <ClInclude Include="CatanNetworking\NetworkParsers\MonopolyParser.h" />
-    <ClInclude Include="CatanNetworking\NetworkParsers\NameParser.h" />
-    <ClInclude Include="CatanNetworking\NetworkParsers\NetworkParser.h" />
-    <ClInclude Include="CatanNetworking\NetworkParsers\OfferParser.h" />
-    <ClInclude Include="CatanNetworking\NetworkParsers\ParserStatus.h" />
-    <ClInclude Include="CatanNetworking\NetworkParsers\RobberCardParser.h" />
-    <ClInclude Include="CatanNetworking\NetworkParsers\RobberMoveParser.h" />
-    <ClInclude Include="CatanNetworking\NetworkParsers\TokenParser.h" />
-    <ClInclude Include="CatanNetworking\NetworkParsers\YOPParser.h" />
-    <ClInclude Include="CatanNetworking\NetworkProtocols\NetworkProtocol.h" />
-    <ClInclude Include="CatanNetworking\NetworkProtocols\Protocol.h" />
-    <ClInclude Include="CatanNetworking\NetworkProtocols\ProtocolState.h" />
-    <ClInclude Include="CatanNetworking\NetworkProtocols\PSDataSend.h" />
-    <ClInclude Include="CatanNetworking\NetworkProtocols\PSRecv.h" />
-    <ClInclude Include="CatanNetworking\NetworkProtocols\PSSend.h" />
-    <ClInclude Include="CatanNetworking\NetworkProtocols\PSWaitSend.h" />
-    <ClInclude Include="FSM\EventGenerator.h" />
-    <ClInclude Include="FSM\EventQueue.h" />
-    <ClInclude Include="FSM\GenericEvent.h" />
-    <ClInclude Include="FSM\GenericFsm.h" />
-    <ClInclude Include="MVC\Observer.h" />
-    <ClInclude Include="MVC\Subject.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="CatanData\BankData.cpp" />
-    <ClCompile Include="CatanData\BuildingData.cpp" />
-    <ClCompile Include="CatanData\CardIsData.cpp" />
-    <ClCompile Include="CatanData\CatanData.cpp" />
-    <ClCompile Include="CatanData\DevCardsData.cpp" />
-    <ClCompile Include="CatanData\DicesData.cpp" />
-    <ClCompile Include="CatanData\KnightData.cpp" />
-    <ClCompile Include="CatanData\MapData.cpp" />
-    <ClCompile Include="CatanData\MonopolyData.cpp" />
-    <ClCompile Include="CatanData\NameData.cpp" />
-    <ClCompile Include="CatanData\OfferData.cpp" />
-    <ClCompile Include="CatanData\RobberCardData.cpp" />
-    <ClCompile Include="CatanData\RobberMoveData.cpp" />
-    <ClCompile Include="CatanData\TokenData.cpp" />
-    <ClCompile Include="CatanData\YOPData.cpp" />
-    <ClCompile Include="CatanEvents\BankEvent.cpp" />
-    <ClCompile Include="CatanEvents\BuildingEvent.cpp" />
-    <ClCompile Include="CatanEvents\CardIsEvent.cpp" />
-    <ClCompile Include="CatanEvents\CatanEvent.cpp" />
-    <ClCompile Include="CatanEvents\DicesEvent.cpp" />
-    <ClCompile Include="CatanEvents\KnightEvent.h" />
-    <ClCompile Include="CatanEvents\MonopolyEvent.cpp" />
-    <ClCompile Include="CatanEvents\OfferEvent.cpp" />
-    <ClCompile Include="CatanEvents\RobberCardEvent.cpp" />
-    <ClCompile Include="CatanEvents\RobberMoveEvent.cpp" />
-    <ClCompile Include="CatanEvents\SyncEvent.cpp" />
-    <ClCompile Include="CatanEvents\YOPEvent.cpp" />
-    <ClCompile Include="CatanGame\Building.cpp" />
-    <ClCompile Include="CatanGame\CatanGame.cpp" />
-    <ClCompile Include="CatanGame\CatanStatus.cpp" />
-    <ClCompile Include="CatanGame\Player.cpp" />
-    <ClCompile Include="CatanGame\ResourceCard.cpp" />
-    <ClCompile Include="CatanGame\ResourceHex.cpp" />
-    <ClCompile Include="CatanGame\Robber.cpp" />
-    <ClCompile Include="CatanGame\SeaHex.cpp" />
-    <ClCompile Include="CatanNetworking\CatanNetworking.cpp" />
-    <ClCompile Include="CatanNetworking\NetworkHandlers\NetworkClient.cpp" />
-    <ClCompile Include="CatanNetworking\NetworkHandlers\NetworkServer.cpp" />
-    <ClCompile Include="CatanNetworking\NetworkHandlers\NetworkSocket.cpp" />
-    <ClCompile Include="CatanNetworking\Networking\Networking.cpp" />
-    <ClCompile Include="CatanNetworking\Networking\NetworkingState.cpp" />
-    <ClCompile Include="CatanNetworking\NetworkPackets\BankPacket.cpp" />
-    <ClCompile Include="CatanNetworking\NetworkPackets\BuildingPacket.cpp" />
-    <ClCompile Include="CatanNetworking\NetworkPackets\CardIsPacket.cpp" />
-    <ClCompile Include="CatanNetworking\NetworkPackets\DevCardPacket.cpp" />
-    <ClCompile Include="CatanNetworking\NetworkPackets\DicesPacket.cpp" />
-    <ClCompile Include="CatanNetworking\NetworkPackets\KnighPacket.cpp" />
-    <ClCompile Include="CatanNetworking\NetworkPackets\MapPacket.cpp" />
-    <ClCompile Include="CatanNetworking\NetworkPackets\MonopolyPacket.cpp" />
-    <ClCompile Include="CatanNetworking\NetworkPackets\NamePacket.cpp" />
-    <ClCompile Include="CatanNetworking\NetworkPackets\NetworkPacket.cpp" />
-    <ClCompile Include="CatanNetworking\NetworkPackets\OfferPacket.cpp" />
-    <ClCompile Include="CatanNetworking\NetworkPackets\RobberCardPacket.cpp" />
-    <ClCompile Include="CatanNetworking\NetworkPackets\RobberMovePacket.cpp" />
-    <ClCompile Include="CatanNetworking\NetworkPackets\TokenPacket.cpp" />
-    <ClCompile Include="CatanNetworking\NetworkPackets\YOPPacket.cpp" />
-    <ClCompile Include="CatanNetworking\NetworkParsers\BankParser.cpp" />
-    <ClCompile Include="CatanNetworking\NetworkParsers\BuildingParser.cpp" />
-    <ClCompile Include="CatanNetworking\NetworkParsers\CardIsParser.cpp" />
-    <ClCompile Include="CatanNetworking\NetworkParsers\DevCardParser.cpp" />
-    <ClCompile Include="CatanNetworking\NetworkParsers\DicesParser.cpp" />
-    <ClCompile Include="CatanNetworking\NetworkParsers\KnightParser.cpp" />
-    <ClCompile Include="CatanNetworking\NetworkParsers\MapParser.cpp" />
-    <ClCompile Include="CatanNetworking\NetworkParsers\MonopolyParser.cpp" />
-    <ClCompile Include="CatanNetworking\NetworkParsers\NameParser.cpp" />
-    <ClCompile Include="CatanNetworking\NetworkParsers\NetworkParser.cpp" />
-    <ClCompile Include="CatanNetworking\NetworkParsers\OfferParser.cpp" />
-    <ClCompile Include="CatanNetworking\NetworkParsers\RobberCardParser.cpp" />
-    <ClCompile Include="CatanNetworking\NetworkParsers\RobberMoveParser.cpp" />
-    <ClCompile Include="CatanNetworking\NetworkParsers\TokenParser.cpp" />
-    <ClCompile Include="CatanNetworking\NetworkParsers\YOPParser.cpp" />
-    <ClCompile Include="CatanNetworking\NetworkProtocols\Protocol.cpp" />
-    <ClCompile Include="CatanNetworking\NetworkProtocols\ProtocolState.cpp" />
-    <ClCompile Include="CatanNetworking\NetworkProtocols\PSDataSend.cpp" />
-    <ClCompile Include="CatanNetworking\NetworkProtocols\PSRecv.cpp" />
-    <ClCompile Include="CatanNetworking\NetworkProtocols\PSSend.cpp" />
-    <ClCompile Include="CatanNetworking\NetworkProtocols\PSWaitSend.cpp" />
-    <ClCompile Include="FSM\EventQueue.cpp" />
-    <ClCompile Include="FSM\GenericEvent.cpp" />
-    <ClCompile Include="FSM\GenericFsm.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="MVC\Observer.cpp" />
-    <ClCompile Include="MVC\Subject.cpp" />
+    <ClCompile Include="..\Catan\CatanData\BankData.cpp" />
+    <ClCompile Include="..\Catan\CatanData\BuildingData.cpp" />
+    <ClCompile Include="..\Catan\CatanData\CardIsData.cpp" />
+    <ClCompile Include="..\Catan\CatanData\CatanData.cpp" />
+    <ClCompile Include="..\Catan\CatanData\DevCardsData.cpp" />
+    <ClCompile Include="..\Catan\CatanData\DicesData.cpp" />
+    <ClCompile Include="..\Catan\CatanData\KnightData.cpp" />
+    <ClCompile Include="..\Catan\CatanData\MapData.cpp" />
+    <ClCompile Include="..\Catan\CatanData\MonopolyData.cpp" />
+    <ClCompile Include="..\Catan\CatanData\NameData.cpp" />
+    <ClCompile Include="..\Catan\CatanData\OfferData.cpp" />
+    <ClCompile Include="..\Catan\CatanData\RobberCardData.cpp" />
+    <ClCompile Include="..\Catan\CatanData\RobberMoveData.cpp" />
+    <ClCompile Include="..\Catan\CatanData\TokenData.cpp" />
+    <ClCompile Include="..\Catan\CatanData\YOPData.cpp" />
+    <ClCompile Include="..\Catan\CatanNetworking\NetworkHandlers\NetworkClient.cpp" />
+    <ClCompile Include="..\Catan\CatanNetworking\NetworkHandlers\NetworkServer.cpp" />
+    <ClCompile Include="..\Catan\CatanNetworking\NetworkHandlers\NetworkSocket.cpp" />
+    <ClCompile Include="..\Catan\CatanNetworking\NetworkPackets\BankPacket.cpp" />
+    <ClCompile Include="..\Catan\CatanNetworking\NetworkPackets\BuildingPacket.cpp" />
+    <ClCompile Include="..\Catan\CatanNetworking\NetworkPackets\CardIsPacket.cpp" />
+    <ClCompile Include="..\Catan\CatanNetworking\NetworkPackets\DevCardPacket.cpp" />
+    <ClCompile Include="..\Catan\CatanNetworking\NetworkPackets\DicesPacket.cpp" />
+    <ClCompile Include="..\Catan\CatanNetworking\NetworkPackets\KnighPacket.cpp" />
+    <ClCompile Include="..\Catan\CatanNetworking\NetworkPackets\MapPacket.cpp" />
+    <ClCompile Include="..\Catan\CatanNetworking\NetworkPackets\MonopolyPacket.cpp" />
+    <ClCompile Include="..\Catan\CatanNetworking\NetworkPackets\NamePacket.cpp" />
+    <ClCompile Include="..\Catan\CatanNetworking\NetworkPackets\NetworkPacket.cpp" />
+    <ClCompile Include="..\Catan\CatanNetworking\NetworkPackets\OfferPacket.cpp" />
+    <ClCompile Include="..\Catan\CatanNetworking\NetworkPackets\RobberCardPacket.cpp" />
+    <ClCompile Include="..\Catan\CatanNetworking\NetworkPackets\RobberMovePacket.cpp" />
+    <ClCompile Include="..\Catan\CatanNetworking\NetworkPackets\TokenPacket.cpp" />
+    <ClCompile Include="..\Catan\CatanNetworking\NetworkPackets\YOPPacket.cpp" />
+    <ClCompile Include="..\Catan\CatanNetworking\NetworkParsers\BankParser.cpp" />
+    <ClCompile Include="..\Catan\CatanNetworking\NetworkParsers\BuildingParser.cpp" />
+    <ClCompile Include="..\Catan\CatanNetworking\NetworkParsers\CardIsParser.cpp" />
+    <ClCompile Include="..\Catan\CatanNetworking\NetworkParsers\DevCardParser.cpp" />
+    <ClCompile Include="..\Catan\CatanNetworking\NetworkParsers\DicesParser.cpp" />
+    <ClCompile Include="..\Catan\CatanNetworking\NetworkParsers\KnightParser.cpp" />
+    <ClCompile Include="..\Catan\CatanNetworking\NetworkParsers\MapParser.cpp" />
+    <ClCompile Include="..\Catan\CatanNetworking\NetworkParsers\MonopolyParser.cpp" />
+    <ClCompile Include="..\Catan\CatanNetworking\NetworkParsers\NameParser.cpp" />
+    <ClCompile Include="..\Catan\CatanNetworking\NetworkParsers\NetworkParser.cpp" />
+    <ClCompile Include="..\Catan\CatanNetworking\NetworkParsers\OfferParser.cpp" />
+    <ClCompile Include="..\Catan\CatanNetworking\NetworkParsers\RobberCardParser.cpp" />
+    <ClCompile Include="..\Catan\CatanNetworking\NetworkParsers\RobberMoveParser.cpp" />
+    <ClCompile Include="..\Catan\CatanNetworking\NetworkParsers\TokenParser.cpp" />
+    <ClCompile Include="..\Catan\CatanNetworking\NetworkParsers\YOPParser.cpp" />
+    <ClCompile Include="..\Catan\FSM\EventQueue.cpp" />
+    <ClCompile Include="..\Catan\FSM\GenericEvent.cpp" />
+    <ClCompile Include="..\Catan\FSM\GenericFsm.cpp" />
+    <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Catan\Catan.vcxproj">
+      <Project>{cb03f482-49fd-4bc8-8a03-e24a5ceed8f1}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Catan\CatanData\BankData.h" />
+    <ClInclude Include="..\Catan\CatanData\BuildingData.h" />
+    <ClInclude Include="..\Catan\CatanData\CardIsData.h" />
+    <ClInclude Include="..\Catan\CatanData\CatanData.h" />
+    <ClInclude Include="..\Catan\CatanData\DevCardsData.h" />
+    <ClInclude Include="..\Catan\CatanData\DicesData.h" />
+    <ClInclude Include="..\Catan\CatanData\KnightData.h" />
+    <ClInclude Include="..\Catan\CatanData\MapData.h" />
+    <ClInclude Include="..\Catan\CatanData\MonopolyData.h" />
+    <ClInclude Include="..\Catan\CatanData\NameData.h" />
+    <ClInclude Include="..\Catan\CatanData\OfferData.h" />
+    <ClInclude Include="..\Catan\CatanData\RobberCardData.h" />
+    <ClInclude Include="..\Catan\CatanData\RobberMoveData.h" />
+    <ClInclude Include="..\Catan\CatanData\TokenData.h" />
+    <ClInclude Include="..\Catan\CatanData\YOPData.h" />
+    <ClInclude Include="..\Catan\CatanNetworking\NetworkHandlers\NetworkClient.h" />
+    <ClInclude Include="..\Catan\CatanNetworking\NetworkHandlers\NetworkServer.h" />
+    <ClInclude Include="..\Catan\CatanNetworking\NetworkHandlers\NetworkSocket.h" />
+    <ClInclude Include="..\Catan\CatanNetworking\NetworkPackets\BankPacket.h" />
+    <ClInclude Include="..\Catan\CatanNetworking\NetworkPackets\BuildingPacket.h" />
+    <ClInclude Include="..\Catan\CatanNetworking\NetworkPackets\CardIsPacket.h" />
+    <ClInclude Include="..\Catan\CatanNetworking\NetworkPackets\DevCardPacket.h" />
+    <ClInclude Include="..\Catan\CatanNetworking\NetworkPackets\DicesPacket.h" />
+    <ClInclude Include="..\Catan\CatanNetworking\NetworkPackets\KnightPacket.h" />
+    <ClInclude Include="..\Catan\CatanNetworking\NetworkPackets\MapPacket.h" />
+    <ClInclude Include="..\Catan\CatanNetworking\NetworkPackets\MonopolyPacket.h" />
+    <ClInclude Include="..\Catan\CatanNetworking\NetworkPackets\NamePacket.h" />
+    <ClInclude Include="..\Catan\CatanNetworking\NetworkPackets\NetworkPacket.h" />
+    <ClInclude Include="..\Catan\CatanNetworking\NetworkPackets\OfferPacket.h" />
+    <ClInclude Include="..\Catan\CatanNetworking\NetworkPackets\RobberCardPacket.h" />
+    <ClInclude Include="..\Catan\CatanNetworking\NetworkPackets\RobberMovePacket.h" />
+    <ClInclude Include="..\Catan\CatanNetworking\NetworkPackets\TokenPacket.h" />
+    <ClInclude Include="..\Catan\CatanNetworking\NetworkPackets\YOPPacket.h" />
+    <ClInclude Include="..\Catan\CatanNetworking\NetworkParsers\BankParser.h" />
+    <ClInclude Include="..\Catan\CatanNetworking\NetworkParsers\BuildingParser.h" />
+    <ClInclude Include="..\Catan\CatanNetworking\NetworkParsers\CardIsParser.h" />
+    <ClInclude Include="..\Catan\CatanNetworking\NetworkParsers\DevCardParser.h" />
+    <ClInclude Include="..\Catan\CatanNetworking\NetworkParsers\DicesParser.h" />
+    <ClInclude Include="..\Catan\CatanNetworking\NetworkParsers\KnightParser.h" />
+    <ClInclude Include="..\Catan\CatanNetworking\NetworkParsers\MapParser.h" />
+    <ClInclude Include="..\Catan\CatanNetworking\NetworkParsers\MonopolyParser.h" />
+    <ClInclude Include="..\Catan\CatanNetworking\NetworkParsers\NameParser.h" />
+    <ClInclude Include="..\Catan\CatanNetworking\NetworkParsers\NetworkParser.h" />
+    <ClInclude Include="..\Catan\CatanNetworking\NetworkParsers\OfferParser.h" />
+    <ClInclude Include="..\Catan\CatanNetworking\NetworkParsers\ParserStatus.h" />
+    <ClInclude Include="..\Catan\CatanNetworking\NetworkParsers\RobberCardParser.h" />
+    <ClInclude Include="..\Catan\CatanNetworking\NetworkParsers\RobberMoveParser.h" />
+    <ClInclude Include="..\Catan\CatanNetworking\NetworkParsers\TokenParser.h" />
+    <ClInclude Include="..\Catan\CatanNetworking\NetworkParsers\YOPParser.h" />
+    <ClInclude Include="..\Catan\FSM\EventGenerator.h" />
+    <ClInclude Include="..\Catan\FSM\EventQueue.h" />
+    <ClInclude Include="..\Catan\FSM\GenericEvent.h" />
+    <ClInclude Include="..\Catan\FSM\GenericFsm.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
