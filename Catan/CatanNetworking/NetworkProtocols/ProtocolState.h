@@ -15,6 +15,12 @@ using namespace std;
 using NotifyCallback = function<CatanStatus(NetworkPacket*)>;
 
 /*
+* SendCallback - Transmision de mensajes a traves del handler
+* correspondiente.
+*/
+using SendCallback = function<void(NetworkPacket*)>;
+
+/*
 * ProtocolStatus - Verificacion de ejecucion del protocolo
 * para cada estado al implementar las llamadas.
 */
@@ -33,9 +39,11 @@ public:
 	/*
 	* ProtocolState
 	* Se permite construir un estado del protocol con o sin,
-	* callback de notificacion.
+	* callback de notificacion y con callback para mandar mensaje.
 	*/
+	ProtocolState(NotifyCallback notify, SendCallback send);
 	ProtocolState(NotifyCallback callback);
+	ProtocolState(SendCallback send);
 	ProtocolState(void);
 	virtual ~ProtocolState();
 
@@ -53,6 +61,25 @@ public:
 	bool shouldNotify(void) const;
 
 	/*
+	* setSendCallback
+	* Configura el callback para transmision de mensajes
+	*/
+	void setSendCallback(SendCallback send);
+
+	/*
+	* canSend
+	* Indica si tiene o no configurado callback para mandar mensajes.
+	*/
+	bool canSend(void) const;
+
+	/*
+	* sendPacket
+	* Permite mandar un mensaje o paquete de datos
+	* utilizando el callback para ello.
+	*/
+	void sendPacket(NetworkPacket* packet);
+
+	/*
 	* Rutinas de operacion del estado de un protocolo.
 	* El estado de un protocolo puede redefinir la reaccion
 	* ante la necesidad de mandar, haber recibido un mensaje,
@@ -63,6 +90,9 @@ public:
 	virtual ProtocolStatus solve(void) = 0;
 
 private:
-	NotifyCallback callback;
-	bool hasCallback;
+	NotifyCallback notifyCallback;
+	bool hasNotify;
+
+	SendCallback sendCallback;
+	bool hasSend;
 };

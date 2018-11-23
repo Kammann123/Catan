@@ -2,11 +2,16 @@
 
 Protocol::
 Protocol(SendCallback sendCallback, vector<ProtocolState> states) {
-	this->sendCallback = sendCallback;
+	/* Inicializo */
 	this->states = states;
 	this->currentState = 0;
 	this->status = ProtocolStatus::OK;
 	this->error = "";
+
+	/* Configuro el callback */
+	for (ProtocolState& p : states) {
+		p.setSendCallback(sendCallback);
+	}
 }
 
 ProtocolStatus
@@ -103,6 +108,8 @@ Protocol::transition(ProtocolStatus status) {
 
 void 
 Protocol::send(NetworkPacket* packet) {
+	verifyStatus();
+
 	ProtocolStatus response = this->states[currentState].send(packet);
 
 	transition(response, packet);
@@ -110,7 +117,19 @@ Protocol::send(NetworkPacket* packet) {
 
 void
 Protocol::recv(NetworkPacket* packet) {
+	verifyStatus();
+
 	ProtocolStatus response = this->states[currentState].recv(packet);
 
 	transition(response, packet);
+}
+
+voi
+Protocol::verifyStatus(void) const {
+	if (status == ProtocolStatus::DONE) {
+		throw exception("Protocol - verifyStatus - El protocolo termino, revisar getStatus!");
+	}
+	else if (status == ProtocolStatus::ERROR ){
+		throw exception("Protocol - verifyStatus - El protocolo tuvo un error, revisar getStatus!");
+	})
 }

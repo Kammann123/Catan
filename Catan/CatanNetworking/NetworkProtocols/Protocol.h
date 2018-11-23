@@ -8,12 +8,6 @@
 using namespace std;
 
 /*
-* SendCallback - Transmision de mensajes a traves del handler
-* correspondiente.
-*/
-using SendCallback = function<void(NetworkPacket*)>;
-
-/*
 * Protocol
 * Modelizacion de un protocolo de comunicacion, donde se define
 * la secuencia de handshaking que hace a una conversacion.
@@ -68,7 +62,13 @@ private:
 	void transition(ProtocolStatus status);
 	void transition(ProtocolStatus status, NetworkPacket* packet);
 
-	SendCallback sendCallback;
+	/*
+	* verifyStatus
+	* Verifica que el protocolo siga vivo, sino, no puede ejecutar nada
+	* y levanto excepcion... porque no estan revisando las cosas.
+	*/
+	void verifyStatus(void) const;
+
 	ProtocolStatus status;
 	string error;
 
