@@ -11,16 +11,21 @@ PSRecv(NotifyCallback notify, PacketHeader _expected) : ProtocolState(notify) {
 PSRecv::
 PSRecv(list<PacketHeader> _expected) : ProtocolState(), expected(_expected) {}
 
+PSRecv::
+PSRecv(PacketHeader _expected) : ProtocolState() {
+	expected.push_back(_expected);
+}
+
 ProtocolStatus
 PSRecv::send(NetworkPacket* packet) {
-	return ProtocolStatus::ERROR;
+	return ProtocolStatus::PROTOCOL_ERROR;
 }
 
 ProtocolStatus
 PSRecv::recv(NetworkPacket* packet) {
 	/* Recibio un mensaje no esperado? */
 	if (find(expected.begin(), expected.end(), packet->getHeader()) == expected.end()) {
-		return ProtocolStatus::ERROR;
+		return ProtocolStatus::PROTOCOL_ERROR;
 	}
 	else {
 		return ProtocolStatus::DONE;

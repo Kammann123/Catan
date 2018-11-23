@@ -18,13 +18,6 @@ ProtocolState(NotifyCallback callback) {
 }
 
 ProtocolState::
-ProtocolState(SendCallback callback) {
-	this->sendCallback = callback;
-	this->hasNotify = false;
-	this->hasSend = true;
-}
-
-ProtocolState::
 ProtocolState(void) {
 	this->hasNotify = false;
 	this->hasSend = false;
@@ -37,7 +30,7 @@ ProtocolState::shouldNotify(void) const {
 	return this->hasNotify;
 }
 
-CatanStatus
+void
 ProtocolState::notify(NetworkPacket* packet) {
 	if (!hasNotify) {
 		throw exception("ProtocolState - notify - Configuracion de protocolo erronea, no deberia notificar!");

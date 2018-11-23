@@ -12,7 +12,7 @@ using namespace std;
 * de estos llamados siempre es un CatanStatus que identifica
 * un posible error o estado.
 */
-using NotifyCallback = function<CatanStatus(NetworkPacket*)>;
+using NotifyCallback = function<void(NetworkPacket*)>;
 
 /*
 * SendCallback - Transmision de mensajes a traves del handler
@@ -24,7 +24,7 @@ using SendCallback = function<void(NetworkPacket*)>;
 * ProtocolStatus - Verificacion de ejecucion del protocolo
 * para cada estado al implementar las llamadas.
 */
-enum class ProtocolStatus : unsigned int {OK, DONE, ERROR};
+enum class ProtocolStatus : unsigned int {OK, DONE, PROTOCOL_ERROR};
 
 /*
 * ProtocolState
@@ -43,7 +43,6 @@ public:
 	*/
 	ProtocolState(NotifyCallback notify, SendCallback send);
 	ProtocolState(NotifyCallback callback);
-	ProtocolState(SendCallback send);
 	ProtocolState(void);
 	virtual ~ProtocolState();
 
@@ -52,7 +51,7 @@ public:
 	* Notifica en caso de tenerlo habilitado, y devuelve estado
 	* o resultado, llamando el callback.
 	*/
-	CatanStatus notify(NetworkPacket* packet);
+	void notify(NetworkPacket* packet);
 
 	/*
 	* shouldNotify

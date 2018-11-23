@@ -163,6 +163,12 @@
     <ClCompile Include="..\Catan\CatanNetworking\NetworkParsers\RobberMoveParser.cpp" />
     <ClCompile Include="..\Catan\CatanNetworking\NetworkParsers\TokenParser.cpp" />
     <ClCompile Include="..\Catan\CatanNetworking\NetworkParsers\YOPParser.cpp" />
+    <ClCompile Include="..\Catan\CatanNetworking\NetworkProtocols\Protocol.cpp" />
+    <ClCompile Include="..\Catan\CatanNetworking\NetworkProtocols\ProtocolState.cpp" />
+    <ClCompile Include="..\Catan\CatanNetworking\NetworkProtocols\PSDataSend.cpp" />
+    <ClCompile Include="..\Catan\CatanNetworking\NetworkProtocols\PSRecv.cpp" />
+    <ClCompile Include="..\Catan\CatanNetworking\NetworkProtocols\PSSend.cpp" />
+    <ClCompile Include="..\Catan\CatanNetworking\NetworkProtocols\PSWaitSend.cpp" />
     <ClCompile Include="..\Catan\FSM\EventQueue.cpp" />
     <ClCompile Include="..\Catan\FSM\GenericEvent.cpp" />
     <ClCompile Include="..\Catan\FSM\GenericFsm.cpp" />
@@ -226,6 +232,13 @@
     <ClInclude Include="..\Catan\CatanNetworking\NetworkParsers\RobberMoveParser.h" />
     <ClInclude Include="..\Catan\CatanNetworking\NetworkParsers\TokenParser.h" />
     <ClInclude Include="..\Catan\CatanNetworking\NetworkParsers\YOPParser.h" />
+    <ClInclude Include="..\Catan\CatanNetworking\NetworkProtocols\NetworkProtocol.h" />
+    <ClInclude Include="..\Catan\CatanNetworking\NetworkProtocols\Protocol.h" />
+    <ClInclude Include="..\Catan\CatanNetworking\NetworkProtocols\ProtocolState.h" />
+    <ClInclude Include="..\Catan\CatanNetworking\NetworkProtocols\PSDataSend.h" />
+    <ClInclude Include="..\Catan\CatanNetworking\NetworkProtocols\PSRecv.h" />
+    <ClInclude Include="..\Catan\CatanNetworking\NetworkProtocols\PSSend.h" />
+    <ClInclude Include="..\Catan\CatanNetworking\NetworkProtocols\PSWaitSend.h" />
     <ClInclude Include="..\Catan\FSM\EventGenerator.h" />
     <ClInclude Include="..\Catan\FSM\EventQueue.h" />
     <ClInclude Include="..\Catan\FSM\GenericEvent.h" />

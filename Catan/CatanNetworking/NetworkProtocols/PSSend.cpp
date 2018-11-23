@@ -5,12 +5,12 @@ PSSend(PacketHeader _header) : ProtocolState(), header(_header) {}
 
 ProtocolStatus
 PSSend::send(NetworkPacket* packet) {
-	return ProtocolStatus::ERROR;
+	return ProtocolStatus::PROTOCOL_ERROR;
 }
 
 ProtocolStatus
 PSSend::recv(NetworkPacket* packet) {
-	return ProtocolStatus::ERROR;
+	return ProtocolStatus::PROTOCOL_ERROR;
 }
 
 ProtocolStatus

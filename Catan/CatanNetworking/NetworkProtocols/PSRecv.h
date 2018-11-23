@@ -24,6 +24,7 @@ public:
 	PSRecv(NotifyCallback notify, list<PacketHeader> _expected);
 	PSRecv(NotifyCallback notify, PacketHeader _expected);
 	PSRecv(list<PacketHeader> _expected);
+	PSRecv(PacketHeader _expected);
 
 	/*
 	* Implementacion de las rutinas de operacion del

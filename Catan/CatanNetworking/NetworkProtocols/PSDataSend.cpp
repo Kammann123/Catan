@@ -8,12 +8,12 @@ PSDataSend(PacketCallback _callback) : ProtocolState(), callback(_callback) {}
 
 ProtocolStatus
 PSDataSend::send(NetworkPacket* packet) {
-	return ProtocolStatus::ERROR;
+	return ProtocolStatus::PROTOCOL_ERROR;
 }
 
 ProtocolStatus
 PSDataSend::recv(NetworkPacket* packet) {
-	return ProtocolStatus::ERROR;
+	return ProtocolStatus::PROTOCOL_ERROR;
 }
 
 ProtocolStatus

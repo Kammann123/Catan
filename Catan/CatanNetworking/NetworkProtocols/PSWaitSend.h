@@ -22,6 +22,7 @@ public:
 	PSWaitSend(NotifyCallback notify, PacketHeader _expected);
 	PSWaitSend(NotifyCallback notify, list<PacketHeader> _expected);
 	PSWaitSend(list<PacketHeader> _expected);
+	PSWaitSend(PacketHeader _expected);
 
 	/*
 	* Implementacion de las rutinas de operacion del

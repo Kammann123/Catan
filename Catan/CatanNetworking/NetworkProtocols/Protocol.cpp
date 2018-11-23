@@ -67,7 +67,7 @@ Protocol::transition(ProtocolStatus status, NetworkPacket* packet) {
 
 		/* El estado de protocolo responde un error, indicando que
 		* no recibio correctamente lo que esperaba! */
-	case ProtocolStatus::ERROR:
+	case ProtocolStatus::PROTOCOL_ERROR:
 		this->status = status;
 		this->error = "Hubo un error en el protocolo de comunicacion!";
 		break;
@@ -102,7 +102,7 @@ Protocol::transition(ProtocolStatus status) {
 
 		/* El estado de protocolo responde un error, indicando que
 		* no recibio correctamente lo que esperaba! */
-	case ProtocolStatus::ERROR:
+	case ProtocolStatus::PROTOCOL_ERROR:
 		this->status = status;
 		this->error = "Hubo un error en el protocolo de comunicacion!";
 		break;
@@ -132,7 +132,7 @@ Protocol::verifyStatus(void) const {
 	if (status == ProtocolStatus::DONE) {
 		throw exception("Protocol - verifyStatus - El protocolo termino, revisar getStatus!");
 	}
-	else if (status == ProtocolStatus::ERROR ){
+	else if (status == ProtocolStatus::PROTOCOL_ERROR){
 		throw exception("Protocol - verifyStatus - El protocolo tuvo un error, revisar getStatus!");
 	}
 }
