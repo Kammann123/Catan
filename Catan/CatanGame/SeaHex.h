@@ -29,7 +29,7 @@ public:
 	* getType
 	* Devuelve el tipo de muelle del mar que tiene
 	*/
-	SeaId getType(void) const;
+	list<SeaId> getDockList(void) const;
 
 
 private:

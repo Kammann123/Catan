@@ -6,8 +6,17 @@ SeaHex(unsigned char coord, SeaId dockOne, SeaId dockTwo)
 	/* Inicializacion */
 	this->coord = coord;
 	this->dockList.push_back(dockOne);
-	this->dockList.pus
+	this->dockList.push_back(dockTwo);
 }
+
+SeaHex::
+SeaHex(unsigned char coord, SeaId onlyDock)
+{
+	/* Inicializacion */
+	this->coord = coord;
+	this->dockList.push_back(onlyDock);
+}
+
 
 unsigned char
 SeaHex::getCoord(void) const {
@@ -15,6 +24,7 @@ SeaHex::getCoord(void) const {
 }
 
 SeaId
-SeaHex::getType(void) const {
-	return this->seaId;
+list<SeaId> getDockList(void) const
+{
+	return this->dockList;
 }
