@@ -17,6 +17,13 @@ Protocol(SendCallback sendCallback, vector<ProtocolState*> states) {
 	transition(this->states[this->currentState]->solve());
 }
 
+Protocol::
+~Protocol() {
+	for (ProtocolState* p : states) {
+		delete p;
+	}
+}
+
 ProtocolStatus
 Protocol::getStatus(void) const {
 	return this->status;

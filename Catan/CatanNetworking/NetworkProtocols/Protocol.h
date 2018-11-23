@@ -24,6 +24,7 @@ public:
 	* - states: Estados del protocolo
 	*/
 	Protocol(SendCallback sendCallback, vector<ProtocolState*> states);
+	~Protocol();
 
 	/*
 	* getStatus
