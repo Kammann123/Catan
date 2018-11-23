@@ -261,6 +261,9 @@
     <ClInclude Include="CatanNetworking\NetworkPackets\CardIsPacket.h">
       <Filter>CatanNetworking\NetworkPackets</Filter>
     </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkParsers\CardIsParser.h">
+      <Filter>CatanNetworking\NetworkParsers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FSM\EventQueue.cpp">
@@ -466,6 +469,9 @@
     </ClCompile>
     <ClCompile Include="CatanNetworking\NetworkPackets\CardIsPacket.cpp">
       <Filter>CatanNetworking\NetworkPackets</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkParsers\CardIsParser.cpp">
+      <Filter>CatanNetworking\NetworkParsers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

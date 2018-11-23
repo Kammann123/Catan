@@ -166,6 +166,7 @@
     <ClInclude Include="CatanNetworking\NetworkPackets\YOPPacket.h" />
     <ClInclude Include="CatanNetworking\NetworkParsers\BankParser.h" />
     <ClInclude Include="CatanNetworking\NetworkParsers\BuildingParser.h" />
+    <ClInclude Include="CatanNetworking\NetworkParsers\CardIsParser.h" />
     <ClInclude Include="CatanNetworking\NetworkParsers\DevCardParser.h" />
     <ClInclude Include="CatanNetworking\NetworkParsers\DicesParser.h" />
     <ClInclude Include="CatanNetworking\NetworkParsers\KnightParser.h" />
@@ -237,6 +238,7 @@
     <ClCompile Include="CatanNetworking\NetworkPackets\YOPPacket.cpp" />
     <ClCompile Include="CatanNetworking\NetworkParsers\BankParser.cpp" />
     <ClCompile Include="CatanNetworking\NetworkParsers\BuildingParser.cpp" />
+    <ClCompile Include="CatanNetworking\NetworkParsers\CardIsParser.cpp" />
     <ClCompile Include="CatanNetworking\NetworkParsers\DevCardParser.cpp" />
     <ClCompile Include="CatanNetworking\NetworkParsers\DicesParser.cpp" />
     <ClCompile Include="CatanNetworking\NetworkParsers\KnightParser.cpp" />
