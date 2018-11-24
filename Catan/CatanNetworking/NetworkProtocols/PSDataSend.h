@@ -25,8 +25,8 @@ public:
 	* donde se busca el paquete particular para enviar el mensaje
 	* en cuestion.
 	*/
-	PSDataSend(NotifyCallback _notify, PacketCallback _callback);
-	PSDataSend(PacketCallback _callback);
+	PSDataSend(ProtocolTag* tag, NotifyCallback _notify, PacketCallback _callback);
+	PSDataSend(ProtocolTag* tag, PacketCallback _callback);
 
 	/*
 	* Rutinas de operacion del estado de protocolo

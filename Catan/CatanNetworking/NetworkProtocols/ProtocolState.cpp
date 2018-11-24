@@ -3,7 +3,8 @@
 #include <exception>
 
 ProtocolState::
-ProtocolState(NotifyCallback notify, SendCallback send) {
+ProtocolState(ProtocolTag* tag, NotifyCallback notify, SendCallback send) {
+	this->tag = tag;
 	this->notifyCallback = notify;
 	this->hasNotify = true;
 	this->sendCallback = send;
@@ -11,19 +12,50 @@ ProtocolState(NotifyCallback notify, SendCallback send) {
 }
 
 ProtocolState::
-ProtocolState(NotifyCallback callback) {
+ProtocolState(ProtocolTag* tag, NotifyCallback callback) {
+	this->tag = tag;
 	this->notifyCallback = callback;
 	this->hasNotify = true;
 	this->hasSend = false;
 }
 
 ProtocolState::
-ProtocolState(void) {
+ProtocolState(ProtocolTag* tag) {
+	this->tag = tag;
 	this->hasNotify = false;
 	this->hasSend = false;
 }
 
-ProtocolState::~ProtocolState(void) {}
+ProtocolState::~ProtocolState(void) {
+	if (tag)
+		delete tag;
+}
+
+ProtocolTag*
+ProtocolState::getTag(void) {
+	return tag;
+}
+
+NotifyCallback
+ProtocolState::getNotifyCallback(void) {
+	return notifyCallback;
+}
+
+map<string, ProtocolState*>* 
+ProtocolState::getSubStates(void) {
+	return nullptr;
+}
+
+void 
+ProtocolState::setNotifyCallback(NotifyCallback notify) {
+	this->notify = notify;
+	this->hasNotify = true;
+}
+
+string 
+ProtocolState::getNextTag(void){
+	return this->tag->getTag();
+}
 
 bool
 ProtocolState::shouldNotify(void) const {

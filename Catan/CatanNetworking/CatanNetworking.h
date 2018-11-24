@@ -1,13 +1,20 @@
 #pragma once
 
-#include "NetworkingState.h"
 #include "NetworkHandlers/NetworkSocket.h"
 #include "../CatanGame/CatanGame.h"
 #include "../MVC/Observer.h"
 
 #include <string>
 
+#include "NetworkingStates/NetworkingState.h"
+
 using namespace std;
+
+/*
+* IMPORTANTE RECORDATORIO
+* Para entender el flujo de State pattern, recordar pensar que en cada estado,
+* ver al estado, es en si mismo ver a CatanNetworking.
+*/
 
 /*
 * CatanNetworking
@@ -58,9 +65,27 @@ public:
 	*/
 	bool good(void);
 
-private:
+	/*
+	* changeState
+	* Cambia el estado del Networking
+	*/
+	void changeState(NetworkingState* state);
 
-	friend class NetworkingState;
+	/*
+	* setError
+	* Configura un estado de error en el Networking
+	*/
+	void setError(string msg);
+	void setError(const char* msg);
+
+	/* Getters paara los NetworkingStates */
+	CatanGame& getGame(void);
+	NetworkSocket* getSocket(void);
+	string getIp(void);
+	unsigned int getPort(void);
+	void setSocket(NetworkSocket* socket);
+
+private:
 
 	/*
 	* getEventPacket
@@ -75,19 +100,6 @@ private:
 	* utilizacion de Networking.
 	*/
 	void verifyStatus(void) const;
-
-	/*
-	* changeState
-	* Cambia el estado del Networking
-	*/
-	void changeState(NetworkingState* state);
-
-	/*
-	* setError
-	* Configura un estado de error en el Networking
-	*/
-	void setError(string msg);
-	void setError(const char* msg);
 
 private:
 	string ip;

@@ -6,8 +6,11 @@
 
 #include <vector>
 #include <string>
+#include <map>
 
 using namespace std;
+
+#define PROTOCOL_DONE	"DONE"
 
 /*
 * Protocol
@@ -24,10 +27,10 @@ public:
 	* Requiere definirse:
 	* - sendCallback: Callback de transmision de paquete
 	* - timeout: Tiempo maximo de espera en milisegundos
-	* - states: Estados del protocolo
+	* - states: Estados del protocolo con sus tags respectivos
 	*/
-	Protocol(SendCallback sendCallback, unsigned int timeout, vector<ProtocolState*> states);
-	Protocol(SendCallback sendCallback, vector<ProtocolState*> states);
+	Protocol(SendCallback sendCallback, string start, unsigned int timeout, map<string, ProtocolState*> states);
+	Protocol(SendCallback sendCallback, string start, map<string, ProtocolState*> states);
 	~Protocol();
 
 	/*
@@ -63,8 +66,7 @@ private:
 	* transition
 	* Maneja una transicion dentro del protocolo de comunicacion
 	*/
-	void transition(ProtocolStatus status);
-	void transition(ProtocolStatus status, NetworkPacket* packet);
+	void transition(ProtocolStatus status, NetworkPacket* packet = nullptr);
 
 	/*
 	* resetTimer
@@ -78,12 +80,17 @@ private:
 	* y levanto excepcion... porque no estan revisando las cosas.
 	*/
 	void verifyStatus(void) const;
+	
+	/* Rutionas de inicializacion */
+	void _init_callback();
+	void _init_substates();
 
 	ProtocolStatus status;
 	string error;
 
-	vector<ProtocolState*> states;
-	unsigned int currentState;
+	map<string, ProtocolState*> states;
+	string currState;
+	string startState;
 
 	boost::chrono::steady_clock::duration timeout;
 	boost::chrono::steady_clock::time_point start;

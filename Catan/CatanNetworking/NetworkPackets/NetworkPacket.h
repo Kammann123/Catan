@@ -42,7 +42,7 @@ enum PacketHeader : unsigned char {
 	I_WON = 0x50,
 	PLAY_AGAIN,
 	GAME_OVER,
-	ERROR = 0xFE,
+	HEADER_ERROR = 0xFE,
 	QUIT
 };
 

@@ -16,7 +16,7 @@ public:
 	* Se construye el estado de respuesta con el header
 	* del mensaje que hay que armar para enviar.
 	*/
-	PSSend(PacketHeader _header);
+	PSSend(ProtocolTag* tag, PacketHeader _header);
 
 	/*
 	* Implementacion de las rutinas de operacion del 

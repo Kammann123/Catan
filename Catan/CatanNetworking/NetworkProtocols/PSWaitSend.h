@@ -19,10 +19,10 @@ public:
 	* para poder notificar y luego los header que son validos
 	* para enviar en esta etapa.
 	*/
-	PSWaitSend(NotifyCallback notify, PacketHeader _expected);
-	PSWaitSend(NotifyCallback notify, list<PacketHeader> _expected);
-	PSWaitSend(list<PacketHeader> _expected);
-	PSWaitSend(PacketHeader _expected);
+	PSWaitSend(ProtocolTag* tag, NotifyCallback notify, PacketHeader _expected);
+	PSWaitSend(ProtocolTag* tag, NotifyCallback notify, list<PacketHeader> _expected);
+	PSWaitSend(ProtocolTag* tag, list<PacketHeader> _expected);
+	PSWaitSend(ProtocolTag* tag, PacketHeader _expected);
 
 	/*
 	* Implementacion de las rutinas de operacion del

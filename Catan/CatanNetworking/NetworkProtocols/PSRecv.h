@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ProtocolState.h"
+#include "PSIfRecv.h"
 
 #include <list>
 
@@ -21,10 +22,10 @@ public:
 	* de los posibles mensajes validos a esperar, y tambien
 	* el callback de notificacion del mensaje recibido.
 	*/
-	PSRecv(NotifyCallback notify, list<PacketHeader> _expected);
-	PSRecv(NotifyCallback notify, PacketHeader _expected);
-	PSRecv(list<PacketHeader> _expected);
-	PSRecv(PacketHeader _expected);
+	PSRecv(ProtocolTag* tag, NotifyCallback notify, list<PacketHeader> _expected);
+	PSRecv(ProtocolTag* tag, NotifyCallback notify, PacketHeader _expected);
+	PSRecv(ProtocolTag* tag, list<PacketHeader> _expected);
+	PSRecv(ProtocolTag* tag, PacketHeader _expected);
 
 	/*
 	* Implementacion de las rutinas de operacion del

@@ -1,7 +1,7 @@
 #include "PSSend.h"
 
 PSSend::
-PSSend(PacketHeader _header) : ProtocolState(), header(_header) {}
+PSSend(ProtocolTag* tag, PacketHeader _header) : ProtocolState(tag), header(_header) {}
 
 ProtocolStatus
 PSSend::send(NetworkPacket* packet) {

@@ -1,5 +1,9 @@
 #pragma once
 
+#include <string>
+
+using namespace std;
+
 /* Declaracion del networking */
 class CatanNetworking;
 
@@ -16,7 +20,7 @@ public:
 	* Constructor de NetworkingState
 	*/
 	NetworkingState(CatanNetworking& _networking);
-	virtual ~NetworkingState();
+	~NetworkingState();
 
 	/*
 	* Metodos y rutinas de ejecucion en Networking
@@ -29,6 +33,6 @@ public:
 	virtual void update(void) = 0;
 	virtual string what(void) = 0;
 
-private:
+protected:
 	CatanNetworking& networking;
 };

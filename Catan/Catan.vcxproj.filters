@@ -49,8 +49,8 @@
     <Filter Include="CatanData">
       <UniqueIdentifier>{3ea99685-f141-473c-90d5-eafe44ca6dcd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="CatanNetworking\Networking">
-      <UniqueIdentifier>{d7d543b6-d636-42eb-95eb-6327415b7d8d}</UniqueIdentifier>
+    <Filter Include="CatanNetworking\NetworkingStates">
+      <UniqueIdentifier>{76bcf697-69bf-414d-9b4e-45376105215f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -306,11 +306,44 @@
     <ClInclude Include="CatanNetworking\NetworkProtocols\PSSend.h">
       <Filter>CatanNetworking\NetworkProtocols</Filter>
     </ClInclude>
-    <ClInclude Include="CatanNetworking\Networking\Networking.h">
-      <Filter>CatanNetworking</Filter>
-    </ClInclude>
     <ClInclude Include="CatanNetworking\Networking\NetworkingState.h">
-      <Filter>CatanNetworking</Filter>
+      <Filter>CatanNetworking\NetworkingStates</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkingStates\Disconnected.h">
+      <Filter>CatanNetworking\NetworkingStates</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkingStates\Idle.h">
+      <Filter>CatanNetworking\NetworkingStates</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkingStates\Listening.h">
+      <Filter>CatanNetworking\NetworkingStates</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkingStates\NetError.h">
+      <Filter>CatanNetworking\NetworkingStates</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkingStates\NetworkingState.h">
+      <Filter>CatanNetworking\NetworkingStates</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkingStates\Sync.h">
+      <Filter>CatanNetworking\NetworkingStates</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkingStates\WaitSync.h">
+      <Filter>CatanNetworking\NetworkingStates</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkProtocols\ConditionalTag.h">
+      <Filter>CatanNetworking\NetworkProtocols</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkProtocols\ProtocolTag.h">
+      <Filter>CatanNetworking\NetworkProtocols</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkProtocols\StringTag.h">
+      <Filter>CatanNetworking\NetworkProtocols</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkProtocols\PSIfRecv.h">
+      <Filter>CatanNetworking\NetworkProtocols</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkProtocols\PSIfSend.h">
+      <Filter>CatanNetworking\NetworkProtocols</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -557,11 +590,29 @@
     <ClCompile Include="CatanNetworking\CatanNetworking.cpp">
       <Filter>CatanNetworking</Filter>
     </ClCompile>
-    <ClCompile Include="CatanNetworking\Networking\Networking.cpp">
-      <Filter>CatanNetworking</Filter>
-    </ClCompile>
     <ClCompile Include="CatanNetworking\Networking\NetworkingState.cpp">
-      <Filter>CatanNetworking</Filter>
+      <Filter>CatanNetworking\NetworkingStates</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkingStates\NetError.cpp">
+      <Filter>CatanNetworking\NetworkingStates</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkingStates\NetworkingState.cpp">
+      <Filter>CatanNetworking\NetworkingStates</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkingStates\Disconnected.cpp">
+      <Filter>CatanNetworking\NetworkingStates</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkProtocols\ConditionalTag.cpp">
+      <Filter>CatanNetworking\NetworkProtocols</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkProtocols\StringTag.cpp">
+      <Filter>CatanNetworking\NetworkProtocols</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkProtocols\PSIfRecv.cpp">
+      <Filter>CatanNetworking\NetworkProtocols</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkProtocols\PSIfSend.cpp">
+      <Filter>CatanNetworking\NetworkProtocols</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

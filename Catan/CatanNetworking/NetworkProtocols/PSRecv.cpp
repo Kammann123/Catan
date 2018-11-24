@@ -1,18 +1,18 @@
 #include "PSRecv.h"
 
 PSRecv::
-PSRecv(NotifyCallback notify, list<PacketHeader> _expected) : ProtocolState(notify), expected(_expected) {}
+PSRecv(ProtocolTag* tag, NotifyCallback notify, list<PacketHeader> _expected) : ProtocolState(tag, notify), expected(_expected) {}
 
 PSRecv::
-PSRecv(NotifyCallback notify, PacketHeader _expected) : ProtocolState(notify) {
+PSRecv(ProtocolTag* tag, NotifyCallback notify, PacketHeader _expected) : ProtocolState(tag, notify) {
 	expected.push_back(_expected);
 }
 
 PSRecv::
-PSRecv(list<PacketHeader> _expected) : ProtocolState(), expected(_expected) {}
+PSRecv(ProtocolTag* tag, list<PacketHeader> _expected) : ProtocolState(tag), expected(_expected) {}
 
 PSRecv::
-PSRecv(PacketHeader _expected) : ProtocolState() {
+PSRecv(ProtocolTag* tag, PacketHeader _expected) : ProtocolState(tag) {
 	expected.push_back(_expected);
 }
 

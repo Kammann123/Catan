@@ -2,8 +2,11 @@
 
 #include "../NetworkPackets/NetworkPacket.h"
 #include "../../CatanGame/CatanStatus.h"
+#include "ProtocolTag.h"
 
 #include <functional>
+#include <map>
+#include <string>
 
 using namespace std;
 
@@ -41,10 +44,17 @@ public:
 	* Se permite construir un estado del protocol con o sin,
 	* callback de notificacion y con callback para mandar mensaje.
 	*/
-	ProtocolState(NotifyCallback notify, SendCallback send);
-	ProtocolState(NotifyCallback callback);
-	ProtocolState(void);
+	ProtocolState(ProtocolTag* tag, NotifyCallback notify, SendCallback send);
+	ProtocolState(ProtocolTag* tag, NotifyCallback callback);
+	ProtocolState(ProtocolTag* tag);
 	virtual ~ProtocolState();
+
+	/*
+	* setNotifyCallback
+	* Permite configurar el notify callback
+	*/
+	void setNotifyCallback(NotifyCallback notify);
+	NotifyCallback getNotifyCallback(void);
 
 	/*
 	* notify
@@ -79,6 +89,13 @@ public:
 	void sendPacket(NetworkPacket* packet);
 
 	/*
+	* getNextTag
+	* Devuelve el siguiente tag del estado del protocolo
+	*/
+	string getNextTag(void);
+	ProtocolTag* getTag(void);
+
+	/*
 	* Rutinas de operacion del estado de un protocolo.
 	* El estado de un protocolo puede redefinir la reaccion
 	* ante la necesidad de mandar, haber recibido un mensaje,
@@ -87,11 +104,12 @@ public:
 	virtual ProtocolStatus send(NetworkPacket* packet) = 0;
 	virtual ProtocolStatus recv(NetworkPacket* packet) = 0;
 	virtual ProtocolStatus solve(void) = 0;
+	virtual map<string, ProtocolState*>* getSubStates(void);
 
-private:
+protected:
+	ProtocolTag* tag;
 	NotifyCallback notifyCallback;
-	bool hasNotify;
-
 	SendCallback sendCallback;
+	bool hasNotify;
 	bool hasSend;
 };

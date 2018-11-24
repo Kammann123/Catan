@@ -1,49 +1,86 @@
 #include "Protocol.h"
 
 Protocol::
-Protocol(SendCallback sendCallback, unsigned int timeout, vector<ProtocolState*> states) {
+Protocol(SendCallback sendCallback, string start, unsigned int timeout, map<string, ProtocolState*> states) {
 	/* Inicializo */
 	this->states = states;
-	this->currentState = 0;
+	this->currState = start;
+	this->startState = start;
 	this->status = ProtocolStatus::OK;
 	this->error = "";
 	this->timeout = boost::chrono::milliseconds(timeout);
 	this->hasTimeout = true;
 
-	/* Configuro el callback */
-	for (ProtocolState* p : states) {
-		p->setSendCallback(sendCallback);
-	}
+	_init_callback();
+	_init_substates();
 
 	/* Ejecuto solve del primer estado */
-	transition(this->states[this->currentState]->solve());
+	transition(this->states[this->currState]->solve());
 
 	/* Reinicio timeout */
 	resetTime();
 }
 
 Protocol::
-Protocol(SendCallback sendCallback, vector<ProtocolState*> states) {
+Protocol(SendCallback sendCallback, string start, map<string, ProtocolState*> states) {
 	/* Inicializo */
 	this->states = states;
-	this->currentState = 0;
+	this->currState = start;
+	this->startState = start;
 	this->status = ProtocolStatus::OK;
 	this->error = "";
 	this->hasTimeout = false;
 
-	/* Configuro el callback */
-	for (ProtocolState* p : states) {
-		p->setSendCallback(sendCallback);
-	}
+	_init_callback();
+	_init_substates();
 
 	/* Ejecuto solve del primer estado */
-	transition(this->states[this->currentState]->solve());
+	transition(this->states[this->currState]->solve());
+
+	/* Reinicio timeout */
+	resetTime();
 }
 
 Protocol::
 ~Protocol() {
-	for (ProtocolState* p : states) {
-		delete p;
+	/* Configuro el callback */
+	for (auto ps : this->states) {
+		delete ps.second;
+	}
+}
+
+void
+Protocol::_init_callback() {
+
+	/* Configuro el callback */
+	for (auto ps : this->states) {
+		ps.second->setSendCallback(sendCallback);
+	}
+}
+
+void
+Protocol::_init_substates() {
+
+
+	/* Cargo todos los subestados para permitir interconexion! */
+	list<map<string, ProtocolState*>*> subMaps;
+
+	/* Busco los sub mapas de todos */
+	for (auto ps : this->states) {
+
+		if (ps.second->getSubStates()) {
+
+			subMaps.push_back(ps.second->getSubStates());
+		}
+	}
+
+	/* Los cargo todos */
+	for (auto map : subMaps) {
+
+		for (auto state : map) {
+
+			this->states[(*map).first] = (*map).second;
+		}
 	}
 }
 
@@ -79,7 +116,7 @@ void
 Protocol::reset(void) {
 	this->status = ProtocolStatus::OK;
 	this->error = "";
-	this->currentState = 0;
+	this->currState = this->startState;
 }
 
 void
@@ -93,13 +130,15 @@ Protocol::transition(ProtocolStatus status, NetworkPacket* packet) {
 	case ProtocolStatus::DONE:
 
 		/* Verifico si debo notificarlo */
-		if (states[currentState]->shouldNotify()) {
-			states[currentState]->notify(packet);
+		if (packet) {
+			if (states[currState]->shouldNotify()) {
+				states[currState]->notify(packet);
+			}
 		}
 
 		/* Muevo el protocolo de estado */
-		currentState++;
-		if (currentState >= states.size()) {
+		this->currState = this->states[currState]->getNextTag();
+		if ( this->currState == PROTOCOL_DONE ) {
 			this->status = status;
 			this->error = "";
 		}
@@ -109,47 +148,7 @@ Protocol::transition(ProtocolStatus status, NetworkPacket* packet) {
 				resetTime();
 			}
 
-			transition(this->states[currentState]->solve());
-		}
-		break;
-
-		/* El estado de protocolo responde correctamente, sin indicar
-		* un cambio resuelto aun, y se mantiene esperando! */
-	case ProtocolStatus::OK:
-		break;
-
-		/* El estado de protocolo responde un error, indicando que
-		* no recibio correctamente lo que esperaba! */
-	case ProtocolStatus::PROTOCOL_ERROR:
-		this->status = status;
-		this->error = "Hubo un error en el protocolo de comunicacion!";
-		break;
-	}
-}
-
-void
-Protocol::transition(ProtocolStatus status) {
-	switch (status) {
-
-		/* El estado de protocolo recibio lo que esperaba, con lo que
-		* ejecuta su proposito y termina. Se cambia a siguiente estado
-		* y se ejecuta rutina solve, si se acaban estados, el protocolo
-		* tambien termino! */
-	case ProtocolStatus::DONE:
-
-		/* Muevo el protocolo de estado */
-		currentState++;
-		if (currentState >= states.size()) {
-			this->status = status;
-			this->error = "";
-		}
-		else {
-
-			if (hasTimeout) {
-				resetTime();
-			}
-
-			transition(this->states[currentState]->solve());
+			transition(this->states[currState]->solve());
 		}
 		break;
 
@@ -171,7 +170,7 @@ void
 Protocol::send(NetworkPacket* packet) {
 	verifyStatus();
 
-	ProtocolStatus response = this->states[currentState]->send(packet);
+	ProtocolStatus response = this->states[currState]->send(packet);
 
 	transition(response, packet);
 }
@@ -180,7 +179,7 @@ void
 Protocol::recv(NetworkPacket* packet) {
 	verifyStatus();
 
-	ProtocolStatus response = this->states[currentState]->recv(packet);
+	ProtocolStatus response = this->states[currState]->recv(packet);
 
 	transition(response, packet);
 }

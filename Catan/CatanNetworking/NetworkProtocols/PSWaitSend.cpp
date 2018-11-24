@@ -1,18 +1,18 @@
 #include "PSWaitSend.h"
 
 PSWaitSend::
-PSWaitSend(NotifyCallback notify, list<PacketHeader> _expected) : ProtocolState(notify), expected(_expected) {}
+PSWaitSend(ProtocolTag* tag, NotifyCallback notify, list<PacketHeader> _expected) : ProtocolState(tag, notify), expected(_expected) {}
 
 PSWaitSend::
-PSWaitSend(NotifyCallback notify, PacketHeader _expected) : ProtocolState(notify) {
+PSWaitSend(ProtocolTag* tag, NotifyCallback notify, PacketHeader _expected) : ProtocolState(tag, notify) {
 	expected.push_back(_expected);
 }
 
 PSWaitSend::
-PSWaitSend(list<PacketHeader> _expected) : ProtocolState(), expected(_expected) {}
+PSWaitSend(ProtocolTag* tag, list<PacketHeader> _expected) : ProtocolState(tag), expected(_expected){}
 
 PSWaitSend::
-PSWaitSend(PacketHeader _expected) : ProtocolState() {
+PSWaitSend(ProtocolTag* tag, PacketHeader _expected) : ProtocolState(tag) {
 	expected.push_back(_expected);
 }
 

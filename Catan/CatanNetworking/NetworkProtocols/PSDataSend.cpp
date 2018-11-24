@@ -1,10 +1,10 @@
 #include "PSDataSend.h"
 
 PSDataSend::
-PSDataSend(NotifyCallback _notify, PacketCallback _callback) : ProtocolState(_notify), callback(_callback) {}
+PSDataSend(ProtocolTag* tag, NotifyCallback _notify, PacketCallback _callback) : ProtocolState(tag, _notify), callback(_callback) {}
 
 PSDataSend::
-PSDataSend(PacketCallback _callback) : ProtocolState(), callback(_callback) {}
+PSDataSend(ProtocolTag* tag, PacketCallback _callback) : ProtocolState(tag), callback(_callback) {}
 
 ProtocolStatus
 PSDataSend::send(NetworkPacket* packet) {

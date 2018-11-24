@@ -23,6 +23,7 @@
 #include "../CatanEvents/YOPEvent.h"
 #include "../CatanEvents/CatanEvent.h"
 
+
 #include <exception>
 
 CatanNetworking::
@@ -44,6 +45,31 @@ CatanNetworking::
 		delete this->currState;
 	if (this->prevState)
 		delete this->prevState;
+}
+
+unsigned int 
+CatanNetworking::getPort(void) {
+	return port;
+}
+
+string 
+CatanNetworking::getIp(void) {
+	return ip;
+}
+
+NetworkSocket*
+CatanNetworking::getSocket() {
+	return socket;
+}
+
+void
+CatanNetworking::setSocket(NetworkSocket* socket) {
+	this->socket = socket;
+}
+
+CatanGame& 
+CatanNetworking::getGame(void) {
+	return this->game;
 }
 
 NetworkingState*
