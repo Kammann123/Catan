@@ -1,6 +1,9 @@
 #include "RobberCardPacket.h"
 
 RobberCardPacket::
+RobberCardPacket(RobberCardData data) : NetworkPacket(PacketHeader::ROBBER_CARDS), RobberCardData(data) {}
+
+RobberCardPacket::
 RobberCardPacket(void) : NetworkPacket(PacketHeader::ROBBER_CARDS), RobberCardData() {}
 
 RobberCardPacket::

@@ -14,6 +14,7 @@ public:
 	/*
 	* Constructores y destructores
 	*/
+	NamePacket(NameData data);
 	NamePacket(string name);
 	NamePacket(void);
 	virtual ~NamePacket();

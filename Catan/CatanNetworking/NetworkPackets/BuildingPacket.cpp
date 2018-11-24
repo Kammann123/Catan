@@ -1,21 +1,42 @@
 #include "BuildingPacket.h"
 
+PacketHeader buildingHeader(BuildingType type) {
+
+	switch (type) {
+		case BuildingType::SETTLEMENT:
+			return PacketHeader::SETTLEMENT;
+			break;
+		case BuildingType::ROAD:
+			return PacketHeader::ROAD;
+			break;
+		case BuildingType::CITY:
+			return PacketHeader::CITY;
+			break;
+	}
+}
+
+BuildingType buildingType(PacketHeader header) {
+
+	switch (header) {
+		case PacketHeader::SETTLEMENT:
+			return BuildingType::SETTLEMENT;
+			break;
+		case PacketHeader::CITY:
+			return BuildingType::CITY;
+			break;
+		case PacketHeader::ROAD:
+			return BuildingType::ROAD;
+			break;
+	}
+}
+
+BuildingPacket::
+BuildingPacket(BuildingData data) : NetworkPacket(buildingHeader(data.getType())), BuildingData(data) {}
+
 BuildingPacket::
 BuildingPacket(PacketHeader header, string coords) : NetworkPacket(header), BuildingData() {
 
-	this->setCoords(coords);
-
-	switch (header) {
-	case PacketHeader::SETTLEMENT:
-		this->setType(BuildingType::SETTLEMENT);
-		break;
-	case PacketHeader::CITY:
-		this->setType(BuildingType::CITY);
-		break;
-	case PacketHeader::ROAD:
-		this->setType(BuildingType::ROAD);
-		break;
-	}
+	this->setCoords(coords);}
 }
 
 BuildingPacket::

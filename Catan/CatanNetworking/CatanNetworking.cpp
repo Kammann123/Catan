@@ -23,6 +23,7 @@
 #include "../CatanEvents/YOPEvent.h"
 #include "../CatanEvents/CatanEvent.h"
 
+#include "NetworkingStates/Disconnected.h"
 
 #include <exception>
 
@@ -34,7 +35,7 @@ CatanNetworking(string ip, unsigned int port, CatanGame& _game) : Observer(), ga
 	this->status = false;
 	this->error = "";
 	this->prevState = nullptr;
-	this->currState = nullptr;
+	this->currState = new Disconnected(*this);
 }
 
 CatanNetworking::
@@ -162,35 +163,51 @@ CatanNetworking::update() {
 NetworkPacket*
 CatanNetworking::getEventPacket(CatanEvent* event) {
 
-	NetworkPacket* packet = nullptr;
-
-	/*
 	switch (event->getEvent()) {
 		case CatanEvent::Events::THROW_DICES:
+			return new DicesPacket(*(DicesData*)event);
 			break;
 		case CatanEvent::Events::ROBBER_CARDS:
+			return new RobberCardPacket(*(RobberCardData*)event);
 			break;
 		case CatanEvent::Events::ROBBER_MOVE:
+			return new RobberMovePacket(*(RobberMoveData*)event);
 			break;
 		case CatanEvent::Events::BUILDING:
+			return new BuildingPacket(*(BuildingData*)event);
 			break;
 		case CatanEvent::Events::BANK_TRADE:
+			return new BankPacket(*(BankData*)event);
 			break;
 		case CatanEvent::Events::OFFER_TRADE:
-			break;
-		case CatanEvent::Events::PASS:
+			return new OfferPacket(*(OfferData*)event);
 			break;
 		case CatanEvent::Events::CARD_IS:
+			return new CardIsPacket(*(CardIsData*)event);
 			break;
 		case CatanEvent::Events::KNIGHT:
+			return new KnightPacket(*(KnightData*)event);
 			break;
 		case CatanEvent::Events::MONOPOLY:
+			return new MonopolyPacket(*(MonopolyData*)event);
 			break;
 		case CatanEvent::Events::YOP:
+			return new YOPPacket(*(YOPData*)event);
 			break;
 		case CatanEvent::Events::DEV_CARD:
+			return new NetworkPacket(PacketHeader::DEV_CARD);
 			break;
-	}*/
-
-	return packet;
+		case CatanEvent::Events::PASS:
+			return new NetworkPacket(PacketHeader::PASS);
+			break;
+		case CatanEvent::Events::QUIT:
+			return new NetworkPacket(PacketHeader::QUIT);
+			break;
+		case CatanEvent::Events::ERROR_EVENT:
+			return new NetworkPacket(PacketHeader::HEADER_ERROR);
+			break;
+		case CatanEvent::Events::PLAY_AGAIN:
+			return new NetworkPacket(PacketHeader::PLAY_AGAIN);
+			break;
+	}
 }

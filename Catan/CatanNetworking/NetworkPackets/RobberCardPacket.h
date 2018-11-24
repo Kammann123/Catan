@@ -14,6 +14,7 @@ public:
 	/*
 	* Constructores y destructores
 	*/
+	RobberCardPacket(RobberCardData data);
 	RobberCardPacket(list<ResourceId> resources);
 	RobberCardPacket(void);
 	~RobberCardPacket();

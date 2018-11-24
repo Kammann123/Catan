@@ -4,6 +4,9 @@ TokenPacket::
 TokenPacket(map<unsigned char, unsigned char> tokens) : NetworkPacket(PacketHeader::CIRCULAR_TOKENS), TokenData(tokens) {}
 
 TokenPacket::
+TokenPacket(TokenData data) : NetworkPacket(PacketHeader::CIRCULAR_TOKENS), TokenData(data) {}
+
+TokenPacket::
 TokenPacket(void) : NetworkPacket(PacketHeader::CIRCULAR_TOKENS), TokenData() {}
 
 TokenPacket::

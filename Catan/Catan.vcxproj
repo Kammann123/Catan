@@ -162,7 +162,6 @@
     <ClInclude Include="CatanNetworking\NetworkingStates\NetworkingState.h" />
     <ClInclude Include="CatanNetworking\NetworkingStates\Sync.h" />
     <ClInclude Include="CatanNetworking\NetworkingStates\WaitSync.h" />
-    <ClInclude Include="CatanNetworking\Networking\NetworkingState.h" />
     <ClInclude Include="CatanNetworking\NetworkPackets\BankPacket.h" />
     <ClInclude Include="CatanNetworking\NetworkPackets\BuildingPacket.h" />
     <ClInclude Include="CatanNetworking\NetworkPackets\CardIsPacket.h" />
@@ -254,9 +253,12 @@
     <ClCompile Include="CatanNetworking\NetworkHandlers\NetworkServer.cpp" />
     <ClCompile Include="CatanNetworking\NetworkHandlers\NetworkSocket.cpp" />
     <ClCompile Include="CatanNetworking\NetworkingStates\Disconnected.cpp" />
+    <ClCompile Include="CatanNetworking\NetworkingStates\Idle.cpp" />
+    <ClCompile Include="CatanNetworking\NetworkingStates\Listening.cpp" />
     <ClCompile Include="CatanNetworking\NetworkingStates\NetError.cpp" />
     <ClCompile Include="CatanNetworking\NetworkingStates\NetworkingState.cpp" />
-    <ClCompile Include="CatanNetworking\Networking\NetworkingState.cpp" />
+    <ClCompile Include="CatanNetworking\NetworkingStates\Sync.cpp" />
+    <ClCompile Include="CatanNetworking\NetworkingStates\WaitSync.cpp" />
     <ClCompile Include="CatanNetworking\NetworkPackets\BankPacket.cpp" />
     <ClCompile Include="CatanNetworking\NetworkPackets\BuildingPacket.cpp" />
     <ClCompile Include="CatanNetworking\NetworkPackets\CardIsPacket.cpp" />

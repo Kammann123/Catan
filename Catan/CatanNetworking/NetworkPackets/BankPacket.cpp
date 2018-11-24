@@ -1,6 +1,9 @@
 #include "BankPacket.h"
 
 BankPacket::
+BankPacket(BankData data) : NetworkPacket(PacketHeader::BANK_TRADE), BankData(data) {}
+
+BankPacket::
 BankPacket(void) : NetworkPacket(PacketHeader::BANK_TRADE), BankData() {}
 
 BankPacket::

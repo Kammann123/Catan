@@ -11,6 +11,7 @@
 class CardIsPacket : public NetworkPacket, public CardIsData {
 public:
 	/* Constructores */
+	CardIsPacket(CardIsData data);
 	CardIsPacket(ResourceId resource);
 	CardIsPacket();
 	virtual ~CardIsPacket();

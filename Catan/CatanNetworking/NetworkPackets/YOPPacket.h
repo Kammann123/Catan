@@ -12,6 +12,7 @@ class YOPPacket : public NetworkPacket, public YOPData {
 public:
 
 	/* Constructores y destructores */
+	YOPPacket(YOPData data);
 	YOPPacket(ResourceId fRes, ResourceId sRes);
 	YOPPacket(void);
 	~YOPPacket();

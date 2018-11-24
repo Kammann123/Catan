@@ -14,6 +14,7 @@ public:
 	/*
 	* Constructores y destructores
 	*/
+	OfferPacket(OfferData data);
 	OfferPacket(list<ResourceId> given, list<ResourceId> recv);
 	OfferPacket(void);
 	virtual ~OfferPacket();

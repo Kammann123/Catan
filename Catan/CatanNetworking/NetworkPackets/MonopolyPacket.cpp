@@ -1,6 +1,9 @@
 #include "MonopolyPacket.h"
 
 MonopolyPacket::
+MonopolyPacket(MonopolyData data) : NetworkPacket(PacketHeader::MONOPOLY), MonopolyData(data) {}
+
+MonopolyPacket::
 MonopolyPacket(void) : NetworkPacket(PacketHeader::MONOPOLY), MonopolyData() {}
 
 MonopolyPacket::

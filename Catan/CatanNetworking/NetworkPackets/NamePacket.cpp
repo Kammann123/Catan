@@ -4,6 +4,9 @@ NamePacket::
 NamePacket(void) : NetworkPacket(PacketHeader::NAME_IS), NameData() {}
 
 NamePacket::
+NamePacket(NameData data) : NetworkPacket(PacketHeader::NAME_IS), NameData(data) {}
+
+NamePacket::
 NamePacket(string name) : NetworkPacket(PacketHeader::NAME_IS), NameData(name) {}
 
 NamePacket::

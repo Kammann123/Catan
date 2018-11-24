@@ -38,7 +38,7 @@ using namespace std::placeholders;
 */
 
 /* Macros bajo nivel de tags */
-#define GET_TAG(_1, _2, _3, NAME, ...)	NAME
+#define GET_TAG(_1, _2, _3, NAME, ...) (ProtocolTag*)NAME
 
 #define STRING_TAG(_str)	new StringTag(_str)
 #define CONDITIONAL_TAG(_callback, _op1, _op2)	new ConditionalTag(_callback, _op1, _op2)
@@ -57,7 +57,7 @@ using namespace std::placeholders;
 *	Macros para facilitar la creacion del callback para mandar mensajes
 *	dentro de un protocolo cualquiera, sea que se tiene un server o un client
 */
-#define socket_send(_socket)	bind(&NetworkSocket::send, &_socket, _1)
+#define socket_send(_socket)	bind(&NetworkSocket::send, _socket, _1)
 
 /* Macro para creacion de protocolos 
 *
@@ -67,9 +67,9 @@ using namespace std::placeholders;
 *		+ protocol( 
 *			socket_send(myBeautifulSocket),
 *			"NAME",
-*			recv("REQUEST_NAME", "ANSWER_NAME", NAME),
-*			data_send("ANSWER_NAME", "WAIT_ACK", getLocalName),
-*			recv("WAIT_ACK", PROTOCOL_DONE, ACK)
+*			p_recv("REQUEST_NAME", "ANSWER_NAME", NAME),
+*			p_data_send("ANSWER_NAME", "WAIT_ACK", getLocalName),
+*			p_recv("WAIT_ACK", PROTOCOL_DONE, ACK)
 *		)
 *
 *	- timeout_protocol: Es igual que protocol con un campo mas para definir un valor de timeout
@@ -79,9 +79,9 @@ using namespace std::placeholders;
 *			socket_send(myBeautifulSocket),
 *			"NAME",
 *			100,
-*			recv("REQUEST_NAME", "ANSWER_NAME", NAME),
-*			data_send("ANSWER_NAME", "WAIT_ACK", getLocalName),
-*			recv("WAIT_ACK", PROTOCOL_DONE, ACK)
+*			p_recv("REQUEST_NAME", "ANSWER_NAME", NAME),
+*			p_data_send("ANSWER_NAME", "WAIT_ACK", getLocalName),
+*			p_recv("WAIT_ACK", PROTOCOL_DONE, ACK)
 *		)
 *
 */
@@ -106,17 +106,17 @@ using namespace std::placeholders;
 * siguiente esquema
 *
 *	- recv: Crea un estado de protocolo que espera recibir un mensaje, con los siguientes formatos:
-*			+ recv("RECV_TAG", tag("NEXT_STATE"), ACK)
-+			+ recv("RECV_TAG", tag("NEXT_STATE"), callback, ACK)
-+			+ recv("RECV_TAG", tag("NEXT_STATE"), {ACK, ERROR})
-+			+ recv("RECV_TAG", tag("NEXT_STATE"), callback, {ACK, ERROR})
+*			+ p_recv("RECV_TAG", tag("NEXT_STATE"), ACK)
++			+ p_recv("RECV_TAG", tag("NEXT_STATE"), callback, ACK)
++			+ p_recv("RECV_TAG", tag("NEXT_STATE"), {ACK, ERROR})
++			+ p_recv("RECV_TAG", tag("NEXT_STATE"), callback, {ACK, ERROR})
 *
 *		nota: Se indica cual es el tag del estado, como decidir cual es su siguiente tag,
 *			se define que tipos de paquetes espera, y un callback para notificar el paquete
 *			cuando se recibe.
 *
 *	- send: Crea un estado de protocolo que manda directamente un mensaje, con los formatos:
-*			+ send("SEND_TAG", tag("NEXT_STATE"), ACK)
+*			+ p_send("SEND_TAG", tag("NEXT_STATE"), ACK)
 *
 *		nota: Se indica cual es el tag del esatdo, como decidir cual es su siguiente tag,
 *			y el header del paquete a enviar, notese que es transmision directa,
@@ -124,10 +124,10 @@ using namespace std::placeholders;
 *
 *	- wait_send: Crea un estado de protocolo que manda un mensaje esperando que se lo vengan a 
 *			a pedir que lo mande, indicandole cual es el paquete, y tiene los formatos:
-*			+ wait_send("WAIT_TAG", tag("NEXT_STATE"), DICES_ARE)
-*			+ wait_send("WAIT_TAG", tag("NEXT_STATE"), callback, DICES_ARE)
-*			+ wait_send("WAIT_TAG", tag("NEXT_STATE"), {DICES_ARE, ROBBER_CARD})
-*			+ wait_send("WAIT_TAG", tag("NEXT_STATE"), callback, {DICES_ARE, ROBBER_CARD})
+*			+ p_wait_send("WAIT_TAG", tag("NEXT_STATE"), DICES_ARE)
+*			+ p_wait_send("WAIT_TAG", tag("NEXT_STATE"), callback, DICES_ARE)
+*			+ p_wait_send("WAIT_TAG", tag("NEXT_STATE"), {DICES_ARE, ROBBER_CARD})
+*			+ p_wait_send("WAIT_TAG", tag("NEXT_STATE"), callback, {DICES_ARE, ROBBER_CARD})
 *
 *		nota: Se indica cual es el tag del estado, como decidir a que estado pasar, y luego
 *			que tipo de paquete es valido que le pidan que mande, y un callback para notificar
@@ -135,8 +135,8 @@ using namespace std::placeholders;
 *
 *	- data_send: Crea un estado de protocolo que manda un mensaje de forma directa, no obstante
 *			busca la informacion del paquete a enviar en un callback dado, y sus formatos:
-*			+ data_send("DATA_TAG", tag("NEXT_STATE"), callback)
-*			+ data_send("DATA_TAG", tag("NEXT_STATE"), notify, callback)
+*			+ p_data_send("DATA_TAG", tag("NEXT_STATE"), callback)
+*			+ p_data_send("DATA_TAG", tag("NEXT_STATE"), notify, callback)
 *
 *		nota: Se indica su tag de estado, como decidir el proximo tag de estado, y luego
 *			se informa si se quiere un callback para notificar ejecucion del estado y tambien
@@ -144,7 +144,7 @@ using namespace std::placeholders;
 *
 *	- if_recv: Crea un estado de protocolo que puede recibir multiples respuestas y para cada una
 *			realizar una notificacion o una bifurcacion del protocolo, sus formatos:
-*			+ if_recv("RECV_MULT_TAG", 
+*			+ p_if_recv("RECV_MULT_TAG", 
 *						recv("FIRST_RECV", "FIRST_NEXT", ACK),
 *						recv("SECOND_RECV", "SECOND_NEXT", ROBBER_CARDS)
 *					)
@@ -156,15 +156,15 @@ using namespace std::placeholders;
 *			donde son todas de tipo wait_data, es decir, espera que alguien le pida mandar
 *			un paquete dado, y valida que sea ese el paquete correcto, creando diferentes
 *			flujos del protocolo, sus formatos son:
-*			+ if_send("SEND_MULT_TAG", 
+*			+ p_if_send("SEND_MULT_TAG", 
 *						wait_send("FIRST_TAG", tag("FIRST_STATE"), ROBBER_CARDS),
 *						wait_send("SCND_TAG", tag("SCND_STATE"), ROBBER_MOVE)
 *					)
 *
 */
-#define recv(_tag, ...)			{_tag, RECV(__VA_ARGS__)}
-#define send(_tag, ...)			{_tag, SEND(__VA_ARGS__)}
-#define wait_send(_tag, ...)	{_tag, WAIT_SEND(__VA_ARGS__)}
-#define data_send(_tag, ...)	{_tag, DATA_SEND(__VA_ARGS__)}
-#define if_recv(_tag, ...)		{_tag, IF_RECV({__VA_ARGS__})}
-#define if_send(_tag, ...)		{_tag, IF_SEND({__VA_ARGS__})}
+#define p_recv(_tag, ...)			{_tag, RECV(__VA_ARGS__)}
+#define p_send(_tag, ...)			{_tag, SEND(__VA_ARGS__)}
+#define p_wait_send(_tag, ...)	{_tag, WAIT_SEND(__VA_ARGS__)}
+#define p_data_send(_tag, ...)	{_tag, DATA_SEND(__VA_ARGS__)}
+#define p_if_recv(_tag, ...)		{_tag, IF_RECV({__VA_ARGS__})}
+#define p_if_send(_tag, ...)		{_tag, IF_SEND({__VA_ARGS__})}

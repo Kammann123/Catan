@@ -4,6 +4,9 @@ RobberMovePacket::
 RobberMovePacket(unsigned char coord) : NetworkPacket(PacketHeader::ROBBER_MOVE), RobberMoveData(coord) {}
 
 RobberMovePacket::
+RobberMovePacket(RobberMoveData data) : NetworkPacket(PacketHeader::ROBBER_MOVE), RobberMoveData(data) {}
+
+RobberMovePacket::
 RobberMovePacket(void) : NetworkPacket(PacketHeader::ROBBER_MOVE), RobberMoveData() {}
 
 RobberMovePacket::

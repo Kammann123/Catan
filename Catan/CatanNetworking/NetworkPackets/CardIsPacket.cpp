@@ -1,6 +1,9 @@
 #include "CardIsPacket.h"
 
 CardIsPacket::
+CardIsPacket(CardIsData data) : NetworkPacket(PacketHeader::CARD_IS), CardIsData(data) {}
+
+CardIsPacket::
 CardIsPacket() : NetworkPacket(PacketHeader::CARD_IS), CardIsData() {}
 
 CardIsPacket::

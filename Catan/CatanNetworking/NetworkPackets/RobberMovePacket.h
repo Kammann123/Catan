@@ -14,6 +14,7 @@ public:
 	/*
 	* Constructores y destructores
 	*/
+	RobberMovePacket(RobberMoveData data);
 	RobberMovePacket(unsigned char c);
 	RobberMovePacket(void);
 	virtual ~RobberMovePacket();

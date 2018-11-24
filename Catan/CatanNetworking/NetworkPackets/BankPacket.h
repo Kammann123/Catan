@@ -15,6 +15,7 @@ public:
 	/*
 	* Constructores y destructores
 	*/
+	BankPacket(BankData data);
 	BankPacket(list<ResourceId> given, list<ResourceId> recv);
 	BankPacket();
 	virtual ~BankPacket();

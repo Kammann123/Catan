@@ -1,6 +1,9 @@
 #include "MapPacket.h"
 
 MapPacket::
+MapPacket(MapData data) : NetworkPacket(PacketHeader::MAP_IS), MapData(data) {}
+
+MapPacket::
 MapPacket(void) : NetworkPacket(PacketHeader::MAP_IS), MapData() {}
 
 MapPacket::

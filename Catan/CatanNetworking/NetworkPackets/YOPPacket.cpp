@@ -2,6 +2,10 @@
 
 YOPPacket::
 YOPPacket(ResourceId fRes, ResourceId sRes) : NetworkPacket(PacketHeader::YEARS_OF_PLENTY), YOPData(fRes, sRes) {}
+
+YOPPacket::
+YOPPacket(YOPData data) : NetworkPacket(PacketHeader::YEARS_OF_PLENTY), YOPData(data) {}
+
 YOPPacket::
 YOPPacket(void) : NetworkPacket(PacketHeader::YEARS_OF_PLENTY), YOPData() {}
 

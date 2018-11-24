@@ -1,6 +1,9 @@
 #include "OfferPacket.h"
 
 OfferPacket::
+OfferPacket(OfferData data) : NetworkPacket(PacketHeader::OFFER_TRADE), OfferData(data) {}
+
+OfferPacket::
 OfferPacket(void) : NetworkPacket(PacketHeader::OFFER_TRADE), OfferData() {}
 
 OfferPacket::

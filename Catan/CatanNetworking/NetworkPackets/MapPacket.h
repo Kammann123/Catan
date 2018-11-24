@@ -14,6 +14,7 @@ public:
 	/*
 	* Constructores y destructores
 	*/
+	MapPacket(MapData data);
 	MapPacket(map<unsigned char, MapValue> m);
 	MapPacket(void);
 	virtual ~MapPacket();

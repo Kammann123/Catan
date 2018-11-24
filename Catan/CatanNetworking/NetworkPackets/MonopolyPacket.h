@@ -10,6 +10,8 @@
 */
 class MonopolyPacket : public NetworkPacket, public MonopolyData {
 public:
+	/* Constructores */
+	MonopolyPacket(MonopolyData data);
 	MonopolyPacket(ResourceId res);
 	MonopolyPacket(void);
 	~MonopolyPacket();

@@ -20,13 +20,14 @@ public:
 	void update(void);
 	string what(void);
 
-	/* Metodos para formacion del evento */
+	/* Metodos del protocolo */
 	NetworkPacket* getLocalName(void);
 	void setRemoteName(NetworkPacket* packet);
 	void setMap(NetworkPacket* packet);
 	void setTokens(NetworkPacket* packet);
+	void setTurn(NetworkPacket* packet);
 
 private:
-	Protocol * protocol;
-	SyncEvent event;
+	Protocol * syncProtocol;
+	SyncEvent * event;
 };

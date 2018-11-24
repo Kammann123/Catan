@@ -1,6 +1,9 @@
 #include "KnightPacket.h"
 
 KnightPacket::
+KnightPacket(KnightData data) : NetworkPacket(PacketHeader::KNIGHT), KnightData(data) {}
+
+KnightPacket::
 KnightPacket(void) : NetworkPacket(PacketHeader::KNIGHT), KnightData() {}
 
 KnightPacket::

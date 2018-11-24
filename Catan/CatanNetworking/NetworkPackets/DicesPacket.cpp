@@ -1,6 +1,9 @@
 #include "DicesPacket.h"
 
 DicesPacket::
+DicesPacket(DicesData data) : NetworkPacket(PacketHeader::DICES_ARE), DicesData(data) {}
+
+DicesPacket::
 DicesPacket(void) : NetworkPacket(PacketHeader::DICES_ARE), DicesData() {}
 
 DicesPacket::

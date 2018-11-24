@@ -15,6 +15,7 @@ public:
 	/*
 	* Constructores y destructores
 	*/
+	DicesPacket(DicesData data);
 	DicesPacket(unsigned int fDice, unsigned int sDice);
 	DicesPacket(void);
 	virtual ~DicesPacket();

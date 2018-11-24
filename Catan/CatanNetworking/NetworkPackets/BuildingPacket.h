@@ -4,6 +4,9 @@
 
 #include "../../CatanData/BuildingData.h"
 
+BuildingType buildingType(PacketHeader header);
+PacketHeader buildingHeader(BuildingType type);
+
 /*
 * BuildingPacket
 * Paquete de datos con informacion sobre la construccion de
@@ -16,6 +19,7 @@ public:
 	/*
 	* Constructores y destructores
 	*/
+	BuildingPacket(BuildingData data);
 	BuildingPacket(PacketHeader header, string coords);
 	BuildingPacket(PacketHeader header);
 	virtual ~BuildingPacket();

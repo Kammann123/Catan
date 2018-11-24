@@ -15,6 +15,7 @@ public:
 	/*
 	* Constructores y desctructores
 	*/
+	DevCardPacket(DevCardsData data);
 	DevCardPacket(list<DevCardId> cards);
 	DevCardPacket(void);
 	virtual ~DevCardPacket();

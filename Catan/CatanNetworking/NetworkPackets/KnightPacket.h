@@ -11,6 +11,7 @@
 class KnightPacket : public NetworkPacket, public KnightData {
 public:
 	/* Constructores y destructores */
+	KnightPacket(KnightData data);
 	KnightPacket(unsigned char coord);
 	KnightPacket(void);
 	~KnightPacket();

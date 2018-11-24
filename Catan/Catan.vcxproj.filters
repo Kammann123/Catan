@@ -306,9 +306,6 @@
     <ClInclude Include="CatanNetworking\NetworkProtocols\PSSend.h">
       <Filter>CatanNetworking\NetworkProtocols</Filter>
     </ClInclude>
-    <ClInclude Include="CatanNetworking\Networking\NetworkingState.h">
-      <Filter>CatanNetworking\NetworkingStates</Filter>
-    </ClInclude>
     <ClInclude Include="CatanNetworking\NetworkingStates\Disconnected.h">
       <Filter>CatanNetworking\NetworkingStates</Filter>
     </ClInclude>
@@ -590,9 +587,6 @@
     <ClCompile Include="CatanNetworking\CatanNetworking.cpp">
       <Filter>CatanNetworking</Filter>
     </ClCompile>
-    <ClCompile Include="CatanNetworking\Networking\NetworkingState.cpp">
-      <Filter>CatanNetworking\NetworkingStates</Filter>
-    </ClCompile>
     <ClCompile Include="CatanNetworking\NetworkingStates\NetError.cpp">
       <Filter>CatanNetworking\NetworkingStates</Filter>
     </ClCompile>
@@ -613,6 +607,18 @@
     </ClCompile>
     <ClCompile Include="CatanNetworking\NetworkProtocols\PSIfSend.cpp">
       <Filter>CatanNetworking\NetworkProtocols</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkingStates\Listening.cpp">
+      <Filter>CatanNetworking\NetworkingStates</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkingStates\Sync.cpp">
+      <Filter>CatanNetworking\NetworkingStates</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkingStates\WaitSync.cpp">
+      <Filter>CatanNetworking\NetworkingStates</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkingStates\Idle.cpp">
+      <Filter>CatanNetworking\NetworkingStates</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

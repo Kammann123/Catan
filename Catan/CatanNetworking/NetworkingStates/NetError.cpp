@@ -11,7 +11,6 @@ NetError(CatanNetworking& networking) : NetworkingState(networking) {
 	*/
 	if( networking.getSocket() )
 		networking.getSocket()->send(new NetworkPacket(PacketHeader::HEADER_ERROR)); 
-	networking.setError("NetError - Networking Error, ha dejado de funcionar la comunicacion.");
 }
 
 void

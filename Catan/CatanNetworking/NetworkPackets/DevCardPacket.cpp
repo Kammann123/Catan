@@ -1,6 +1,9 @@
 #include "DevCardPacket.h"
 
 DevCardPacket::
+DevCardPacket(DevCardsData data) : NetworkPacket(PacketHeader::DEV_CARDS), DevCardsData(data) {}
+
+DevCardPacket::
 DevCardPacket(void) : NetworkPacket(PacketHeader::DEV_CARDS), DevCardsData() {}
 
 DevCardPacket::
