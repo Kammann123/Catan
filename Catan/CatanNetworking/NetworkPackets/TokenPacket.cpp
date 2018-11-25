@@ -18,7 +18,7 @@ TokenPacket::getDataStream(unsigned int& length) {
 	map<unsigned char, unsigned char> tokens = this->getTokens();
 
 	/* Longitud del buffer */
-	unsigned int bufferLength = 1 + tokens.size();
+	unsigned int bufferLength = 1 + (unsigned int)tokens.size();
 
 	/* Creo el buffer */
 	unsigned char* buff = new unsigned char[bufferLength];

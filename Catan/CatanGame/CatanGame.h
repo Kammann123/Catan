@@ -27,6 +27,10 @@ using namespace std;
 * El funcionamiento del flujo de la logica del CatanGame se basa
 * en el patron de diseño State, siendo el CatanGame el Context
 * o Wrapper de los estados.
+*
+* A saber de los ERRORES, unicamente CatanGame levanta errores de la logica
+* que notifica a traves de su cola de eventos a sus observers, con lo cual
+* cualquier error de los controllers es manejado por ellos.
 */
 class CatanGame {
 public:
@@ -127,10 +131,10 @@ private:
 	void addNewEvent(CatanEvent* event);
 
 	/*
-	* packetDispatcher
+	* getPacketEvent
 	* Devuelve evento a partir de un network packet
 	*/
-	CatanEvent* packetDispatcher(NetworkPacket* packet);
+	CatanEvent* getPacketEvent(NetworkPacket* packet);
 
 	Player localPlayer;
 	Player remotePlayer;

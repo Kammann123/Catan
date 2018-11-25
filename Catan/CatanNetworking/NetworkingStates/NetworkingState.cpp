@@ -1,4 +1,3 @@
-#include "Networking.h"
 #include "NetworkingState.h"
 
 NetworkingState::

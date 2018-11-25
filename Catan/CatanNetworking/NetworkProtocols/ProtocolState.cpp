@@ -48,7 +48,7 @@ ProtocolState::getSubStates(void) {
 
 void 
 ProtocolState::setNotifyCallback(NotifyCallback notify) {
-	this->notify = notify;
+	this->notifyCallback = notify;
 	this->hasNotify = true;
 }
 

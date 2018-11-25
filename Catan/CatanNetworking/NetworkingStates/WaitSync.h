@@ -1,33 +1,47 @@
 #pragma once
 
-#include "NetworkingState.h"
-#include "../NetworkProtocols/NetworkProtocol.h"
+#include "HandshakingState.h"
 #include "../../CatanEvents/SyncEvent.h"
 
-/*
-* WaitSync
-* En este estado de CatanNetworking se ejecuta el protocolo de comunicacion para
-* esperar la informacion del juego.
-*/
-class WaitSync : public NetworkingState {
+class WaitSync : public HandshakingState {
 public:
-	/* Constructor */
-	WaitSync(CatanNetworking& networking);
-	~WaitSync();
-	
-	/* Acciones del estado */
-	void run(void);
-	void update(void);
-	string what(void);
-
-	/* Metodos del protocolo */
-	NetworkPacket* getLocalName(void);
-	void setRemoteName(NetworkPacket* packet);
-	void setMap(NetworkPacket* packet);
-	void setTokens(NetworkPacket* packet);
-	void setTurn(NetworkPacket* packet);
-
+	WaitSync(CatanNetworking& net) : HandshakingState(waitSyncProtocol, net) { this->event = new SyncEvent(CatanEvent::Sources::NETWORKING); }
+	string what(void) { return "CLIENT_WAIT_SYNC"; }
+	virtual bool isHeader(PacketHeader header) { return header == PacketHeader::NAME; }
 private:
-	Protocol * syncProtocol;
-	SyncEvent * event;
+	/* Metodos del protocolo */
+	NetworkPacket * getLocalName(void) { return nullptr;/* return new NamePacket(networking.getGame().getLocalName()); */ }
+	void setRemoteName(NetworkPacket* packet) { /* networking.getGame().setRemoteName(((NamePacket*)packet)->getName()); */ }
+	void setMap(NetworkPacket* packet) { /* networking.getGame().setMap(((MapPacket*)packet)->getMap()); */}
+	void setTokens(NetworkPacket* packet) { /* networking.getGame().setTokens(((TokenPacket*)packet)->getTokens(); */ }
+	void setTurn(NetworkPacket* packet) { 
+		/* networking.getGame().setTurn(packet->getHeader() == PacketHeader::YOU_START ? PlayerId::PLAYER_ONE : PlayerID::PLAYER_TWO); */
+		/* networking.getGame().handle(this->event); */ 
+	}
+	bool doIStart(void) { return true;/* return networking.getGame().getTurn() == PlayerId::PLAYER_ONE; */ }
+
+	/* Protocolo */
+	SyncEvent* event;
+
+	Protocol * waitSyncProtocol = protocol(
+		socket_send(networking.getSocket()),
+		"LOCAL_REQUEST",
+		p_recv("LOCAL_REQUEST", tag("LOCAL_SEND"), PacketHeader::NAME),
+		p_data_send("LOCAL_SEND", tag("LOCAL_ACK"), bind(&WaitSync::getLocalName, this)),
+		p_recv("LOCAL_ACK", tag("REMOTE_REQUEST"), PacketHeader::ACK),
+		p_send("REMOTE_REQUEST", tag("REMOTE_RECV"), PacketHeader::NAME),
+		p_recv("REMOTE_RECV", tag("REMOTE_ACK"), bind(&WaitSync::setRemoteName, this, _1), PacketHeader::NAME_IS),
+		p_send("REMOTE_ACK", tag("MAP"), PacketHeader::ACK),
+		p_recv("MAP", tag("MAP_ACK"), bind(&WaitSync::setMap, this, _1), PacketHeader::MAP_IS),
+		p_send("MAP_ACK", tag("TOKEN"), PacketHeader::ACK),
+		p_recv("TOKEN", tag("TOKEN_ACK"), bind(&WaitSync::setTokens, this, _1), PacketHeader::CIRCULAR_TOKENS),
+		p_send("TOKEN_ACK", tag("SV"), PacketHeader::ACK),
+		p_if_recv(
+			"SV",
+			p_recv("DEV_CARDS", tag("NO_DEVS"), PacketHeader::DEV_CARDS),
+			p_recv("TURN", cond_tag(bind(&WaitSync::doIStart, this), "TURN_ACK", PROTOCOL_DONE), bind(&WaitSync::setTurn, this, _1), { PacketHeader::YOU_START, PacketHeader::I_START })
+		),
+		p_send("NO_DEVS", tag("TURN"), PacketHeader::NO),
+		p_send("TURN_ACK", tag(PROTOCOL_DONE), ACK)
+	);
 };

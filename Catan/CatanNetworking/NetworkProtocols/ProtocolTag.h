@@ -12,6 +12,11 @@ using namespace std;
 using ConditionalCallback = function<bool(void)>;
 
 /*
+* ListCallback - Devuelve un indice para elegir dentro de una lsita
+*/
+using ListCallback = function<unsigned int(void)>;
+
+/*
 * ProtocolTag
 * Se define como un selector de tag dentro del protocolo para continuar
 * el flujo del mismo, donde puede funcionar en diversos modos, consistiendo

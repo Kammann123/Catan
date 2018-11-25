@@ -342,6 +342,48 @@
     <ClInclude Include="CatanNetworking\NetworkProtocols\PSIfSend.h">
       <Filter>CatanNetworking\NetworkProtocols</Filter>
     </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkingStates\TellDices.h">
+      <Filter>CatanNetworking\NetworkingStates</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkingStates\TellOffer.h">
+      <Filter>CatanNetworking\NetworkingStates</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkingStates\ListenDices.h">
+      <Filter>CatanNetworking\NetworkingStates</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkingStates\ListenOffer.h">
+      <Filter>CatanNetworking\NetworkingStates</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkProtocols\ListTag.h">
+      <Filter>CatanNetworking\NetworkProtocols</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkingStates\HandshakingState.h">
+      <Filter>CatanNetworking\NetworkingStates</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkingStates\ListenBank.h">
+      <Filter>CatanNetworking\NetworkingStates</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkingStates\ListenBuilding.h">
+      <Filter>CatanNetworking\NetworkingStates</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkingStates\ListenEnd.h">
+      <Filter>CatanNetworking\NetworkingStates</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkingStates\ListenQuit.h">
+      <Filter>CatanNetworking\NetworkingStates</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkingStates\TellBank.h">
+      <Filter>CatanNetworking\NetworkingStates</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkingStates\TellBuilding.h">
+      <Filter>CatanNetworking\NetworkingStates</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkingStates\TellEnd.h">
+      <Filter>CatanNetworking\NetworkingStates</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkingStates\TellQuit.h">
+      <Filter>CatanNetworking\NetworkingStates</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FSM\EventQueue.cpp">
@@ -611,13 +653,13 @@
     <ClCompile Include="CatanNetworking\NetworkingStates\Listening.cpp">
       <Filter>CatanNetworking\NetworkingStates</Filter>
     </ClCompile>
-    <ClCompile Include="CatanNetworking\NetworkingStates\Sync.cpp">
-      <Filter>CatanNetworking\NetworkingStates</Filter>
-    </ClCompile>
-    <ClCompile Include="CatanNetworking\NetworkingStates\WaitSync.cpp">
-      <Filter>CatanNetworking\NetworkingStates</Filter>
-    </ClCompile>
     <ClCompile Include="CatanNetworking\NetworkingStates\Idle.cpp">
+      <Filter>CatanNetworking\NetworkingStates</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkProtocols\ListTag.cpp">
+      <Filter>CatanNetworking\NetworkProtocols</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkingStates\HandshakingState.cpp">
       <Filter>CatanNetworking\NetworkingStates</Filter>
     </ClCompile>
   </ItemGroup>

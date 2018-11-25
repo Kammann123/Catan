@@ -34,7 +34,9 @@ PSIfSend::recv(NetworkPacket* packet) {
 }
 
 ProtocolStatus
-PSIfSend::solve(void) {}
+PSIfSend::solve(void) {
+	return ProtocolStatus::OK;
+}
 
 map<string, ProtocolState*>*
 PSIfSend::getSubStates(void) {

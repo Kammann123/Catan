@@ -7,6 +7,10 @@
 #include "../CatanEvents/RobberCardEvent.h"
 #include "../CatanEvents/OfferEvent.h"
 #include "../CatanEvents/CatanEvent.h"
+#include "../CatanEvents/CardIsEvent.h"
+#include "../CatanEvents/MonopolyEvent.h"
+#include "../CatanEvents/YOPEvent.h"
+#include "../CatanEvents/KnightEvent.h"
 
 CatanGame::
 CatanGame(string localPlayerName) : localPlayer(PlayerId::PLAYER_ONE), remotePlayer(PlayerId::PLAYER_TWO) {
@@ -52,8 +56,7 @@ CatanGame::
 CatanStatus
 CatanGame::handle(NetworkPacket* packet) {
 
-	CatanEvent* newEvent = this->packetDispatcher(packet);
-
+	CatanEvent* newEvent = this->getPacketEvent(packet);
 	return this->handle(newEvent);
 }
 
@@ -92,40 +95,87 @@ CatanGame::changeState(CatanState* newState) {
 }
 
 CatanEvent*
-CatanGame::packetDispatcher(NetworkPacket* packet) {
+CatanGame::getPacketEvent(NetworkPacket* packet) {
 
-	CatanEvent* newEvent = nullptr;
+	/*
+	* Para NO PERDERSE... es importante recordar que la utilidad de este metodo
+	* es la de convertir los paquete de datos de networking que le son de INTERES,
+	* al CatanGame para poder operar el juego. Por tanto, se listan aquellos
+	* paquetes que son de interes, y solo estos. Ningun otro.
+	*/
 
 	switch (packet->getHeader()) {
-	case PacketHeader::DICES_ARE:
-		newEvent = new DicesEvent((DicesPacket*)packet);
-		break;
-	case PacketHeader::BANK_TRADE:
-		newEvent = new BankEvent((BankPacket*)packet);
-		break;
-	case PacketHeader::OFFER_TRADE:
-		newEvent = new OfferEvent((OfferPacket*)packet);
-		break;
-	case PacketHeader::ROBBER_CARDS:
-		newEvent = new RobberCardEvent((RobberCardPacket*)packet);
-		break;
-	case PacketHeader::ROBBER_MOVE:
-		newEvent = new RobberMoveEvent((RobberMovePacket*)packet);
-		break;
-	case PacketHeader::SETTLEMENT: case PacketHeader::ROAD: case PacketHeader::CITY:
-		newEvent = new BuildingEvent((BuildingPacket*)packet);
-		break;
-	default:
-		newEvent = new CatanEvent(packet);
-		break;
+		case PacketHeader::DICES_ARE:
+			return new DicesEvent((DicesPacket*)packet);
+			break;
+		case PacketHeader::BANK_TRADE:
+			return new BankEvent((BankPacket*)packet);
+			break;
+		case PacketHeader::OFFER_TRADE:
+			return new OfferEvent((OfferPacket*)packet);
+			break;
+		case PacketHeader::ROBBER_CARDS:
+			return new RobberCardEvent((RobberCardPacket*)packet);
+			break;
+		case PacketHeader::ROBBER_MOVE:
+			return new RobberMoveEvent((RobberMovePacket*)packet);
+			break;
+		case PacketHeader::CARD_IS:
+			return new CardIsEvent((CardIsPacket*)packet);
+			break;
+		case PacketHeader::MONOPOLY:
+			return new MonopolyEvent((MonopolyPacket*)packet);
+			break;
+		case PacketHeader::YEARS_OF_PLENTY:
+			return new YOPEvent((YOPPacket*)packet);
+			break;
+		case PacketHeader::KNIGHT:
+			return new KnightEvent((KnightPacket*)packet);
+			break;
+		case PacketHeader::SETTLEMENT: case PacketHeader::ROAD: case PacketHeader::CITY:
+			return new BuildingEvent((BuildingPacket*)packet);
+			break;
+		case PacketHeader::PASS:
+			return new CatanEvent(CatanEvent::Events::PASS, CatanEvent::Sources::NETWORKING, PlayerId::PLAYER_TWO);
+			break;
+		case PacketHeader::QUIT:
+			return new CatanEvent(CatanEvent::Events::QUIT, CatanEvent::Sources::NETWORKING, PlayerId::PLAYER_TWO);
+			break;
+		case PacketHeader::I_WON:
+			return new CatanEvent(CatanEvent::Events::WON, CatanEvent::Sources::NETWORKING, PlayerId::PLAYER_TWO);
+			break;
+		case PacketHeader::GAME_OVER:
+			return new CatanEvent(CatanEvent::Events::GAME_OVER, CatanEvent::Sources::NETWORKING, PlayerId::PLAYER_TWO);
+			break;
+		case PacketHeader::PLAY_AGAIN:
+			return new CatanEvent(CatanEvent::Events::QUIT, CatanEvent::Sources::NETWORKING, PlayerId::PLAYER_TWO);
+			break;
+		case PacketHeader::DEV_CARD:
+			return new CatanEvent(CatanEvent::Events::DEV_CARD, CatanEvent::Sources::NETWORKING, PlayerId::PLAYER_TWO);
+			break;
+		case PacketHeader::YES:
+			return new CatanEvent(CatanEvent::Events::YES, CatanEvent::Sources::NETWORKING, PlayerId::PLAYER_TWO);
+			break;
+		case PacketHeader::NO:
+			return new CatanEvent(CatanEvent::Events::NO, CatanEvent::Sources::NETWORKING, PlayerId::PLAYER_TWO);
+			break;
+		case PacketHeader::ROAD_BUILDING:
+			return new CatanEvent(CatanEvent::Events::ROAD_BUILDING, CatanEvent::Sources::NETWORKING, PlayerId::PLAYER_TWO);
+			break;
 	}
 
-	return newEvent;
+	/*
+	* El uso de esta excepcion busca romper con el flujo del programa si algun
+	* paquete recibido desde CatanNetworking no es de interes como evento para CatanGame
+	* en cuyo caso, es un error del programador y no une eventualidad a manejar en el flujo,
+	* asi, se encuentra el error y se corrige mediante la excepcion.
+	*/
+	throw exception("CatanGame - Un paquete de networking no se pudo parsear en evento");
 }
 
 void 
 CatanGame::addNewEvent(NetworkPacket* packet) {
-	CatanEvent* event = this->packetDispatcher(packet);
+	CatanEvent* event = this->getPacketEvent(packet);
 
 	this->addNewEvent(event);
 }

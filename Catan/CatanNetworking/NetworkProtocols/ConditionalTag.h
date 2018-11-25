@@ -8,6 +8,7 @@
 */
 class ConditionalTag : public ProtocolTag {
 public:
+	ConditionalTag(ConditionalCallback callback, const char* trueOption, const char* falseOption);
 	ConditionalTag(ConditionalCallback callback, string trueOption, string falseOption);
 	virtual string getTag(void);
 private:

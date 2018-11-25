@@ -35,8 +35,7 @@ BuildingPacket(BuildingData data) : NetworkPacket(buildingHeader(data.getType())
 
 BuildingPacket::
 BuildingPacket(PacketHeader header, string coords) : NetworkPacket(header), BuildingData() {
-
-	this->setCoords(coords);}
+	this->setCoords(coords);
 }
 
 BuildingPacket::
@@ -64,7 +63,7 @@ BuildingPacket::getDataStream(unsigned int& length) {
 	string coords = this->getCoords();
 
 	/* Calculo la cantidad */
-	unsigned int bufferLength = 2 + coords.size();
+	unsigned int bufferLength = 2 + (unsigned int)coords.size();
 
 	/* Creo el buffer */
 	unsigned char* buff = new unsigned char[bufferLength];
@@ -72,7 +71,7 @@ BuildingPacket::getDataStream(unsigned int& length) {
 	/* Guardo y armo el paquete */
 	length = bufferLength;
 	buff[0] = (unsigned char)this->getHeader();
-	buff[1] = coords.size();
+	buff[1] = (unsigned char)coords.size();
 	unsigned int i = 2;
 	for (unsigned char c : coords) {
 		buff[i++] = c;

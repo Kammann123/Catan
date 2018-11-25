@@ -60,6 +60,12 @@ public:
 	*/
 	void reset(void);
 
+	/*
+	* start
+	* Inicia el protocolo ejecutando el primer estado en solve
+	*/
+	void start(void);
+
 private:
 
 	/*
@@ -82,7 +88,7 @@ private:
 	void verifyStatus(void) const;
 	
 	/* Rutionas de inicializacion */
-	void _init_callback();
+	void _init_callback(SendCallback sendCallback);
 	void _init_substates();
 
 	ProtocolStatus status;
@@ -93,6 +99,6 @@ private:
 	string startState;
 
 	boost::chrono::steady_clock::duration timeout;
-	boost::chrono::steady_clock::time_point start;
+	boost::chrono::steady_clock::time_point startTime;
 	bool hasTimeout;
 };

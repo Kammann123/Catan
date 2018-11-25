@@ -7,7 +7,7 @@ map<PacketHeader, const char*> HeaderStrings = {
 { SETTLEMENT, "SETTLEMENT" },{ ROAD, "ROAD" },{ CITY, "CITY" },{ BANK_TRADE, "BANK_TRADE" },{ OFFER_TRADE, "OFFER_TRADE" },
 { PASS, "PASS" },{ DEV_CARD, "DEV_CARD" },{ MONOPOLY, "MONOPOLY" },{ YEARS_OF_PLENTY, "YEARS_OF_PLENTY" },
 { ROAD_BUILDING, "ROAD_BUILDING" },{ KNIGHT, "KNIGHT" },{ YES, "YES" },{ NO, "NO" },{ I_WON, "I_WON" },{ PLAY_AGAIN, "PLAY_AGAIN" },
-{ GAME_OVER, "GAME_OVER" },{ ERROR, "ERROR" },{ QUIT, "QUIT" }
+{ GAME_OVER, "GAME_OVER" },{ HEADER_ERROR, "ERROR" },{ QUIT, "QUIT" }
 };
 
 /* NetworkPacket Metodos Definiciones */

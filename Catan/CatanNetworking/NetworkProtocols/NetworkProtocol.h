@@ -5,6 +5,7 @@
 #include "ProtocolTag.h"
 #include "StringTag.h"
 #include "ConditionalTag.h"
+#include "ListTag.h"
 
 #include "ProtocolState.h"
 #include "PSRecv.h"
@@ -38,12 +39,9 @@ using namespace std::placeholders;
 */
 
 /* Macros bajo nivel de tags */
-#define GET_TAG(_1, _2, _3, NAME, ...) (ProtocolTag*)NAME
-
-#define STRING_TAG(_str)	new StringTag(_str)
-#define CONDITIONAL_TAG(_callback, _op1, _op2)	new ConditionalTag(_callback, _op1, _op2)
-
-#define TAG_ERROR()		throw exception("NetworkProtocol - Mal uso de la definicion de tag!")
+#define tag(...)			(ProtocolTag*)new StringTag(__VA_ARGS__)
+#define list_tag(...)			(ProtocolTag*)new ListTag(__VA_ARGS__)
+#define cond_tag(...)	(ProtocolTag*)new ConditionalTag(__VA_ARGS__)
 
 /* Macros de bajo nivel para estados de protocolo */
 #define RECV(...)	new PSRecv(__VA_ARGS__)
@@ -87,18 +85,6 @@ using namespace std::placeholders;
 */
 #define timeout_protocol(_callback, _start, _timeout, ...)	new Protocol(_callback, _start, _timeout, {__VA_ARGS__})
 #define protocol(_callback, _start, ...)		new Protocol(_callback, _start, {__VA_ARGS__})
-
-/* Macros accesibles y utiles para tags
-*
-* Para el uso de la MACRO tag(...) debe considerar que al momento de hoy existen:
-*
-* - string tag: Un tag definido directamete como string, para lo cual se indica
-*				+ tag("VALUE")
-*
-* - conditional tag: Un tag que mediante un callback, decide en true/false si es alguna
-*				+ tag(callback, trueOption, falseOption)
-*/
-#define tag(...)	GET_TAG(__VA_ARGS__, CONDITIONAL_TAG, TAG_ERROR, STRING_TAG)(__VA_ARGS__)
 
 /* Macros accesibles y utiles para estados del protocolo
 *

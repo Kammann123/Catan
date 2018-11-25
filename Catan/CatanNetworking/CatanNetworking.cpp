@@ -136,7 +136,8 @@ CatanNetworking::run() {
 	}
 
 	/* Ejecuto el run del estado */
-	this->currState->run();
+	if( this->good() )
+		this->currState->run();
 }
 
 void
@@ -162,6 +163,16 @@ CatanNetworking::update() {
 
 NetworkPacket*
 CatanNetworking::getEventPacket(CatanEvent* event) {
+
+	/*
+	* Para NO PERDERSER... recordar lo siguiente respecto de este metodo.
+	* Este METODO representa todos aquellos eventos de CatanGame, que le son
+	* de interes al networking para poder correr sus protocolos, ninguna otra cosa debe
+	* parsearse, y cualquier cosa que falte, hara inutil el protocolo.
+	*
+	* Reitero. Conversion de los eventos de CATAN que al networking le son de INTERES
+	* en paquete de datos para transmitirlos!
+	*/
 
 	switch (event->getEvent()) {
 		case CatanEvent::Events::THROW_DICES:
@@ -209,5 +220,28 @@ CatanNetworking::getEventPacket(CatanEvent* event) {
 		case CatanEvent::Events::PLAY_AGAIN:
 			return new NetworkPacket(PacketHeader::PLAY_AGAIN);
 			break;
+		case CatanEvent::Events::GAME_OVER:
+			return new NetworkPacket(PacketHeader::GAME_OVER);
+			break;
+		case CatanEvent::Events::WON:
+			return new NetworkPacket(PacketHeader::I_WON);
+			break;
+		case CatanEvent::Events::YES:
+			return new NetworkPacket(PacketHeader::YES);
+			break;
+		case CatanEvent::Events::NO:
+			return new NetworkPacket(PacketHeader::NO);
+			break;
+		case CatanEvent::Events::ROAD_BUILDING:
+			return new NetworkPacket(PacketHeader::ROAD_BUILDING);
+			break;
 	}
+	
+	/*
+	* A modo preventido, se supone que no debiera permitirse que pasen aquellos eventos que
+	* no nos resultan de importancia en CatanNetworking de CatanGame, por tanto, aquellos
+	* errores que los dejen pasar, seran temporales, y podran ser encontrados con esta excepcion,
+	* ya que no es de interes manejar el flujo ante esa eventualidad.
+	*/
+	throw exception("HandshakingState - Un evento del CatanGame no pudo ser parseado en paquete");
 }

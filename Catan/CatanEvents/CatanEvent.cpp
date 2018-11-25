@@ -1,29 +1,6 @@
 #include "CatanEvent.h"
 
 CatanEvent::
-CatanEvent(NetworkPacket* packet) {
-	this->source = Sources::NETWORKING;
-	this->player = PlayerId::PLAYER_TWO;
-
-	switch (packet->getHeader()) {
-		case PacketHeader::DEV_CARD:
-			this->event = Events::DEV_CARD;
-		case PacketHeader::PLAY_AGAIN:
-			this->event = Events::PLAY_AGAIN;
-			break;
-		case PacketHeader::PASS:
-			this->event = Events::PASS;
-			break;
-		case PacketHeader::QUIT:
-			this->event = Events::QUIT;
-			break;
-		case PacketHeader::ERROR: default:
-			this->event = Events::ERROR_EVENT;
-			break;
-	}
-}
-
-CatanEvent::
 CatanEvent(Events event, Sources source, PlayerId player) {
 	this->event = event;
 	this->source = source;

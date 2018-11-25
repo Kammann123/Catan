@@ -54,9 +54,10 @@ Disconnected::run() {
 }
 
 void
-Disconnected::update() {}
+Disconnected::update() {
+	networking.setError("WaitSync - Hubo un error en el protocolo de sincronizacion!");
+	networking.changeState(new NetError(networking));
+}
 
 string
-Disconnected::what() {
-	return string("DISCONNECTED");
-}
+Disconnected::what() { return string("DISCONNECTED"); }

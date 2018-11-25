@@ -19,7 +19,7 @@ BankPacket::getDataStream(unsigned int& length) {
 	list<ResourceId> receivedResources = this->getRecv();
 
 	/* Calculo el largo necesario */
-	unsigned int bufferLength = 2 + givenResources.size() + receivedResources.size();
+	unsigned int bufferLength = 2 + (unsigned int)givenResources.size() + (unsigned int)receivedResources.size();
 
 	/* Creo el buffer */
 	unsigned char* buff = new unsigned char[bufferLength];

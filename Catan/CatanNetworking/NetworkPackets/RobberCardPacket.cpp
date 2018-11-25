@@ -18,7 +18,7 @@ RobberCardPacket::getDataStream(unsigned int& length) {
 	list<ResourceId> resources = this->getResources();
 
 	/* Calculo la longitud del buffer */
-	unsigned int bufferLength = 2 + resources.size();
+	unsigned int bufferLength = 2 + (unsigned int)resources.size();
 
 	/* Creo el buffer */
 	unsigned char* buff = new unsigned char[bufferLength];

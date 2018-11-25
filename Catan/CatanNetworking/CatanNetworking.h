@@ -14,6 +14,12 @@ using namespace std;
 * IMPORTANTE RECORDATORIO
 * Para entender el flujo de State pattern, recordar pensar que en cada estado,
 * ver al estado, es en si mismo ver a CatanNetworking.
+*
+* A saber, existe 3 TIPOS DE ERRORES que pueden surgir unicamente en el proceso
+* de Networking, ya sea un error con el Socket, con el Parser de paquetes, o bien
+* en el Protocolo mismo de cada "conversacion", estos errores invalidan a Networking,
+* a lo cual su flujo se restringe. Por si llega a olvidar verificar estos errores,
+* la utilizacion de Networking posterior a algun error, levantara EXCEPCIONES!
 */
 
 /*
@@ -78,6 +84,12 @@ public:
 	void setError(string msg);
 	void setError(const char* msg);
 
+	/*
+	* getEventPacket
+	* Crea un paquete de datos a partir de un Evento del juego
+	*/
+	NetworkPacket* getEventPacket(CatanEvent* event);
+
 	/* Getters paara los NetworkingStates */
 	CatanGame& getGame(void);
 	NetworkSocket* getSocket(void);
@@ -86,12 +98,6 @@ public:
 	void setSocket(NetworkSocket* socket);
 
 private:
-
-	/*
-	* getEventPacket
-	* Crea un paquete de datos a partir de un Evento del juego
-	*/
-	NetworkPacket* getEventPacket(CatanEvent* event);
 
 	/*
 	* verifyStatus

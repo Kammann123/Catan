@@ -1,5 +1,7 @@
 #include "Protocol.h"
 
+#include <list>
+
 Protocol::
 Protocol(SendCallback sendCallback, string start, unsigned int timeout, map<string, ProtocolState*> states) {
 	/* Inicializo */
@@ -11,14 +13,8 @@ Protocol(SendCallback sendCallback, string start, unsigned int timeout, map<stri
 	this->timeout = boost::chrono::milliseconds(timeout);
 	this->hasTimeout = true;
 
-	_init_callback();
+	_init_callback(sendCallback);
 	_init_substates();
-
-	/* Ejecuto solve del primer estado */
-	transition(this->states[this->currState]->solve());
-
-	/* Reinicio timeout */
-	resetTime();
 }
 
 Protocol::
@@ -31,14 +27,8 @@ Protocol(SendCallback sendCallback, string start, map<string, ProtocolState*> st
 	this->error = "";
 	this->hasTimeout = false;
 
-	_init_callback();
+	_init_callback(sendCallback);
 	_init_substates();
-
-	/* Ejecuto solve del primer estado */
-	transition(this->states[this->currState]->solve());
-
-	/* Reinicio timeout */
-	resetTime();
 }
 
 Protocol::
@@ -50,7 +40,7 @@ Protocol::
 }
 
 void
-Protocol::_init_callback() {
+Protocol::_init_callback(SendCallback sendCallback) {
 
 	/* Configuro el callback */
 	for (auto ps : this->states) {
@@ -77,9 +67,9 @@ Protocol::_init_substates() {
 	/* Los cargo todos */
 	for (auto map : subMaps) {
 
-		for (auto state : map) {
+		for (auto state : *map) {
 
-			this->states[(*map).first] = (*map).second;
+			this->states[state.first] = state.second;
 		}
 	}
 }
@@ -87,7 +77,7 @@ Protocol::_init_substates() {
 void
 Protocol::resetTime(void) {
 	if (hasTimeout) {
-		start = boost::chrono::steady_clock::now();
+		startTime = boost::chrono::steady_clock::now();
 	}
 }
 
@@ -97,7 +87,7 @@ Protocol::getStatus(void) {
 	/* Verifico timeout */
 	if (status == ProtocolStatus::OK && hasTimeout ) {
 
-		if ((boost::chrono::steady_clock::now() - start) > timeout) {
+		if ((boost::chrono::steady_clock::now() - startTime) > timeout) {
 
 			this->status = ProtocolStatus::TIMEOUT;
 		}
@@ -117,6 +107,19 @@ Protocol::reset(void) {
 	this->status = ProtocolStatus::OK;
 	this->error = "";
 	this->currState = this->startState;
+}
+
+void
+Protocol::start(void) {
+
+	if (this->currState == this->startState) {
+
+		/* Ejecuto solve del primer estado */
+		transition(this->states[this->currState]->solve());
+
+		/* Reinicio timeout */
+		resetTime();
+	}
 }
 
 void

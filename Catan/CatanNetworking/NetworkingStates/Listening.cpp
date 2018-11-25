@@ -39,7 +39,10 @@ Listening::run() {
 }
 
 void
-Listening::update() {}
+Listening::update() {
+	networking.setError("WaitSync - Hubo un error en el protocolo de sincronizacion!");
+	networking.changeState(new NetError(networking));
+}
 
 string
 Listening::what() { return string("LISTENING"); }
