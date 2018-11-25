@@ -256,7 +256,7 @@ CatanGame::getPrevState(void)
 //}
 
 bool CatanGame::
-isValidPlayerTransaction(list<ResourceCard*>& offeredCards, list<ResourceCard*>& requestedCards, PlayerId srcPlayerID) 
+isValidPlayerTransaction(list<ResourceId>& offeredCards, list<ResourceId>& requestedCards, PlayerId srcPlayerID) 
 {
 	bool ret = false;
 	PlayerId destPlayerID = ((srcPlayerID == PlayerId::PLAYER_ONE) ? PlayerId::PLAYER_TWO : PlayerId::PLAYER_ONE);
@@ -270,7 +270,7 @@ isValidPlayerTransaction(list<ResourceCard*>& offeredCards, list<ResourceCard*>&
 }
 
 bool CatanGame::
-isValidBankTransaction(list<ResourceCard*>& offeredCards, PlayerId playerID)
+isValidBankTransaction(list<ResourceId>& offeredCards, PlayerId playerID)
 {
 	bool ret = false;
 
@@ -283,7 +283,7 @@ isValidBankTransaction(list<ResourceCard*>& offeredCards, PlayerId playerID)
 }
 
 bool CatanGame::
-isValidListOfCards(list<ResourceCard*>& offeredCards, PlayerId playerID) 
+isValidListOfCards(list<ResourceId>& offeredCards, PlayerId playerID) 
 {
 	bool ret = false;
 	Player& player = ((playerID == PlayerId::PLAYER_ONE) ? localPlayer : remotePlayer); 
@@ -303,6 +303,20 @@ isValidListOfCards(list<ResourceCard*>& offeredCards, PlayerId playerID)
 }
 
 unsigned int CatanGame::
+getResourceCount(list<ResourceId>& cardsList, ResourceId resourceID) const
+{
+	unsigned int resourceCount = 0;
+	for (ResourceId resID : cardsList) // range-based for de la lista de cartas de recursos
+	{
+		if (resID == resourceID) // verifico que el recurso sea el correcto
+		{
+			resourceCount++; // si es así, incremento el contador
+		}
+	}
+	return resourceCount;
+}
+
+unsigned int CatanGame::
 getResourceCount(list<ResourceCard*>& cardsList, ResourceId resourceID) const
 {
 	unsigned int resourceCount = 0;
@@ -316,18 +330,129 @@ getResourceCount(list<ResourceCard*>& cardsList, ResourceId resourceID) const
 	return resourceCount;
 }
 
-//bool CatanGame::
-//isValidCity(string coords, PlayerId playerID)
-//{
-//	ret = false;
-//	Player& player = ((playerID == PlayerId::PLAYER_ONE) ? localPlayer : remotePlayer);
-//	for (Building* Settlement : settlements)
-//	{
-//		if (stringMatch(Settlement.getCoords(), coords)) // como no puedo ver los otros archivos, no sé el nombre de los datos/metodos miembro.
-//		{
-//			ret = true;
-//			break; // para optimizar tiempo y no poner múltiples puntos de retorno
-//		}
-//	}
-//
-//	return ret;
+bool CatanGame::
+hasRobberCards(PlayerId playerID)
+{
+	bool ret = false;
+	Player& player = (playerID == PlayerId::PLAYER_ONE ? localPlayer : remotePlayer);
+
+	if (player.getResourceCards().size() > ROBBER_CARDS_COUNT)
+	{
+		ret = true;
+	}
+
+	return ret;
+}
+
+bool CatanGame::
+isValidCity(string coords, PlayerId playerID) 
+{
+	bool ret = false;
+	list<Building*>& buildings = this->getBuiltMap();
+
+	for (Building* oneBuilding : buildings)
+	{
+		if (
+
+			(oneBuilding->getType == BuildingType::SETTLEMENT) &&  // la construcción es un Settlement
+			(oneBuilding->getPlayer() == playerID) &&              // es del jugador en cuestión
+			matchCoords(oneBuilding->getPlace(), coords) &&
+			// validar que la lista de cities tenga size > 0, 
+			// validar recursos
+
+			) 
+		{
+			ret = true;
+			break; // para optimizar tiempo y no poner múltiples puntos de retorno
+		}
+	}
+
+	return ret;
+
+}
+
+bool CatanGame::
+hasRoadResources(PlayerId playerID)
+{
+	Player& player = (playerID == PlayerId::PLAYER_ONE ? localPlayer : remotePlayer);
+	bool ret = false;
+
+	if ( 
+		(getResourceCount(player.getResourceCards(), ResourceId::HILL) >= ROAD_BRICK_NEEDED ) &&
+		(getResourceCount(player.getResourceCards, ResourceId::FOREST) >= ROAD_LUMBER_NEEDED )
+		)
+	{
+		ret = true;
+	}
+
+	return ret;
+}
+
+bool CatanGame::
+hasCityResources(PlayerId playerID)
+{
+	Player& player = (playerID == PlayerId::PLAYER_ONE ? localPlayer : remotePlayer);
+	bool ret = false;
+
+	if (
+		(getResourceCount(player.getResourceCards(), ResourceId::MOUNTAIN) >= CITY_ORE_NEEDED) &&
+		(getResourceCount(player.getResourceCards, ResourceId::FIELD) >= CITY_GRAIN_NEEDED)
+		)
+	{
+		ret = true;
+	}
+
+	return ret;
+}
+
+
+bool CatanGame::
+hasSettlementResources(PlayerId playerID)
+{
+	Player& player = (playerID == PlayerId::PLAYER_ONE ? localPlayer : remotePlayer);
+	bool ret = false;
+
+	if (
+		(getResourceCount(player.getResourceCards(), ResourceId::HILL) >= SETTLEMENT_BRICK_NEEDED) &&
+		(getResourceCount(player.getResourceCards, ResourceId::FIELD) >= SETTLEMENT_GRAIN_NEEDED) &&
+		(getResourceCount(player.getResourceCards, ResourceId::FOREST) >= SETTLEMENT_LUMBER_NEEDED) &&
+		(getResourceCount(player.getResourceCards, ResourceId::PASTURES) >= SETTLEMENT_WOOL_NEEDED)
+		)
+	{
+		ret = true;
+	}
+
+	return ret;
+}
+bool CatanGame::
+matchCoords(string str1, string str2)
+{
+	bool ret = true;
+
+	if (str1.length() == str2.length()) // ambos strings deben tener la misma longitud
+	{
+		for (int i = 0 ; i < str1.length() ; i++) // para cada caracter del string1
+		{
+			if ( str2.find(str1.c_str()[i]) == string::npos ) // si no lo encuentro, entonces las coordenadas no son iguales
+			{
+				ret = false; // cambio el parámetro de return
+				break; // y finalizo el barrido, porque ya las coordenadas no son iguales
+
+			}
+		}
+
+	}
+
+	else
+	{
+		ret = false;
+	}
+
+	return ret;
+}
+
+void CatanGame::
+pass(void)
+{
+	this->turn = (this->turn == PlayerId::PLAYER_ONE ? PlayerId::PLAYER_TWO : PlayerId::PLAYER_ONE);
+}
