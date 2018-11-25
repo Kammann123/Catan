@@ -19,7 +19,7 @@ public:
 
 	/* Getters y setters */
 	void setLocalName(NameData name);
-	void setRemoveName(NameData name);
+	void setRemoteName(NameData name);
 	void setMap(MapData map);
 	void setTokens(TokenData tokens);
 	void setDevCards(DevCardsData cards);

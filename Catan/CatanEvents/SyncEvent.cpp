@@ -9,7 +9,7 @@ SyncEvent::setLocalName(NameData name) {
 }
 
 void 
-SyncEvent::setRemoveName(NameData name) {
+SyncEvent::setRemoteName(NameData name) {
 	remote = name;
 }
 

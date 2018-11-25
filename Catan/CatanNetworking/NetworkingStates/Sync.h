@@ -9,11 +9,11 @@ public:
 	virtual bool isHeader(PacketHeader header) { return header == PacketHeader::NAME; }
 private:
 	/* Metodos del protocolo */
-	void setRemoteName(NetworkPacket* packet) { /* networking.getGame().setRemoteName(((NamePacket*)packet)->getName()); */ }
-	NetworkPacket* getLocalName(void) { return nullptr;/* return new NamePacket(networking.getGame().getLocalName()); */ }
-	NetworkPacket* getMap(void) { return nullptr;/* return new MapPacket(networking.getGame().getMap()); */ }
-	NetworkPacket* getTokens(void){ return nullptr;/* return new TokenPacket(networking.getGame().getTokens()); */ }
-	bool whoStarts(void) { return true;/* return networking.getGame().getTurn() == PlayerId::PLAYER_ONE; */ }
+	void setRemoteName(NetworkPacket* packet) { networking.getGame().setRemoteName(((NamePacket*)packet)->getName()); }
+	NetworkPacket* getLocalName(void) { return new NamePacket(networking.getGame().getLocalName()); }
+	NetworkPacket* getMap(void) { return new MapPacket(networking.getGame().getMap()); }
+	NetworkPacket* getTokens(void){ return new TokenPacket(networking.getGame().getTokens()); }
+	bool whoStarts(void) { return networking.getGame().getTurn() == PlayerId::PLAYER_ONE; }
 
 	/* Protocolo */
 	Protocol * syncProtocol = protocol(

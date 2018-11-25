@@ -14,13 +14,21 @@ public:
 	/*
 	* Constructor
 	*/
-	ResourceHex(ResourceId resource_, unsigned int token_, unsigned char coord_);
+	ResourceHex(unsigned char coord_);
+	ResourceHex(ResourceId resource_, unsigned char coord_);
+	ResourceHex(ResourceId resource_, unsigned int token__, unsigned char coord_);
 
 	/*
 	* getCoord()
 	* Devuelve la coordenada del resourceHex
 	*/
 	unsigned char getCoord(void);
+
+	/*
+	* setCoord()
+	* Define el valor de posicion del hex
+	*/
+	void setCoord(unsigned char coord);
 
 	/*
 	* getToken()

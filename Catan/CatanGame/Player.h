@@ -12,7 +12,7 @@
 
 using namespace std;
 
-enum class PlayerId : int {PLAYER_ONE, PLAYER_TWO};
+enum class PlayerId : int {PLAYER_ONE, PLAYER_TWO, PLAYER_NONE};
 
 class Player {
 public:
@@ -42,12 +42,6 @@ public:
 	unsigned int getVictoryPoints(void);
 
 	/*
-	* getResourceCards()
-	* Devuelve una lista con las resource cards del jugador
-	*/
-	list <ResourceCard *>& getResourceCards();
-
-	/*
 	* addPoints()
 	* Suma puntos de victoria al jugador
 	*/
@@ -70,6 +64,15 @@ public:
 	* Quita una resource card del jugador
 	*/
 	void removeResourceCard(ResourceCard * card);
+	void removeResourceCard(ResourceId resourceId, unsigned int qty);
+	list<ResourceCard*> giveResourceCard(ResourceId resourceId, unsigned int qty);
+
+	/*
+	* getResourceCount
+	* Devuelve la cantidad de recursos que tiene el jugador de este tipo
+	* dado.
+	*/
+	unsigned int getResourceCount(ResourceId resourceID) const;
 
 	/*
 	* hasRoads()
@@ -106,6 +109,12 @@ public:
 	* Devuelve un objeto City pre-creado
 	*/
 	Building* popCity(void);
+
+	/*
+	* giveBack
+	* Devuelve una construccion al Player
+	*/
+	void giveBackBuilding(BuildingType type, Building* building);
 
 private:
 	PlayerId player;

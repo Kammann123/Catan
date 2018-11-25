@@ -1,10 +1,11 @@
 #pragma once
 
 #include "HandshakingState.h"
+#include "../../CatanEvents/SyncEvent.h"
 
 class ListenEnd : public HandshakingState {
 public:
-	ListenEnd(CatanNetworking& net) : HandshakingState(listenEndProtocol, net) {}
+	ListenEnd(CatanNetworking& net) : HandshakingState(listenEndProtocol, net) { this->event = new SyncEvent(CatanEvent::Sources::NETWORKING); }
 	string what(void) { return "LISTEN_END";  }
 	virtual bool isHeader(PacketHeader header) { return header == PacketHeader::I_WON; }
 private:
@@ -12,13 +13,15 @@ private:
 	void userWon(NetworkPacket* packet) { networking.getGame().handle( new CatanEvent(CatanEvent::Events::WON, CatanEvent::Sources::NETWORKING, PlayerId::PLAYER_TWO) ); }
 	void gameOver(NetworkPacket* packet) { networking.getGame().handle( new CatanEvent(CatanEvent::Events::GAME_OVER, CatanEvent::Sources::NETWORKING, PlayerId::PLAYER_TWO) ); }
 	void playAgain(NetworkPacket* packet) { networking.getGame().handle(new CatanEvent(CatanEvent::Events::PLAY_AGAIN, CatanEvent::Sources::NETWORKING, PlayerId::PLAYER_TWO)); }
-	void setMap(NetworkPacket* packet) { /* networking.getGame().setMap(((MapPacket*)packet)->getMap()); */ }
-	void setTokens(NetworkPacket* packet) { /* networking.getGame().setTokens(((TokenPacket*)packet)->getTokens(); */ }
+	void setMap(NetworkPacket* packet) {  event->setMap(((MapPacket*)packet)->getMap());  }
+	void setTokens(NetworkPacket* packet) { event->setTokens(((TokenPacket*)packet)->getTokens());  }
 	void setTurn(NetworkPacket* packet) {
-		/* networking.getGame().setTurn(packet->getHeader() == PacketHeader::YOU_START ? PlayerId::PLAYER_ONE : PlayerID::PLAYER_TWO); */
-		/* networking.getGame().handle(this->event); */
+		event->setTurn(packet->getHeader() == PacketHeader::YOU_START ? PlayerId::PLAYER_ONE : PlayerId::PLAYER_TWO); 
+		networking.getGame().handle(event);
 	}
-	bool doIStart(void) { return true;/* return networking.getGame().getTurn() == PlayerId::PLAYER_ONE; */ }
+	bool doIStart(void) { return networking.getGame().getTurn() == PlayerId::PLAYER_ONE;  }
+
+	SyncEvent* event;
 
 	/* Protocolo */
 	Protocol* listenEndProtocol = protocol(

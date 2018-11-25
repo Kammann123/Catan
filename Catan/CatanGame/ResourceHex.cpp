@@ -1,10 +1,20 @@
 #include "ResourceHex.h"
 
 ResourceHex::
-ResourceHex(ResourceId resource_, unsigned int token_, unsigned char coord_)
-{
+ResourceHex(ResourceId resource_, unsigned int token_, unsigned char coord_){
 	this->resource = resource_;
 	this->token = token_;
+	this->coord = coord_;
+}
+
+ResourceHex::
+ResourceHex(ResourceId resource_, unsigned char coord_){
+	this->resource = resource_;
+	this->coord = coord_;
+}
+
+ResourceHex::
+ResourceHex(unsigned char coord_){
 	this->coord = coord_;
 }
 
@@ -22,6 +32,11 @@ ResourceHex::setToken(unsigned int newToken)
 		token = newToken;
 	}
 
+}
+
+void
+ResourceHex::setCoord(unsigned char coord) {
+	this->coord = coord;
 }
 
 ResourceId

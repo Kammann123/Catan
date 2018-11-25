@@ -100,9 +100,17 @@ unsigned int Player::getVictoryPoints()
 	return victoryPoints;
 }
 
-list<ResourceCard*>& Player::getResourceCards()
-{
-	return resourceCards;
+unsigned int
+Player::getResourceCount(ResourceId resourceID) const {
+	unsigned int resourceCount = 0;
+
+	for (ResourceCard* resCard : this->resourceCards) {
+		if (resCard->getResourceId() == resourceID) {
+			resourceCount++;
+		}
+	}
+
+	return resourceCount;
 }
 
 void Player::addPoints(unsigned int points)
@@ -158,6 +166,69 @@ unsigned int Player::hasCities(void)
 	return ret;
 }
 
+void
+Player::removeResourceCard(ResourceId resourceId, unsigned int qty) {
+
+	list<ResourceCard*> bucket;
+
+	/* Verifico tener esa cantidad para removerlas */
+	if( qty == getResourceCount(resourceId) ){
+		/* Busco y guardo las cartas que tengo que tirar */
+		for (ResourceCard* card : resourceCards) {
+			if (card->getResourceId() == resourceId) {
+				bucket.push_back(card);
+				qty--;
+				if (qty == 0)	break;
+			}
+		}
+		/* Tiro las cartas */
+		for (ResourceCard* card : bucket) {
+			resourceCards.remove(card);
+			delete card;
+		}
+	}
+}
+
+list<ResourceCard*>
+Player::giveResourceCard(ResourceId resourceId, unsigned int qty) {
+	list<ResourceCard*> bucket;
+
+	/* Busco hasta esa cantidad */
+	for (ResourceCard* card : resourceCards) {
+		if (card->getResourceId() == resourceId) {
+			bucket.push_back(card);
+			qty--;
+			if (qty == 0) break;
+		}
+	}
+	/* Las quito de mi lista */
+	for (ResourceCard* card : bucket) {
+		resourceCards.remove(card);
+	}
+
+	return bucket;
+}
+
+void
+Player::giveBackBuilding(BuildingType type, Building* building) {
+
+	/* Si la construccion existe realmente */
+	if (building) {
+
+		/* La vuelvo a meter a mis conjuntos */
+		switch (type) {
+			case BuildingType::CITY:
+				cities.push_back(building);
+				break;
+			case BuildingType::ROAD:
+				roads.push_back(building);
+				break;
+			case BuildingType::SETTLEMENT:
+				settlements.push_back(building);
+				break;
+		}
+	}
+}
 
 Building* Player:: popRoad(void)
 {

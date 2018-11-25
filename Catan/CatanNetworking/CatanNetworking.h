@@ -54,6 +54,13 @@ public:
 	void update(void);
 
 	/*
+	* what
+	* Devuelve un mensaje descriptivo y caracteristico
+	* del estado actual del CatanNetworking.
+	*/
+	string what(void);
+
+	/*
 	* getState
 	* Devuelve el estado actual de Networking
 	*/

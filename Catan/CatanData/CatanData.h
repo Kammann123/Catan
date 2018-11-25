@@ -1,5 +1,9 @@
 #pragma once
 
+#include <string>
+
+using namespace std;
+
 using MapValue = unsigned char;
 
 /*
@@ -51,6 +55,12 @@ bool isDevCard(unsigned char value);
 bool isValidDice(unsigned char value);
 bool isMapPosition(unsigned char value);
 bool isSeaPosition(unsigned char value);
+
+/*
+* matchCoords
+* Devuelve true en el caso de que las dos coordenadas hagan referencia al mismo lugar
+*/
+bool matchCoords(string str1, string str2);
 
 /*
 * CatanData

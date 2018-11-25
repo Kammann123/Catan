@@ -10,15 +10,16 @@ public:
 	virtual bool isHeader(PacketHeader header) { return header == PacketHeader::NAME; }
 private:
 	/* Metodos del protocolo */
-	NetworkPacket * getLocalName(void) { return nullptr;/* return new NamePacket(networking.getGame().getLocalName()); */ }
-	void setRemoteName(NetworkPacket* packet) { /* networking.getGame().setRemoteName(((NamePacket*)packet)->getName()); */ }
-	void setMap(NetworkPacket* packet) { /* networking.getGame().setMap(((MapPacket*)packet)->getMap()); */}
-	void setTokens(NetworkPacket* packet) { /* networking.getGame().setTokens(((TokenPacket*)packet)->getTokens(); */ }
+	NetworkPacket * getLocalName(void) { return new NamePacket(networking.getGame().getLocalName()); }
+	void setRemoteName(NetworkPacket* packet) { event->setRemoteName(((NamePacket*)packet)->getName()); }
+	void setMap(NetworkPacket* packet) { event->setMap(((MapPacket*)packet)->getMap()); }
+	void setTokens(NetworkPacket* packet) { event->setTokens(((TokenPacket*)packet)->getTokens()); }
 	void setTurn(NetworkPacket* packet) { 
-		/* networking.getGame().setTurn(packet->getHeader() == PacketHeader::YOU_START ? PlayerId::PLAYER_ONE : PlayerID::PLAYER_TWO); */
-		/* networking.getGame().handle(this->event); */ 
+		event->setTurn(packet->getHeader() == PacketHeader::YOU_START ? PlayerId::PLAYER_ONE : PlayerId::PLAYER_TWO);
+		event->setDevMode(false);
+		networking.getGame().handle(this->event);
 	}
-	bool doIStart(void) { return true;/* return networking.getGame().getTurn() == PlayerId::PLAYER_ONE; */ }
+	bool doIStart(void) { return networking.getGame().getTurn() == PlayerId::PLAYER_ONE; }
 
 	/* Protocolo */
 	SyncEvent* event;
@@ -39,7 +40,7 @@ private:
 		p_if_recv(
 			"SV",
 			p_recv("DEV_CARDS", tag("NO_DEVS"), PacketHeader::DEV_CARDS),
-			p_recv("TURN", cond_tag(bind(&WaitSync::doIStart, this), "TURN_ACK", PROTOCOL_DONE), bind(&WaitSync::setTurn, this, _1), { PacketHeader::YOU_START, PacketHeader::I_START })
+			p_recv("TURN", cond_tag(bind(&WaitSync::doIStart, this), PROTOCOL_DONE, "TURN_ACK"), bind(&WaitSync::setTurn, this, _1), { PacketHeader::YOU_START, PacketHeader::I_START })
 		),
 		p_send("NO_DEVS", tag("TURN"), PacketHeader::NO),
 		p_send("TURN_ACK", tag(PROTOCOL_DONE), ACK)

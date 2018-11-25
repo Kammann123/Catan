@@ -1,14 +1,14 @@
 #include "ResourceCard.h"
 #include "Player.h"
 
-ResourceCard::ResourceCard()
-{
-	resourceId = ResourceId::DESERT; // esto por defecto ?????
-	playerId = PlayerId::PLAYER_ONE; // esto por defecto ?????
-}
-
 ResourceCard::ResourceCard(ResourceId resourceId)
 {
+	this->resourceId = resourceId;
+}
+
+ResourceCard::ResourceCard(PlayerId player, ResourceId resourceId)
+{
+	this->playerId = player;
 	this->resourceId = resourceId;
 }
 

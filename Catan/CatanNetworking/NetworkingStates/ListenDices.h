@@ -9,7 +9,16 @@ public:
 	virtual bool isHeader(PacketHeader header) { return header == PacketHeader::PASS; }
 private:
 	/* Metodos del protocolo */
-	unsigned int decideRobber(void) { return 0; /* Algo que me diga si el juego esta en modo robber y si tengo para tirar cartas */ }
+	unsigned int decideRobber(void) { 
+		if (networking.getGame().isRobberStatus()) {
+			if (networking.getGame().hasRobberCards(PlayerId::PLAYER_ONE)) {
+				return 1;
+			}
+			return 2;
+		}
+		return 0;
+	}
+
 	void setDices(NetworkPacket* packet) { networking.getGame().handle(packet); }
 	void setRemoteCards(NetworkPacket* packet) { networking.getGame().handle(packet); }
 	void setRobberMove(NetworkPacket* packet) { networking.getGame().handle(packet); }

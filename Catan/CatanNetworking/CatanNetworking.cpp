@@ -48,6 +48,11 @@ CatanNetworking::
 		delete this->prevState;
 }
 
+string
+CatanNetworking::what(void) {
+	return this->currState->what();
+}
+
 unsigned int 
 CatanNetworking::getPort(void) {
 	return port;

@@ -1,0 +1,31 @@
+#include "CatanNetworking/CatanNetworking.h"
+#include "CatanGame/CatanGame.h"
+
+#define CONSOLE(x) cout << "[CatanGame v1.0] " << x << endl
+
+int main(int argc, char** argv) {
+
+	CatanGame game("Lucas Agustin Kammann");
+	CatanNetworking net("127.0.0.1", 12345, game);
+
+	game.attach(&net);
+
+	CONSOLE("Iniciando networking y game...");
+
+	string status = net.what();
+	while (net.good()) {
+
+		net.run();
+
+		if (status != net.what()) {
+
+			CONSOLE("Hubo un cambio de estado en el networking" + net.what());
+
+			status = net.what();
+		}
+
+	}
+
+	CONSOLE( net.getError() );
+	
+}

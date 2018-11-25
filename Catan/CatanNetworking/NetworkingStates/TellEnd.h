@@ -10,10 +10,10 @@ public:
 private:
 	/* Metodos del protocolo */
 	void gameOver(NetworkPacket* packet) { networking.getGame().handle(new CatanEvent(CatanEvent::Events::GAME_OVER, CatanEvent::Sources::NETWORKING, PlayerId::PLAYER_TWO)); }
-	void playAgan(NetworkPacket* packet) { networking.getGame().handle(new CatanEvent(CatanEvent::Events::PLAY_AGAIN, CatanEvent::Sources::NETWORKING, PlayerId::PLAYER_TWO)); }
-	NetworkPacket* getMap(void) { return nullptr;/* return new MapPacket(networking.getGame().getMap()); */ }
-	NetworkPacket* getTokens(void) { return nullptr;/* return new TokenPacket(networking.getGame().getTokens()); */ }
-	bool whoStarts(void) { return true;/* return networking.getGame().getTurn() == PlayerId::PLAYER_ONE; */ }
+	void playAgain(NetworkPacket* packet) { networking.getGame().handle(new CatanEvent(CatanEvent::Events::PLAY_AGAIN, CatanEvent::Sources::NETWORKING, PlayerId::PLAYER_TWO)); }
+	NetworkPacket* getMap(void) { return new MapPacket(networking.getGame().getMap()); }
+	NetworkPacket* getTokens(void) { return new TokenPacket(networking.getGame().getTokens()); }
+	bool whoStarts(void) { return networking.getGame().getTurn() == PlayerId::PLAYER_ONE; }
 
 	/* Protocolo */
 	Protocol* tellEndProtocol = protocol(
@@ -21,7 +21,7 @@ private:
 		"I_WON",
 		p_send("I_WON", tag("REMOTE_DECIDE"), PacketHeader::I_WON),
 		p_if_recv("REMOTE_DECIDE",
-			p_recv("WANTS_AGAIN", tag("AGAIN_ANSWER"), bind(&TellEnd::playAgan, this, _1), PacketHeader::PLAY_AGAIN),
+			p_recv("WANTS_AGAIN", tag("AGAIN_ANSWER"), bind(&TellEnd::playAgain, this, _1), PacketHeader::PLAY_AGAIN),
 			p_recv("WANTS_OVER", tag("OVER_ACK"), bind(&TellEnd::gameOver, this, _1), PacketHeader::GAME_OVER),
 			),
 		p_send("OVER_ACK", tag(PROTOCOL_DONE), PacketHeader::ACK),

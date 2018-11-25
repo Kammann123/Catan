@@ -9,6 +9,7 @@
 #include "CatanStatus.h"
 #include "CatanState.h"
 
+#include "../MVC/Subject.h"
 #include "../CatanEvents/CatanEvent.h"
 #include "../CatanNetworking/NetworkPackets/NetworkPacket.h"
 
@@ -31,26 +32,19 @@
 
 #define ROBBER_CARDS_COUNT 7
 
-
 using namespace std;
 
 /*
 * CatanGame
-* Clase con la logica y la informacion de la partida actual
-* del juego Catan.
-* El funcionamiento del flujo de la logica del CatanGame se basa
-* en el patron de diseño State, siendo el CatanGame el Context
-* o Wrapper de los estados.
+* Se definen las reglas del juego y la clase con la informacion sobre la partida actual
+* asi como el Modelo para la implementacion de MVC y luego el Context para el State pattern.
 *
-* A saber de los ERRORES, unicamente CatanGame levanta errores de la logica
-* que notifica a traves de su cola de eventos a sus observers, con lo cual
-* cualquier error de los controllers es manejado por ellos.
+* Consideraciones:
+*	+ Se define como PLAYER_ONE al jugador local y PLAYER_TWO al oponente.
+*
 */
-class CatanGame {
+class CatanGame : public Subject{
 public:
-
-	/* Definimos estados del catan game */
-	enum States : CatanState::Type {};
 
 	/* Constructor y destructor */
 	CatanGame(string localPlayerName);
@@ -63,18 +57,6 @@ public:
 	*/
 	CatanStatus handle(NetworkPacket* packet);
 	CatanStatus handle(CatanEvent* event);
-
-	/* Getters */
-	Player& getLocalPlayer(void);
-	Player& getRemotePlayer(void);
-	list<Building*>& getBuiltMap(void);
-	map<unsigned char, ResourceHex> getResourceMap(void);
-	map<unsigned char, SeaHex> getSeaMap(void);
-	PlayerId getTurn(void);
-	PlayerId getLongestRoad(void);
-	Robber getRobber(void);
-	CatanState* getCurrentState(void);
-	CatanState* getPrevState(void);
 
 	/*
 	* getNextEvent
@@ -94,105 +76,153 @@ public:
 	*/
 	void changeState(CatanState* newState);
 
+	CatanState* getCurrentState(void);
+	CatanState* getPrevState(void);
+
+public:
+
+	/* 
+	* Metodos para la interfaz con el CatanNetworking, para garantizar
+	* acceso a configurar y pedir datos del CatanGame momento a momento.
+	* Tambien su uso esta disponible para CatanGui.
+	*/
+	bool isRobberStatus(void);
+
+	void setRemoteName(string remoteName);
+
+	PlayerId getTurn(void);
+	string getLocalName(void);
+	map<unsigned char, MapValue> getMap(void);
+	map<unsigned char, unsigned char> getTokens(void);
+
 private:
 
-	friend class CatanState; // no funcoina!!1
+	/*
+	* getPlayer
+	* Permite obtener el objeto Player en funcion del id con el cual
+	* se determina el turno actual del juego o bien una accion realizada.
+	*/
+	Player& getPlayer(PlayerId playerId);
 
-	/* Generación de juego */
+public:
 
-	void generateMap(void); // ver reglas de creación
-	void generateOcean(void); // idem anterior
-	void generateTokens(void); // numeros que van encima de los hexagonos
+	/*
+	* Aclaracion importante, a continuacion se declaran los metodos empleados
+	* para validar acciones y ejecutar acciones del juego, sin control logico
+	* de flujo. Se las coloca ordenadas y clasificadas segun partes del juego.
+	*/
 
+	/* 
+	* Metodos de generacion inicial del juego bajo las reglas
+	* definidas en Catan. Se puede generar el mapa seteando los
+	* recursos en un orden determinado. Se puede generar el oceano
+	* en un orden de muelles determinado. Y se puede generar los valores
+	* aleatorios de tokens asignados para cada Token.
+	*/
+	void generateMap(void);
+	void generateTurn(void); 
+	void generateOcean(void);
+	void generateTokens(void);
 
-
-	/* Acciones de juego */
-
+	/*
+	* assignResources
+	* Al notificar un valor de dados jugados, el juego asigna
+	* correspondientemente a cada jugar los recursos que reciben
+	* segun el numero y los settlements como debe ser.
+	*/
 	void assignResources(unsigned int dices);
-	void robberCards(list<ResourceId>& cards, PlayerId playerID);
-	void moveRobber(unsigned char newCoords);
+
+	/*
+	* hasRobberCards
+	* Permite ver si un jugador dado cumple las condiciones en cuanto
+	* a cantidad de recursos acumulados, para ver si debe descartar
+	* alguna de esas cartas, con lo cual, es true si se valida esto.
+	*/
+	bool hasRobberCards(PlayerId playerID);
 	
-	void buildRoad(string coords, PlayerId playerID);
-	void buildCity(string coords, PlayerId playerID);
-	void buildSettlement(string coords, PlayerId playerID);
+	/*
+	* robberCards
+	* Un jugador dado entrega una lista de recursos que utilizan
+	* para tomar y descartar esas cartas del mismo jugador.
+	* Aclaracion, la seleccion es por tipo de recurso.
+	*/
+	void robberCards(list<ResourceId>& cards, PlayerId playerID);
 
 	/*
-	* pass()
-	* Método que pasa el turno al otro jugador
+	* moveRobber
+	* Permite mover el robber a una nueva ubicacion dentro del mapa.
 	*/
+	void moveRobber(unsigned char newCoords);
 
-	void pass(void);
-
-	void bankExchange(list<ResourceId>& offered, ResourceId wanted, PlayerId playerID);
-	void playerExchange(list<ResourceId>& offered, list<ResourceId> wanted, PlayerId srcPlayerID);
-	void dockExchange(list<ResourceId>& offered, ResourceId wanted, PlayerId playerID);
-
-
-
-
-
-
-
-
-
-	/* VALIDACION DE MOVIMIENTOS */
-
-
-	bool hasRobberCards(PlayerId playerID); // chequea si tiene mas de 7 cartas, para descartar
 	/*
-	* isValidxxxxx()
-	* Métodos que nos informan si es válida la construcción de un road, city o settlement, respectivamente (GEOGRAFICO).
+	* isValidRoad,isValidCity,isValidSettlement
+	* Validan la colocacion de cada una de esas construcciones para un jugador
+	* determinado, en la ubicacion dada, verificando que sea posible a nivel constructivo,
+	* esto quiere decir, que no valida requisitos economicos, unicamente si es posible,
+	* ya que puede haber una construccion en esa ubicacion, o no cumplir las reglas del juego.
 	*/
-
 	bool isValidRoad(string coords, PlayerId playerID);
 	bool isValidCity(string coords, PlayerId playerID);
 	bool isValidSettlement(string coords, PlayerId playerID);
 
 	/*
-	* hasXxxResources()
-	* Métodos que nos informan si es válida la construcción de un road, city o settlement, respectivamente (RECURSOS).
+	* hasCityResources, hasSettlementResources, hasRoadResources
+	* Validan la disponibilidad de los recursos de un player para realizar 
+	* algunas de esas construcciones, esto quiere decir, si cumple los requisitos
+	* economicos para realizar tal construccion.
 	*/
-	
-	bool hasRoadResources(PlayerId playerID);
 	bool hasCityResources(PlayerId playerID);
 	bool hasSettlementResources(PlayerId playerID);
-
-
-
-	/*
-	* isValidDockTransaction()
-	* Verifica que la transacción propuesta sea coherente en el marco del juego (devuelve true si lo es, false  en caso contrario)
- 	*/
-	bool isValidDockTransaction(list<ResourceId>& offeredCards,ResourceId requestedCard, unsigned char seaCoord,unsigned char dockNumber,PlayerId player);
-	bool isValidPlayerTransaction(list<ResourceId>& offeredCards, list<ResourceId>& requestedCards, PlayerId srcPlayerID);
-	bool isValidBankTransaction(list<ResourceId>& offeredCards, PlayerId playerID);
-
-	/*
-	* isAvailableDock()
-	* Verifica si el puerto está disponible para una transacción
-	*/
-
-	bool isAvailableDock(SeaId dockID, PlayerId playerID);
-
+	bool hasRoadResources(PlayerId playerID);
 	
 	/*
-	* isValidListOfCards()
-	* Devuelve true en el caso que las cartas ofrecidas estén disponibles para el jugador
+	* buildRoad, buildCity, buildSettlement
+	* Realizan la construccion de alguna de esas entidades en la posicion definida
+	* por el usuario, para ese jugador, donde se asume previa validacion ya que 
+	* consiste unicamente en el proceso de cobrar recursos y ubicar la entidad.
 	*/
-	bool isValidListOfCards(list<ResourceId>& offeredCards, PlayerId playerID);
+	void buildRoad(string coords, PlayerId playerID);
+	void buildCity(string coords, PlayerId playerID);
+	void buildSettlement(string coords, PlayerId playerID);
 
 	/*
-	* getResourceCount()
-	* Devuelve la cantidad de resourceCards de un determinado tipo que tiene un jugador.
+	* isValidDockExchange, isValidPlayerExchange, isValidBankExchange
+	* Valida intercambios de cartas realizados u ofrecidos por algun jugador, ya sea con otro jugador, como tambien con
+	* alguno de los muelles o bien el banco del juego. Estas validaciones implican verificar que sea posible la transaccion
+	* , que tenga los recursos para hacerla, y que tenga disponible las opciones de hacerla, por los muelles por ejemplo.
 	*/
-	unsigned int getResourceCount(list<ResourceId>& cardsList, ResourceId resourceID) const;
-	unsigned int getResourceCount(list<ResourceCard*>& cardsList, ResourceId resourceID) const;
+	bool isValidDockExchange(list<ResourceId>& offeredCards, ResourceId requestedCard, unsigned char seaCoord, unsigned char dockNumber, PlayerId player);
+	bool isValidPlayerExchange(list<ResourceId>& offeredCards, list<ResourceId>& requestedCards, PlayerId srcPlayerID);
+	bool isValidBankExchange(list<ResourceId>& offeredCards, PlayerId playerID);
 
 	/*
-	* matchCoords()
-	* Devuelve true en el caso de que las dos coordenadas hagan referencia al mismo lugar
+	* isAvailableDock
+	* Valida si esta disponible el muelle para ese jugador, en funcion de sus construcciones
+	* para posteriormente determinar si es posible que realice transaccion con tal muelle.
 	*/
-	bool matchCoords(string str1, string str2);
+	bool isAvailableDock(SeaId dockID, PlayerId playerID);
+
+	/*
+	* canPlayerAccept
+	* Este metodo permite determinar si es valido que el jugador acepte el intercambio de cartas
+	* con lo garantiza si se da o no la opcion de aceptarla. Verifica que disponga las cartas...
+	*/
+	bool canPlayerAccept(list<ResourceId>& requestedCards, PlayerId destPlayerID);
+
+	/*
+	* bankExchange, playerExchange, dockExchange
+	* Realizan los intercambios de cartas entre un jugador y, ya sea otro jugador o bien
+	* el banco o un muelle, donde se asume validacion y unicamente se distribuyen recursos.
+	*/
+	void bankExchange(list<ResourceId>& offered, ResourceId wanted, PlayerId playerID);
+	void playerExchange(list<ResourceId>& offered, list<ResourceId>& wanted, PlayerId srcPlayerID);
+	void dockExchange(list<ResourceId>& offered, ResourceId wanted, PlayerId playerID);
+
+	/*
+	* pass
+	* Ejecuta la accion de pasar de turno
+	*/
+	void pass(void);
 
 	/*
 	* addNewEvent
@@ -207,6 +237,7 @@ private:
 	*/
 	CatanEvent* getPacketEvent(NetworkPacket* packet);
 
+private:
 	Player localPlayer;
 	Player remotePlayer;
 	list<Building*> builtMap;

@@ -6,6 +6,8 @@
 
 using namespace std;
 
+#define BUILDING_NOT_PLACED	"FFF"
+
 enum class PlayerId;
 
 /*
@@ -18,7 +20,9 @@ public:
 	/*
 	* Constructor
 	*/
+	Building(string place, PlayerId player, BuildingType type);
 	Building(PlayerId player, BuildingType type);
+	Building(BuildingType type);
 
 	/*
 	* getPlace()
@@ -43,6 +47,12 @@ public:
 	* Define la posicion de la construccion
 	*/
 	void setPlace(string place);
+
+	/*
+	* setPlayer
+	* Define a que jugador pertenece 
+	*/
+	void setPlayer(PlayerId player);
 
 private:
 	string place;

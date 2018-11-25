@@ -43,9 +43,6 @@
     <Filter Include="CatanEvents">
       <UniqueIdentifier>{37c4fdbf-896a-43a3-a1f7-1754d34907b8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="CatanGame\States">
-      <UniqueIdentifier>{734a4ef9-e7e5-4c68-a450-30284d0c544f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="CatanData">
       <UniqueIdentifier>{3ea99685-f141-473c-90d5-eafe44ca6dcd}</UniqueIdentifier>
     </Filter>

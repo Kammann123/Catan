@@ -2,11 +2,24 @@
 #include "Building.h"
 
 Building::
-Building(PlayerId player, BuildingType type)
-{
+Building(string place, PlayerId player, BuildingType type) {
+	this->place = place;
 	this->player = player;
 	this->type = type;
-	this->place = "FFF"; // el string "FFF" significa posición no asignada
+}
+
+Building::
+Building(PlayerId player, BuildingType type) {
+	this->place = BUILDING_NOT_PLACED;
+	this->player = player;
+	this->type = type;
+}
+
+Building::
+Building(BuildingType type) {
+	this->place = BUILDING_NOT_PLACED;
+	this->player = PlayerId::PLAYER_NONE;
+	this->type = type;
 }
 
 string Building::
@@ -31,4 +44,9 @@ void Building::
 setPlace(string place)
 {
 	this->place = place;
+}
+
+void Building::
+setPlayer(PlayerId player) {
+	this->player = player;
 }

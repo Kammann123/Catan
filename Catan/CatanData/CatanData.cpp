@@ -64,3 +64,29 @@ bool isMapPosition(unsigned char value) {
 bool isSeaPosition(unsigned char value) {
 	return (value >= '0' && value <= '5');
 }
+
+bool matchCoords(string str1, string str2)
+{
+	bool ret = true;
+
+	if (str1.length() == str2.length()) // ambos strings deben tener la misma longitud
+	{
+		for (int i = 0; i < str1.length(); i++) // para cada caracter del string1
+		{
+			if (str2.find(str1.c_str()[i]) == string::npos) // si no lo encuentro, entonces las coordenadas no son iguales
+			{
+				ret = false; // cambio el parámetro de return
+				break; // y finalizo el barrido, porque ya las coordenadas no son iguales
+
+			}
+		}
+
+	}
+
+	else
+	{
+		ret = false;
+	}
+
+	return ret;
+}

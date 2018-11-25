@@ -12,8 +12,8 @@ class ResourceCard {
 public:
 
 	/* Constructores y destructores */
-	ResourceCard();
 	ResourceCard(ResourceId resourceId);
+	ResourceCard(PlayerId player, ResourceId resourceId);
 
 	/* 
 	* getResourceId

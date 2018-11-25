@@ -185,52 +185,10 @@ CatanGame::addNewEvent(CatanEvent* event) {
 	this->eventQueue.push_back(event);
 }
 
-Player&
-CatanGame::getLocalPlayer(void)
-{
-	return localPlayer;
-}
-
-Player&
-CatanGame::getRemotePlayer(void)
-{
-	return remotePlayer;
-}
-
-list<Building*>&
-CatanGame::getBuiltMap(void)
-{
-	return builtMap;
-}
-
-map<unsigned char, ResourceHex>
-CatanGame::getResourceMap(void)
-{
-	return resourceMap;
-}
-
-map<unsigned char, SeaHex>
-CatanGame::getSeaMap(void)
-{
-	return seaMap;
-}
-
 PlayerId
 CatanGame::getTurn(void)
 {
 	return turn;
-}
-
-PlayerId
-CatanGame::getLongestRoad(void)
-{
-	return longestRoad;
-}
-
-Robber
-CatanGame::getRobber(void)
-{
-	return robber;
 }
 
 CatanState*
@@ -316,19 +274,6 @@ getResourceCount(list<ResourceId>& cardsList, ResourceId resourceID) const
 	return resourceCount;
 }
 
-unsigned int CatanGame::
-getResourceCount(list<ResourceCard*>& cardsList, ResourceId resourceID) const
-{
-	unsigned int resourceCount = 0;
-	for (ResourceCard* resCard : cardsList) // range-based for de la lista de cartas de recursos
-	{
-		if (resCard->getResourceId() == resourceID) // verifico que el recurso sea el correcto
-		{
-			resourceCount++; // si es así, incremento el contador
-		}
-	}
-	return resourceCount;
-}
 
 bool CatanGame::
 hasRobberCards(PlayerId playerID)
@@ -348,7 +293,7 @@ bool CatanGame::
 isValidCity(string coords, PlayerId playerID) 
 {
 	bool ret = false;
-	list<Building*>& buildings = this->getBuiltMap();
+	list<Building*>& buildings = this->builtMap;
 
 	for (Building* oneBuilding : buildings)
 	{
@@ -356,11 +301,9 @@ isValidCity(string coords, PlayerId playerID)
 
 			(oneBuilding->getType == BuildingType::SETTLEMENT) &&  // la construcción es un Settlement
 			(oneBuilding->getPlayer() == playerID) &&              // es del jugador en cuestión
-			matchCoords(oneBuilding->getPlace(), coords) &&
+			matchCoords(oneBuilding->getPlace(), coords)
 			// validar que la lista de cities tenga size > 0, 
-			// validar recursos
-
-			) 
+			// validar recursos 
 		{
 			ret = true;
 			break; // para optimizar tiempo y no poner múltiples puntos de retorno
@@ -420,32 +363,6 @@ hasSettlementResources(PlayerId playerID)
 		)
 	{
 		ret = true;
-	}
-
-	return ret;
-}
-bool CatanGame::
-matchCoords(string str1, string str2)
-{
-	bool ret = true;
-
-	if (str1.length() == str2.length()) // ambos strings deben tener la misma longitud
-	{
-		for (int i = 0 ; i < str1.length() ; i++) // para cada caracter del string1
-		{
-			if ( str2.find(str1.c_str()[i]) == string::npos ) // si no lo encuentro, entonces las coordenadas no son iguales
-			{
-				ret = false; // cambio el parámetro de return
-				break; // y finalizo el barrido, porque ya las coordenadas no son iguales
-
-			}
-		}
-
-	}
-
-	else
-	{
-		ret = false;
 	}
 
 	return ret;
