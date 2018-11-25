@@ -17,8 +17,17 @@
 #include <map>
 #include <deque>
 
+/* Map assignments */
+#define HILL_HEX_COUNT		3
+#define FOREST_HEX_COUNT	4
+#define	MOUNTAIN_HEX_COUNT	3
+#define FIELD_HEX_COUNT		4
+#define PASTURE_HEX_COUNT	4
+
+/* Transaction definitions */
 #define BANK_TRANSACTION_CARDS_COUNT 4 
 
+/* Buildings requirements */
 #define SETTLEMENT_BRICK_NEEDED 1
 #define SETTLEMENT_LUMBER_NEEDED 1
 #define SETTLEMENT_WOOL_NEEDED 1
@@ -30,6 +39,7 @@
 #define ROAD_BRICK_NEEDED 1
 #define ROAD_LUMBER_NEEDED 1
 
+/* Robber definitions */
 #define ROBBER_CARDS_COUNT 7
 
 using namespace std;
@@ -116,6 +126,10 @@ public:
 	* resetGame
 	* Reinicia el juego volviendo a sus valores iniciales
 	* las variables de interes, como los puntos, etc...
+	*
+	* Unicamente reinicia las variables del juego, no define ninguna nueva
+	* disposicion de recursos ni nada por el estilo, de ello se encargan
+	* otras partes.
 	*/
 	void resetGame(void);
 
@@ -246,8 +260,15 @@ public:
 
 private:
 	
-	/* Rutinas bajo nivel de inicializacion */
+	/* Rutinas bajo nivel de inicializacion o restablecimiento */
 	void _init_game(void);
+
+	void _free_buildings(void);
+	void _free_events(void);
+	void _free_states(void);
+
+	void _clear_resource_map(void);
+	void _clear_sea_map(void);
 
 private:
 	Player localPlayer;

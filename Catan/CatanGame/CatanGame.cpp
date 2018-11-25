@@ -12,6 +12,8 @@
 #include "../CatanEvents/YOPEvent.h"
 #include "../CatanEvents/KnightEvent.h"
 
+#include <algorithm>
+#include <vector>
 #include <time.h>
 
 void
@@ -21,11 +23,48 @@ CatanGame::_init_game(void) {
 	this->prevState = nullptr;
 	this->state = nullptr;
 
-	/* Reinicio valores del juego */
-	resetGame();
-
 	/* Semilla para numeros aleatorios */
 	srand(time(NULL));
+}
+
+void
+CatanGame::_free_buildings(void) {
+
+	/* Me fijo si destruyo buildings */
+	for (Building* b : builtMap) {
+		delete b;
+	}
+}
+
+void
+CatanGame::_free_events(void) {
+
+	/* Destruyo eventos */
+	for (CatanEvent* ev : eventQueue) {
+		delete ev;
+	}
+}
+
+void
+CatanGame::_free_states(void) {
+
+	/* Destruyo estados */
+	if (state) {
+		delete state;
+	}
+	if (prevState) {
+		delete prevState;
+	}
+}
+
+void
+CatanGame::_clear_resource_map(void) {
+	resourceMap.clear();
+}
+
+void
+CatanGame::_clear_sea_map(void) {
+	seaMap.clear();
 }
 
 CatanGame::
@@ -47,24 +86,9 @@ CatanGame() : localPlayer(PlayerId::PLAYER_ONE), remotePlayer(PlayerId::PLAYER_T
 
 CatanGame::
 ~CatanGame() {
-
-	/* Me fijo si destruyo buildings */
-	for (Building* b : builtMap) {
-		delete b;
-	}
-
-	/* Destruyo estados */
-	if (state) {
-		delete state;
-	}
-	if (prevState) {
-		delete prevState;
-	}
-
-	/* Destruyo eventos */
-	for (CatanEvent* ev : eventQueue) {
-		delete ev;
-	}
+	_free_buildings();
+	_free_events();
+	_free_states();
 }
 
 CatanStatus
@@ -267,10 +291,47 @@ CatanGame::getPlayer(PlayerId playerId) {
 void
 CatanGame::resetGame() {
 
+	/* Reinicio los estados de los jugadores */
+	localPlayer.reset();
+	remotePlayer.reset();
+
+	/* Limpio los estados, construcciones y eventos */
+	_free_buildings();
+	_free_events();
+	_free_states();
+
+	/* Elimino los recursos y el agua como se despliegan */
+	_clear_resource_map();
+	_clear_sea_map();
+
+	/* Inicializo el juego */
+	_init_game();
 }
 
 void 
 CatanGame::generateMap() {
+
+	/* Creacion aleatoria de posiciones */
+	vector<unsigned char> coords;
+	for (unsigned char c = 'A'; c <= 'S'; c++)	coords.push_back(c);
+	random_shuffle(coords.begin(), coords.end());
+
+	/* Ubicamos aleatoriamente hill */
+	for (unsigned int i = 0; i < HILL_HEX_COUNT; i++) {
+		ResourceHex hex = ResourceHex(ResourceId::HILL, coords.back());
+		coords.pop_back();
+		resourceMap[hex.getCoord()] = hex;
+	}
+
+	/* Ubicamos aleatoriamente forest */
+
+	/* Ubicamos aleatoriamente mountain */
+
+	/* Ubicamos aleatoriamente field */
+
+	/* Ubicamos aleatoriamente pasture */
+
+	/* Ubicamos aleatoriamente desert */
 
 }
 
@@ -357,7 +418,8 @@ CatanGame::hasRoadResources(PlayerId playerID) {
 }
 
 void
-CatanGame::buildRoad(string coords, PlayerId playerID) {
+CatanGame::buildRoad(string coords, PlayerId playerID) 
+{
 
 }
 
@@ -422,6 +484,30 @@ CatanGame::pass() {
 	this->turn = (this->turn == PlayerId::PLAYER_ONE ? PlayerId::PLAYER_TWO : PlayerId::PLAYER_ONE);
 }
 
+bool CatanGame::
+isValidCity(string coords, PlayerId playerID)
+{
+	bool ret = false;
+	list<Building*>& buildings = this->builtMap;
+
+	for (Building* oneBuilding : buildings)
+	{
+		if (
+
+			(oneBuilding->getType == BuildingType::SETTLEMENT) &&  // la construcción es un Settlement
+			(oneBuilding->getPlayer() == playerID) &&              // es del jugador en cuestión
+			matchCoords(oneBuilding->getPlace(), coords)
+
+			)
+		{
+			ret = true;
+			break; // para optimizar tiempo y no poner múltiples puntos de retorno
+		}
+	}
+
+	return ret;
+
+}
 
 //bool CatanGame::
 //isValidDockTransaction(list<ResourceCard*>& offeredCards, ResourceId requestedCard, unsigned char seaCoord, unsigned char dockNumber, PlayerId player)
@@ -480,28 +566,4 @@ isValidListOfCards(list<ResourceId>& offeredCards, PlayerId playerID)
 
 	return ret;
 }
-
-bool CatanGame::
-isValidCity(string coords, PlayerId playerID) 
-{
-	bool ret = false;
-	list<Building*>& buildings = this->builtMap;
-
-	for (Building* oneBuilding : buildings)
-	{
-		if (
-
-			(oneBuilding->getType == BuildingType::SETTLEMENT) &&  // la construcción es un Settlement
-			(oneBuilding->getPlayer() == playerID) &&              // es del jugador en cuestión
-			matchCoords(oneBuilding->getPlace(), coords)
-			// validar que la lista de cities tenga size > 0, 
-			// validar recursos 
-		{
-			ret = true;
-			break; // para optimizar tiempo y no poner múltiples puntos de retorno
-		}
-	}
-
-	return ret;
-
-}*/
+*/

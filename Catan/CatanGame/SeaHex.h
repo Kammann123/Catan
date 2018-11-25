@@ -25,7 +25,7 @@ extern const string externCoords[];
 *
 * Consideraciones:
 *	+ Se toma los diferentes tipos si se construye con uno o dos puertos y se despliegan los puertos en sentido horario.
-*/
+*/	
 class SeaHex {
 public:
 
