@@ -245,6 +245,11 @@ public:
 	CatanEvent* getPacketEvent(NetworkPacket* packet);
 
 private:
+	
+	/* Rutinas bajo nivel de inicializacion */
+	void _init_game(void);
+
+private:
 	Player localPlayer;
 	Player remotePlayer;
 	list<Building*> builtMap;

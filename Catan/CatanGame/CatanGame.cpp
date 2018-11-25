@@ -12,12 +12,27 @@
 #include "../CatanEvents/YOPEvent.h"
 #include "../CatanEvents/KnightEvent.h"
 
+#include <time.h>
+
+void
+CatanGame::_init_game(void) {
+
+	/* Inicializacion de variables */
+	this->prevState = nullptr;
+	this->state = nullptr;
+
+	/* Reinicio valores del juego */
+	resetGame();
+
+	/* Semilla para numeros aleatorios */
+	srand(time(NULL));
+}
+
 CatanGame::
 CatanGame(string localPlayerName) : localPlayer(PlayerId::PLAYER_ONE), remotePlayer(PlayerId::PLAYER_TWO) {
 
 	/* Inicializacion */
-	this->prevState = nullptr;
-	this->state = nullptr; // PRIMER ESTADO!!
+	_init_game();
 
 	/* El nombre del jugador local */
 	this->localPlayer.setName(localPlayerName);
@@ -27,8 +42,7 @@ CatanGame::
 CatanGame() : localPlayer(PlayerId::PLAYER_ONE), remotePlayer(PlayerId::PLAYER_TWO) {
 
 	/* Inicializacion */
-	this->prevState = nullptr;
-	this->state = nullptr; // PRIMER ESTADO!!
+	_init_game();
 }
 
 CatanGame::
@@ -248,6 +262,11 @@ CatanGame::getTokens() {
 Player&
 CatanGame::getPlayer(PlayerId playerId) {
 	return playerId == PlayerId::PLAYER_ONE ? localPlayer : remotePlayer;
+}
+
+void
+CatanGame::resetGame() {
+
 }
 
 void 

@@ -24,6 +24,13 @@ public:
 	~Player();
 
 	/*
+	* reset
+	* Reinicia el estado de juego del Player, vuelve a la normalidad
+	* sus valores de puntaje y fichas disponibles
+	*/
+	void reset(void);
+
+	/*
 	* getName()
 	* Devuelve el nombre del jugador
 	*/
@@ -117,6 +124,15 @@ public:
 	* Devuelve una construccion al Player
 	*/
 	void giveBackBuilding(BuildingType type, Building* building);
+
+private:
+
+	/*
+	* Metodos de inicializacion y restablecimiento
+	*/
+	void _free_buildings(void);
+	void _get_buildings(unsigned int settleCount, unsigned int roadsCount, unsigned int citiesCount);
+	void _free_resources(void);
 
 private:
 	PlayerId player;

@@ -2,39 +2,14 @@
 
 Player::Player(PlayerId player) {
 
-	unsigned int settleCount = SETTLEMENT_COUNT;
-	unsigned int roadsCount = ROAD_COUNT;
-	unsigned int citiesCount = CITY_COUNT;
-
 	/* Inicializacion */
 	this->name = "";
 	this->player = player;
 	victoryPoints = 0;
 	resourceCards = {};
 
-	/* Agrego settlements */
-	while (settleCount) {
-		/* Creo el settlement */
-		Building* settlement = new Building(player, BuildingType::SETTLEMENT);
-		this->settlements.push_back(settlement);
-		settleCount--;
-	}
-
-	/* Agrego roads */
-	while (roadsCount) {
-		/* Creo el road */
-		Building* road = new Building(player, BuildingType::ROAD);
-		this->roads.push_back(road);
-		roadsCount--;
-	}
-
-	/* Agrego cities */
-	while (citiesCount) {
-		/* Creo el city */
-		Building* city = new Building(player, BuildingType::CITY);
-		this->cities.push_back(city);
-		citiesCount--;
-	}
+	/* Pido las construcciones */
+	_get_buildings(SETTLEMENT_COUNT, ROAD_COUNT, CITY_COUNT);
 }
 
 Player::Player(PlayerId player, string name, unsigned int settleCount, unsigned int citiesCount, unsigned int roadsCount)
@@ -45,44 +20,13 @@ Player::Player(PlayerId player, string name, unsigned int settleCount, unsigned 
 	victoryPoints = 0;
 	resourceCards = {};
 
-	/* Agrego settlements */
-	while (settleCount) {
-		/* Creo el settlement */
-		Building* settlement = new Building(player, BuildingType::SETTLEMENT);
-		this->settlements.push_back(settlement);
-		settleCount--;
-	}
-
-	/* Agrego roads */
-	while (roadsCount) {
-		/* Creo el road */
-		Building* road = new Building(player, BuildingType::ROAD);
-		this->roads.push_back(road);
-		roadsCount--;
-	}
-
-	/* Agrego cities */
-	while (citiesCount) {
-		/* Creo el city */
-		Building* city = new Building(player, BuildingType::CITY);
-		this->cities.push_back(city);
-		citiesCount--;
-	}
+	/* Pido las construcciones */
+	_get_buildings(settleCount, roadsCount, citiesCount);
 }
 
 Player::~Player() {
-	for (Building* b : settlements) {
-		delete b;
-	}
-	for (Building* b : roads) {
-		delete b;
-	}
-	for (Building* b : cities) {
-		delete b;
-	}
-	for (ResourceCard* r : resourceCards) {
-		delete r;
-	}
+	_free_buildings();
+	_free_resources();
 }
 
 void 
@@ -98,19 +42,6 @@ string Player::getName()
 unsigned int Player::getVictoryPoints()
 {
 	return victoryPoints;
-}
-
-unsigned int
-Player::getResourceCount(ResourceId resourceID) const {
-	unsigned int resourceCount = 0;
-
-	for (ResourceCard* resCard : this->resourceCards) {
-		if (resCard->getResourceId() == resourceID) {
-			resourceCount++;
-		}
-	}
-
-	return resourceCount;
 }
 
 unsigned int
@@ -140,35 +71,30 @@ void Player::removeResourceCard(ResourceCard * card)
 
 unsigned int Player::hasRoads(void)
 {
-	bool ret = true;
-	if (roads.size() == 0)
-	{
-		ret = false;
-	}
-	return ret;
-
+	return (unsigned int)roads.size();
 }
 
 unsigned int Player::hasSettlements(void)
 {
-	bool ret = true;
-	if (settlements.size() == 0)
-	{
-		ret = false;
-	}
-
-	return ret;
+	return (unsigned int)settlements.size();
 }
 
 unsigned int Player::hasCities(void)
 {
-	bool ret = true;
-	if (cities.size() == 0)
-	{
-		ret = false;
+	return (unsigned int)cities.size();
+}
+
+unsigned int
+Player::getResourceCount(ResourceId resourceID) const {
+	unsigned int resourceCount = 0;
+
+	for (ResourceCard* resCard : this->resourceCards) {
+		if (resCard->getResourceId() == resourceID) {
+			resourceCount++;
+		}
 	}
 
-	return ret;
+	return resourceCount;
 }
 
 void
@@ -278,4 +204,70 @@ Building* Player::popCity(void)
 void
 Player::resetVictoryPoints() {
 	this->victoryPoints = 0;
+}
+
+void
+Player::reset(void) {
+	
+	/* Puntaje a cero */
+	resetVictoryPoints();
+
+	/* Elimino cartas */
+	_free_buildings();
+	_free_resources();
+
+	/* Reinicio fichas */
+	_get_buildings(SETTLEMENT_COUNT, ROAD_COUNT, CITY_COUNT);
+}
+
+void
+Player::_get_buildings(unsigned int settleCount, unsigned int roadsCount, unsigned int citiesCount) {
+
+	/* Agrego settlements */
+	while (settleCount) {
+		/* Creo el settlement */
+		Building* settlement = new Building(player, BuildingType::SETTLEMENT);
+		this->settlements.push_back(settlement);
+		settleCount--;
+	}
+
+	/* Agrego roads */
+	while (roadsCount) {
+		/* Creo el road */
+		Building* road = new Building(player, BuildingType::ROAD);
+		this->roads.push_back(road);
+		roadsCount--;
+	}
+
+	/* Agrego cities */
+	while (citiesCount) {
+		/* Creo el city */
+		Building* city = new Building(player, BuildingType::CITY);
+		this->cities.push_back(city);
+		citiesCount--;
+	}
+}
+
+void
+Player::_free_buildings(void) {
+
+	/* Libero cada building */
+	for (Building* b : settlements) {
+		delete b;
+	}
+	for (Building* b : roads) {
+		delete b;
+	}
+	for (Building* b : cities) {
+		delete b;
+	}
+}
+
+void
+Player::_free_resources(void) {
+
+	/* Libero resource cards */
+	for (ResourceCard* resourceCard : resourceCards) {
+		delete resourceCard;
+	}
 }
