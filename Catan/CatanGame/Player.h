@@ -40,6 +40,7 @@ public:
 	* Devuelve los puntos de victoria del jugador
 	*/
 	unsigned int getVictoryPoints(void);
+	void resetVictoryPoints(void);
 
 	/*
 	* addPoints()
@@ -73,6 +74,7 @@ public:
 	* dado.
 	*/
 	unsigned int getResourceCount(ResourceId resourceID) const;
+	unsigned int getResourceCount(void) const;
 
 	/*
 	* hasRoads()

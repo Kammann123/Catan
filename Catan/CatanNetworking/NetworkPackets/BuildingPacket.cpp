@@ -13,6 +13,8 @@ PacketHeader buildingHeader(BuildingType type) {
 			return PacketHeader::CITY;
 			break;
 	}
+
+	throw exception("BuildingPacket - Se ingreso un valor incorrecto para definir construccion");
 }
 
 BuildingType buildingType(PacketHeader header) {
@@ -28,6 +30,8 @@ BuildingType buildingType(PacketHeader header) {
 			return BuildingType::ROAD;
 			break;
 	}
+
+	throw exception("BuildingPacket - Se ingreso un valor incorrecto para definir construccion");
 }
 
 BuildingPacket::

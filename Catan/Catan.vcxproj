@@ -135,7 +135,6 @@
     <ClInclude Include="CatanEvents\CardIsEvent.h" />
     <ClInclude Include="CatanEvents\CatanEvent.h" />
     <ClInclude Include="CatanEvents\DicesEvent.h" />
-    <ClInclude Include="CatanEvents\KnightEvent.cpp" />
     <ClInclude Include="CatanEvents\MonopolyEvent.h" />
     <ClInclude Include="CatanEvents\OfferEvent.h" />
     <ClInclude Include="CatanEvents\RobberCardEvent.h" />
@@ -247,6 +246,7 @@
     <ClCompile Include="CatanEvents\CardIsEvent.cpp" />
     <ClCompile Include="CatanEvents\CatanEvent.cpp" />
     <ClCompile Include="CatanEvents\DicesEvent.cpp" />
+    <ClCompile Include="CatanEvents\KnightEvent.cpp" />
     <ClCompile Include="CatanEvents\KnightEvent.h" />
     <ClCompile Include="CatanEvents\MonopolyEvent.cpp" />
     <ClCompile Include="CatanEvents\OfferEvent.cpp" />

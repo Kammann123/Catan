@@ -112,6 +112,13 @@ public:
 	* de flujo. Se las coloca ordenadas y clasificadas segun partes del juego.
 	*/
 
+	/*
+	* resetGame
+	* Reinicia el juego volviendo a sus valores iniciales
+	* las variables de interes, como los puntos, etc...
+	*/
+	void resetGame(void);
+
 	/* 
 	* Metodos de generacion inicial del juego bajo las reglas
 	* definidas en Catan. Se puede generar el mapa seteando los
@@ -146,7 +153,7 @@ public:
 	* para tomar y descartar esas cartas del mismo jugador.
 	* Aclaracion, la seleccion es por tipo de recurso.
 	*/
-	void robberCards(list<ResourceId>& cards, PlayerId playerID);
+	void robberCards(list<ResourceCard*>& cards, PlayerId playerID);
 
 	/*
 	* moveRobber

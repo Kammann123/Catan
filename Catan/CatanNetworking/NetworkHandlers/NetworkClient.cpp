@@ -43,9 +43,12 @@ connect(string ip, unsigned int port) {
 		/* Intento realizar conexion */
 		this->socket->connect(endpoint, error);
 
-		/* Verifico errores */
-		if (!handleError(error)) {
-			if(error != boost::asio::error::would_block)	toggleConnection();
+		if (error != boost::asio::error::connection_refused) {
+
+			/* Verifico errores */
+			if (!handleError(error)) {
+				if (error != boost::asio::error::would_block)	toggleConnection();
+			}
 		}
 	}
 }

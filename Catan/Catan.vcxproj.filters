@@ -291,9 +291,6 @@
     <ClInclude Include="CatanNetworking\CatanNetworking.h">
       <Filter>CatanNetworking</Filter>
     </ClInclude>
-    <ClInclude Include="CatanEvents\KnightEvent.cpp">
-      <Filter>CatanEvents</Filter>
-    </ClInclude>
     <ClInclude Include="CatanNetworking\NetworkProtocols\PSWaitSend.h">
       <Filter>CatanNetworking\NetworkProtocols</Filter>
     </ClInclude>
@@ -658,6 +655,9 @@
     </ClCompile>
     <ClCompile Include="CatanNetworking\NetworkingStates\HandshakingState.cpp">
       <Filter>CatanNetworking\NetworkingStates</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanEvents\KnightEvent.cpp">
+      <Filter>CatanEvents</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

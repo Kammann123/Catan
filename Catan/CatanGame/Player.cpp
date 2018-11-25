@@ -113,6 +113,11 @@ Player::getResourceCount(ResourceId resourceID) const {
 	return resourceCount;
 }
 
+unsigned int
+Player::getResourceCount(void) const {
+	return (unsigned int)this->resourceCards.size();
+}
+
 void Player::addPoints(unsigned int points)
 {
 	victoryPoints += points;
@@ -270,3 +275,7 @@ Building* Player::popCity(void)
 	return ret; // devuelvo puntero
 }
 
+void
+Player::resetVictoryPoints() {
+	this->victoryPoints = 0;
+}

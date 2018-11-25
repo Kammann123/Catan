@@ -32,7 +32,7 @@ CatanNetworking(string ip, unsigned int port, CatanGame& _game) : Observer(), ga
 	this->ip = ip;
 	this->port = port;
 	this->socket = nullptr;
-	this->status = false;
+	this->status = true;
 	this->error = "";
 	this->prevState = nullptr;
 	this->currState = new Disconnected(*this);

@@ -1,61 +1,33 @@
-#include "../Catan/CatanNetworking/NetworkHandlers/NetworkClient.h"
-#include "../Catan/CatanNetworking/NetworkProtocols/NetworkProtocol.h"
+#include "../Catan/CatanNetworking/CatanNetworking.h"
+#include "../Catan/CatanGame/CatanGame.h"
 
-#include <iostream>
-#include <string>
-
-using namespace std;
-using namespace std::placeholders;
-
-#define CONSOLE(msg) cout << "[NetworkClient] >> " << msg << endl
-#define CLIENT_SEND(msg, data) CONSOLE(msg), getchar(), client.send(new Networ
-
-void gName(NetworkPacket* packet) { 
-	CONSOLE("Recibiendo paquete NAME_IS");
-	cout << "Se llama: " << ((NamePacket*)packet)->getName() << endl;
-}
+#define CONSOLE(x) cout << "[CatanGame v1.0] " << x << endl
 
 int main(int argc, char** argv) {
 
-	NetworkClient client;
-	Protocol myProtocol(
-		bind(&NetworkClient::send, &client, _1),
-		{
-			SEND(NAME),
-			RECV(gName, NAME_IS),
-			SEND(ACK)
+	CatanGame game("Juan Carlos Catan");
+	CatanNetworking net("127.0.0.1", 12345, game);
+
+	game.attach(&net);
+
+	CONSOLE("Iniciando networking y game...");
+
+	string status = net.what();
+	CONSOLE("Estado inicial " + status);
+
+	while (net.good()) {
+
+		net.run();
+
+		if (status != net.what()) {
+
+			CONSOLE("Hubo un cambio de estado en el networking " + net.what());
+
+			status = net.what();
 		}
-	);
 
-	CONSOLE("Esperando autorizacion para conectar a servidor!");
-	CONSOLE("Presione alguna tecla...");
-	getchar();
-
-	CONSOLE("Conectando... a localhost!");
-
-	while (!client.isConnected()) {
-		client.connect("127.0.0.1", 12345);
 	}
 
-	CONSOLE("Cliente conectado correctamente al servidor!");
+	CONSOLE(net.getError());
 
-	while (client.isConnected()) {
-
-		client.run();
-
-		if (client.hasReceived()) {
-
-			if (myProtocol.getStatus() != ProtocolStatus::DONE) {
-
-				myProtocol.recv(client.receive());
-
-				if (myProtocol.getStatus() == ProtocolStatus::PROTOCOL_ERROR) {
-					throw exception("Error en el protocolo!");
-				}
-			}
-		}
-	}
-
-	CONSOLE("Saliendo...");
-	getchar();
 }

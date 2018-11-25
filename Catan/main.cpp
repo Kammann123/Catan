@@ -13,13 +13,15 @@ int main(int argc, char** argv) {
 	CONSOLE("Iniciando networking y game...");
 
 	string status = net.what();
+	CONSOLE("Estado inicial " + status);
+
 	while (net.good()) {
 
 		net.run();
 
 		if (status != net.what()) {
 
-			CONSOLE("Hubo un cambio de estado en el networking" + net.what());
+			CONSOLE("Hubo un cambio de estado en el networking " + net.what());
 
 			status = net.what();
 		}
