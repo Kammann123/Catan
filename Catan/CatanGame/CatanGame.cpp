@@ -382,7 +382,21 @@ CatanGame::isValidRoad(string coords, PlayerId playerID) {
 
 bool
 CatanGame::isValidCity(string coords, PlayerId playerID) {
-	return false;
+	bool ret = false;
+
+	for (Building* building : builtMap) // Busco que exista un Settlement en la posicion indicada
+	{
+		if (
+			building->getPlayer() == playerID &&
+			matchCoords(building->getPlace(), coords) &&
+			building->getType == BuildingType::SETTLEMENT
+			)
+		{
+			ret = true;
+			break;
+		}
+	}
+	return ret;
 }
 
 bool
@@ -593,30 +607,6 @@ CatanGame::pass() {
 	this->turn = (this->turn == PlayerId::PLAYER_ONE ? PlayerId::PLAYER_TWO : PlayerId::PLAYER_ONE);
 }
 
-bool CatanGame::
-isValidCity(string coords, PlayerId playerID)
-{
-	bool ret = false;
-	list<Building*>& buildings = this->builtMap;
-
-	for (Building* oneBuilding : buildings)
-	{
-		if (
-
-			(oneBuilding->getType == BuildingType::SETTLEMENT) &&  // la construcción es un Settlement
-			(oneBuilding->getPlayer() == playerID) &&              // es del jugador en cuestión
-			matchCoords(oneBuilding->getPlace(), coords)
-
-			)
-		{
-			ret = true;
-			break; // para optimizar tiempo y no poner múltiples puntos de retorno
-		}
-	}
-
-	return ret;
-
-}
 
 //bool CatanGame::
 //isValidDockTransaction(list<ResourceCard*>& offeredCards, ResourceId requestedCard, unsigned char seaCoord, unsigned char dockNumber, PlayerId player)
@@ -628,32 +618,3 @@ isValidCity(string coords, PlayerId playerID)
 //	//
 //}
 
-/*
-bool CatanGame::
-isValidPlayerTransaction(list<ResourceId>& offeredCards, list<ResourceId>& requestedCards, PlayerId srcPlayerID) 
-{
-	bool ret = false;
-	PlayerId destPlayerID = ((srcPlayerID == PlayerId::PLAYER_ONE) ? PlayerId::PLAYER_TWO : PlayerId::PLAYER_ONE);
-
-	if (isValidListOfCards(offeredCards, srcPlayerID) && isValidListOfCards(requestedCards, destPlayerID))
-	{
-		ret = true;
-	}
-
-	return ret;
-}
-
-bool CatanGame::
-isValidBankTransaction(list<ResourceId>& offeredCards, PlayerId playerID)
-{
-	bool ret = false;
-
-	if ((offeredCards.size() == BANK_TRANSACTION_CARDS_COUNT) && isValidListOfCards(offeredCards, playerID))
-	{
-		ret = true;
-	}
-
-	return ret;
-}
-
-*/
