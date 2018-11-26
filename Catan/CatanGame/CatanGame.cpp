@@ -261,7 +261,6 @@ CatanGame::getPrevState(void)
 bool
 CatanGame::isRobberStatus() {
 	return false;
-
 }
 
 void

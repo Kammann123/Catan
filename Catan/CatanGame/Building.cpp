@@ -50,3 +50,33 @@ void Building::
 setPlayer(PlayerId player) {
 	this->player = player;
 }
+
+void
+Building::addNeighbour(Building* building) {
+	neighbours.push_back(building);
+}
+
+void
+Building::removeNeighbour(Building* building) {
+	neighbours.remove(building);
+}
+
+void
+Building::removeNeighbour(void) {
+	neighbours.clear();
+}
+
+bool
+Building::wasVisited(void) {
+	return visited;
+}
+
+void
+Building::visit(bool status) {
+	visited = status;
+}
+
+list<Building*>
+Building::getNeighbours(void) {
+	return neighbours;
+}

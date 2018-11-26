@@ -4,6 +4,7 @@
 #include "Coord.h"
 
 #include <string>
+#include <list>
 
 using namespace std;
 
@@ -59,4 +60,38 @@ private:
 	Coord place;
 	BuildingType type;
 	PlayerId player;
+
+public:
+	
+	/*
+	* addNeighbour/removeNeighbour
+	* Agrego/Quito un vecino contiguo a la construccion, para ir armando
+	* las conexiones del grafo de caminos y construcciones
+	*/
+	void addNeighbour(Building* building);
+	void removeNeighbour(Building* building);
+	void removeNeighbour(void);
+
+	/*
+	* getNeighbours
+	* Devuelve la lista de vecinos, para ir visitandolos a cada
+	* uno de ellos y llevar la cuenta de las visitas
+	*/
+	list<Building*> getNeighbours(void);
+
+	/*
+	* wasVisited
+	* Consulta si ya fue visitada la construccion en particular
+	*/
+	bool wasVisited(void);
+
+	/*
+	* visit
+	* Marca el estado de la visita en esta construccion
+	*/
+	void visit(bool status = true);
+
+private:
+	list<Building*> neighbours;
+	bool visited;
 };
