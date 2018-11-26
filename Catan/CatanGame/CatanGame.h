@@ -33,6 +33,7 @@
 #define	MOUNTAIN_HEX_COUNT	3
 #define FIELD_HEX_COUNT		4
 #define PASTURE_HEX_COUNT	4
+#define DESERT_HEX_COUNT	1
 
 /* Transaction definitions */
 #define BANK_TRANSACTION_CARDS_COUNT 4 
@@ -174,8 +175,14 @@ public:
 	* seran los mapas, tanto de tierra como mar y los valores de
 	* tokens asignados a ellos.
 	*/
-	bool verifyMap(map<Coord, MapValue> landMap);
+	bool verifyMap(map<Coord, MapValue> gameMap);
 	bool verifyTokens(map<Coord, unsigned char> tokens);
+
+	/*
+	* Definicion de los valores del juego del mapa, tanto de 
+	* tierra como mar, asi como los tokens.
+	*/
+	void setGlobalMap(map<Coord, MapValue> gameMap, map<Coord, unsigned char> tokens);
 
 	/*
 	* assignResources

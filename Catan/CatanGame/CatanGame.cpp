@@ -433,6 +433,126 @@ CatanGame::generateTokens() {
 	}
 }
 
+bool
+CatanGame::verifyMap(map<Coord, MapValue> gameMap) {
+	/*
+	* Primero verifico que existan en la definicion, todos los puntos
+	* del mapa, tanto de tierra como de mar, para lo cual
+	* reviso que existan los elementos en el diccionario 
+	*/
+	map<MapValue, unsigned int> counter;
+
+	for (unsigned char i = MIN_SEA_COORD; i <= MAX_SEA_COORD; i++) {
+		if (gameMap.find(i) == gameMap.end()) {
+			return false;
+		}
+
+		if (counter.find(i) == counter.end()) {
+			counter.insert(pair<MapValue, unsigned int>(i, 1));
+		}
+		else {
+			counter[i] += 1;
+		}
+	}
+
+	for (unsigned char i = MIN_LAND_COORD; i <= MAX_LAND_COORD; i++) {
+		if (gameMap.find(i) == gameMap.end()) {
+			return false;
+		}
+
+		if (counter.find(i) == counter.end()) {
+			counter.insert(pair<MapValue, unsigned int>(i, 1));
+		}
+		else {
+			counter[i] += 1;
+		}
+	}
+
+	/*
+	* Luego compruebo que los valores mantengan una relacion 
+	* correcta de cantidades, segun lo establecido por las reglas
+	* del juego Catan
+	*/
+	bool verify = (
+		counter[(MapValue)ResourceId::DESERT] == DESERT_HEX_COUNT &&
+		counter[(MapValue)ResourceId::HILL] == HILL_HEX_COUNT &&
+		counter[(MapValue)ResourceId::FOREST] == FOREST_HEX_COUNT &&
+		counter[(MapValue)ResourceId::MOUNTAIN] == MOUNTAIN_HEX_COUNT &&
+		counter[(MapValue)ResourceId::FIELD] == FIELD_HEX_COUNT &&
+		counter[(MapValue)ResourceId::PASTURES] == PASTURE_HEX_COUNT &&
+		counter[(MapValue)SeaId::BRICK] == 1 &&
+		counter[(MapValue)SeaId::WOOD] == 1 &&
+		counter[(MapValue)SeaId::WHEAT] == 1 &&
+		counter[(MapValue)SeaId::SHEEP] == 1 &&
+		counter[(MapValue)SeaId::STONE] == 1 &&
+		counter[(MapValue)SeaId::NORMAL] == 1
+	);
+
+	return verify;
+}
+
+bool
+CatanGame::verifyTokens(map<Coord, unsigned char> tokens) {
+
+	/*
+	* Verifico que esten los tokens de todas las posiciones 
+	* y luego valido que los numeros esten en el rango que se 
+	* admite segun las reglas de Catan
+	*/
+	unsigned int fCounter = 0;
+	unsigned int sCounter = 0;
+	for (unsigned char i = MIN_LAND_COORD; i <= MAX_LAND_COORD; i++) {
+		if (tokens.find(i) == tokens.end()) {
+			return false;
+		}
+		else {
+			if (tokens[i] < 2 || tokens[i] > 12 || tokens[i] == 7) {
+				return false;
+			}
+			else if (tokens[i] == 2) {
+				fCounter++;
+			}else if( tokens[i] == 12) {
+				sCounter++;
+			}
+		}
+	}
+
+	/*
+	* Verifico que los tokens 2 y 12 aparezcan unicamente una sola vez
+	*/
+	return (fCounter == 1 && sCounter == 1);
+}
+
+void
+CatanGame::setGlobalMap(map<Coord, MapValue> gameMap, map<Coord, unsigned char> tokens) {
+
+	/*
+	* Limpio los mapas actuales 
+	*/
+	resourceMap.clear();
+	seaMap.clear();
+
+	/*
+	* Construyo todos los ResourceHex recibidos con sus tokens
+	* y luego los agrego al mapa de tierras
+	*/
+	for (unsigned char i = MIN_LAND_COORD; i <= MAX_LAND_COORD; i++) {
+		
+		ResourceHex hex = ResourceHex((ResourceId)gameMap[i], (unsigned int)tokens[i], i);
+		resourceMap.insert( pair<Coord, ResourceHex>(i, hex) );
+	}
+
+	/*
+	* Luego realizo la misma accion pero con las piezas de mar, agregando las que 
+	* corresponden al mapa
+	*/
+	for (unsigned int i = MIN_SEA_COORD; i <= MAX_SEA_COORD; i++) {
+
+		SeaHex hex = SeaHex(i, (SeaId)gameMap[i]);
+		seaMap.insert( pair<Coord, SeaHex>(i, hex) );
+	}
+}
+
 void
 CatanGame::assignResources(unsigned int dices) {
 
