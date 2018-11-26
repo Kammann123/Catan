@@ -529,16 +529,16 @@ CatanGame::isValidRoad(Coord coords, PlayerId playerID) {
 	return false;
 }
 
-/*
+
 bool
-CatanGame::isValidCity(string coords, PlayerId playerID) {
+CatanGame::isValidCity(Coord coords, PlayerId playerID) {
 	bool ret = false;
 
 	for (Building* building : builtMap) // Busco que exista un Settlement en la posicion indicada
 	{
 		if (
 			building->getPlayer() == playerID &&
-			matchCoords(building->getPlace(), coords) &&
+			building->getPlace() == coords &&
 			building->getType == BuildingType::SETTLEMENT
 			)
 		{
@@ -547,7 +547,7 @@ CatanGame::isValidCity(string coords, PlayerId playerID) {
 		}
 	}
 	return ret;
-}*/
+}
 
 bool
 CatanGame::isValidSettlement(Coord coords, PlayerId playerID) {
@@ -699,16 +699,16 @@ CatanGame::canPlayerAccept(list<ResourceCard*> requestedCards, PlayerId destPlay
 			break;
 		}
 
-		return (
-			(getPlayer(destPlayerID).getResourceCount(ResourceId::FOREST) >= woodCount) &&
-			(getPlayer(destPlayerID).getResourceCount(ResourceId::HILL) >= brickCount) &&
-			(getPlayer(destPlayerID).getResourceCount(ResourceId::MOUNTAIN) >= oreCount) &&
-			(getPlayer(destPlayerID).getResourceCount(ResourceId::FIELD) >= wheatCount) &&
-			(getPlayer(destPlayerID).getResourceCount(ResourceId::PASTURES) >= woolCount)
-			);
 	}
 
-	return false;
+	return (
+		(getPlayer(destPlayerID).getResourceCount(ResourceId::FOREST) >= woodCount) &&
+		(getPlayer(destPlayerID).getResourceCount(ResourceId::HILL) >= brickCount) &&
+		(getPlayer(destPlayerID).getResourceCount(ResourceId::MOUNTAIN) >= oreCount) &&
+		(getPlayer(destPlayerID).getResourceCount(ResourceId::FIELD) >= wheatCount) &&
+		(getPlayer(destPlayerID).getResourceCount(ResourceId::PASTURES) >= woolCount)
+		);
+
 }
 
 void
@@ -722,7 +722,7 @@ CatanGame::Exchange(list<ResourceCard*>& offered, ResourceId wanted, PlayerId pl
 	ResourceCard* newCard = new ResourceCard(playerID,wanted); // Creo nuevo objeto ResourceCard
 	getPlayer(playerID).addResourceCard(newCard); // Asigno la nueva carta al jugador
 }
-/*
+
 void
 CatanGame::playerExchange(list<ResourceCard*>& offered, list<ResourceId>& wanted, PlayerId srcPlayerID) 
 {
@@ -736,7 +736,7 @@ CatanGame::playerExchange(list<ResourceCard*>& offered, list<ResourceId>& wanted
 	}
 
 	/* Creo una lista con todas las resource cards que transferiré del jugador destino al jugador fuente del intercambio */
-/*
+
 	list<ResourceCard*> wantedList = getPlayer(oponent).giveResourceCard(ResourceId::FOREST, std::count(wanted.begin(), wanted.end(), ResourceId::FOREST));
 	wantedList.merge(getPlayer(oponent).giveResourceCard(ResourceId::HILL, std::count(wanted.begin(), wanted.end(), ResourceId::HILL)));
 	wantedList.merge(getPlayer(oponent).giveResourceCard(ResourceId::MOUNTAIN, std::count(wanted.begin(), wanted.end(), ResourceId::MOUNTAIN)));
@@ -752,7 +752,7 @@ CatanGame::playerExchange(list<ResourceCard*>& offered, list<ResourceId>& wanted
 
 	}
 
-}*/
+}
 
 void
 CatanGame::pass() {
