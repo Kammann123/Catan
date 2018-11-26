@@ -524,7 +524,14 @@ CatanGame::playerExchange(list<ResourceCard*>& offered, list<ResourceId>& wanted
 		getPlayer(srcPlayerID).removeResourceCard(cardOffered); // Remuevo las cartas ofrecidas por jugador fuente
 	}
 
-	list<ResourceCard*> wantedList = getPlayer(oponent).giveResourceCard(ResourceId::FOREST, std::count(wanted.begin(), wanted.end(), ResourceId::FOREST)).merge(getPlayer(oponent).giveResourceCard(ResourceId::HILL, std::count(wanted.begin(), wanted.end(), ResourceId::HILL)).merge(getPlayer(oponent).giveResourceCard(ResourceId::MOUNTAIN, std::count(wanted.begin(), wanted.end(), ResourceId::MOUNTAIN)).merge(getPlayer(oponent).giveResourceCard(ResourceId::FIELD, std::count(wanted.begin(), wanted.end(), ResourceId::FIELD)).merge(getPlayer(oponent).giveResourceCard(ResourceId::PASTURES, std::count(wanted.begin(), wanted.end(), ResourceId::PASTURES))))));
+	/* Creo una lista con todas las resource cards que transferiré del jugador destino al jugador fuente del intercambio */
+
+	list<ResourceCard*> wantedList = getPlayer(oponent).giveResourceCard(ResourceId::FOREST, std::count(wanted.begin(), wanted.end(), ResourceId::FOREST));
+	wantedList.merge(getPlayer(oponent).giveResourceCard(ResourceId::HILL, std::count(wanted.begin(), wanted.end(), ResourceId::HILL)));
+	wantedList.merge(getPlayer(oponent).giveResourceCard(ResourceId::MOUNTAIN, std::count(wanted.begin(), wanted.end(), ResourceId::MOUNTAIN)));
+	wantedList.merge(getPlayer(oponent).giveResourceCard(ResourceId::FIELD, std::count(wanted.begin(), wanted.end(), ResourceId::FIELD)));
+	wantedList.merge(getPlayer(oponent).giveResourceCard(ResourceId::PASTURES, std::count(wanted.begin(), wanted.end(), ResourceId::PASTURES)));
+
 
 	for (ResourceCard* cardWanted : wantedList) // intercambio destinationPlayer -> sourcePlayer
 	{
