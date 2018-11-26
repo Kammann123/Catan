@@ -17,6 +17,15 @@
 #include <list>
 #include <map>
 #include <deque>
+#include <iterator>
+
+/* Docks requierements */
+#define NORMAL_COUNT	3
+#define WHEAT_COUNT		2
+#define SHEEP_COUNT		2
+#define BRICK_COUNT		2
+#define STONE_COUNT		2
+#define WOOD_COUNT		2
 
 /* Map assignments */
 #define HILL_HEX_COUNT		3
@@ -50,6 +59,12 @@
 /* Victory Points reference */
 #define ROAD_BUILT_POINTS			0
 #define SETTLEMENT_BUILT_POINTS		1
+#define CITY_BUILT_POINTS			2
+
+#define RANDOM_DICE	((rand() % 6) + 1)
+
+#define OPONENT_ID(id)	(id == PlayerId::PLAYER_ONE ? PlayerId::PLAYER_TWO : PlayerId::PLAYER_ONE)
+
 
 using namespace std;
 
@@ -202,6 +217,16 @@ public:
 	void moveRobber(Coord newCoords);
 
 	/*
+	* updateDocks
+	* Mantengo actualizado el conjunto de docks disponibles que tiene 
+	* cada uno de los jugadores durante la partida.
+	*
+	* Presupone que coord debe ser un settlement o city, no obstante
+	* lo validara para verificar antes que sea un dock.
+	*/
+	void updateDocks(Coord coord, PlayerId playerId);
+
+	/*
 	* isValidRoad,isValidCity,isValidSettlement
 	* Validan la colocacion de cada una de esas construcciones para un jugador
 	* determinado, en la ubicacion dada, verificando que sea posible a nivel constructivo,
@@ -231,10 +256,23 @@ public:
 	* Realizan la construccion de alguna de esas entidades en la posicion definida
 	* por el usuario, para ese jugador, donde se asume previa validacion ya que 
 	* consiste unicamente en el proceso de cobrar recursos y ubicar la entidad.
+	*
+	* El requisito de un puntero a Building es para la conexion de las construcciones
+	* en caso de City, el reemplazo del settlement.
 	*/
-	void buildRoad(Coord coords, PlayerId playerID);
-	void buildCity(Coord coords, PlayerId playerID);
-	void buildSettlement(Coord coords, PlayerId playerID);
+	void buildRoad(Building* building, Coord coords, PlayerId playerID);
+	void buildCity(Building* building, Coord coords, PlayerId playerID);
+	void buildSettlement(Building* building, Coord coords, PlayerId playerID);
+
+	/*
+	* dockAccepts
+	* Validan si el muelle en cuestion acepta el conjunto de cartas dado
+	* a modo de intercambio, cumpliendo las reglas respectivas de cada uno de ellos
+	*/
+	bool dockAccepts(list<ResourceId>& cards, unsigned int qty, ResourceId id);
+	bool dockAccepts(list<ResourceId>& cards, unsigned int qty);
+	bool dockAccepts(list<ResourceCard*>& cards, unsigned int qty, ResourceId id);
+	bool dockAccepts(list<ResourceCard*>& cards, unsigned int qty);
 
 	/*
 	* isValidDockExchange, isValidPlayerExchange, isValidBankExchange
@@ -242,16 +280,11 @@ public:
 	* alguno de los muelles o bien el banco del juego. Estas validaciones implican verificar que sea posible la transaccion
 	* , que tenga los recursos para hacerla, y que tenga disponible las opciones de hacerla, por los muelles por ejemplo.
 	*/
-	bool isValidDockExchange(list<ResourceCard*>& offeredCards, ResourceId requestedCard, Coord seaCoord, unsigned char dockNumber, PlayerId player);
+	bool isValidDockExchange(list<ResourceId>& offeredCards, PlayerId playerId);
+	bool isValidDockExchange(list<ResourceCard*>& offeredCards, PlayerId playerId);
 	bool isValidPlayerExchange(list<ResourceCard*>& offeredCards, list<ResourceId>& requestedCards, PlayerId srcPlayerID);
+	bool isValidPlayerExchange(list<ResourceId>& offeredCards, list<ResourceId>& requestedCards, PlayerId srcPlayerID);
 	bool isValidBankExchange(list<ResourceCard*>& offeredCards, PlayerId playerID);
-
-	/*
-	* isAvailableDock
-	* Valida si esta disponible el muelle para ese jugador, en funcion de sus construcciones
-	* para posteriormente determinar si es posible que realice transaccion con tal muelle.
-	*/
-	bool isAvailableDock(SeaId dockID, PlayerId playerID);
 
 	/*
 	* canPlayerAccept
@@ -267,7 +300,9 @@ public:
 	* el banco o un muelle, donde se asume validacion y unicamente se distribuyen recursos.
 	*/
 	void Exchange(list<ResourceCard*>& offered, ResourceId wanted, PlayerId playerID);
+	void Exchange(list<ResourceId>& offered, ResourceId wanted, PlayerId playerID);
 	void playerExchange(list<ResourceCard*>& offered, list<ResourceId>& wanted, PlayerId srcPlayerID);
+	void playerExchange(list<ResourceId>& offered, list<ResourceId>& wanted, PlayerId srcPlayerID);
 
 	/*
 	* pass
@@ -321,4 +356,5 @@ private:
 private:
 	
 	map<PlayerId, unsigned int> playerLongestRoad;
+	map<PlayerId, list<SeaId>> playerDocks;
 };

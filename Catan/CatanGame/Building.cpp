@@ -6,6 +6,7 @@ Building(Coord place, PlayerId player, BuildingType type) {
 	this->place = place;
 	this->player = player;
 	this->type = type;
+	this->visited = false;
 }
 
 Building::
@@ -13,6 +14,7 @@ Building(PlayerId player, BuildingType type) {
 	this->place = BUILDING_NOT_PLACED;
 	this->player = player;
 	this->type = type;
+	this->visited = false;
 }
 
 Building::
@@ -20,6 +22,7 @@ Building(BuildingType type) {
 	this->place = BUILDING_NOT_PLACED;
 	this->player = PlayerId::PLAYER_NONE;
 	this->type = type;
+	this->visited = false;
 }
 
 Coord Building::
@@ -49,6 +52,13 @@ setPlace(Coord place)
 void Building::
 setPlayer(PlayerId player) {
 	this->player = player;
+}
+
+void
+Building::addNeighbour(list<Building*> buildings) {
+	for (Building* building : buildings) {
+		addNeighbour(building);
+	}
 }
 
 void

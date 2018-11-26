@@ -68,6 +68,7 @@ public:
 	* Agrego/Quito un vecino contiguo a la construccion, para ir armando
 	* las conexiones del grafo de caminos y construcciones
 	*/
+	void addNeighbour(list<Building*> buildings);
 	void addNeighbour(Building* building);
 	void removeNeighbour(Building* building);
 	void removeNeighbour(void);

@@ -77,6 +77,7 @@ public:
 	void removeResourceCard(ResourceId id);
 	void removeResourceCard(ResourceId resourceId, unsigned int qty);
 	list<ResourceCard*> giveResourceCard(ResourceId resourceId, unsigned int qty);
+	ResourceCard* getResourceCard(ResourceId id);
 
 	/*
 	* getResourceCount

@@ -297,3 +297,18 @@ Player::_free_resources(void) {
 		delete resourceCard;
 	}
 }
+
+ResourceCard*
+Player::getResourceCard(ResourceId id) {
+	ResourceCard* temp = nullptr;
+	for (ResourceCard* card : resourceCards) {
+		if (card->getResourceId() == id) {
+			temp = card;
+			break;
+		}
+	}
+	if (temp) {
+		resourceCards.remove(temp);
+	}
+	return temp;
+}
