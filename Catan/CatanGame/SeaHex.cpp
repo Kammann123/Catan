@@ -2,7 +2,7 @@
 #include "Coord.h"
 
 SeaHex::
-SeaHex(unsigned char coord, SeaId dockOne, SeaId dockTwo)
+SeaHex(Coord coord, SeaId dockOne, SeaId dockTwo)
 {
 	/* Inicializacion */
 	this->coord = coord;
@@ -11,7 +11,7 @@ SeaHex(unsigned char coord, SeaId dockOne, SeaId dockTwo)
 }
 
 SeaHex::
-SeaHex(unsigned char coord, SeaId onlyDock)
+SeaHex(Coord coord, SeaId onlyDock)
 {
 	/* Inicializacion */
 	this->coord = coord;
@@ -24,23 +24,23 @@ SeaHex(const SeaHex& copy) {
 	this->dockList = copy.dockList;
 }
 
-unsigned char
+Coord
 SeaHex::getCoord(void) const {
 	return this->coord;
 }
 
 bool
-SeaHex::hasDock(string coords) {
+SeaHex::hasDock(Coord coords) {
 	unsigned int relativeCoord;
 	unsigned int i;
 
 	/* Me fijo si la coordenada es de costa */
-	if (coords.find(this->coord, 0) != coords.npos) {
+	if (coords.nearCoast()) {
 		/* Busco la coordenada en el arreglo */
 		i = 0;
 		for (string coord : externalDots) {
 			relativeCoord = i % 5;
-			if (matchCoords(coord, coords)) {
+			if (coords == coord) {
 				/* Me fijo segun la cantidad de muelles si es valida */
 				if (dockList.size() == 1)
 					return (relativeCoord == 2 || relativeCoord == 3);
@@ -54,17 +54,17 @@ SeaHex::hasDock(string coords) {
 }
 
 SeaId
-SeaHex::dockType(string coords) {
+SeaHex::dockType(Coord coords) {
 	unsigned int relativeCoord;
 	unsigned int i;
 
 	/* Me fijo si la coordenada es de costa */
-	if (coords.find(this->coord, 0) != coords.npos) {
+	if (coords.nearCoast()) {
 		/* Busco la coordenada en el arreglo */
 		i = 0;
 		for (string coord : externalDots) {
 			relativeCoord = i % 5;
-			if (matchCoords(coord, coords)) {
+			if (coords == coord) {
 				/* Me fijo segun la cantidad de muelles si es valida */
 				if (dockList.size() == 1) {
 					return this->dockList[0];

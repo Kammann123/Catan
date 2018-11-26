@@ -12,5 +12,5 @@ class KnightEvent : public CatanEvent, public KnightData {
 public:
 	/* Constructores */
 	KnightEvent(KnightPacket* packet);
-	KnightEvent(unsigned char coord, PlayerId player);
+	KnightEvent(Coord coord, PlayerId player);
 };

@@ -6,16 +6,16 @@ Robber() {
 }
 
 Robber::
-Robber(unsigned char coord) {
+Robber(Coord coord) {
 	this->coord = coord;
 }
 
 void 
-Robber::setCoord(unsigned char coord) {
+Robber::setCoord(Coord coord) {
 	this->coord = coord;
 }
 
-unsigned char
+Coord
 Robber::getCoord(void) const {
 	return this->coord;
 }

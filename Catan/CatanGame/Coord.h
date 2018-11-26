@@ -31,25 +31,48 @@ extern const string externalEdges[30];
 */
 class Coord {
 public:
-	
-	enum Type : unsigned int {DOT, EDGE, LAND, SEA, NONE};
+
+	enum Type : unsigned int { DOT, EDGE, LAND, SEA, NONE };
 
 	/* Constructores */
+	Coord();
+	Coord(string coords);
 	Coord(string coords, Type type);
 	Coord(const Coord& copy);
-	Coord(unsigned char coord, Type type);
+	Coord(unsigned char coord);
 	Coord(Coord& c1, Coord& c2);
 	Coord(vector<unsigned char> coord);
 
 	/* Sobrecarga de operadores */
+	bool operator<(const Coord& coord) const;
+	bool operator<=(const Coord& coord) const;
+	bool operator>(const Coord& coord) const;
+	bool operator>=(const Coord& coord) const;
+	bool operator==(Coord copy);
 	bool operator==(string coordsCmp);
-	bool operator==(const Coord& copy);
 	bool operator==(unsigned char coord);
 
+	unsigned char operator[](unsigned int index);
+
+	Coord& operator=(unsigned char coord);
+	Coord& operator=(string coords);
+	Coord& operator=(Coord coords);
+
+	Coord& operator+=(unsigned char coord);
+	Coord& operator+=(string coords);
+	Coord& operator+=(Coord coords);
+
 	/* Definicion de los parametros de la coordenada */
-	void setCoord(unsigned char coord, Type type);
 	void setCoord(string coords, Type type);
+	void setCoord(unsigned char coord);
+	void forceEdge(void);
+	void forceDot(void);
+
 	string getCoords(void);
+
+	string::iterator begin(void);
+	string::iterator end(void);
+	size_t size(void);
 
 	/* 
 	* Metodos de validacion y verificacion de la coordenada
@@ -67,7 +90,7 @@ public:
 	* de los parametros pasados como una nueva coordenada, donde se espera
 	* que esto recibido esa de tipo Land, pues no podria ser sino un vertex.
 	*/
-	bool isVertexOf(Coord& coord);
+	bool isVertexOf(Coord coord);
 	bool isVertexOf(unsigned char coord);
 
 	/*
@@ -110,7 +133,11 @@ private:
 	void _verify_type(void);
 
 	bool _is_valid_edges(void);
+	bool _is_valid_land(void);
 	bool _is_valid_dot(void);
+	bool _is_valid_sea(void);
+
+	void _update_coord(void);
 
 	string coords;
 	Type type;

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../CatanData/BuildingData.h"
+#include "Coord.h"
 
 #include <string>
 
@@ -20,7 +21,7 @@ public:
 	/*
 	* Constructor
 	*/
-	Building(string place, PlayerId player, BuildingType type);
+	Building(Coord place, PlayerId player, BuildingType type);
 	Building(PlayerId player, BuildingType type);
 	Building(BuildingType type);
 
@@ -28,7 +29,7 @@ public:
 	* getPlace()
 	* Devuelve las coordenadas de la construcción
 	*/
-	string getPlace(void);
+	Coord getPlace(void);
 
 	/*
 	* getPlayer
@@ -46,7 +47,7 @@ public:
 	* setPlace
 	* Define la posicion de la construccion
 	*/
-	void setPlace(string place);
+	void setPlace(Coord place);
 
 	/*
 	* setPlayer
@@ -55,7 +56,7 @@ public:
 	void setPlayer(PlayerId player);
 
 private:
-	string place;
+	Coord place;
 	BuildingType type;
 	PlayerId player;
 };

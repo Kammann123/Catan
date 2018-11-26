@@ -3,6 +3,7 @@
 #include "../CatanNetworking/NetworkPackets/NetworkPacket.h"
 
 #include "Player.h"
+#include "Coord.h"
 
 #include <string>
 
@@ -15,21 +16,21 @@ public:
 	* Constructor
 	*/
 	ResourceHex(const ResourceHex& copy);
-	ResourceHex(unsigned char coord_);
-	ResourceHex(ResourceId resource_, unsigned char coord_);
-	ResourceHex(ResourceId resource_, unsigned int token__, unsigned char coord_);
+	ResourceHex(Coord coord_);
+	ResourceHex(ResourceId resource_, Coord coord_);
+	ResourceHex(ResourceId resource_, unsigned int token__, Coord coord_);
 
 	/*
 	* getCoord()
 	* Devuelve la coordenada del resourceHex
 	*/
-	unsigned char getCoord(void);
+	Coord getCoord(void);
 
 	/*
 	* setCoord()
 	* Define el valor de posicion del hex
 	*/
-	void setCoord(unsigned char coord);
+	void setCoord(Coord coord);
 
 	/*
 	* getToken()
@@ -58,5 +59,5 @@ public:
 private:
 	unsigned int token;
 	ResourceId resource;
-	unsigned char coord;
+	Coord coord;
 };

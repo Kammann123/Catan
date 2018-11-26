@@ -7,7 +7,7 @@ KnightPacket::
 KnightPacket(void) : NetworkPacket(PacketHeader::KNIGHT), KnightData() {}
 
 KnightPacket::
-KnightPacket(unsigned char coord) : NetworkPacket(PacketHeader::KNIGHT), KnightData(coord) {}
+KnightPacket(Coord coord) : NetworkPacket(PacketHeader::KNIGHT), KnightData(coord) {}
 
 KnightPacket::
 ~KnightPacket(void) {}
@@ -21,7 +21,7 @@ KnightPacket::getDataStream(unsigned int& length) {
 	
 	length = bufferLength;
 	buff[0] = (unsigned char)this->getHeader();
-	buff[1] = (unsigned char)this->getCoord();
+	buff[1] = (unsigned char)this->getCoord().getCoords()[0];
 
 	return buff;
 }

@@ -2,6 +2,8 @@
 
 #include "CatanData.h"
 
+#include "../CatanGame/Coord.h"
+
 /*
 * RobberMoveData
 * Implementacion de la informacion para mover el robber
@@ -10,13 +12,13 @@ class RobberMoveData : public CatanData {
 public:
 
 	/* Constructores */
-	RobberMoveData(unsigned char c);
+	RobberMoveData(Coord c);
 	RobberMoveData();
 
 	/* Setters y getters */
-	bool setCoord(unsigned char c);
-	unsigned char getCoord(void);
+	bool setCoord(Coord c);
+	Coord getCoord(void);
 
 private:
-	unsigned char coord;
+	Coord coord;
 };

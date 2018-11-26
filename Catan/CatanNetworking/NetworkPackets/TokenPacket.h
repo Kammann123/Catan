@@ -14,7 +14,7 @@ public:
 	* Constructores y destructores
 	*/
 	TokenPacket(TokenData data);
-	TokenPacket(map<unsigned char, unsigned char> tokens);
+	TokenPacket(map<Coord, unsigned char> tokens);
 	TokenPacket(void);
 	virtual ~TokenPacket();
 

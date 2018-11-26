@@ -1,7 +1,7 @@
 #include "MapData.h"
 
 MapData::
-MapData(map<unsigned char, MapValue> m) : CatanData(CatanData::Type::MAP) {
+MapData(map<Coord, MapValue> m) : CatanData(CatanData::Type::MAP) {
 	this->gameMap = m;
 }
 
@@ -9,8 +9,8 @@ MapData::
 MapData() : CatanData(CatanData::Type::MAP) {}
 
 bool
-MapData::setMap(unsigned char coord, MapValue value) {
-	if (isMapPosition(coord) || isSeaPosition(coord)) {
+MapData::setMap(Coord coord, MapValue value) {
+	if (coord.isLand() || coord.isSea()) {
 		this->gameMap[coord] = value;
 		return true;
 	}
@@ -18,7 +18,7 @@ MapData::setMap(unsigned char coord, MapValue value) {
 	return false;
 }
 
-map<unsigned char, MapValue>&
+map<Coord, MapValue>&
 MapData::getMap(void) {
 	return gameMap;
 }

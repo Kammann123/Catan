@@ -7,6 +7,7 @@
 #include "ResourceCard.h"
 #include "SeaHex.h"
 #include "CatanStatus.h"
+#include "Coord.h"
 #include "CatanState.h"
 
 #include "../MVC/Subject.h"
@@ -71,8 +72,8 @@ public:
 	* handle
 	* Metodo que permite ejecutar un evento sobre la logica del juego
 	*/
-	CatanStatus handle(NetworkPacket* packet);
-	CatanStatus handle(CatanEvent* event);
+	void handle(NetworkPacket* packet);
+	void handle(CatanEvent* event);
 
 	/*
 	* getNextEvent
@@ -108,8 +109,8 @@ public:
 
 	PlayerId getTurn(void);
 	string getLocalName(void);
-	map<unsigned char, MapValue> getMap(void);
-	map<unsigned char, unsigned char> getTokens(void);
+	map<Coord, MapValue> getMap(void);
+	map<Coord, unsigned char> getTokens(void);
 
 private:
 
@@ -158,6 +159,7 @@ public:
 	* segun el numero y los settlements como debe ser.
 	*/
 	void assignResources(unsigned int dices);
+	void assignResources(PlayerId player, ResourceId resource, unsigned int qty);
 
 	/*
 	* updateLongestRoad
@@ -185,7 +187,7 @@ public:
 	* moveRobber
 	* Permite mover el robber a una nueva ubicacion dentro del mapa.
 	*/
-	void moveRobber(unsigned char newCoords);
+	void moveRobber(Coord newCoords);
 
 	/*
 	* isValidRoad,isValidCity,isValidSettlement
@@ -194,9 +196,9 @@ public:
 	* esto quiere decir, que no valida requisitos economicos, unicamente si es posible,
 	* ya que puede haber una construccion en esa ubicacion, o no cumplir las reglas del juego.
 	*/
-	bool isValidRoad(string coords, PlayerId playerID);
-	bool isValidCity(string coords, PlayerId playerID);
-	bool isValidSettlement(string coords, PlayerId playerID);
+	bool isValidRoad(Coord coords, PlayerId playerID);
+	bool isValidCity(Coord coords, PlayerId playerID);
+	bool isValidSettlement(Coord coords, PlayerId playerID);
 
 	/*
 	* hasCityResources, hasSettlementResources, hasRoadResources
@@ -214,9 +216,9 @@ public:
 	* por el usuario, para ese jugador, donde se asume previa validacion ya que 
 	* consiste unicamente en el proceso de cobrar recursos y ubicar la entidad.
 	*/
-	void buildRoad(string coords, PlayerId playerID);
-	void buildCity(string coords, PlayerId playerID);
-	void buildSettlement(string coords, PlayerId playerID);
+	void buildRoad(Coord coords, PlayerId playerID);
+	void buildCity(Coord coords, PlayerId playerID);
+	void buildSettlement(Coord coords, PlayerId playerID);
 
 	/*
 	* isValidDockExchange, isValidPlayerExchange, isValidBankExchange
@@ -224,7 +226,7 @@ public:
 	* alguno de los muelles o bien el banco del juego. Estas validaciones implican verificar que sea posible la transaccion
 	* , que tenga los recursos para hacerla, y que tenga disponible las opciones de hacerla, por los muelles por ejemplo.
 	*/
-	bool isValidDockExchange(list<ResourceCard*>& offeredCards, ResourceId requestedCard, unsigned char seaCoord, unsigned char dockNumber, PlayerId player);
+	bool isValidDockExchange(list<ResourceCard*>& offeredCards, ResourceId requestedCard, Coord seaCoord, unsigned char dockNumber, PlayerId player);
 	bool isValidPlayerExchange(list<ResourceCard*>& offeredCards, list<ResourceId>& requestedCards, PlayerId srcPlayerID);
 	bool isValidBankExchange(list<ResourceCard*>& offeredCards, PlayerId playerID);
 
@@ -283,12 +285,13 @@ private:
 	void _clear_resource_map(void);
 	void _clear_sea_map(void);
 
+	void _notify_change(void);
 private:
 	Player localPlayer;
 	Player remotePlayer;
 	list<Building*> builtMap;
-	map<unsigned char, ResourceHex> resourceMap;
-	map<unsigned char, SeaHex> seaMap;
+	map<Coord, ResourceHex> resourceMap;
+	map<Coord, SeaHex> seaMap;
 	PlayerId turn;
 	PlayerId longestRoad;
 	Robber robber;

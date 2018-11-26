@@ -31,6 +31,18 @@ extern const string externalEdges[30] = {
 };
 
 Coord::
+Coord(void) {
+	this->coords = "";
+	this->type = Type::NONE;
+}
+
+Coord::
+Coord(string coords) {
+	this->coords = coords;
+	_update_coord();
+}
+
+Coord::
 Coord(string coords, Type type) {
 	this->coords = coords;
 	this->type = type;
@@ -46,10 +58,14 @@ Coord(const Coord& copy) {
 }
 
 Coord::
-Coord(unsigned char coord, Type type) {
+Coord(unsigned char coord) {
 	this->coords = coord;
-	this->type = type;
-
+	if (_has_numbers()) {
+		this->type = Type::SEA;
+	}
+	else {
+		this->type = Type::LAND;
+	}
 	_verify_value();
 	_verify_type();
 }
@@ -102,6 +118,26 @@ Coord(vector<unsigned char> coord) {
 }
 
 bool
+Coord::operator<(const Coord& coord) const {
+	return this->coords < coord.coords;
+}
+
+bool
+Coord::operator<=(const Coord& coord) const {
+	return this->coords <= coord.coords;
+}
+
+bool
+Coord::operator>(const Coord& coord)  const {
+	return this->coords > coord.coords;
+}
+
+bool
+Coord::operator>=(const Coord& coord)  const {
+	return this->coords >= coord.coords;
+}
+
+bool
 Coord::operator==(string coordsCmp) {
 	if (coords.size() == coordsCmp.size()) {
 		if (isDot()) {
@@ -126,14 +162,14 @@ Coord::operator==(string coordsCmp) {
 			}
 		}
 		else {
-			return *this == coordsCmp[0];
+			return this->coords == coordsCmp;
 		}
 	}
 	return false;
 }
 
 bool
-Coord::operator==(const Coord& copy) {
+Coord::operator==(Coord copy) {
 	return (this->coords == copy.coords) && (this->type == copy.type);
 }
 
@@ -145,10 +181,62 @@ Coord::operator==(unsigned char coord) {
 	return false;
 }
 
-void
-Coord::setCoord(unsigned char coord, Type type) {
+unsigned char
+Coord::operator[](unsigned int index) {
+	return coords[index];
+}
+
+Coord&
+Coord::operator=(unsigned char coord) {
 	this->coords = coord;
-	this->type = type;
+	_update_coord();
+	return *this;
+}
+
+Coord&
+Coord::operator=(string coords) {
+	this->coords = coords;
+	_update_coord();
+	return *this;
+}
+
+Coord&
+Coord::operator=(Coord coords) {
+	this->coords = coords.coords;
+	_update_coord();
+	return *this;
+}
+
+Coord&
+Coord::operator+=(unsigned char coord) {
+	this->coords += coord;
+	_update_coord();
+	return *this;
+}
+
+Coord&
+Coord::operator+=(string coords) {
+	this->coords += coords;
+	_update_coord();
+	return *this;
+}
+
+Coord&
+Coord::operator+=(Coord coords) {
+	this->coords += coords.coords;
+	_update_coord();
+	return *this;
+}
+
+void
+Coord::setCoord(unsigned char coord) {
+	this->coords = coord;
+	if (_has_numbers()) {
+		this->type = Type::SEA;
+	}
+	else {
+		this->type = Type::LAND;
+	}
 	_verify_type();
 	_verify_value();
 }
@@ -161,9 +249,34 @@ Coord::setCoord(string coords, Type type) {
 	_verify_value();
 }
 
+void
+Coord::forceEdge(void) {
+	type = Type::EDGE;
+}
+
+void
+Coord::forceDot(void) {
+	type = Type::DOT;
+}
+
 string
-Coord::getCoords(void) {
+Coord::getCoords(void)  {
 	return coords;
+}
+
+string::iterator 
+Coord::begin(void) {
+	return coords.begin();
+}
+
+string::iterator 
+Coord::end(void) {
+	return coords.end();
+}
+
+size_t
+Coord::size(void) {
+	return coords.size();
 }
 
 bool
@@ -192,7 +305,7 @@ Coord::nearCoast(void) {
 }
 
 bool
-Coord::isVertexOf(Coord& coord) {
+Coord::isVertexOf(Coord coord) {
 	if (coord.isLand()) {
 		if (_has(coord.coords[0])) {
 			return true;
@@ -417,4 +530,59 @@ Coord::_is_valid_edges(void) {
 		}
 	}
 	return false;
+}
+
+bool
+Coord::_is_valid_land(void) {
+	if (coords.size() == 1) {
+		return ((coords[0] >= MIN_LAND_COORD) && (coords[0] <= MAX_LAND_COORD));
+	}
+	return false;
+}
+
+bool
+Coord::_is_valid_sea(void) {
+	if (coords.size() == 1) {
+		return ((coords[0] >= MIN_SEA_COORD) && (coords[0] <= MAX_SEA_COORD));
+	}
+	return false;
+}
+
+void
+Coord::_update_coord(void) {
+	if (coords.size() == 1){
+		if (_is_valid_sea()) {
+			type = Type::SEA;
+			return;
+		}
+		else if (_is_valid_land()) {
+			type = Type::LAND;
+			return;
+		}
+	}
+	for (string coord : externalDots) {
+		if (coord == coords) {
+			type = Type::DOT;
+			return;
+		}
+	}
+	for (string coord : internalDots) {
+		if (coord == coords) {
+			type = Type::DOT;
+			return;
+
+	for (string coord : internalEdges) {
+		if (coord == coords) {
+			type = Type::EDGE;
+			return;
+		}
+	}}
+	}
+	for (string coord : externalEdges) {
+		if (coord == coords) {
+			type = Type::EDGE;
+			return;
+		}
+	}
+	type = Type::NONE;
 }

@@ -2,6 +2,8 @@
 
 #include "NetworkPacket.h"
 
+#include "../../CatanGame/Coord.h"
+
 #include "../../CatanData/MapData.h"
 
 /*
@@ -15,7 +17,7 @@ public:
 	* Constructores y destructores
 	*/
 	MapPacket(MapData data);
-	MapPacket(map<unsigned char, MapValue> m);
+	MapPacket(map<Coord, MapValue> m);
 	MapPacket(void);
 	virtual ~MapPacket();
 	

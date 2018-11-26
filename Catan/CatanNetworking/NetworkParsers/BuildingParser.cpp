@@ -45,6 +45,13 @@ void BuildingParser::
 done(GenericEvent* event) {
 	this->packet->setCoords(((LastCoordEvent*)event)->getData());
 
+	if (this->packet->getHeader() == PacketHeader::ROAD) {
+		this->packet->getCoords().forceEdge();
+	}
+	else {
+		this->packet->getCoords().forceDot();
+	}
+
 	fsmEvent = new DoneEvent(this->packet);
 
 	this->count = 0;

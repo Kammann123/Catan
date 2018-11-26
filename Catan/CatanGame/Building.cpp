@@ -2,7 +2,7 @@
 #include "Building.h"
 
 Building::
-Building(string place, PlayerId player, BuildingType type) {
+Building(Coord place, PlayerId player, BuildingType type) {
 	this->place = place;
 	this->player = player;
 	this->type = type;
@@ -22,7 +22,7 @@ Building(BuildingType type) {
 	this->type = type;
 }
 
-string Building::
+Coord Building::
 getPlace(void)
 {
 	return place;
@@ -41,7 +41,7 @@ getType(void)
 }
 
 void Building::
-setPlace(string place)
+setPlace(Coord place)
 {
 	this->place = place;
 }

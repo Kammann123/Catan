@@ -1,7 +1,7 @@
 #include "TokenPacket.h"
 
 TokenPacket::
-TokenPacket(map<unsigned char, unsigned char> tokens) : NetworkPacket(PacketHeader::CIRCULAR_TOKENS), TokenData(tokens) {}
+TokenPacket(map<Coord, unsigned char> tokens) : NetworkPacket(PacketHeader::CIRCULAR_TOKENS), TokenData(tokens) {}
 
 TokenPacket::
 TokenPacket(TokenData data) : NetworkPacket(PacketHeader::CIRCULAR_TOKENS), TokenData(data) {}
@@ -15,7 +15,7 @@ TokenPacket::
 unsigned char*
 TokenPacket::getDataStream(unsigned int& length) {
 
-	map<unsigned char, unsigned char> tokens = this->getTokens();
+	map<Coord, unsigned char> tokens = this->getTokens();
 
 	/* Longitud del buffer */
 	unsigned int bufferLength = 1 + (unsigned int)tokens.size();

@@ -93,21 +93,36 @@ CatanGame::
 	_free_states();
 }
 
-CatanStatus
+void
 CatanGame::handle(NetworkPacket* packet) {
 
 	CatanEvent* newEvent = this->getPacketEvent(packet);
-	return this->handle(newEvent);
+	this->handle(newEvent);
 }
 
-CatanStatus
+void
 CatanGame::handle(CatanEvent* event) {
-	return this->state->handle(event);
+	this->state->handle(event);
+	delete event;
 }
 
 bool
 CatanGame::hasEvents(void) const {
 	return !(this->eventQueue.empty());
+}
+
+void
+CatanGame::_notify_change(void) {
+
+	/* Notifico a los observers */
+	notifyObservers();
+
+	/* Elimino el ultimo evento leido */
+	if (hasEvents()) {
+		CatanEvent* event = this->eventQueue.front();
+		this->eventQueue.pop_front();
+		delete event;
+	}
 }
 
 CatanEvent*
@@ -259,9 +274,9 @@ CatanGame::getLocalName() {
 	return this->localPlayer.getName();
 }
 
-map<unsigned char, MapValue>
+map<Coord, MapValue>
 CatanGame::getMap() {
-	map<unsigned char, MapValue> gameMap;
+	map<Coord, MapValue> gameMap;
 
 	/* En el mapa del juego busco los hexagonos */
 	for (auto hex : resourceMap) {
@@ -272,9 +287,9 @@ CatanGame::getMap() {
 	return gameMap;
 }
 
-map<unsigned char, unsigned char>
+map<Coord, unsigned char>
 CatanGame::getTokens() {
-	map<unsigned char, unsigned char> tokenMap;
+	map<Coord, unsigned char> tokenMap;
 
 	/* En el mapa del juego busco los hexagonos */
 	for (auto hex : resourceMap) {
@@ -352,7 +367,7 @@ CatanGame::generateMap() {
 		for (unsigned int i = 0; i < hexCount; i++) {
 			ResourceHex hex = ResourceHex(hexId, coords.back());
 			coords.pop_back();
-			resourceMap.insert(pair<unsigned char, ResourceHex>(hex.getCoord(), hex));
+			resourceMap.insert(pair<Coord, ResourceHex>(hex.getCoord(), hex));
 		}
 	}
 
@@ -411,8 +426,41 @@ CatanGame::assignResources(unsigned int dices) {
 
 	/* Identifico las coordenadas en las cuales el token coincide
 	* con el valor dado de dices, para entregar ese recurso */
+	list<ResourceHex> hits;
+	for (auto hex : resourceMap) {
+		ResourceHex resourceHex = hex.second;
+		if (resourceHex.getToken() == dices) {
+			hits.push_back(resourceHex);
+		}
+	}
 
-	/*  */
+	/* Reviso todas las construcciones realizadas por lo usuarios
+	* que estan jugando, y las que sean settlement o city, verifico
+	* si esta alrededor del hexagono donde cayo el token y por cada
+	* aparicio reparto recursos */
+	for (Building* building : builtMap) {
+		if (building->getType() == BuildingType::ROAD)	continue;
+
+		for (ResourceHex hex : hits) {
+			if (building->getPlace().isVertexOf(hex.getCoord())) {
+				assignResources(building->getPlayer(), hex.getResource(), building->getType() == BuildingType::CITY ? 2 : 1);
+			}
+		}
+	}
+}
+
+void
+CatanGame::assignResources(PlayerId player, ResourceId resource, unsigned int qty) {
+	/*
+	* Busco al jugador y luego creo la cantidad de cartas necesaria
+	* y le entrego una por una todas las que piden que le asigne
+	*/
+	Player playerObject = getPlayer(player);
+
+	while (qty) {
+		playerObject.addResourceCard(new ResourceCard(player, resource));
+		qty--;
+	}
 }
 
 bool
@@ -431,15 +479,16 @@ CatanGame::robberCards(list<ResourceCard*>& cards, PlayerId playerID)
 }
 
 void
-CatanGame::moveRobber(unsigned char newCoords) {
+CatanGame::moveRobber(Coord newCoords) {
 	robber.setCoord(newCoords);
 }
 
 bool
-CatanGame::isValidRoad(string coords, PlayerId playerID) {
+CatanGame::isValidRoad(Coord coords, PlayerId playerID) {
 	return false;
 }
 
+/*
 bool
 CatanGame::isValidCity(string coords, PlayerId playerID) {
 	bool ret = false;
@@ -457,10 +506,10 @@ CatanGame::isValidCity(string coords, PlayerId playerID) {
 		}
 	}
 	return ret;
-}
+}*/
 
 bool
-CatanGame::isValidSettlement(string coords, PlayerId playerID) {
+CatanGame::isValidSettlement(Coord coords, PlayerId playerID) {
 	return false;
 }
 
@@ -497,7 +546,7 @@ CatanGame::hasRoadResources(PlayerId playerID) {
 }
 
 void
-CatanGame::buildRoad(string coords, PlayerId playerID) 
+CatanGame::buildRoad(Coord coords, PlayerId playerID)
 {
 	Building* newRoad = getPlayer(playerID).popRoad(); // Obtengo objeto pre-creado
 	newRoad->setPlace(coords); // Asigno las coordenadas
@@ -507,7 +556,7 @@ CatanGame::buildRoad(string coords, PlayerId playerID)
 }
 
 void
-CatanGame::buildCity(string coords, PlayerId playerID)
+CatanGame::buildCity(Coord coords, PlayerId playerID)
 {
 	Building* newCity = getPlayer(playerID).popCity(); // Obtengo objeto pre-creado
 	newCity->setPlace(coords); // Asigno las coordenadas
@@ -516,7 +565,7 @@ CatanGame::buildCity(string coords, PlayerId playerID)
 
 	for(Building* building : builtMap)
 	{
-		if (matchCoords(building->getPlace(), coords))
+		if (building->getPlace() == coords)
 		{
 			getPlayer(playerID).giveBackBuilding(building->getType(), building); // Devuelvo el Settlement sobre el que se construyó la City
 			break;
@@ -526,7 +575,7 @@ CatanGame::buildCity(string coords, PlayerId playerID)
 }
 
 void
-CatanGame::buildSettlement(string coords, PlayerId playerID) 
+CatanGame::buildSettlement(Coord coords, PlayerId playerID)
 {
 	Building* newSettlement = getPlayer(playerID).popSettlement(); // Obtengo objeto pre-creado
 	newSettlement->setPlace(coords); // Asigno las coordenadas
@@ -536,7 +585,7 @@ CatanGame::buildSettlement(string coords, PlayerId playerID)
 }
 
 bool 
-CatanGame::isValidDockExchange(list<ResourceCard*>& offeredCards, ResourceId requestedCard, unsigned char seaCoord, unsigned char dockNumber, PlayerId player) {
+CatanGame::isValidDockExchange(list<ResourceCard*>& offeredCards, ResourceId requestedCard, Coord seaCoord, unsigned char dockNumber, PlayerId player) {
 
 	return false;
 }
@@ -568,11 +617,11 @@ CatanGame::canPlayerAccept(list<ResourceId>& requestedCards, PlayerId destPlayer
 {
 	
 	return	(
-			(getPlayer(destPlayerID).getResourceCount(ResourceId::FOREST) >= std::count(requestedCards.begin(), requestedCards.end(), ResourceId::FOREST)) &&
-			(getPlayer(destPlayerID).getResourceCount(ResourceId::HILL) >= std::count(requestedCards.begin(), requestedCards.end(), ResourceId::HILL)) &&
-			(getPlayer(destPlayerID).getResourceCount(ResourceId::MOUNTAIN) >= std::count(requestedCards.begin(), requestedCards.end(), ResourceId::MOUNTAIN)) &&
-			(getPlayer(destPlayerID).getResourceCount(ResourceId::FIELD) >= std::count(requestedCards.begin(), requestedCards.end(), ResourceId::FIELD)) &&
-			(getPlayer(destPlayerID).getResourceCount(ResourceId::PASTURES) >= std::count(requestedCards.begin(), requestedCards.end(), ResourceId::PASTURES))
+			(getPlayer(destPlayerID).getResourceCount(ResourceId::FOREST) >= (unsigned int)std::count(requestedCards.begin(), requestedCards.end(), ResourceId::FOREST)) &&
+			(getPlayer(destPlayerID).getResourceCount(ResourceId::HILL) >= (unsigned int)std::count(requestedCards.begin(), requestedCards.end(), ResourceId::HILL)) &&
+			(getPlayer(destPlayerID).getResourceCount(ResourceId::MOUNTAIN) >= (unsigned int)std::count(requestedCards.begin(), requestedCards.end(), ResourceId::MOUNTAIN)) &&
+			(getPlayer(destPlayerID).getResourceCount(ResourceId::FIELD) >= (unsigned int)std::count(requestedCards.begin(), requestedCards.end(), ResourceId::FIELD)) &&
+			(getPlayer(destPlayerID).getResourceCount(ResourceId::PASTURES) >= (unsigned int)std::count(requestedCards.begin(), requestedCards.end(), ResourceId::PASTURES))
 			);
 }
 
@@ -617,6 +666,8 @@ CatanGame::canPlayerAccept(list<ResourceCard*> requestedCards, PlayerId destPlay
 			(getPlayer(destPlayerID).getResourceCount(ResourceId::PASTURES) >= woolCount)
 			);
 	}
+
+	return false;
 }
 
 void
@@ -644,7 +695,7 @@ CatanGame::playerExchange(list<ResourceCard*>& offered, list<ResourceId>& wanted
 	}
 
 	/* Creo una lista con todas las resource cards que transferiré del jugador destino al jugador fuente del intercambio */
-
+/*
 	list<ResourceCard*> wantedList = getPlayer(oponent).giveResourceCard(ResourceId::FOREST, std::count(wanted.begin(), wanted.end(), ResourceId::FOREST));
 	wantedList.merge(getPlayer(oponent).giveResourceCard(ResourceId::HILL, std::count(wanted.begin(), wanted.end(), ResourceId::HILL)));
 	wantedList.merge(getPlayer(oponent).giveResourceCard(ResourceId::MOUNTAIN, std::count(wanted.begin(), wanted.end(), ResourceId::MOUNTAIN)));
@@ -660,7 +711,7 @@ CatanGame::playerExchange(list<ResourceCard*>& offered, list<ResourceId>& wanted
 
 	}
 
-}
+}*/
 
 void
 CatanGame::pass() {

@@ -59,12 +59,6 @@ bool isMapPosition(unsigned char value);
 bool isSeaPosition(unsigned char value);
 
 /*
-* matchCoords
-* Devuelve true en el caso de que las dos coordenadas hagan referencia al mismo lugar
-*/
-bool matchCoords(string str1, string str2);
-
-/*
 * CatanData
 * Clase base para datos o informacion contenida durante el juego,
 * ya sea en paquetes de datos intercambiados por networking o bien

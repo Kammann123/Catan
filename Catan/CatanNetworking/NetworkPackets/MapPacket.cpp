@@ -7,7 +7,7 @@ MapPacket::
 MapPacket(void) : NetworkPacket(PacketHeader::MAP_IS), MapData() {}
 
 MapPacket::
-MapPacket(map<unsigned char, MapValue> m) : NetworkPacket(PacketHeader::MAP_IS), MapData(m) {}
+MapPacket(map<Coord, MapValue> m) : NetworkPacket(PacketHeader::MAP_IS), MapData(m) {}
 
 MapPacket::
 ~MapPacket(void) {}
@@ -15,7 +15,7 @@ MapPacket::
 unsigned char*
 MapPacket::getDataStream(unsigned int& length) {
 
-	map<unsigned char, MapValue> gameMap = this->getMap();
+	map<Coord, MapValue> gameMap = this->getMap();
 
 	/* Calculo la longitud de buffer */
 	unsigned int bufferLength = 1 + (unsigned int)gameMap.size();

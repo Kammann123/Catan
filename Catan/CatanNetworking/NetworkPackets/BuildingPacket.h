@@ -20,7 +20,7 @@ public:
 	* Constructores y destructores
 	*/
 	BuildingPacket(BuildingData data);
-	BuildingPacket(PacketHeader header, string coords);
+	BuildingPacket(PacketHeader header, Coord coords);
 	BuildingPacket(PacketHeader header);
 	virtual ~BuildingPacket();
 

@@ -1,20 +1,20 @@
 #include "ResourceHex.h"
 
 ResourceHex::
-ResourceHex(ResourceId resource_, unsigned int token_, unsigned char coord_){
+ResourceHex(ResourceId resource_, unsigned int token_, Coord coord_){
 	this->resource = resource_;
 	this->token = token_;
 	this->coord = coord_;
 }
 
 ResourceHex::
-ResourceHex(ResourceId resource_, unsigned char coord_){
+ResourceHex(ResourceId resource_, Coord coord_){
 	this->resource = resource_;
 	this->coord = coord_;
 }
 
 ResourceHex::
-ResourceHex(unsigned char coord_){
+ResourceHex(Coord coord_){
 	this->coord = coord_;
 }
 
@@ -42,7 +42,7 @@ ResourceHex::setToken(unsigned int newToken)
 }
 
 void
-ResourceHex::setCoord(unsigned char coord) {
+ResourceHex::setCoord(Coord coord) {
 	this->coord = coord;
 }
 
@@ -58,7 +58,7 @@ ResourceHex::setResource(ResourceId newResource)
 	resource = newResource;
 }
 
-unsigned char 
+Coord
 ResourceHex::getCoord(void)
 {
 	return coord;

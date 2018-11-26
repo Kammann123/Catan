@@ -2,6 +2,8 @@
 
 #include "CatanData.h"
 
+#include "../CatanGame/Coord.h"
+
 #include <string>
 
 using namespace std;
@@ -20,17 +22,16 @@ class BuildingData : public CatanData {
 public:
 
 	/* Constructor */
-	BuildingData(BuildingType type, string coords);
+	BuildingData(BuildingType type, Coord coords);
 	BuildingData();
 
 	/* Getter y setters */
-	bool setCoords(string coords);
-	bool setCoords(unsigned char coord);
+	bool setCoords(Coord coord);
 	void setType(BuildingType type);
-	string getCoords(void);
+	Coord& getCoords(void);
 	BuildingType getType(void);
 
 private:
-	string coords;
+	Coord coords;
 	BuildingType type;
 };

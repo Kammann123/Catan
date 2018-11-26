@@ -2,6 +2,8 @@
 
 #include "../CatanData/CatanData.h"
 
+#include "Coord.h"
+
 #include <string>
 #include <vector>
 
@@ -28,28 +30,28 @@ class SeaHex {
 public:
 
 	/* Constructores */
-	SeaHex(unsigned char coord, SeaId dockOne, SeaId dockTwo);
-	SeaHex(unsigned char coord, SeaId onlyDock);
+	SeaHex(Coord coord, SeaId dockOne, SeaId dockTwo);
+	SeaHex(Coord coord, SeaId onlyDock);
 	SeaHex(const SeaHex& copy);
 
 	/*
 	* getCoord
 	* Devuelve la coordenad actual del sea hex
 	*/
-	unsigned char getCoord(void) const;
+	Coord getCoord(void) const;
 
 	/*
 	* hasDock
 	* Devuelve true si el mar tiene un muelle en esa coordenada
 	*/
-	bool hasDock(string coords);
+	bool hasDock(Coord coords);
 
 	/*
 	* dockType
 	* Devuelve el tipo de muelle en esas coordenadas
 	* Si fuera invalido, se levanta una excepcion
 	*/
-	SeaId dockType(string coords);
+	SeaId dockType(Coord coords);
 
 	/*
 	* getDocks
@@ -59,6 +61,6 @@ public:
 
 private:
 
-	unsigned char coord;
+	Coord coord;
 	vector<SeaId> dockList;
 };	

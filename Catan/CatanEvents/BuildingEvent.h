@@ -14,6 +14,6 @@ class BuildingEvent : public CatanEvent, public BuildingData {
 public:
 	/* Constructores y destructores */
 	BuildingEvent(BuildingPacket* packet);
-	BuildingEvent(string& coords, BuildingType type);
+	BuildingEvent(Coord coords, BuildingType type);
 	~BuildingEvent();
 };

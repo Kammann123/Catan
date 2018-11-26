@@ -2,6 +2,8 @@
 
 #include "CatanData.h"
 
+#include "../CatanGame/Coord.h"
+
 /*
 * KnightData
 * Implementacion de la informacion de la carta de desarrollo Knight
@@ -9,12 +11,12 @@
 class KnightData : public CatanData {
 public:
 	/* Constructores */
-	KnightData(unsigned char coord);
+	KnightData(Coord coord);
 	KnightData();
 
 	/* Setters y getters */
-	bool setCoord(unsigned char c);
-	unsigned char getCoord(void);
+	bool setCoord(Coord c);
+	Coord getCoord(void);
 private:
-	unsigned char coord;
+	Coord coord;
 };

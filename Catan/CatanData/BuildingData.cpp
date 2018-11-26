@@ -1,7 +1,7 @@
 #include "BuildingData.h"
 
 BuildingData::
-BuildingData(BuildingType type, string coords) : CatanData(CatanData::Type::BUILDING) {
+BuildingData(BuildingType type, Coord coords) : CatanData(CatanData::Type::BUILDING) {
 	this->type = type;
 	this->coords = coords;
 }
@@ -11,24 +11,9 @@ BuildingData() : CatanData(CatanData::Type::BUILDING) {
 	this->coords = "";
 }
 
-bool
-BuildingData::setCoords(string coords){
-
-	/* Valido todas coordenadas */
-	for (unsigned char c : coords) {
-		if (!isMapPosition(c) && !isSeaPosition(c)) {
-			return false;
-		}
-	}
-
-	/* Ok! */
-	this->coords = coords;
-	return true;
-}
-
 bool 
-BuildingData::setCoords(unsigned char coord) {
-	if (isMapPosition(coord) || isSeaPosition(coord)) {
+BuildingData::setCoords(Coord coord) {
+	if (coord.isLand() || coord.isSea()) {
 		this->coords += coord;
 		return true;
 	}
@@ -40,7 +25,7 @@ BuildingData::setType(BuildingType type) {
 	this->type = type;
 }
 
-string
+Coord&
 BuildingData::getCoords(void) {
 	return this->coords;
 }

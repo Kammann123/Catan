@@ -2,6 +2,8 @@
 
 #include "CatanData.h"
 
+#include "../CatanGame/Coord.h"
+
 #include <map>
 
 using namespace std;
@@ -13,12 +15,12 @@ using namespace std;
 class MapData : public CatanData {
 public:
 	/* Constructores */
-	MapData(map<unsigned char, MapValue> m);
+	MapData(map<Coord, MapValue> m);
 	MapData();
 
 	/* Setters y getters */
-	bool setMap(unsigned char coord, MapValue value);
-	map<unsigned char, MapValue>& getMap(void);
+	bool setMap(Coord coord, MapValue value);
+	map<Coord, MapValue>& getMap(void);
 private:
-	map<unsigned char, MapValue> gameMap;
+	map<Coord, MapValue> gameMap;
 };

@@ -1,7 +1,7 @@
 #include "RobberMovePacket.h"
 
 RobberMovePacket::
-RobberMovePacket(unsigned char coord) : NetworkPacket(PacketHeader::ROBBER_MOVE), RobberMoveData(coord) {}
+RobberMovePacket(Coord coord) : NetworkPacket(PacketHeader::ROBBER_MOVE), RobberMoveData(coord) {}
 
 RobberMovePacket::
 RobberMovePacket(RobberMoveData data) : NetworkPacket(PacketHeader::ROBBER_MOVE), RobberMoveData(data) {}
@@ -24,7 +24,7 @@ RobberMovePacket::getDataStream(unsigned int& length) {
 	/* Armo el paquete */
 	length = bufferLength;
 	buff[0] = (unsigned char)this->getHeader();
-	buff[1] = (unsigned char)this->getCoord();
+	buff[1] = (unsigned char)this->getCoord().getCoords()[0];
 
 	/* Devuelvo */
 	return buff;

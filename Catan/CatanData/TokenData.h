@@ -1,6 +1,7 @@
 #pragma once
 
 #include "CatanData.h"
+#include "../CatanGame/Coord.h"
 
 #include <map>
 
@@ -13,13 +14,13 @@ using namespace std;
 class TokenData : public CatanData {
 public:
 	/* Constructores */
-	TokenData(map<unsigned char, unsigned char> tokens);
+	TokenData(map<Coord, unsigned char> tokens);
 	TokenData(void);
 
 	/* Setters y getters */
-	bool setToken(unsigned char coord, unsigned char token);
+	bool setToken(Coord coord, unsigned char token);
 	unsigned char getToken(unsigned char coord);
-	map<unsigned char, unsigned char>& getTokens(void);
+	map<Coord, unsigned char>& getTokens(void);
 private:
-	map<unsigned char, unsigned char> tokens;
+	map<Coord, unsigned char> tokens;
 };

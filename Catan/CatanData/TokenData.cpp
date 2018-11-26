@@ -1,7 +1,7 @@
 #include "TokenData.h"
 
 TokenData::
-TokenData(map<unsigned char, unsigned char> tokens) : CatanData(CatanData::Type::TOKEN) {
+TokenData(map<Coord, unsigned char> tokens) : CatanData(CatanData::Type::TOKEN) {
 	this->tokens = tokens;
 }
 
@@ -9,13 +9,10 @@ TokenData::
 TokenData(void) : CatanData(CatanData::Type::TOKEN) {}
 
 bool
-TokenData::setToken(unsigned char coord, unsigned char token) {
-
-	if (isMapPosition(coord)) {
-		if (isValidToken(token)) {
-			this->tokens[coord] = token;
-			return true;
-		}
+TokenData::setToken(Coord coord, unsigned char token) {
+	if (isValidToken(token)) {
+		this->tokens[coord] = token;
+		return true;
 	}
 
 	return false;
@@ -30,7 +27,7 @@ TokenData::getToken(unsigned char coord) {
 	return -1;
 }
 
-map<unsigned char, unsigned char>&
+map<Coord, unsigned char>&
 TokenData::getTokens() {
 	return tokens;
 }
