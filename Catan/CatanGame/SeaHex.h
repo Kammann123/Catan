@@ -42,7 +42,7 @@ public:
 
 	/*
 	* getDocks
-	* Devuelve la lista con los docks del seaHex
+	* Devuelve el SeaId de la pieza
 	*/
 	SeaId getDocks(void);
 
