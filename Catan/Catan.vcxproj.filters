@@ -378,6 +378,9 @@
     <ClInclude Include="CatanNetworking\NetworkingStates\TellQuit.h">
       <Filter>CatanNetworking\NetworkingStates</Filter>
     </ClInclude>
+    <ClInclude Include="CatanGame\Coord.h">
+      <Filter>CatanGame</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FSM\EventQueue.cpp">
@@ -655,6 +658,9 @@
     </ClCompile>
     <ClCompile Include="CatanNetworking\NetworkingStates\HandshakingState.cpp">
       <Filter>CatanNetworking\NetworkingStates</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGame\Coord.cpp">
+      <Filter>CatanGame</Filter>
     </ClCompile>
     <ClCompile Include="CatanEvents\KnightEvent.cpp">
       <Filter>CatanEvents</Filter>

@@ -16,8 +16,6 @@
 
 using namespace std;
 
-extern const string externCoords[];
-
 /*
 * SeaHex
 * Porcion del mapa con mar, que representa un muelle con acceso a 

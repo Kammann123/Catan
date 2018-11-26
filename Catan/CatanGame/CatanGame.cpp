@@ -409,6 +409,10 @@ CatanGame::generateTokens() {
 void
 CatanGame::assignResources(unsigned int dices) {
 
+	/* Identifico las coordenadas en las cuales el token coincide
+	* con el valor dado de dices, para entregar ese recurso */
+
+	/*  */
 }
 
 bool
@@ -477,8 +481,8 @@ void
 CatanGame::buildRoad(string coords, PlayerId playerID) 
 {
 	Building* newRoad = getPlayer(playerID).popRoad(); // Obtengo objeto pre-creado
-	newRoad->setPlace = coords; // Asigno las coordenadas
-	newRoad->setPlayer = playerID; // Asigno el ID del jugador propietario
+	newRoad->setPlace(coords); // Asigno las coordenadas
+	newRoad->setPlayer(playerID); // Asigno el ID del jugador propietario
 	builtMap.push_back(newRoad); // Push del objeto en el mapa de construcciones
 	getPlayer(playerID).addPoints(ROAD_BUILT_POINTS); // Asigno vp correspondientes a la construcción
 }
@@ -487,8 +491,8 @@ void
 CatanGame::buildCity(string coords, PlayerId playerID)
 {
 	Building* newCity = getPlayer(playerID).popCity(); // Obtengo objeto pre-creado
-	newCity->setPlace = coords; // Asigno las coordenadas
-	newCity->setPlayer = playerID; // Asigno el ID del jugador propietario
+	newCity->setPlace(coords); // Asigno las coordenadas
+	newCity->setPlayer(playerID); // Asigno el ID del jugador propietario
 	builtMap.push_back(newCity); // Push del objeto en el mapa de construcciones
 
 	for(Building* building : builtMap)
@@ -506,8 +510,8 @@ void
 CatanGame::buildSettlement(string coords, PlayerId playerID) 
 {
 	Building* newSettlement = getPlayer(playerID).popSettlement(); // Obtengo objeto pre-creado
-	newSettlement->setPlace = coords; // Asigno las coordenadas
-	newSettlement->setPlayer = playerID; // Asigno el ID del jugador propietario
+	newSettlement->setPlace(coords); // Asigno las coordenadas
+	newSettlement->setPlayer(playerID); // Asigno el ID del jugador propietario
 	builtMap.push_back(newSettlement); // Push del objeto en el mapa de construcciones
 	getPlayer(playerID).addPoints(SETTLEMENT_BUILT_POINTS); // Asigno vp correspondientes a la construcción
 }
@@ -567,7 +571,7 @@ CatanGame::bankExchange(list<ResourceCard*>& offered, ResourceId wanted, PlayerI
 	ResourceCard* newCard = new ResourceCard(playerID,wanted); // Creo nuevo objeto ResourceCard
 	getPlayer(playerID).addResourceCard(newCard); // Asigno la nueva carta al jugador
 }
-
+/*
 void
 CatanGame::playerExchange(list<ResourceCard*>& offered, list<ResourceId>& wanted, PlayerId srcPlayerID) 
 {
@@ -591,7 +595,7 @@ CatanGame::playerExchange(list<ResourceCard*>& offered, list<ResourceId>& wanted
 	}
 
 }
-
+*/
 void
 CatanGame::dockExchange(list<ResourceCard*>& offered, ResourceId wanted, PlayerId playerID) {
 

@@ -160,6 +160,12 @@ public:
 	void assignResources(unsigned int dices);
 
 	/*
+	* updateLongestRoad
+	* Actualiza el estado actual del longest road.
+	*/
+	void updateLongestRoad(void);
+
+	/*
 	* hasRobberCards
 	* Permite ver si un jugador dado cumple las condiciones en cuanto
 	* a cantidad de recursos acumulados, para ver si debe descartar
@@ -276,7 +282,7 @@ private:
 	void _clear_resource_map(void);
 	void _clear_sea_map(void);
 
-public:
+private:
 	Player localPlayer;
 	Player remotePlayer;
 	list<Building*> builtMap;
