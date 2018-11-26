@@ -25,7 +25,7 @@ public:
 	* getPlayerId
 	* Devuelve player a quien pertenece la carta
 	*/
-	PlayerId getPlayerId();
+	PlayerId getPlayerId(void);
 
 	/* Setters de atributos de la clase */
 	void setResourceId(ResourceId resourceId);

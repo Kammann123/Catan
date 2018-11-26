@@ -14,6 +14,7 @@ public:
 	/*
 	* Constructor
 	*/
+	ResourceHex(const ResourceHex& copy);
 	ResourceHex(unsigned char coord_);
 	ResourceHex(ResourceId resource_, unsigned char coord_);
 	ResourceHex(ResourceId resource_, unsigned int token__, unsigned char coord_);

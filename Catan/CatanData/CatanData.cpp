@@ -71,7 +71,7 @@ bool matchCoords(string str1, string str2)
 
 	if (str1.length() == str2.length()) // ambos strings deben tener la misma longitud
 	{
-		for (int i = 0; i < str1.length(); i++) // para cada caracter del string1
+		for (unsigned int i = 0; i < str1.length(); i++) // para cada caracter del string1
 		{
 			if (str2.find(str1.c_str()[i]) == string::npos) // si no lo encuentro, entonces las coordenadas no son iguales
 			{

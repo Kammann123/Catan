@@ -32,6 +32,7 @@ public:
 	/* Constructores */
 	SeaHex(unsigned char coord, SeaId dockOne, SeaId dockTwo);
 	SeaHex(unsigned char coord, SeaId onlyDock);
+	SeaHex(const SeaHex& copy);
 
 	/*
 	* getCoord
@@ -51,6 +52,12 @@ public:
 	* Si fuera invalido, se levanta una excepcion
 	*/
 	SeaId dockType(string coords);
+
+	/*
+	* getDocks
+	* Devuelve la lista con los docks del seaHex
+	*/
+	vector<SeaId> getDocks(void);
 
 private:
 

@@ -88,10 +88,12 @@ unsigned int
 Player::getResourceCount(ResourceId resourceID) const {
 	unsigned int resourceCount = 0;
 
-	for (ResourceCard* resCard : this->resourceCards) {
-		if (resCard->getResourceId() == resourceID) {
+	for (ResourceCard* card : resourceCards) {
+
+		if (card->getResourceId() == resourceID) {
 			resourceCount++;
 		}
+
 	}
 
 	return resourceCount;

@@ -19,6 +19,11 @@ SeaHex(unsigned char coord, SeaId onlyDock)
 	this->dockList.push_back(onlyDock);
 }
 
+SeaHex::
+SeaHex(const SeaHex& copy) {
+	this->coord = copy.coord;
+	this->dockList = copy.dockList;
+}
 
 unsigned char
 SeaHex::getCoord(void) const {
@@ -79,4 +84,9 @@ SeaHex::dockType(string coords) {
 	}
 
 	throw exception("SeaHex - dockType se ejecuto con una coordenada invalida");
+}
+
+vector<SeaId>
+SeaHex::getDocks(void) {
+	return dockList;
 }

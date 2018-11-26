@@ -16,6 +16,8 @@
 #include <vector>
 #include <time.h>
 
+#define RANDOM_DICE	((rand() % 6) + 1)
+
 void
 CatanGame::_init_game(void) {
 
@@ -24,7 +26,7 @@ CatanGame::_init_game(void) {
 	this->state = nullptr;
 
 	/* Semilla para numeros aleatorios */
-	srand(time(NULL));
+	srand( (unsigned int)time(NULL) );
 }
 
 void
@@ -317,37 +319,91 @@ CatanGame::generateMap() {
 	random_shuffle(coords.begin(), coords.end());
 
 	/* Ubicamos aleatoriamente hill */
-	for (unsigned int i = 0; i < HILL_HEX_COUNT; i++) {
-		ResourceHex hex = ResourceHex(ResourceId::HILL, coords.back());
-		coords.pop_back();
-		resourceMap[hex.getCoord()] = hex;
+	for (unsigned int ii = 0; ii < 5; ii++) {
+
+		unsigned int hexCount;
+		ResourceId hexId;
+
+		/* Elijo que tipo de recurso asignar  */
+		switch ( ii ) {
+			case 0:
+				hexCount = HILL_HEX_COUNT;
+				hexId = ResourceId::HILL;
+				break;
+			case 1:
+				hexCount = FOREST_HEX_COUNT;
+				hexId = ResourceId::FOREST;
+				break;
+			case 2:
+				hexCount = MOUNTAIN_HEX_COUNT;
+				hexId = ResourceId::MOUNTAIN;
+				break;
+			case 3:
+				hexCount = FIELD_HEX_COUNT;
+				hexId = ResourceId::FIELD;
+				break;
+			case 4:
+				hexCount = PASTURE_HEX_COUNT;
+				hexId = ResourceId::PASTURES;
+				break;
+		}
+
+		/* Ubicamos aleatoriamente */
+		for (unsigned int i = 0; i < hexCount; i++) {
+			ResourceHex hex = ResourceHex(hexId, coords.back());
+			coords.pop_back();
+			resourceMap.insert(pair<unsigned char, ResourceHex>(hex.getCoord(), hex));
+		}
 	}
 
-	/* Ubicamos aleatoriamente forest */
-
-	/* Ubicamos aleatoriamente mountain */
-
-	/* Ubicamos aleatoriamente field */
-
-	/* Ubicamos aleatoriamente pasture */
-
 	/* Ubicamos aleatoriamente desert */
-
+	resourceMap.insert(pair<unsigned char, ResourceHex>(coords.back(), ResourceHex(ResourceId::DESERT, coords.back())));
 }
 
 void
 CatanGame::generateTurn() {
-
+	turn = rand() % 2 ? PlayerId::PLAYER_ONE : PlayerId::PLAYER_TWO;
 }
 
 void
 CatanGame::generateOcean() {
 
+	/* Coordenadas disponibles */
+	vector<unsigned char> coords;
+	for (unsigned char i = '0'; i <= '5'; i++) coords.push_back(i);
+	random_shuffle(coords.begin(), coords.end());
+
+	/* Creo los elementos de mar */
+	seaMap.insert(pair<unsigned char, SeaHex>(coords.back(), SeaHex(coords.back(), SeaId::NORMAL, SeaId::SHEEP))), coords.pop_back();
+	seaMap.insert(pair<unsigned char, SeaHex>(coords.back(), SeaHex(coords.back(), SeaId::NORMAL))), coords.pop_back();
+	seaMap.insert(pair<unsigned char, SeaHex>(coords.back(), SeaHex(coords.back(), SeaId::NORMAL, SeaId::BRICK))), coords.pop_back();
+	seaMap.insert(pair<unsigned char, SeaHex>(coords.back(), SeaHex(coords.back(), SeaId::NORMAL))), coords.pop_back();
+	seaMap.insert(pair<unsigned char, SeaHex>(coords.back(), SeaHex(coords.back(), SeaId::NORMAL, SeaId::WHEAT))), coords.pop_back();
+	seaMap.insert(pair<unsigned char, SeaHex>(coords.back(), SeaHex(coords.back(), SeaId::STONE))), coords.pop_back();
 }
 
 void
 CatanGame::generateTokens() {
+	vector<unsigned char> tokens;
+	unsigned char token;
 
+	/* Genero los numeros aleatorios */
+	tokens.push_back(2), tokens.push_back(12);
+	for (unsigned int i = 0; i < 16; i++) {
+		do {
+			token = RANDOM_DICE + RANDOM_DICE;
+		} while ( token == 7 || token == 2 || token == 12 );
+		tokens.push_back(token);
+	}
+	random_shuffle(tokens.begin(), tokens.end());
+
+	/* Asigno los tokens */
+	for (auto& hex : resourceMap) {
+		ResourceHex& resourceHex = hex.second;
+		if (resourceHex.getResource() != ResourceId::DESERT) {
+			resourceHex.setToken( tokens.back() ), tokens.pop_back();
+		}
+	}
 }
 
 void
@@ -460,7 +516,6 @@ CatanGame::isAvailableDock(SeaId dockID, PlayerId playerID) {
 
 bool
 CatanGame::canPlayerAccept(list<ResourceId>& requestedCards, PlayerId destPlayerID) {
-
 	return false;
 }
 
@@ -484,6 +539,7 @@ CatanGame::pass() {
 	this->turn = (this->turn == PlayerId::PLAYER_ONE ? PlayerId::PLAYER_TWO : PlayerId::PLAYER_ONE);
 }
 
+/*
 bool CatanGame::
 isValidCity(string coords, PlayerId playerID)
 {
@@ -508,7 +564,7 @@ isValidCity(string coords, PlayerId playerID)
 	return ret;
 
 }
-
+*/
 //bool CatanGame::
 //isValidDockTransaction(list<ResourceCard*>& offeredCards, ResourceId requestedCard, unsigned char seaCoord, unsigned char dockNumber, PlayerId player)
 //{

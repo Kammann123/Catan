@@ -18,6 +18,13 @@ ResourceHex(unsigned char coord_){
 	this->coord = coord_;
 }
 
+ResourceHex::
+ResourceHex(const ResourceHex& copy) {
+	this->resource = copy.resource;
+	this->token = copy.token;
+	this->coord = copy.coord;
+}
+
 unsigned int
 ResourceHex::getToken(void)
 {

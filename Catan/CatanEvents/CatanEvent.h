@@ -23,7 +23,7 @@ public:
 	* Sources
 	* Fuentes posibles generadores del evento
 	*/
-	enum Sources : unsigned int {NETWORKING, GUI};
+	enum Sources : unsigned int {NETWORKING, GUI, GAME};
 
 	/* Constructor y destructores */
 	CatanEvent(Events event, Sources source, PlayerId player);

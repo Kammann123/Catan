@@ -5,29 +5,22 @@
 
 int main(int argc, char** argv) {
 
-	CatanGame game("Lucas Agustin Kammann");
-	CatanNetworking net("127.0.0.1", 12345, game);
+	CatanGame game("Lucas");
 
-	game.attach(&net);
+	game.generateMap();
+	game.generateOcean();
+	game.generateTokens();
+	game.generateTurn();
 
-	CONSOLE("Iniciando networking y game...");
-
-	string status = net.what();
-	CONSOLE("Estado inicial " + status);
-
-	while (net.good()) {
-
-		net.run();
-
-		if (status != net.what()) {
-
-			CONSOLE("Hubo un cambio de estado en el networking " + net.what());
-
-			status = net.what();
+	for (auto hex : game.seaMap) {
+		cout << "Coordenada: " << hex.first << " Cantidad de puertos: " << hex.second.getDocks().size();
+		for (SeaId dock : hex.second.getDocks()) {
+			cout << " Dock: " << (unsigned char)dock;
 		}
-
+		cout << endl;
 	}
-
-	CONSOLE( net.getError() );
-	
+	for (auto hex : game.resourceMap) {
+		cout << "Coordenada: " << hex.first << " Recurso: " << (unsigned char)hex.second.getResource() << " Token: " << hex.second.getToken() << endl;
+	}
+	cout << "Es turno del jugador: " << (unsigned int)game.turn << endl;
 }

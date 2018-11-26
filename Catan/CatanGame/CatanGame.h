@@ -270,7 +270,7 @@ private:
 	void _clear_resource_map(void);
 	void _clear_sea_map(void);
 
-private:
+public:
 	Player localPlayer;
 	Player remotePlayer;
 	list<Building*> builtMap;
