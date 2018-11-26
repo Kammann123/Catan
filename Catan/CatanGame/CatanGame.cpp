@@ -421,8 +421,13 @@ CatanGame::hasRobberCards(PlayerId playerID) {
 }
 
 void
-CatanGame::robberCards(list<ResourceCard*>& cards, PlayerId playerID) {
-
+CatanGame::robberCards(list<ResourceCard*>& cards, PlayerId playerID) 
+{
+	for (ResourceCard* card : cards)
+	{
+		getPlayer(playerID).removeResourceCard(card); // Descarto las cartas elegidas
+		card->~ResourceCard(); // Destruyo el objeto
+	}
 }
 
 void
@@ -437,7 +442,21 @@ CatanGame::isValidRoad(string coords, PlayerId playerID) {
 
 bool
 CatanGame::isValidCity(string coords, PlayerId playerID) {
-	return false;
+	bool ret = false;
+
+	for (Building* building : builtMap) // Busco que exista un Settlement en la posicion indicada
+	{
+		if (
+			building->getPlayer() == playerID &&
+			matchCoords(building->getPlace(), coords) &&
+			building->getType == BuildingType::SETTLEMENT
+			)
+		{
+			ret = true;
+			break;
+		}
+	}
+	return ret;
 }
 
 bool
@@ -525,14 +544,17 @@ CatanGame::isValidDockExchange(list<ResourceCard*>& offeredCards, ResourceId req
 bool
 CatanGame::isValidPlayerExchange(list<ResourceCard*>& offeredCards, list<ResourceId>& requestedCards, PlayerId srcPlayerID) {
 
-	return false;
+	return	(
+			canPlayerAccept(offeredCards, srcPlayerID) && 
+			canPlayerAccept(requestedCards, (srcPlayerID == PlayerId::PLAYER_ONE ? PlayerId::PLAYER_TWO : PlayerId::PLAYER_ONE) )
+			);
 
 }
 
 bool 
 CatanGame::isValidBankExchange(list<ResourceCard*>& offeredCards, PlayerId playerID) {
 
-	return false;
+	return (offeredCards.size() == BANK_TRANSACTION_CARDS_COUNT && canPlayerAccept(offeredCards,playerID));
 }
 
 bool
@@ -542,26 +564,63 @@ CatanGame::isAvailableDock(SeaId dockID, PlayerId playerID) {
 }
 
 bool
-CatanGame::canPlayerAccept(list<ResourceId>& requestedCards, PlayerId destPlayerID) {
+CatanGame::canPlayerAccept(list<ResourceId>& requestedCards, PlayerId destPlayerID)
+{
 	
-	bool ret = false;
+	return	(
+			(getPlayer(destPlayerID).getResourceCount(ResourceId::FOREST) >= std::count(requestedCards.begin(), requestedCards.end(), ResourceId::FOREST)) &&
+			(getPlayer(destPlayerID).getResourceCount(ResourceId::HILL) >= std::count(requestedCards.begin(), requestedCards.end(), ResourceId::HILL)) &&
+			(getPlayer(destPlayerID).getResourceCount(ResourceId::MOUNTAIN) >= std::count(requestedCards.begin(), requestedCards.end(), ResourceId::MOUNTAIN)) &&
+			(getPlayer(destPlayerID).getResourceCount(ResourceId::FIELD) >= std::count(requestedCards.begin(), requestedCards.end(), ResourceId::FIELD)) &&
+			(getPlayer(destPlayerID).getResourceCount(ResourceId::PASTURES) >= std::count(requestedCards.begin(), requestedCards.end(), ResourceId::PASTURES))
+			);
+}
 
-	if (
-		( getPlayer(destPlayerID).getResourceCount(ResourceId::FOREST) >= std::count(requestedCards.begin(),requestedCards.end(),ResourceId::FOREST) ) &&
-		( getPlayer(destPlayerID).getResourceCount(ResourceId::HILL) >= std::count(requestedCards.begin(), requestedCards.end(), ResourceId::HILL) ) &&
-		( getPlayer(destPlayerID).getResourceCount(ResourceId::MOUNTAIN) >= std::count(requestedCards.begin(), requestedCards.end(), ResourceId::MOUNTAIN) ) &&
-		( getPlayer(destPlayerID).getResourceCount(ResourceId::FIELD) >= std::count(requestedCards.begin(), requestedCards.end(), ResourceId::FIELD) ) &&
-		( getPlayer(destPlayerID).getResourceCount(ResourceId::PASTURES) >= std::count(requestedCards.begin(), requestedCards.end(), ResourceId::PASTURES) )
-		)
+bool
+CatanGame::canPlayerAccept(list<ResourceCard*> requestedCards, PlayerId destPlayerID)
+{
+	unsigned int woodCount = 0, brickCount = 0, oreCount = 0, wheatCount = 0, woolCount = 0; // Inicializo contadores
+
+	for (ResourceCard* card : requestedCards)
 	{
-		ret = true; // Verifico si las cartas están disponibles
-	}
+		switch (card->getResourceId())
+		{
+		case ResourceId::FOREST:
+			woodCount++;
+			break;
 
-	return ret;
+		case ResourceId::HILL:
+			brickCount++;
+			break;
+
+		case ResourceId::MOUNTAIN:
+			oreCount++;
+			break;
+
+		case ResourceId::FIELD:
+			wheatCount++;
+			break;
+
+		case ResourceId::PASTURES:
+			woolCount++;
+			break;
+
+		default:
+			break;
+		}
+
+		return (
+			(getPlayer(destPlayerID).getResourceCount(ResourceId::FOREST) >= woodCount) &&
+			(getPlayer(destPlayerID).getResourceCount(ResourceId::HILL) >= brickCount) &&
+			(getPlayer(destPlayerID).getResourceCount(ResourceId::MOUNTAIN) >= oreCount) &&
+			(getPlayer(destPlayerID).getResourceCount(ResourceId::FIELD) >= wheatCount) &&
+			(getPlayer(destPlayerID).getResourceCount(ResourceId::PASTURES) >= woolCount)
+			);
+	}
 }
 
 void
-CatanGame::bankExchange(list<ResourceCard*>& offered, ResourceId wanted, PlayerId playerID) 
+CatanGame::Exchange(list<ResourceCard*>& offered, ResourceId wanted, PlayerId playerID) 
 {
 	for (ResourceCard* cardOffered : offered)
 	{
@@ -584,7 +643,14 @@ CatanGame::playerExchange(list<ResourceCard*>& offered, list<ResourceId>& wanted
 		getPlayer(srcPlayerID).removeResourceCard(cardOffered); // Remuevo las cartas ofrecidas por jugador fuente
 	}
 
-	list<ResourceCard*> wantedList = getPlayer(oponent).giveResourceCard(ResourceId::FOREST, std::count(wanted.begin(), wanted.end(), ResourceId::FOREST)).merge(getPlayer(oponent).giveResourceCard(ResourceId::HILL, std::count(wanted.begin(), wanted.end(), ResourceId::HILL)).merge(getPlayer(oponent).giveResourceCard(ResourceId::MOUNTAIN, std::count(wanted.begin(), wanted.end(), ResourceId::MOUNTAIN)).merge(getPlayer(oponent).giveResourceCard(ResourceId::FIELD, std::count(wanted.begin(), wanted.end(), ResourceId::FIELD)).merge(getPlayer(oponent).giveResourceCard(ResourceId::PASTURES, std::count(wanted.begin(), wanted.end(), ResourceId::PASTURES))))));
+	/* Creo una lista con todas las resource cards que transferiré del jugador destino al jugador fuente del intercambio */
+
+	list<ResourceCard*> wantedList = getPlayer(oponent).giveResourceCard(ResourceId::FOREST, std::count(wanted.begin(), wanted.end(), ResourceId::FOREST));
+	wantedList.merge(getPlayer(oponent).giveResourceCard(ResourceId::HILL, std::count(wanted.begin(), wanted.end(), ResourceId::HILL)));
+	wantedList.merge(getPlayer(oponent).giveResourceCard(ResourceId::MOUNTAIN, std::count(wanted.begin(), wanted.end(), ResourceId::MOUNTAIN)));
+	wantedList.merge(getPlayer(oponent).giveResourceCard(ResourceId::FIELD, std::count(wanted.begin(), wanted.end(), ResourceId::FIELD)));
+	wantedList.merge(getPlayer(oponent).giveResourceCard(ResourceId::PASTURES, std::count(wanted.begin(), wanted.end(), ResourceId::PASTURES)));
+
 
 	for (ResourceCard* cardWanted : wantedList) // intercambio destinationPlayer -> sourcePlayer
 	{
@@ -595,43 +661,13 @@ CatanGame::playerExchange(list<ResourceCard*>& offered, list<ResourceId>& wanted
 	}
 
 }
-*/
-void
-CatanGame::dockExchange(list<ResourceCard*>& offered, ResourceId wanted, PlayerId playerID) {
-
-}
 
 void
 CatanGame::pass() {
 	this->turn = (this->turn == PlayerId::PLAYER_ONE ? PlayerId::PLAYER_TWO : PlayerId::PLAYER_ONE);
 }
 
-/*
-bool CatanGame::
-isValidCity(string coords, PlayerId playerID)
-{
-	bool ret = false;
-	list<Building*>& buildings = this->builtMap;
 
-	for (Building* oneBuilding : buildings)
-	{
-		if (
-
-			(oneBuilding->getType == BuildingType::SETTLEMENT) &&  // la construcción es un Settlement
-			(oneBuilding->getPlayer() == playerID) &&              // es del jugador en cuestión
-			matchCoords(oneBuilding->getPlace(), coords)
-
-			)
-		{
-			ret = true;
-			break; // para optimizar tiempo y no poner múltiples puntos de retorno
-		}
-	}
-
-	return ret;
-
-}
-*/
 //bool CatanGame::
 //isValidDockTransaction(list<ResourceCard*>& offeredCards, ResourceId requestedCard, unsigned char seaCoord, unsigned char dockNumber, PlayerId player)
 //{
@@ -642,32 +678,3 @@ isValidCity(string coords, PlayerId playerID)
 //	//
 //}
 
-/*
-bool CatanGame::
-isValidPlayerTransaction(list<ResourceId>& offeredCards, list<ResourceId>& requestedCards, PlayerId srcPlayerID) 
-{
-	bool ret = false;
-	PlayerId destPlayerID = ((srcPlayerID == PlayerId::PLAYER_ONE) ? PlayerId::PLAYER_TWO : PlayerId::PLAYER_ONE);
-
-	if (isValidListOfCards(offeredCards, srcPlayerID) && isValidListOfCards(requestedCards, destPlayerID))
-	{
-		ret = true;
-	}
-
-	return ret;
-}
-
-bool CatanGame::
-isValidBankTransaction(list<ResourceId>& offeredCards, PlayerId playerID)
-{
-	bool ret = false;
-
-	if ((offeredCards.size() == BANK_TRANSACTION_CARDS_COUNT) && isValidListOfCards(offeredCards, playerID))
-	{
-		ret = true;
-	}
-
-	return ret;
-}
-
-*/

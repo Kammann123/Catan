@@ -241,15 +241,16 @@ public:
 	* con lo garantiza si se da o no la opcion de aceptarla. Verifica que disponga las cartas...
 	*/
 	bool canPlayerAccept(list<ResourceId>& requestedCards, PlayerId destPlayerID);
+	bool canPlayerAccept(list<ResourceCard*> requestedCards, PlayerId destPlayerID);
 
 	/*
 	* bankExchange, playerExchange, dockExchange
 	* Realizan los intercambios de cartas entre un jugador y, ya sea otro jugador o bien
 	* el banco o un muelle, donde se asume validacion y unicamente se distribuyen recursos.
 	*/
-	void bankExchange(list<ResourceCard*>& offered, ResourceId wanted, PlayerId playerID);
+	void Exchange(list<ResourceCard*>& offered, ResourceId wanted, PlayerId playerID);
 	void playerExchange(list<ResourceCard*>& offered, list<ResourceId>& wanted, PlayerId srcPlayerID);
-	void dockExchange(list<ResourceCard*>& offered, ResourceId wanted, PlayerId playerID);
+
 
 	/*
 	* pass
