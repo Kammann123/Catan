@@ -10,6 +10,7 @@
 #define CITY_COUNT			4
 #define ROAD_COUNT			15
 
+
 using namespace std;
 
 enum class PlayerId : int {PLAYER_ONE, PLAYER_TWO, PLAYER_NONE};

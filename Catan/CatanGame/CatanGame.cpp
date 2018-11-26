@@ -470,14 +470,17 @@ CatanGame::isValidDockExchange(list<ResourceCard*>& offeredCards, ResourceId req
 bool
 CatanGame::isValidPlayerExchange(list<ResourceCard*>& offeredCards, list<ResourceId>& requestedCards, PlayerId srcPlayerID) {
 
-	return false;
+	return	(
+			canPlayerAccept(offeredCards, srcPlayerID) && 
+			canPlayerAccept(requestedCards, (srcPlayerID == PlayerId::PLAYER_ONE ? PlayerId::PLAYER_TWO : PlayerId::PLAYER_ONE) )
+			);
 
 }
 
 bool 
 CatanGame::isValidBankExchange(list<ResourceCard*>& offeredCards, PlayerId playerID) {
 
-	return false;
+	return (offeredCards.size() == BANK_TRANSACTION_CARDS_COUNT && canPlayerAccept(offeredCards,playerID));
 }
 
 bool
@@ -487,15 +490,59 @@ CatanGame::isAvailableDock(SeaId dockID, PlayerId playerID) {
 }
 
 bool
-CatanGame::canPlayerAccept(list<ResourceId>& requestedCards, PlayerId destPlayerID) {
+CatanGame::canPlayerAccept(list<ResourceId>& requestedCards, PlayerId destPlayerID)
+{
 	
-	return (
-		(getPlayer(destPlayerID).getResourceCount(ResourceId::FOREST) >= std::count(requestedCards.begin(), requestedCards.end(), ResourceId::FOREST)) &&
-		(getPlayer(destPlayerID).getResourceCount(ResourceId::HILL) >= std::count(requestedCards.begin(), requestedCards.end(), ResourceId::HILL)) &&
-		(getPlayer(destPlayerID).getResourceCount(ResourceId::MOUNTAIN) >= std::count(requestedCards.begin(), requestedCards.end(), ResourceId::MOUNTAIN)) &&
-		(getPlayer(destPlayerID).getResourceCount(ResourceId::FIELD) >= std::count(requestedCards.begin(), requestedCards.end(), ResourceId::FIELD)) &&
-		(getPlayer(destPlayerID).getResourceCount(ResourceId::PASTURES) >= std::count(requestedCards.begin(), requestedCards.end(), ResourceId::PASTURES))
-		);
+	return	(
+			(getPlayer(destPlayerID).getResourceCount(ResourceId::FOREST) >= std::count(requestedCards.begin(), requestedCards.end(), ResourceId::FOREST)) &&
+			(getPlayer(destPlayerID).getResourceCount(ResourceId::HILL) >= std::count(requestedCards.begin(), requestedCards.end(), ResourceId::HILL)) &&
+			(getPlayer(destPlayerID).getResourceCount(ResourceId::MOUNTAIN) >= std::count(requestedCards.begin(), requestedCards.end(), ResourceId::MOUNTAIN)) &&
+			(getPlayer(destPlayerID).getResourceCount(ResourceId::FIELD) >= std::count(requestedCards.begin(), requestedCards.end(), ResourceId::FIELD)) &&
+			(getPlayer(destPlayerID).getResourceCount(ResourceId::PASTURES) >= std::count(requestedCards.begin(), requestedCards.end(), ResourceId::PASTURES))
+			);
+}
+
+bool
+CatanGame::canPlayerAccept(list<ResourceCard*> requestedCards, PlayerId destPlayerID)
+{
+	unsigned int woodCount = 0, brickCount = 0, oreCount = 0, wheatCount = 0, woolCount = 0; // Inicializo contadores
+
+	for (ResourceCard* card : requestedCards)
+	{
+		switch (card->getResourceId())
+		{
+		case ResourceId::FOREST:
+			woodCount++;
+			break;
+
+		case ResourceId::HILL:
+			brickCount++;
+			break;
+
+		case ResourceId::MOUNTAIN:
+			oreCount++;
+			break;
+
+		case ResourceId::FIELD:
+			wheatCount++;
+			break;
+
+		case ResourceId::PASTURES:
+			woolCount++;
+			break;
+
+		default:
+			break;
+		}
+
+		return (
+			(getPlayer(destPlayerID).getResourceCount(ResourceId::FOREST) >= woodCount) &&
+			(getPlayer(destPlayerID).getResourceCount(ResourceId::HILL) >= brickCount) &&
+			(getPlayer(destPlayerID).getResourceCount(ResourceId::MOUNTAIN) >= oreCount) &&
+			(getPlayer(destPlayerID).getResourceCount(ResourceId::FIELD) >= wheatCount) &&
+			(getPlayer(destPlayerID).getResourceCount(ResourceId::PASTURES) >= woolCount)
+			);
+	}
 }
 
 void

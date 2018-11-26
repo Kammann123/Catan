@@ -235,6 +235,7 @@ public:
 	* con lo garantiza si se da o no la opcion de aceptarla. Verifica que disponga las cartas...
 	*/
 	bool canPlayerAccept(list<ResourceId>& requestedCards, PlayerId destPlayerID);
+	bool canPlayerAccept(list<ResourceCard*> requestedCards, PlayerId destPlayerID);
 
 	/*
 	* bankExchange, playerExchange, dockExchange
