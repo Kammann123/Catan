@@ -153,6 +153,14 @@ public:
 	void generateTokens(void);
 
 	/*
+	* Metodos para la validacion de los elementos de juego, como
+	* seran los mapas, tanto de tierra como mar y los valores de
+	* tokens asignados a ellos.
+	*/
+	bool verifyMap(map<Coord, MapValue> landMap);
+	bool verifyTokens(map<Coord, unsigned char> tokens);
+
+	/*
 	* assignResources
 	* Al notificar un valor de dados jugados, el juego asigna
 	* correspondientemente a cada jugar los recursos que reciben
@@ -166,6 +174,7 @@ public:
 	* Actualiza el estado actual del longest road.
 	*/
 	void updateLongestRoad(void);
+	unsigned int getLongestRoad(PlayerId playerId);
 
 	/*
 	* hasRobberCards
@@ -182,6 +191,7 @@ public:
 	* Aclaracion, la seleccion es por tipo de recurso.
 	*/
 	void robberCards(list<ResourceCard*>& cards, PlayerId playerID);
+	void robberCards(list<ResourceId>& cards, PlayerId playerID);
 
 	/*
 	* moveRobber

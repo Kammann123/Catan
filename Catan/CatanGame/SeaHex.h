@@ -7,31 +7,18 @@
 #include <string>
 #include <vector>
 
-/* Puntos de acceso a los docks y offsets para la tabla de puntos externos */
-#define FIRST_DOCK_OFFSET 0
-
-#define SECOND_DOCK_OFFSET 3
-
-#define ONLY_DOCK_OFFSET 2
-
-#define VERTEX_PER_SEA_PIECE 6
-
 using namespace std;
 
 /*
 * SeaHex
 * Porcion del mapa con mar, que representa un muelle con acceso a 
 * intermacion de algun tipo.
-*
-* Consideraciones:
-*	+ Se toma los diferentes tipos si se construye con uno o dos puertos y se despliegan los puertos en sentido horario.
 */	
 class SeaHex {
 public:
 
 	/* Constructores */
-	SeaHex(Coord coord, SeaId dockOne, SeaId dockTwo);
-	SeaHex(Coord coord, SeaId onlyDock);
+	SeaHex(Coord coord, SeaId id);
 	SeaHex(const SeaHex& copy);
 
 	/*
@@ -57,10 +44,10 @@ public:
 	* getDocks
 	* Devuelve la lista con los docks del seaHex
 	*/
-	vector<SeaId> getDocks(void);
+	SeaId getDocks(void);
 
 private:
 
 	Coord coord;
-	vector<SeaId> dockList;
+	SeaId id;
 };	

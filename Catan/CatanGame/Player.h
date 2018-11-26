@@ -74,6 +74,7 @@ public:
 	* Quita una resource card del jugador
 	*/
 	void removeResourceCard(ResourceCard * card);
+	void removeResourceCard(ResourceId id);
 	void removeResourceCard(ResourceId resourceId, unsigned int qty);
 	list<ResourceCard*> giveResourceCard(ResourceId resourceId, unsigned int qty);
 

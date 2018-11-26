@@ -82,7 +82,15 @@ public:
 	bool isLand(void);
 	bool isDot(void);
 	bool isEdge(void);
+
+	/*
+	* nearCoast
+	* Devuelve si la coordenada se encuentra cercana a la costa
+	* o bien a alguna costa especifica, que asi lo sea
+	*/
 	bool nearCoast(void);
+	bool nearCoast(Coord coord);
+	bool nearCoast(unsigned char coord);
 	
 	/*
 	* isVertexOf

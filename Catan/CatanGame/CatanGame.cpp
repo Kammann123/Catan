@@ -389,11 +389,11 @@ CatanGame::generateOcean() {
 	random_shuffle(coords.begin(), coords.end());
 
 	/* Creo los elementos de mar */
-	seaMap.insert(pair<unsigned char, SeaHex>(coords.back(), SeaHex(coords.back(), SeaId::NORMAL, SeaId::SHEEP))), coords.pop_back();
+	seaMap.insert(pair<unsigned char, SeaHex>(coords.back(), SeaHex(coords.back(), SeaId::SHEEP))), coords.pop_back();
 	seaMap.insert(pair<unsigned char, SeaHex>(coords.back(), SeaHex(coords.back(), SeaId::NORMAL))), coords.pop_back();
-	seaMap.insert(pair<unsigned char, SeaHex>(coords.back(), SeaHex(coords.back(), SeaId::NORMAL, SeaId::BRICK))), coords.pop_back();
-	seaMap.insert(pair<unsigned char, SeaHex>(coords.back(), SeaHex(coords.back(), SeaId::NORMAL))), coords.pop_back();
-	seaMap.insert(pair<unsigned char, SeaHex>(coords.back(), SeaHex(coords.back(), SeaId::NORMAL, SeaId::WHEAT))), coords.pop_back();
+	seaMap.insert(pair<unsigned char, SeaHex>(coords.back(), SeaHex(coords.back(), SeaId::BRICK))), coords.pop_back();
+	seaMap.insert(pair<unsigned char, SeaHex>(coords.back(), SeaHex(coords.back(), SeaId::WOOD))), coords.pop_back();
+	seaMap.insert(pair<unsigned char, SeaHex>(coords.back(), SeaHex(coords.back(), SeaId::WHEAT))), coords.pop_back();
 	seaMap.insert(pair<unsigned char, SeaHex>(coords.back(), SeaHex(coords.back(), SeaId::STONE))), coords.pop_back();
 }
 
@@ -463,6 +463,36 @@ CatanGame::assignResources(PlayerId player, ResourceId resource, unsigned int qt
 	}
 }
 
+void
+CatanGame::updateLongestRoad(void) {
+	/*
+	* Primero busco en las construcciones realizadas por cada jugador
+	* los roads que tiene, contando aquellos caminos que formo y de ellos
+	* extrayendo la cantidad mas alta, luego comparando entre ambos jugadores
+	* se obtiene el que tiene el camino mas largo.
+	*/
+
+	/* 
+	* Se compara con el estado actual de longest road para determinar si hubo algun cambio
+	* en caso de haberlo, se actualiza como corresponde, agregando puntaje y quitandolo
+	* a quienes es debido
+	*/
+}
+
+unsigned int
+CatanGame::getLongestRoad(PlayerId playerId) {
+	/*
+	* Obtengo los datos del jugador dado, y busco entre sus construcciones,
+	* los caminos enlazados, encontrando el de mayor longitud.
+	*/
+	for (Building* building : builtMap) {
+		if (building->getPlayer() == playerId && building->getType() == BuildingType::ROAD) {
+
+
+		}
+	}
+}
+
 bool
 CatanGame::hasRobberCards(PlayerId playerID) {
 	return (getPlayer(playerID).getResourceCount() > ROBBER_CARDS_COUNT);
@@ -471,10 +501,21 @@ CatanGame::hasRobberCards(PlayerId playerID) {
 void
 CatanGame::robberCards(list<ResourceCard*>& cards, PlayerId playerID) 
 {
+	Player player = getPlayer(playerID);
+
 	for (ResourceCard* card : cards)
 	{
-		getPlayer(playerID).removeResourceCard(card); // Descarto las cartas elegidas
-		card->~ResourceCard(); // Destruyo el objeto
+		player.removeResourceCard(card);
+		delete card;
+	}
+}
+
+void
+CatanGame::robberCards(list<ResourceId>& cards, PlayerId playerID) {
+	Player player = getPlayer(playerID);
+
+	for (ResourceId card : cards) {
+		player.removeResourceCard(card);
 	}
 }
 

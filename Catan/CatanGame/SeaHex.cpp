@@ -2,26 +2,17 @@
 #include "Coord.h"
 
 SeaHex::
-SeaHex(Coord coord, SeaId dockOne, SeaId dockTwo)
+SeaHex(Coord coord, SeaId id)
 {
 	/* Inicializacion */
 	this->coord = coord;
-	this->dockList.push_back(dockOne);
-	this->dockList.push_back(dockTwo);
-}
-
-SeaHex::
-SeaHex(Coord coord, SeaId onlyDock)
-{
-	/* Inicializacion */
-	this->coord = coord;
-	this->dockList.push_back(onlyDock);
+	this->id = id;
 }
 
 SeaHex::
 SeaHex(const SeaHex& copy) {
 	this->coord = copy.coord;
-	this->dockList = copy.dockList;
+	this->id = copy.id;
 }
 
 Coord
@@ -35,16 +26,16 @@ SeaHex::hasDock(Coord coords) {
 	unsigned int i;
 
 	/* Me fijo si la coordenada es de costa */
-	if (coords.nearCoast()) {
+	if (coords.nearCoast(this->coord)) {
 		/* Busco la coordenada en el arreglo */
 		i = 0;
 		for (string coord : externalDots) {
 			relativeCoord = i % 5;
 			if (coords == coord) {
 				/* Me fijo segun la cantidad de muelles si es valida */
-				if (dockList.size() == 1)
+				if (id == SeaId::NORMAL || id == SeaId::STONE || id == SeaId::WOOD )
 					return (relativeCoord == 2 || relativeCoord == 3);
-				else if (dockList.size() == 2)
+				else if ( id == SeaId::SHEEP || id == SeaId::BRICK || id == SeaId::WHEAT )
 					return (relativeCoord == 1 || relativeCoord == 0 || relativeCoord == 3 || relativeCoord == 4);
 			}
 			i++;
@@ -59,24 +50,48 @@ SeaHex::dockType(Coord coords) {
 	unsigned int i;
 
 	/* Me fijo si la coordenada es de costa */
-	if (coords.nearCoast()) {
+	if (coords.nearCoast(this->coord)) {
 		/* Busco la coordenada en el arreglo */
 		i = 0;
 		for (string coord : externalDots) {
 			relativeCoord = i % 5;
 			if (coords == coord) {
 				/* Me fijo segun la cantidad de muelles si es valida */
-				if (dockList.size() == 1) {
-					return this->dockList[0];
-				}				
-				else if (dockList.size() == 2) {
-					if (relativeCoord == 0 || relativeCoord == 1) {
-						return this->dockList[0];
-					}
-					else {
-						return this->dockList[1];
-					}
-				};
+				switch (id) {
+					case SeaId::NORMAL:
+						return SeaId::NORMAL;
+						break;
+					case SeaId::STONE:
+						return SeaId::STONE;
+						break;
+					case SeaId::WOOD:
+						return SeaId::WOOD;
+						break;
+					case SeaId::SHEEP:
+						if (relativeCoord == 0 || relativeCoord == 1) {
+							return SeaId::NORMAL;
+						}
+						else {
+							return SeaId::SHEEP;
+						}
+						break;
+					case SeaId::BRICK:
+						if (relativeCoord == 0 || relativeCoord == 1) {
+							return SeaId::NORMAL;
+						}
+						else {
+							return SeaId::BRICK;
+						}
+						break;
+					case SeaId::WHEAT:
+						if (relativeCoord == 0 || relativeCoord == 1) {
+							return SeaId::NORMAL;
+						}
+						else {
+							return SeaId::WHEAT;
+						}
+						break;
+				}
 			}
 			i++;
 		}
@@ -85,7 +100,7 @@ SeaHex::dockType(Coord coords) {
 	throw exception("SeaHex - dockType se ejecuto con una coordenada invalida");
 }
 
-vector<SeaId>
+SeaId
 SeaHex::getDocks(void) {
-	return dockList;
+	return id;
 }

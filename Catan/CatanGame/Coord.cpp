@@ -305,6 +305,22 @@ Coord::nearCoast(void) {
 }
 
 bool
+Coord::nearCoast(Coord coord) {
+	if (coord.isSea()) {
+		if (_has(coord.coords[0]) ) {
+			return true;
+		}
+	}
+	return false;
+}
+
+bool
+Coord::nearCoast(unsigned char coord) {
+	Coord myCoord(coord);
+	return nearCoast(myCoord);
+}
+
+bool
 Coord::isVertexOf(Coord coord) {
 	if (coord.isLand()) {
 		if (_has(coord.coords[0])) {

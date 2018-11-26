@@ -77,6 +77,22 @@ void Player::removeResourceCard(ResourceCard * card)
 	resourceCards.remove(card);
 }
 
+void Player::removeResourceCard(ResourceId id) {
+	ResourceCard* temp = nullptr;
+
+	for (ResourceCard* card : resourceCards) {
+		if (card->getResourceId() == id) {
+			temp = card;
+			break;
+		}
+	}
+	
+	if (temp) {
+		resourceCards.remove(temp);
+		delete temp;
+	}
+}
+
 unsigned int Player::hasRoads(void)
 {
 	return (unsigned int)roads.size();
