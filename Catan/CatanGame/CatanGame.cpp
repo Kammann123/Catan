@@ -18,15 +18,24 @@
 
 #define RANDOM_DICE	((rand() % 6) + 1)
 
+#define OPONENT_ID(id)	(id == PlayerId::PLAYER_ONE ? PlayerId::PLAYER_TWO : PlayerId::PLAYER_ONE)
+
 void
 CatanGame::_init_game(void) {
 
 	/* Inicializacion de variables */
 	this->prevState = nullptr;
 	this->state = nullptr;
+	this->longestRoad = PlayerId::PLAYER_NONE;
+	this->turn = PlayerId::PLAYER_NONE;
 
 	/* Semilla para numeros aleatorios */
 	srand( (unsigned int)time(NULL) );
+
+	/* Los estados de longest road */
+	playerLongestRoad.clear();
+	playerLongestRoad.insert(pair<PlayerId, unsigned int>(PlayerId::PLAYER_ONE, 0));
+	playerLongestRoad.insert(pair<PlayerId, unsigned int>(PlayerId::PLAYER_TWO, 0));
 }
 
 void
@@ -429,7 +438,9 @@ CatanGame::assignResources(unsigned int dices) {
 	for (auto hex : resourceMap) {
 		ResourceHex resourceHex = hex.second;
 		if (resourceHex.getToken() == dices) {
-			hits.push_back(resourceHex);
+			if ( !(resourceHex.getCoord() == robber.getCoord()) ) {
+				hits.push_back(resourceHex);
+			}
 		}
 	}
 
@@ -465,25 +476,98 @@ CatanGame::assignResources(PlayerId player, ResourceId resource, unsigned int qt
 void
 CatanGame::updateLongestRoad(void) {
 	/*
-	* Primero busco en las construcciones realizadas por cada jugador
-	* los roads que tiene, contando aquellos caminos que formo y de ellos
-	* extrayendo la cantidad mas alta, luego comparando entre ambos jugadores
-	* se obtiene el que tiene el camino mas largo.
+	* Inicializo los valores del longest road de cada jugador y asumo
+	* estado de visitas false en todos los caminos posibles 
 	*/
+	playerLongestRoad[PlayerId::PLAYER_ONE] = 0;
+	playerLongestRoad[PlayerId::PLAYER_TWO] = 0;
 
-	/* 
-	* Se compara con el estado actual de longest road para determinar si hubo algun cambio
-	* en caso de haberlo, se actualiza como corresponde, agregando puntaje y quitandolo
-	* a quienes es debido
+	/*
+	* Pruebo hacer recorrido desde todos los buildings posibles,
+	* en cada caso si ya fue visitado, directamente el algoritmo saldra
+	* habiendo tenido una longitud nula. Quedan despues guardados los caminos.
 	*/
+	for (Building* building : builtMap) {
+		getLongestRoad(building);
+	}
+
+	/*
+	* Limpio las marcas realizadas en todos los buildings y reviso si los
+	* resultados de los recorridos superaron el valor actual 
+	*/
+	for (Building* building : builtMap) building->visit(false);
+
+	/*
+	* Verifico si con los nuevos resultados cambia el estado del longest road y luego
+	* hago el intercambio de los puntajes nuevamente
+	*/
+	if (playerLongestRoad[PlayerId::PLAYER_ONE] >= MIN_LONGEST_ROAD && playerLongestRoad[PlayerId::PLAYER_TWO] >= MIN_LONGEST_ROAD) {
+		if (longestRoad == PlayerId::PLAYER_ONE && (playerLongestRoad[PlayerId::PLAYER_TWO] > playerLongestRoad[PlayerId::PLAYER_ONE])) {
+			longestRoad = PlayerId::PLAYER_TWO;
+			getPlayer(PlayerId::PLAYER_TWO).addPoints(LONGEST_ROAD_POINTS);
+			getPlayer(PlayerId::PLAYER_ONE).removePoints(LONGEST_ROAD_POINTS);
+		}
+		else if (longestRoad == PlayerId::PLAYER_TWO && (playerLongestRoad[PlayerId::PLAYER_ONE] > playerLongestRoad[PlayerId::PLAYER_TWO])) {
+			longestRoad = PlayerId::PLAYER_ONE;
+			getPlayer(PlayerId::PLAYER_ONE).addPoints(LONGEST_ROAD_POINTS);
+			getPlayer(PlayerId::PLAYER_TWO).removePoints(LONGEST_ROAD_POINTS);
+		}
+	}
+	else if (playerLongestRoad[PlayerId::PLAYER_ONE] >= MIN_LONGEST_ROAD) {
+		getPlayer(PlayerId::PLAYER_ONE).addPoints(LONGEST_ROAD_POINTS);
+		longestRoad = PlayerId::PLAYER_ONE;
+	}
+	else if (playerLongestRoad[PlayerId::PLAYER_TWO] >= MIN_LONGEST_ROAD) {
+		getPlayer(PlayerId::PLAYER_TWO).addPoints(LONGEST_ROAD_POINTS);
+		longestRoad = PlayerId::PLAYER_TWO;
+	}
 }
 
 void
-CatanGame::getLongestRoad(PlayerId playerId, unsigned int length) {
+CatanGame::getLongestRoad(Building* building, unsigned int length) {
 	/*
-	* Obtengo los datos del jugador dado, y busco entre sus construcciones,
-	* los caminos enlazados, encontrando el de mayor longitud.
+	* Recorro todos los caminos que se bifurcan de building por sus vecinos
+	* y en cada uno de ellos llevo la cuenta del largo del camino, cuando termino
+	* se revisa si es el mas largo al momento, y hace un update de la variable
+	* de clase playerLongesRoad
 	*/
+
+	if (building->wasVisited()) {
+		/*
+		* Ya fue visitado, entonces termino el camino aca, debo actualizar
+		* si se dan las condiciones...
+		*/
+		if (length > playerLongestRoad[building->getPlayer()]) {
+			playerLongestRoad[building->getPlayer()] = length;
+		}
+	}
+	else {
+		building->visit();
+
+		/* Como no fue visitando antes, entonces incrementa el largo del camino
+		* hasta el momento */
+		length += building->getType() == BuildingType::ROAD ? 1 : 0;
+
+		/*
+		* Si no fue visitado, existen dos posibilidades, que no tenga mas vecinos
+		* en cuyo caso tambien termina de visitar y luego la otra chance, que siga vistiando
+		* a sus vecinos
+		*/
+		if (building->hasNeighbours()) {
+
+			/* Visito a cada uno de los vecinos nuevamente
+			* con un recorrido de tipo DFS, en profunidad
+			*/
+			for (Building* neighbour : building->getNeighbours()) {
+				getLongestRoad(neighbour, length);
+			}
+		}
+		else {
+			if (length > playerLongestRoad[building->getPlayer()]) {
+				playerLongestRoad[building->getPlayer()] = length;
+			}
+		}
+	}
 }
 
 bool
@@ -494,7 +578,7 @@ CatanGame::hasRobberCards(PlayerId playerID) {
 void
 CatanGame::robberCards(list<ResourceCard*>& cards, PlayerId playerID) 
 {
-	Player player = getPlayer(playerID);
+	Player& player = getPlayer(playerID);
 
 	for (ResourceCard* card : cards)
 	{
@@ -505,7 +589,7 @@ CatanGame::robberCards(list<ResourceCard*>& cards, PlayerId playerID)
 
 void
 CatanGame::robberCards(list<ResourceId>& cards, PlayerId playerID) {
-	Player player = getPlayer(playerID);
+	Player& player = getPlayer(playerID);
 
 	for (ResourceId card : cards) {
 		player.removeResourceCard(card);
@@ -517,34 +601,137 @@ CatanGame::moveRobber(Coord newCoords) {
 	robber.setCoord(newCoords);
 }
 
-bool
+Building*
 CatanGame::isValidRoad(Coord coords, PlayerId playerID) {
-	return false;
-}
 
+	/* Valido que la coordenada sea valida, verificando que sea
+	* de tipo EDGE, y luego chequeo si no esta ocupada aun por otra
+	* construccion de algun jugador o el mismo 
+	*/
+	if (coords.isEdge()) {
 
-bool
-CatanGame::isValidCity(Coord coords, PlayerId playerID) {
-	bool ret = false;
+		for (Building* building : builtMap) {
+			if (building->getPlace() == coords) {
+				return nullptr;
+			}
+		}
 
-	for (Building* building : builtMap) // Busco que exista un Settlement en la posicion indicada
-	{
-		if (
-			building->getPlayer() == playerID &&
-			building->getPlace() == coords &&
-			building->getType == BuildingType::SETTLEMENT
-			)
-		{
-			ret = true;
-			break;
+		/*
+		* A continuacion, si no fallo la validacion previa, se verifica
+		* que exista algun punto o linea a la cual adherir el camino,
+		* para continuar el camino, en caso encontrarlo se devuelve el puntero
+		*/
+		for (Building* building : builtMap) {
+
+			/* En las construcciones del jugador */
+			if (building->getPlayer() == playerID) {
+
+				/* Aquellas que son ROADS */
+				if (building->getType() == BuildingType::ROAD) {
+
+					/* Si son una continuidad el ROAD con el ROAD */
+					if (coords.edgeContinuity(building->getPlace())) {
+						Coord checkCoord(coords, building->getPlace());
+
+						/* Verifico que no tengan en medio un settlement enemigo :( */
+						for (Building* otherBuilding : builtMap) {
+							if (otherBuilding->getPlayer() == OPONENT_ID(playerID)) {
+								if (otherBuilding->getPlace() == checkCoord) {
+									return nullptr;
+								}
+							}
+						}
+						return building;
+					}
+				}
+				else {
+					/* Si son CITIES o SETTLEMENTS, y se conectan con el ROAD */
+					if (coords.isEdgeOf(building->getPlace())) {
+						return building;
+					}
+				}
+			}
 		}
 	}
-	return ret;
+
+	return nullptr;
 }
 
-bool
+Building*
+CatanGame::isValidCity(Coord coords, PlayerId playerID) {
+
+	/*
+	* Verifico primero que la coordenada corresponda a una ubicacion
+	* puntual para asentamientos o ciudades y luego verifico si hay
+	* en esa coordenada, otro settlement para reemplazar
+	*/
+	if (coords.isDot()) {
+
+		for (Building* building : builtMap) {
+
+			if (building->getPlayer() == playerID) {
+
+				if (building->getPlace() == coords) {
+
+					if (building->getType() == BuildingType::SETTLEMENT) {
+						return building;
+					}
+					else {
+						return nullptr;
+					}
+				}
+			}
+		}
+	}
+}
+
+Building*
 CatanGame::isValidSettlement(Coord coords, PlayerId playerID) {
-	return false;
+
+	/*
+	* Verifico que sea una coordenada valida para poder establecer
+	* un asentamiento, y luego verifico que no este ya utilizada
+	* por otro asentamiento o ciudad
+	*/
+	if (coords.isDot()) {
+		for (Building* building : builtMap) {
+			if (building->getPlace() == coords) {
+				return nullptr;
+			}
+		}
+
+		/*
+		* Busco entre los roads construidos del jugador, a ver si alguno
+		* se conecta con el punto de interes, y luego verifico que ningun otro
+		* establecimiento sea adyacente
+		*/
+		for (Building* building : builtMap) {
+			/* Busco caminos del jugador en cuestion */
+			if (building->getPlayer() == playerID) {
+				if (building->getType() == BuildingType::ROAD) {
+
+					/* Encuentro un camino que conecte a ese settlement */
+					if (coords.isEdgeOf(building->getPlace())) {
+
+						/* Verifico la regla de la distancia */
+						for (Building* building : builtMap) {
+
+							if (building->getType() != BuildingType::ROAD) {
+
+								if (coords.isAdjacentDot(building->getPlace())) {
+									return nullptr;
+								}
+							}
+						}
+
+						return building;
+					}
+				}
+			}
+		}
+	}
+
+	return nullptr;
 }
 
 bool
@@ -629,7 +816,7 @@ CatanGame::isValidPlayerExchange(list<ResourceCard*>& offeredCards, list<Resourc
 
 	return	(
 			canPlayerAccept(offeredCards, srcPlayerID) && 
-			canPlayerAccept(requestedCards, (srcPlayerID == PlayerId::PLAYER_ONE ? PlayerId::PLAYER_TWO : PlayerId::PLAYER_ONE) )
+			canPlayerAccept(requestedCards, (OPONENT_ID(srcPlayerID)))
 			);
 
 }
@@ -719,7 +906,7 @@ CatanGame::Exchange(list<ResourceCard*>& offered, ResourceId wanted, PlayerId pl
 void
 CatanGame::playerExchange(list<ResourceCard*>& offered, list<ResourceId>& wanted, PlayerId srcPlayerID) 
 {
-	PlayerId oponent = (srcPlayerID == PlayerId::PLAYER_ONE ? PlayerId::PLAYER_TWO : PlayerId::PLAYER_ONE); // ID del jugador contrario
+	PlayerId oponent = OPONENT_ID(srcPlayerID);
 
 	for (ResourceCard* cardOffered : offered) // intercambio sourcePlayer -> destinationPlayer
 	{
@@ -749,6 +936,6 @@ CatanGame::playerExchange(list<ResourceCard*>& offered, list<ResourceId>& wanted
 
 void
 CatanGame::pass() {
-	this->turn = (this->turn == PlayerId::PLAYER_ONE ? PlayerId::PLAYER_TWO : PlayerId::PLAYER_ONE);
+	this->turn = OPONENT_ID(this->turn);
 }
 

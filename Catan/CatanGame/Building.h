@@ -52,7 +52,7 @@ public:
 
 	/*
 	* setPlayer
-	* Define a que jugador pertenece 
+	* Define a que jugador pertenece
 	*/
 	void setPlayer(PlayerId player);
 
@@ -62,7 +62,7 @@ private:
 	PlayerId player;
 
 public:
-	
+
 	/*
 	* addNeighbour/removeNeighbour
 	* Agrego/Quito un vecino contiguo a la construccion, para ir armando
@@ -78,6 +78,12 @@ public:
 	* uno de ellos y llevar la cuenta de las visitas
 	*/
 	list<Building*> getNeighbours(void);
+
+	/*
+	* hasNeighbours
+	* Devuelve true si el building tiene vecinos agregados
+	*/
+	bool hasNeighbours(void);
 
 	/*
 	* wasVisited

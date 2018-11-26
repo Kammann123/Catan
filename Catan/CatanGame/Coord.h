@@ -40,7 +40,7 @@ public:
 	Coord(string coords, Type type);
 	Coord(const Coord& copy);
 	Coord(unsigned char coord);
-	Coord(Coord& c1, Coord& c2);
+	Coord(Coord c1, Coord c2);
 	Coord(vector<unsigned char> coord);
 
 	/* Sobrecarga de operadores */
@@ -107,7 +107,7 @@ public:
 	* extremo de la coordenada actual, donde se entiende que para que pueda ser
 	* posible, primero la coordenada actual debe ser de tipo Edge.
 	*/
-	bool isEdgeOf(Coord& coord);
+	bool isEdgeOf(Coord coord);
 	bool isEdgeOf(unsigned char coord);
 
 	/*
@@ -116,7 +116,7 @@ public:
 	* continuo al Edge de la coordenada actual, asumiendo que ambos son de tal tipo
 	* en cuyo caso contrario, sera false.
 	*/
-	bool edgeContinuity(Coord& coord);
+	bool edgeContinuity(Coord coord);
 	bool edgeContinuity(unsigned char coord);
 
 	/*
@@ -124,7 +124,7 @@ public:
 	* Devuelve true si la coordenada actual y la que se pasa a evaluar
 	* son ambas de tipo Dot y son adyacentes entre si.
 	*/
-	bool isAdjacentDot(Coord& coord);
+	bool isAdjacentDot(Coord coord);
 	bool isAdjacentDot(unsigned char coord);
 
 private:

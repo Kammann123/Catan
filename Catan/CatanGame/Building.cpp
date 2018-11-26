@@ -80,3 +80,8 @@ list<Building*>
 Building::getNeighbours(void) {
 	return neighbours;
 }
+
+bool
+Building::hasNeighbours(void) {
+	return !neighbours.empty();
+}

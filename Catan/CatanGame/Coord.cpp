@@ -71,7 +71,7 @@ Coord(unsigned char coord) {
 }
 
 Coord::
-Coord(Coord& c1, Coord& c2) {
+Coord(Coord c1, Coord c2) {
 	if (c1.isEdge() && c2.isEdge()) {
 		this->coords = c1.coords + c2.coords;
 		if (c1.nearCoast() && c2.nearCoast()) {
@@ -341,7 +341,7 @@ Coord::isVertexOf(unsigned char coord) {
 }
 
 bool
-Coord::isEdgeOf(Coord& coord) {
+Coord::isEdgeOf(Coord coord) {
 	if (isEdge()) {
 		if (coord.isDot()) {
 			if (coord.coords.size() == 3) {
@@ -371,7 +371,7 @@ Coord::isEdgeOf(unsigned char coord) {
 }
 
 bool
-Coord::edgeContinuity(Coord& coord) {
+Coord::edgeContinuity(Coord coord) {
 	if (isEdge()) {
 		if (coord.isEdge()) {
 			Coord myCoord(*this, coord);
@@ -387,7 +387,7 @@ Coord::edgeContinuity(unsigned char coord) {
 }
 
 bool
-Coord::isAdjacentDot(Coord& coord) {
+Coord::isAdjacentDot(Coord coord) {
 	if (isDot()) {
 		if (coord.isDot()) {
 			Coord myCoord(*this, coord);

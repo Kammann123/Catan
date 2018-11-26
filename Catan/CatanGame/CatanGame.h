@@ -43,11 +43,13 @@
 /* Robber definitions */
 #define ROBBER_CARDS_COUNT	7
 
+/* Longest road definitions */
+#define MIN_LONGEST_ROAD	5
+#define LONGEST_ROAD_POINTS	2
+
 /* Victory Points reference */
 #define ROAD_BUILT_POINTS			0
 #define SETTLEMENT_BUILT_POINTS		1
-
-
 
 using namespace std;
 
@@ -174,7 +176,7 @@ public:
 	* Actualiza el estado actual del longest road.
 	*/
 	void updateLongestRoad(void);
-	void getLongestRoad(PlayerId playerId, unsigned int length = 0);
+	void getLongestRoad(Building* building, unsigned int length = 0);
 
 	/*
 	* hasRobberCards
@@ -205,10 +207,14 @@ public:
 	* determinado, en la ubicacion dada, verificando que sea posible a nivel constructivo,
 	* esto quiere decir, que no valida requisitos economicos, unicamente si es posible,
 	* ya que puede haber una construccion en esa ubicacion, o no cumplir las reglas del juego.
+	*
+	* Devuelven puntero nullptr si no cumple, o devuelve puntero a los building de interes
+	* donde en caso de Road y Settlement seran contiguos o bien en caso de City, el settlement
+	* a sustituir.
 	*/
-	bool isValidRoad(Coord coords, PlayerId playerID);
-	bool isValidCity(Coord coords, PlayerId playerID);
-	bool isValidSettlement(Coord coords, PlayerId playerID);
+	Building* isValidRoad(Coord coords, PlayerId playerID);
+	Building* isValidCity(Coord coords, PlayerId playerID);
+	Building* isValidSettlement(Coord coords, PlayerId playerID);
 
 	/*
 	* hasCityResources, hasSettlementResources, hasRoadResources
@@ -263,7 +269,6 @@ public:
 	void Exchange(list<ResourceCard*>& offered, ResourceId wanted, PlayerId playerID);
 	void playerExchange(list<ResourceCard*>& offered, list<ResourceId>& wanted, PlayerId srcPlayerID);
 
-
 	/*
 	* pass
 	* Ejecuta la accion de pasar de turno
@@ -312,4 +317,8 @@ private:
 
 	CatanState* state;
 	CatanState* prevState;
+
+private:
+	
+	map<PlayerId, unsigned int> playerLongestRoad;
 };
