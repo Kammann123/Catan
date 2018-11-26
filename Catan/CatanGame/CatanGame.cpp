@@ -361,8 +361,13 @@ CatanGame::hasRobberCards(PlayerId playerID) {
 }
 
 void
-CatanGame::robberCards(list<ResourceCard*>& cards, PlayerId playerID) {
-
+CatanGame::robberCards(list<ResourceCard*>& cards, PlayerId playerID) 
+{
+	for (ResourceCard* card : cards)
+	{
+		getPlayer(playerID).removeResourceCard(card); // Descarto las cartas elegidas
+		card->~ResourceCard(); // Destruyo el objeto
+	}
 }
 
 void
@@ -484,20 +489,13 @@ CatanGame::isAvailableDock(SeaId dockID, PlayerId playerID) {
 bool
 CatanGame::canPlayerAccept(list<ResourceId>& requestedCards, PlayerId destPlayerID) {
 	
-	bool ret = false;
-
-	if (
-		( getPlayer(destPlayerID).getResourceCount(ResourceId::FOREST) >= std::count(requestedCards.begin(),requestedCards.end(),ResourceId::FOREST) ) &&
-		( getPlayer(destPlayerID).getResourceCount(ResourceId::HILL) >= std::count(requestedCards.begin(), requestedCards.end(), ResourceId::HILL) ) &&
-		( getPlayer(destPlayerID).getResourceCount(ResourceId::MOUNTAIN) >= std::count(requestedCards.begin(), requestedCards.end(), ResourceId::MOUNTAIN) ) &&
-		( getPlayer(destPlayerID).getResourceCount(ResourceId::FIELD) >= std::count(requestedCards.begin(), requestedCards.end(), ResourceId::FIELD) ) &&
-		( getPlayer(destPlayerID).getResourceCount(ResourceId::PASTURES) >= std::count(requestedCards.begin(), requestedCards.end(), ResourceId::PASTURES) )
-		)
-	{
-		ret = true; // Verifico si las cartas están disponibles
-	}
-
-	return ret;
+	return (
+		(getPlayer(destPlayerID).getResourceCount(ResourceId::FOREST) >= std::count(requestedCards.begin(), requestedCards.end(), ResourceId::FOREST)) &&
+		(getPlayer(destPlayerID).getResourceCount(ResourceId::HILL) >= std::count(requestedCards.begin(), requestedCards.end(), ResourceId::HILL)) &&
+		(getPlayer(destPlayerID).getResourceCount(ResourceId::MOUNTAIN) >= std::count(requestedCards.begin(), requestedCards.end(), ResourceId::MOUNTAIN)) &&
+		(getPlayer(destPlayerID).getResourceCount(ResourceId::FIELD) >= std::count(requestedCards.begin(), requestedCards.end(), ResourceId::FIELD)) &&
+		(getPlayer(destPlayerID).getResourceCount(ResourceId::PASTURES) >= std::count(requestedCards.begin(), requestedCards.end(), ResourceId::PASTURES))
+		);
 }
 
 void
