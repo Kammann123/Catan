@@ -174,7 +174,7 @@ public:
 	* Actualiza el estado actual del longest road.
 	*/
 	void updateLongestRoad(void);
-	unsigned int getLongestRoad(PlayerId playerId);
+	void getLongestRoad(PlayerId playerId, unsigned int length = 0);
 
 	/*
 	* hasRobberCards
@@ -296,7 +296,9 @@ private:
 	void _clear_sea_map(void);
 
 	void _notify_change(void);
+
 private:
+	
 	Player localPlayer;
 	Player remotePlayer;
 	list<Building*> builtMap;

@@ -478,18 +478,12 @@ CatanGame::updateLongestRoad(void) {
 	*/
 }
 
-unsigned int
-CatanGame::getLongestRoad(PlayerId playerId) {
+void
+CatanGame::getLongestRoad(PlayerId playerId, unsigned int length) {
 	/*
 	* Obtengo los datos del jugador dado, y busco entre sus construcciones,
 	* los caminos enlazados, encontrando el de mayor longitud.
 	*/
-	for (Building* building : builtMap) {
-		if (building->getPlayer() == playerId && building->getType() == BuildingType::ROAD) {
-
-
-		}
-	}
 }
 
 bool
