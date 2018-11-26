@@ -6,9 +6,9 @@
 #include "ResourceHex.h"
 #include "ResourceCard.h"
 #include "SeaHex.h"
-#include "CatanStatus.h"
 #include "Coord.h"
-#include "CatanState.h"
+
+#include "CatanStates/CatanState.h"
 
 #include "../MVC/Subject.h"
 #include "../CatanEvents/CatanEvent.h"
@@ -80,6 +80,13 @@ using namespace std;
 */
 class CatanGame : public Subject{
 public:
+	
+	/*
+	* Defino los estados posibles del juego
+	* en funcion de los cuales se crean clases para la 
+	* la fsm implementada con State Pattern
+	*/
+	enum State : unsigned int {GAME_SYNC, FIRST_BUILDS, TURN_DICES, TURN, WINNER, GAME_END, GAME_ERROR};
 
 	/* Constructor y destructor */
 	CatanGame(string localPlayerName);
@@ -87,11 +94,22 @@ public:
 	~CatanGame();
 
 	/*
-	* handle
-	* Metodo que permite ejecutar un evento sobre la logica del juego
+	* Metodos principales que definen el comportamiento de CatanGame,
+	* ya que son la entrada o verificacion de estados del mismo, y su definicion
+	* la riguen los estados actuales del mismo
 	*/
 	void handle(NetworkPacket* packet);
 	void handle(CatanEvent* event);
+	State getState(void);
+
+	/*
+	* info
+	* Devuelve un mensaje descriptivo a saber, de caracter informativo
+	* sobre alguna posible accion erronea pasada, utilizar para verificar
+	* el caracter de una jugada equivocada
+	*/
+	string info(void);
+	void setInfo(string info);
 
 	/*
 	* getNextEvent
@@ -180,9 +198,10 @@ public:
 
 	/*
 	* Definicion de los valores del juego del mapa, tanto de 
-	* tierra como mar, asi como los tokens.
+	* tierra como mar, asi como los tokens. Tambien del turno.
 	*/
 	void setGlobalMap(map<Coord, MapValue> gameMap, map<Coord, unsigned char> tokens);
+	void setTurn(PlayerId playerId);
 
 	/*
 	* assignResources
@@ -201,12 +220,30 @@ public:
 	void getLongestRoad(Building* building, unsigned int length = 0);
 
 	/*
+	* isRobberDices
+	* Reconoce el valor de dados para saber si es una jugada
+	* que merece activar el Robber, mas alla de su trivialidad, implica
+	* que para cada accion, los estados pasen por CatanGame, agregando un nivel
+	* de control que permite adherir mejoras a futuro. Ademas queda bien.
+	*/
+	bool isRobberDices(unsigned int dices);
+
+	/*
 	* hasRobberCards
 	* Permite ver si un jugador dado cumple las condiciones en cuanto
 	* a cantidad de recursos acumulados, para ver si debe descartar
 	* alguna de esas cartas, con lo cual, es true si se valida esto.
 	*/
 	bool hasRobberCards(PlayerId playerID);
+
+	/*
+	* validateRobberCards
+	* Valida las cartas del jugador, teniendo en cuenta que cuando se deben
+	* descartar las mismas ante la presencia del robber, se debe eliminar
+	* la mitad de las que se tienen en mano
+	*/
+	bool validateRobberCards(list<ResourceCard*>& cards, PlayerId playerID);
+	bool validateRobberCards(list<ResourceId>& cards, PlayerId playerID);
 	
 	/*
 	* robberCards
@@ -361,7 +398,7 @@ private:
 	CatanState* prevState;
 
 private:
-	
+	string description;
 	map<PlayerId, unsigned int> playerLongestRoad;
 	map<PlayerId, list<SeaId>> playerDocks;
 };
