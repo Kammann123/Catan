@@ -759,14 +759,3 @@ CatanGame::pass() {
 	this->turn = (this->turn == PlayerId::PLAYER_ONE ? PlayerId::PLAYER_TWO : PlayerId::PLAYER_ONE);
 }
 
-
-//bool CatanGame::
-//isValidDockTransaction(list<ResourceCard*>& offeredCards, ResourceId requestedCard, unsigned char seaCoord, unsigned char dockNumber, PlayerId player)
-//{
-//	// Busco las coordenadas del dock (?) -> tiene 2 !!!!! (cambiar el método)
-//	SeaHex& mySeaHex = seaMap[seaCoord];
-//	string dockCoords = seaMap[seaCoord].getDockAbsCoords(dockNumber);
-//	// si es así, tendría que chequear si la oferta del jugador se condice con lo requerido por el puerto
-//	//
-//}
-
