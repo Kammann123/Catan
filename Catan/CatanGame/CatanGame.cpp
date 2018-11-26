@@ -501,7 +501,7 @@ CatanGame::canPlayerAccept(list<ResourceId>& requestedCards, PlayerId destPlayer
 }
 
 void
-CatanGame::bankExchange(list<ResourceCard*>& offered, ResourceId wanted, PlayerId playerID) 
+CatanGame::Exchange(list<ResourceCard*>& offered, ResourceId wanted, PlayerId playerID) 
 {
 	for (ResourceCard* cardOffered : offered)
 	{
@@ -540,11 +540,6 @@ CatanGame::playerExchange(list<ResourceCard*>& offered, list<ResourceId>& wanted
 		getPlayer(oponent).removeResourceCard(cardWanted); // Remuevo las cartas ofrecidas por jugador destino
 
 	}
-
-}
-
-void
-CatanGame::dockExchange(list<ResourceCard*>& offered, ResourceId wanted, PlayerId playerID) {
 
 }
 
