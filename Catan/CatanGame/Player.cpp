@@ -64,6 +64,14 @@ void Player::addResourceCard(ResourceCard * card)
 	resourceCards.push_back(card);
 }
 
+void Player::addResourceCard(list<ResourceCard*> cardsList)
+{
+	for (ResourceCard* card : cardsList)
+	{
+		this->addResourceCard(card);
+	}
+}
+
 void Player::removeResourceCard(ResourceCard * card)
 {
 	resourceCards.remove(card);
