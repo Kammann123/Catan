@@ -66,6 +66,7 @@ public:
 	* Añade una resource card al jugador
 	*/
 	void addResourceCard(ResourceCard * card);
+	void addResourceCard(list<ResourceCard*> cardsList);
 
 	/*
 	* removeResourceCard()

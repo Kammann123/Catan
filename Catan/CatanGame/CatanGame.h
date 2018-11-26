@@ -28,19 +28,25 @@
 #define BANK_TRANSACTION_CARDS_COUNT 4 
 
 /* Buildings requirements */
-#define SETTLEMENT_BRICK_NEEDED 1
-#define SETTLEMENT_LUMBER_NEEDED 1
-#define SETTLEMENT_WOOL_NEEDED 1
-#define SETTLEMENT_GRAIN_NEEDED 1
+#define SETTLEMENT_BRICK_NEEDED		1
+#define SETTLEMENT_LUMBER_NEEDED	1
+#define SETTLEMENT_WOOL_NEEDED		1
+#define SETTLEMENT_GRAIN_NEEDED		1
 
-#define CITY_ORE_NEEDED 3
-#define CITY_GRAIN_NEEDED 2
+#define CITY_ORE_NEEDED		3
+#define CITY_GRAIN_NEEDED	2
 
-#define ROAD_BRICK_NEEDED 1
-#define ROAD_LUMBER_NEEDED 1
+#define ROAD_BRICK_NEEDED	1
+#define ROAD_LUMBER_NEEDED	1
 
 /* Robber definitions */
-#define ROBBER_CARDS_COUNT 7
+#define ROBBER_CARDS_COUNT	7
+
+/* Victory Points reference */
+#define ROAD_BUILT_POINTS			0
+#define SETTLEMENT_BUILT_POINTS		1
+
+
 
 using namespace std;
 
@@ -212,9 +218,9 @@ public:
 	* alguno de los muelles o bien el banco del juego. Estas validaciones implican verificar que sea posible la transaccion
 	* , que tenga los recursos para hacerla, y que tenga disponible las opciones de hacerla, por los muelles por ejemplo.
 	*/
-	bool isValidDockExchange(list<ResourceId>& offeredCards, ResourceId requestedCard, unsigned char seaCoord, unsigned char dockNumber, PlayerId player);
-	bool isValidPlayerExchange(list<ResourceId>& offeredCards, list<ResourceId>& requestedCards, PlayerId srcPlayerID);
-	bool isValidBankExchange(list<ResourceId>& offeredCards, PlayerId playerID);
+	bool isValidDockExchange(list<ResourceCard*>& offeredCards, ResourceId requestedCard, unsigned char seaCoord, unsigned char dockNumber, PlayerId player);
+	bool isValidPlayerExchange(list<ResourceCard*>& offeredCards, list<ResourceId>& requestedCards, PlayerId srcPlayerID);
+	bool isValidBankExchange(list<ResourceCard*>& offeredCards, PlayerId playerID);
 
 	/*
 	* isAvailableDock
@@ -235,9 +241,9 @@ public:
 	* Realizan los intercambios de cartas entre un jugador y, ya sea otro jugador o bien
 	* el banco o un muelle, donde se asume validacion y unicamente se distribuyen recursos.
 	*/
-	void bankExchange(list<ResourceId>& offered, ResourceId wanted, PlayerId playerID);
-	void playerExchange(list<ResourceId>& offered, list<ResourceId>& wanted, PlayerId srcPlayerID);
-	void dockExchange(list<ResourceId>& offered, ResourceId wanted, PlayerId playerID);
+	void bankExchange(list<ResourceCard*>& offered, ResourceId wanted, PlayerId playerID);
+	void playerExchange(list<ResourceCard*>& offered, list<ResourceId>& wanted, PlayerId srcPlayerID);
+	void dockExchange(list<ResourceCard*>& offered, ResourceId wanted, PlayerId playerID);
 
 	/*
 	* pass
