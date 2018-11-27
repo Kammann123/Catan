@@ -722,9 +722,6 @@
     <ClCompile Include="CatanGame\CatanStates\Winner.cpp">
       <Filter>CatanGame\CatanStates</Filter>
     </ClCompile>
-    <ClCompile Include="CatanEvents\KnightEvent.cpp">
-      <Filter>CatanEvents</Filter>
-    </ClCompile>
     <ClCompile Include="Widgets.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
@@ -733,6 +730,9 @@
     </ClCompile>
     <ClCompile Include="networkingTester.cpp">
       <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanEvents\KnightEvent.cpp">
+      <Filter>CatanEvents</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

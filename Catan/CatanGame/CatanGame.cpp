@@ -1,5 +1,6 @@
 #include "CatanGame.h"
 
+#include "../CatanEvents/KnightEvent.h"
 #include "../CatanEvents/DicesEvent.h"
 #include "../CatanEvents/BankEvent.h"
 #include "../CatanEvents/BuildingEvent.h"
@@ -10,7 +11,6 @@
 #include "../CatanEvents/CardIsEvent.h"
 #include "../CatanEvents/MonopolyEvent.h"
 #include "../CatanEvents/YOPEvent.h"
-#include "../CatanEvents/KnightEvent.h"
 
 #include "CatanStates/GameSync.h"
 #include "CatanStates/GameEnd.h"

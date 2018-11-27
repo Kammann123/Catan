@@ -1,7 +1,6 @@
 #pragma once
 
 #include "CatanEvent.h"
-#include "../CatanData/KnightData.h"
 #include "../CatanNetworking/NetworkPackets/KnightPacket.h"
 
 /*

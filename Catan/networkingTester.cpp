@@ -1,12 +1,16 @@
 #include "CatanNetworking/CatanNetworking.h"
 #include "CatanGame/CatanGame.h"
 
+#include <vector>
+
 using namespace std;
 
 #define CONSOLE(msg)	cout << "[TESTING] " << msg << endl;
 
 int main(int argc, char** argv) {
 
+	vector<string> netStrings = {"DISCONNECTED", "LISTENING", "WAIT_SYNC", "SYNC", "IDLE", "NET_ERROR" };
+	
 	string localName;
 	string ip;
 	unsigned int port;
@@ -20,8 +24,8 @@ int main(int argc, char** argv) {
 	CatanGame game = CatanGame(localName);
 	CatanNetworking net = CatanNetworking(ip, port, game);
 	game.attach(&net);
-
-	string netStatus = "";
+	
+	CatanNetworking::States netStatus = CatanNetworking::States::DISCONNECTED;
 	CatanGame::State gameStatus = CatanGame::State::GAME_SYNC;
 
 	while (game.getState() != CatanGame::State::GAME_ERROR && game.getState() != CatanGame::State::GAME_END) {
@@ -29,9 +33,9 @@ int main(int argc, char** argv) {
 		if (net.good()) {
 			net.run();
 
-			if (netStatus != net.what()) {
-				netStatus = net.what();
-				CONSOLE("Networking cambio de estado: " + netStatus);
+			if (netStatus != net.getNetworkingState()) {
+				netStatus = net.getNetworkingState();
+				CONSOLE("Networking cambio de estado: " + netStrings[netStatus]);
 			}
 
 		}
