@@ -52,22 +52,26 @@ HandshakingState::update() {
 	CatanEvent* event = networking.getGame().getNextEvent();
 	NetworkPacket* packet = networking.getEventPacket(event);
 
-	/* Ejecuto el protocolo con el evento */
-	handshakingProtocol->send(packet);
+	/* Resulta que hay eventos que no son interesantes para networking */
+	if (packet) {
 
-	/* Verifico estado del protocolo */
-	switch (handshakingProtocol->getStatus()) {
-		case ProtocolStatus::DONE:
-			networking.changeState(new Idle(networking));
-			break;
-		case ProtocolStatus::PROTOCOL_ERROR:
-			networking.setError("HandshakingState - Hubo error en el protocolo.");
-			networking.changeState(new NetError(networking));
-			break;
-		case ProtocolStatus::TIMEOUT:
-			networking.setError("HandshakingState - Hubo error de timeout en el protocolo.");
-			networking.changeState(new NetError(networking));
-			break;
+		/* Ejecuto el protocolo con el evento */
+		handshakingProtocol->send(packet);
+
+		/* Verifico estado del protocolo */
+		switch (handshakingProtocol->getStatus()) {
+			case ProtocolStatus::DONE:
+				networking.changeState(new Idle(networking));
+				break;
+			case ProtocolStatus::PROTOCOL_ERROR:
+				networking.setError("HandshakingState - Hubo error en el protocolo.");
+				networking.changeState(new NetError(networking));
+				break;
+			case ProtocolStatus::TIMEOUT:
+				networking.setError("HandshakingState - Hubo error de timeout en el protocolo.");
+				networking.changeState(new NetError(networking));
+				break;
+		}
 	}
 }
 
