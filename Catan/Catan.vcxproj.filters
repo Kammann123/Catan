@@ -402,6 +402,9 @@
     <ClInclude Include="CatanGame\CatanStates\Turn.h">
       <Filter>CatanGame\CatanStates</Filter>
     </ClInclude>
+    <ClInclude Include="CatanGame\CatanStates\GameEnd.h">
+      <Filter>CatanGame\CatanStates</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FSM\EventQueue.cpp">
@@ -702,6 +705,9 @@
       <Filter>CatanGame\CatanStates</Filter>
     </ClCompile>
     <ClCompile Include="CatanGame\CatanStates\Turn.cpp">
+      <Filter>CatanGame\CatanStates</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGame\CatanStates\GameEnd.cpp">
       <Filter>CatanGame\CatanStates</Filter>
     </ClCompile>
   </ItemGroup>

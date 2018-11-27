@@ -137,9 +137,25 @@ CatanGame::handle(NetworkPacket* packet) {
 
 void
 CatanGame::handle(CatanEvent* event) {
+
+	/*
+	* Valido que haya llegado verdaderamente un evento
+	* y no algun tipo de puntero nulo por algun error...
+	*/
 	if (event) {
-		this->state->handle(event);
-		delete event;
+
+		/*
+		* Valido que el evento particular no sea de cierre
+		* en cuyo caso... adios!
+		*/
+		if (event->getEvent() == CatanEvent::Events::QUIT) {
+			// ----> CAMBIAR A ESTADO DE END <------
+		}
+		else {
+
+			this->state->handle(event);
+			delete event;
+		}
 	}
 }
 
