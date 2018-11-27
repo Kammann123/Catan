@@ -4,8 +4,7 @@
 
 class TellBuilding : public HandshakingState {
 public:
-	TellBuilding(CatanNetworking& net) : HandshakingState(tellBuildingProtocol, net) {}
-	string what(void) { return "TELL_BUILDING"; }
+	TellBuilding(CatanNetworking& net) : HandshakingState(tellBuildingProtocol, net, CatanNetworking::States::TELL_BUILDING) {}
 	virtual bool isHeader(PacketHeader header) { return header == PacketHeader::ROAD || header == PacketHeader::CITY || header == PacketHeader::SETTLEMENT;  }
 private:
 	/* Protocolo */

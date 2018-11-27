@@ -5,8 +5,7 @@
 
 class WaitSync : public HandshakingState {
 public:
-	WaitSync(CatanNetworking& net) : HandshakingState(waitSyncProtocol, net) { this->event = new SyncEvent(CatanEvent::Sources::NETWORKING); }
-	string what(void) { return "CLIENT_WAIT_SYNC"; }
+	WaitSync(CatanNetworking& net) : HandshakingState(waitSyncProtocol, net, CatanNetworking::States::WAIT_SYNC) { this->event = new SyncEvent(CatanEvent::Sources::NETWORKING); }
 	virtual bool isHeader(PacketHeader header) { return header == PacketHeader::NAME; }
 private:
 	/* Metodos del protocolo */

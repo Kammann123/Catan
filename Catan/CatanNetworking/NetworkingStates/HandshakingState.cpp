@@ -6,7 +6,7 @@
 #include "NetError.h"
 
 HandshakingState::
-HandshakingState(Protocol* p, CatanNetworking& net) : NetworkingState(net), handshakingProtocol(p) {}
+HandshakingState(Protocol* p, CatanNetworking& net, unsigned int id) : NetworkingState(net, id), handshakingProtocol(p) {}
 
 HandshakingState::
 ~HandshakingState() {
@@ -31,15 +31,16 @@ HandshakingState::run() {
 		/* Verifico estado de protocolo */
 		switch (handshakingProtocol->getStatus()) {
 			case ProtocolStatus::DONE:
-				networking.changeState(new Idle(networking));
+				this->handshakingProtocol->reset();
+				networking.changeState(CatanNetworking::States::IDLE);
 				break;
 			case ProtocolStatus::PROTOCOL_ERROR:
 				networking.setError("HandshakingState - Hubo error en el protocolo.");
-				networking.changeState(new NetError(networking));
+				networking.changeState(CatanNetworking::States::NET_ERROR);
 				break;
 			case ProtocolStatus::TIMEOUT:
 				networking.setError("HandshakingState - Hubo error de timeout en el protocolo.");
-				networking.changeState(new NetError(networking));
+				networking.changeState(CatanNetworking::States::NET_ERROR);
 				break;
 		}
 	}
@@ -61,19 +62,17 @@ HandshakingState::update() {
 		/* Verifico estado del protocolo */
 		switch (handshakingProtocol->getStatus()) {
 			case ProtocolStatus::DONE:
-				networking.changeState(new Idle(networking));
+				this->handshakingProtocol->reset();
+				networking.changeState(CatanNetworking::States::IDLE);
 				break;
 			case ProtocolStatus::PROTOCOL_ERROR:
 				networking.setError("HandshakingState - Hubo error en el protocolo.");
-				networking.changeState(new NetError(networking));
+				networking.changeState(CatanNetworking::States::NET_ERROR);
 				break;
 			case ProtocolStatus::TIMEOUT:
 				networking.setError("HandshakingState - Hubo error de timeout en el protocolo.");
-				networking.changeState(new NetError(networking));
+				networking.changeState(CatanNetworking::States::NET_ERROR);
 				break;
 		}
 	}
 }
-
-string
-HandshakingState::what(void) { return string("HANDSHAKING"); }

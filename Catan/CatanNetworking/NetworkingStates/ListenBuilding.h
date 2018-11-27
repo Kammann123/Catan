@@ -4,8 +4,7 @@
 
 class ListenBuilding : public HandshakingState {
 public:
-	ListenBuilding(CatanNetworking& net) : HandshakingState(listenBuildingProtocol, net) {}
-	string what(void) { return "LISTE_BUILDING"; }
+	ListenBuilding(CatanNetworking& net) : HandshakingState(listenBuildingProtocol, net, CatanNetworking::States::LISTEN_BUILDING) {}
 	virtual bool isHeader(PacketHeader header) { return header == PacketHeader::CITY || header == PacketHeader::ROAD || header == PacketHeader::SETTLEMENT; }
 private:
 	/* Metodos del protocolo */

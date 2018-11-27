@@ -31,6 +31,13 @@ class CatanNetworking : public Observer {
 public:
 
 	/*
+	* Estados de funcionamiento del CatanNetworking
+	*/
+	enum States : unsigned int {DISCONNECTED, LISTENING, WAIT_SYNC, SYNC, IDLE, NET_ERROR,
+		LISTEN_BANK, LISTEN_BUILDING, LISTEN_DICES, LISTEN_END, LISTEN_OFFER, LISTEN_QUIT,
+		TELL_BANK, TELL_BUILDING, TELL_DICES, TELL_END, TELL_OFFER, TELL_QUIT};
+
+	/*
 	* CatanNetworking
 	* Se construye el CatanNetworking con una referencia
 	* del juego para acceder a su informacion, ademas por ser observer.
@@ -54,11 +61,9 @@ public:
 	void update(void);
 
 	/*
-	* what
-	* Devuelve un mensaje descriptivo y caracteristico
-	* del estado actual del CatanNetworking.
+	* Devuelve identificador del estado de networking
 	*/
-	string what(void);
+	CatanNetworking::States getNetworkingState(void);
 
 	/*
 	* getState
@@ -83,6 +88,7 @@ public:
 	* Cambia el estado del Networking
 	*/
 	void changeState(NetworkingState* state);
+	void changeState(CatanNetworking::States state);
 
 	/*
 	* setError
@@ -117,10 +123,11 @@ private:
 private:
 	string ip;
 	unsigned int port;
-	NetworkingState* prevState;
 	NetworkingState* currState;
 	bool status;
 	string error;
 	NetworkSocket * socket;
 	CatanGame& game;
+
+	map<CatanNetworking::States, NetworkingState*> states;
 };

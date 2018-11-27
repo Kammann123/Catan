@@ -4,8 +4,7 @@
 
 class ListenQuit : public HandshakingState {
 public:
-	ListenQuit(CatanNetworking& net) : HandshakingState(listenQuitProtocol, net) {}
-	string what(void) { return "LISTEN_QUIT"; }
+	ListenQuit(CatanNetworking& net) : HandshakingState(listenQuitProtocol, net, CatanNetworking::States::LISTEN_QUIT) {}
 	virtual bool isHeader(PacketHeader header) { return header == PacketHeader::QUIT; }
 private:
 	/* Metodos del protocolo */
