@@ -415,7 +415,7 @@
       <Filter>CatanGame\CatanStates</Filter>
     </ClInclude>
     <ClInclude Include="Widgets.h">
-      <Filter>Archivos de encabezado</Filter>
+      <Filter>CatanGui\AllegroWidgets</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -727,6 +727,9 @@
     </ClCompile>
     <ClCompile Include="CatanEvents\KnightEvent.cpp">
       <Filter>CatanEvents</Filter>
+    </ClCompile>
+    <ClCompile Include="Widgets.cpp">
+      <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
