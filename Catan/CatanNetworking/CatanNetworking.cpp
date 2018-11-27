@@ -73,9 +73,7 @@ CatanNetworking::
 
 CatanNetworking::States 
 CatanNetworking::getNetworkingState(void) {
-	if (currState) {
-		return (CatanNetworking::States )this->currState->getId();
-	}
+	return (CatanNetworking::States )this->currState->getId();
 }
 
 unsigned int 

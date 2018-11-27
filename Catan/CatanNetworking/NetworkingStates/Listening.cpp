@@ -6,7 +6,7 @@
 #include "Sync.h"
 
 Listening::
-Listening(CatanNetworking& networking) : NetworkingState(networking) {
+Listening(CatanNetworking& networking) : NetworkingState(networking, CatanNetworking::States::LISTENING ) {
 
 	/* Abro un nuevo socket como servidor */
 	unsigned int port = networking.getPort();
