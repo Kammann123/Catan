@@ -689,9 +689,6 @@
     <ClCompile Include="CatanGame\Coord.cpp">
       <Filter>CatanGame</Filter>
     </ClCompile>
-    <ClCompile Include="CatanEvents\KnightEvent.cpp">
-      <Filter>CatanEvents</Filter>
-    </ClCompile>
     <ClCompile Include="CatanGame\CatanStates\FirstBuilds.cpp">
       <Filter>CatanGame\CatanStates</Filter>
     </ClCompile>
@@ -721,6 +718,9 @@
     </ClCompile>
     <ClCompile Include="CatanGame\CatanStates\Winner.cpp">
       <Filter>CatanGame\CatanStates</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanEvents\KnightEvent.cpp">
+      <Filter>CatanEvents</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

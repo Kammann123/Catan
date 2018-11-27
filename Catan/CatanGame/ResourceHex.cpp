@@ -1,6 +1,9 @@
 #include "ResourceHex.h"
 
 ResourceHex::
+ResourceHex() {}
+
+ResourceHex::
 ResourceHex(ResourceId resource_, unsigned int token_, Coord coord_){
 	this->resource = resource_;
 	this->token = token_;
