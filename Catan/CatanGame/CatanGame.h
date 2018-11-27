@@ -202,6 +202,7 @@ public:
 	*/
 	void setGlobalMap(map<Coord, MapValue> gameMap, map<Coord, unsigned char> tokens);
 	void setTurn(PlayerId playerId);
+	void toggleTurn(void);
 
 	/*
 	* assignResources
@@ -281,6 +282,7 @@ public:
 	* donde en caso de Road y Settlement seran contiguos o bien en caso de City, el settlement
 	* a sustituir.
 	*/
+	bool validFirstSettlement(Coord coords, PlayerId playerId);
 	Building* isValidRoad(Coord coords, PlayerId playerID);
 	Building* isValidCity(Coord coords, PlayerId playerID);
 	Building* isValidSettlement(Coord coords, PlayerId playerID);

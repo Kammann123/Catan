@@ -583,6 +583,11 @@ CatanGame::setTurn(PlayerId playerId) {
 }
 
 void
+CatanGame::toggleTurn(void) {
+	turn = OPONENT_ID(turn);
+}
+
+void
 CatanGame::assignResources(unsigned int dices) {
 
 	/* Identifico las coordenadas en las cuales el token coincide
@@ -951,6 +956,24 @@ CatanGame::isValidSettlement(Coord coords, PlayerId playerID) {
 	return nullptr;
 }
 
+bool 
+CatanGame::validFirstSettlement(Coord coords, PlayerId playerId) {
+
+	/*
+	* Verifico que la construccion sea en una coordenada valida
+	* y luego verifico que no existe ninguna construccion en ese punto
+	*/
+	if (coords.isDot()) {
+		for (Building* building : builtMap) {
+			if (building->getPlace() == coords) {
+				return false;
+			}
+		}
+		return true;
+	}
+	return false;
+}
+
 bool
 CatanGame::hasCityResources(PlayerId playerID) {
 	Player& player = getPlayer(playerID);
@@ -1042,8 +1065,10 @@ CatanGame::buildSettlement(Building* building, Coord coords, PlayerId playerID)
 	*/
 	Building* newSettlement = getPlayer(playerID).popSettlement();
 	newSettlement->setPlace(coords);
-	newSettlement->addNeighbour(building);
-	building->addNeighbour(newSettlement);
+	if (building) {
+		newSettlement->addNeighbour(building);
+		building->addNeighbour(newSettlement);
+	}
 
 	/*
 	* Agrego la nueva construccion al tablero y le asigno el puntaje
