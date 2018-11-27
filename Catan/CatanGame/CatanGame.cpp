@@ -475,7 +475,6 @@ CatanGame::generateOcean() {
 void
 CatanGame::generateTokens() {
 	vector<unsigned char> tokens;
-	unsigned char token;
 
 	/* Genero los numeros aleatorios */
 	tokens.push_back(2), tokens.push_back(12);
@@ -1406,13 +1405,13 @@ CatanGame::isValidPlayerExchange(list<ResourceId>& offeredCards, list<ResourceId
 bool
 CatanGame::isValidBankExchange(list<ResourceCard*>& offeredCards, PlayerId playerID) {
 
-	return accepts(offeredCards, BANK_TRANSACTION_CARDS_COUNT) && canPlayerAccept(offeredCards, playerID));
+	return accepts(offeredCards, BANK_TRANSACTION_CARDS_COUNT) && canPlayerAccept(offeredCards, playerID);
 }
 
 bool
 CatanGame::isValidBankExchange(list<ResourceId>& offeredCards, PlayerId playerID) {
 
-	return accepts(offeredCards, BANK_TRANSACTION_CARDS_COUNT) && canPlayerAccept(offeredCards, playerID));
+	return accepts(offeredCards, BANK_TRANSACTION_CARDS_COUNT) && canPlayerAccept(offeredCards, playerID);
 }
 
 bool

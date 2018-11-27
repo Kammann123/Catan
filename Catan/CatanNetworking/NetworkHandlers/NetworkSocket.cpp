@@ -112,9 +112,6 @@ isConnected(void) const {
 void NetworkSocket::
 toggleConnection(void) {
 	this->connected = this->connected ? false : true;
-	if (this->connected) {
-		this->socket->non_blocking(true);
-	}
 }
 
 void
@@ -216,14 +213,82 @@ handleError(boost::system::error_code error) {
 
 	/* Si hay algun error */
 	if (error) {
+		switch (error.value) {
+			/* Ante los siguientes errores, durante la emision o
+			* transmision de mensajes con el socket, se detecta una
+			* falla en la conexion, con lo cual, se aborta tal conexion
+			* y actualiza estado en funcion de ello
+			*/
+			case boost::asio::error::host_not_found:
+			case boost::asio::error::host_not_found_try_again:
+			case boost::asio::error::host_unreachable:
+			case boost::asio::error::network_unreachable:
+			case boost::asio::error::network_down:
+			case boost::asio::error::network_reset:
+			case boost::asio::error::not_connected:
+			case boost::asio::error::connection_aborted:
+			case boost::asio::error::connection_refused:
+			case boost::asio::error::connection_reset:
+				this->connected = false;
+				this->status = false;
+				this->error = error.message();
+				return true;
+				break;
 
-		/* Que no sea que sea bloqueante */
-		if (error != boost::asio::error::would_block) {
-
-			this->status = false;
-			this->error = error.message();
-			return true;
+			/* Si el error es would_block, entonces no hay problemas
+			* ya que esta habilitado como no bloqueante
+			*/
+			case boost::asio::error::would_block:
+				return false;
+				break;
 		}
 	}
+
+	/*
+	* Para todos los errores que no defino, cuyo caso no me interesa
+	*/
 	return false;
+}
+
+bool NetworkSocket::
+handleConnection(boost::system::error_code error) {
+
+	/* Verifico que exista error */
+	if (error) {
+		switch (error.value) {
+
+			/* Se definen todos aquellos codigos de error
+			* en los cuales asio define un estado que me interesa no tomar como
+			* error ya que debo seguir intentando la conexion
+			*/
+			case boost::asio::error::connection_refused:
+			case boost::asio::error::already_connected:
+			case boost::asio::error::host_not_found:
+			case boost::asio::error::host_not_found_try_again:
+			case boost::asio::error::host_unreachable:
+			case boost::asio::error::in_progress:
+			case boost::asio::error::network_unreachable:
+			case boost::asio::error::not_connected:
+			case boost::asio::error::not_found:
+			case boost::asio::error::would_block:
+				return false;
+
+			/*
+			* En los que casos que me interesa que sea un error
+			* guardo un estado de error en el cliente con su mensaje respectivo
+			*/
+			default:
+				this->status = false;
+				this->error = error.message();
+				return true;
+		}
+	}
+	else {
+		return false;
+	}
+}
+
+void NetworkSocket::
+nonBlocking(void) {
+	this->socket->non_blocking(true);
 }

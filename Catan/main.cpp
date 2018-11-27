@@ -1,32 +1,32 @@
-#include "../Catan/CatanNetworking/CatanNetworking.h"
-#include "../Catan/CatanGame/CatanGame.h"
+#include "CatanNetworking/NetworkHandlers/NetworkClient.h"
+#include "CatanNetworking/NetworkHandlers/NetworkServer.h"
+#include "CatanNetworking/NetworkHandlers/NetworkSocket.h"
 
-#define CONSOLE(x) cout << "[CatanGame v1.0] " << x << endl
+#define CONSOLE(msg) cout << "[SERVER] > " << msg << endl
 
 int main(int argc, char** argv) {
 
-	CatanGame game("Juan Carlos Catan");
-	CatanNetworking net("193.168.0.3", 13225, game);
+	NetworkServer server = NetworkServer(13225);
 
-	game.attach(&net);
+	CONSOLE("Esperando conexiones...");
 
-	CONSOLE("Iniciando networking y game...");
-
-	string status = net.what();
-	CONSOLE("Estado inicial " + status);
-
-	while (net.good()) {
-
-		net.run();
-
-		if (status != net.what()) {
-
-			CONSOLE("Hubo un cambio de estado en el networking " + net.what());
-
-			status = net.what();
-		}
-
+	while (!server.isConnected()) {
+		server.listen();
 	}
 
-	CONSOLE(net.getError());
+	CONSOLE("Servidor conectado con exito!");
+
+	while (server.good()) {
+
+		server.run();
+
+		if (server.hasReceived()) {
+
+			NetworkPacket* packet = server.receive();
+			CONSOLE("Recibido el mensaje: " + packet->getString());
+		}
+	}
+
+	CONSOLE("Servidor tuvo error... saliendo!");
+	getchar();
 }

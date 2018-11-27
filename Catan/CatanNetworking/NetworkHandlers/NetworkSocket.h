@@ -116,6 +116,15 @@ public:
 protected:
 
 	/*
+	* nonBlocking
+	* Metodo para configurar estado no bloqueante
+	* del socket que debera ser llamado en aquellos momentos donde
+	* se haya habilitado el funcionamiento del cliente/server
+	*/
+
+	void nonBlocking(void);
+
+	/*
 	* toggleConnection
 	* Cambia el estado de conexion, inviertiendo el estado actual
 	*/
@@ -129,6 +138,21 @@ protected:
 	* Si no hubo error devuelve false.
 	*/
 	bool handleError(boost::system::error_code error);
+
+	/*
+	* handleConnection
+	* Revisa el codigo de error de respuesta para un intentos de
+	* conexiones y valida en funcion de ello, si la conexion es posible
+	* , si debe continuar o bien hubo un error critico
+	*/
+	bool handleConnection(boost::system::error_code error);
+
+	/* NOTA: Se crean dos metodos distintos manejadores de errores
+	* que internamente son muy similares pero invertidos, sin utilizar el mismo
+	* pero invirtiendo el resultado, ya que de esta forma es mas facil
+	* ir modificando las cosas en funcion de futuras mejores, ya que los errores
+	* de conexion no me interesan por igual que los de mensajes
+	*/
 
 	/*
 	* sendPacket
