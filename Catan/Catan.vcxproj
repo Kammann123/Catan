@@ -149,6 +149,7 @@
     <ClInclude Include="CatanGame\CatanStates\GameEnd.h" />
     <ClInclude Include="CatanGame\CatanStates\GameError.h" />
     <ClInclude Include="CatanGame\CatanStates\GameSync.h" />
+    <ClInclude Include="CatanGame\CatanStates\OfferAnswer.h" />
     <ClInclude Include="CatanGame\CatanStates\RobberCards.h" />
     <ClInclude Include="CatanGame\CatanStates\RobberMove.h" />
     <ClInclude Include="CatanGame\CatanStates\ThrowDices.h" />
@@ -269,6 +270,7 @@
     <ClCompile Include="CatanGame\CatanStates\GameEnd.cpp" />
     <ClCompile Include="CatanGame\CatanStates\GameError.cpp" />
     <ClCompile Include="CatanGame\CatanStates\GameSync.cpp" />
+    <ClCompile Include="CatanGame\CatanStates\OfferAnswer.cpp" />
     <ClCompile Include="CatanGame\CatanStates\RobberCards.cpp" />
     <ClCompile Include="CatanGame\CatanStates\RobberMove.cpp" />
     <ClCompile Include="CatanGame\CatanStates\ThrowDices.cpp" />

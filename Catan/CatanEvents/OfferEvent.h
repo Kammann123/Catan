@@ -13,4 +13,5 @@ class OfferEvent : public CatanEvent, public OfferData{
 public:
 	OfferEvent(OfferPacket* packet);
 	OfferEvent(list<ResourceId> given, list<ResourceId> recv, PlayerId player);
+	OfferEvent(list<ResourceCard*> given, list<ResourceId> recv, PlayerId player);
 };

@@ -1176,7 +1176,7 @@ CatanGame::paySettlement(PlayerId playerID) {
 }
 
 bool
-CatanGame::dockAccepts(list<ResourceId>& cards, unsigned int qty, ResourceId id) {
+CatanGame::accepts(list<ResourceId>& cards, unsigned int qty, ResourceId id) {
 
 	/* Verifico que la cantidad de cartas sea la pedida,
 	* y luego guardo y verifico que sean todas del mismo tipo
@@ -1194,7 +1194,7 @@ CatanGame::dockAccepts(list<ResourceId>& cards, unsigned int qty, ResourceId id)
 }
 
 bool
-CatanGame::dockAccepts(list<ResourceId>& cards, unsigned int qty) {
+CatanGame::accepts(list<ResourceId>& cards, unsigned int qty) {
 
 	/* Verifico que la cantidad de cartas sea la pedida,
 	* y luego guardo y verifico que sean todas del mismo tipo
@@ -1212,7 +1212,7 @@ CatanGame::dockAccepts(list<ResourceId>& cards, unsigned int qty) {
 }
 
 bool
-CatanGame::dockAccepts(list<ResourceCard*>& cards, unsigned int qty, ResourceId id) {
+CatanGame::accepts(list<ResourceCard*>& cards, unsigned int qty, ResourceId id) {
 
 	/* Verifico que la cantidad de cartas sea la pedida,
 	* y luego guardo y verifico que sean todas del mismo tipo
@@ -1230,7 +1230,7 @@ CatanGame::dockAccepts(list<ResourceCard*>& cards, unsigned int qty, ResourceId 
 }
 
 bool 
-CatanGame::dockAccepts(list<ResourceCard*>& cards, unsigned int qty) {
+CatanGame::accepts(list<ResourceCard*>& cards, unsigned int qty) {
 	
 	/* Verifico que la cantidad de cartas sea la pedida,
 	* y luego guardo y verifico que sean todas del mismo tipo
@@ -1259,32 +1259,32 @@ CatanGame::isValidDockExchange(list<ResourceCard*>& offeredCards, PlayerId playe
 		for (SeaId seaId : docks) {
 			switch (seaId) {
 			case SeaId::NORMAL:
-				if (dockAccepts(offeredCards, NORMAL_COUNT)) {
+				if (accepts(offeredCards, NORMAL_COUNT)) {
 					return true;
 				}
 				break;
 			case SeaId::WHEAT:
-				if (dockAccepts(offeredCards, WHEAT_COUNT, ResourceId::FIELD)) {
+				if (accepts(offeredCards, WHEAT_COUNT, ResourceId::FIELD)) {
 					return true;
 				}
 				break;
 			case SeaId::BRICK:
-				if (dockAccepts(offeredCards, BRICK_COUNT, ResourceId::HILL)) {
+				if (accepts(offeredCards, BRICK_COUNT, ResourceId::HILL)) {
 					return true;
 				}
 				break;
 			case SeaId::SHEEP:
-				if (dockAccepts(offeredCards, SHEEP_COUNT, ResourceId::PASTURES)) {
+				if (accepts(offeredCards, SHEEP_COUNT, ResourceId::PASTURES)) {
 					return true;
 				}
 				break;
 			case SeaId::STONE:
-				if (dockAccepts(offeredCards, STONE_COUNT, ResourceId::MOUNTAIN)) {
+				if (accepts(offeredCards, STONE_COUNT, ResourceId::MOUNTAIN)) {
 					return true;
 				}
 				break;
 			case SeaId::WOOD:
-				if (dockAccepts(offeredCards, WOOD_COUNT, ResourceId::FOREST)) {
+				if (accepts(offeredCards, WOOD_COUNT, ResourceId::FOREST)) {
 					return true;
 				}
 				break;
@@ -1306,32 +1306,32 @@ CatanGame::isValidDockExchange(list<ResourceId>& offeredCards, PlayerId playerId
 		for (SeaId seaId : docks) {
 			switch (seaId) {
 				case SeaId::NORMAL:
-					if (dockAccepts(offeredCards, NORMAL_COUNT)) {
+					if (accepts(offeredCards, NORMAL_COUNT)) {
 						return true;
 					}
 					break;
 				case SeaId::WHEAT:
-					if (dockAccepts(offeredCards, WHEAT_COUNT, ResourceId::FIELD)) {
+					if (accepts(offeredCards, WHEAT_COUNT, ResourceId::FIELD)) {
 						return true;
 					}
 					break;
 				case SeaId::BRICK:
-					if (dockAccepts(offeredCards, BRICK_COUNT, ResourceId::HILL)) {
+					if (accepts(offeredCards, BRICK_COUNT, ResourceId::HILL)) {
 						return true;
 					}
 					break;
 				case SeaId::SHEEP:
-					if (dockAccepts(offeredCards, SHEEP_COUNT, ResourceId::PASTURES)) {
+					if (accepts(offeredCards, SHEEP_COUNT, ResourceId::PASTURES)) {
 						return true;
 					}
 					break;
 				case SeaId::STONE:
-					if (dockAccepts(offeredCards, STONE_COUNT, ResourceId::MOUNTAIN)) {
+					if (accepts(offeredCards, STONE_COUNT, ResourceId::MOUNTAIN)) {
 						return true;
 					}
 					break;
 				case SeaId::WOOD:
-					if (dockAccepts(offeredCards, WOOD_COUNT, ResourceId::FOREST)) {
+					if (accepts(offeredCards, WOOD_COUNT, ResourceId::FOREST)) {
 						return true;
 					}
 					break;
@@ -1377,10 +1377,16 @@ CatanGame::isValidPlayerExchange(list<ResourceId>& offeredCards, list<ResourceId
 	);
 }
 
-bool 
+bool
 CatanGame::isValidBankExchange(list<ResourceCard*>& offeredCards, PlayerId playerID) {
 
-	return (offeredCards.size() == BANK_TRANSACTION_CARDS_COUNT && canPlayerAccept(offeredCards,playerID));
+	return accepts(offeredCards, BANK_TRANSACTION_CARDS_COUNT) && canPlayerAccept(offeredCards, playerID));
+}
+
+bool
+CatanGame::isValidBankExchange(list<ResourceId>& offeredCards, PlayerId playerID) {
+
+	return accepts(offeredCards, BANK_TRANSACTION_CARDS_COUNT) && canPlayerAccept(offeredCards, playerID));
 }
 
 bool

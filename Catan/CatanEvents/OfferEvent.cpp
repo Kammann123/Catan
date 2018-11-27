@@ -5,3 +5,6 @@ OfferEvent(OfferPacket* packet) : CatanEvent(Events::OFFER_TRADE, Sources::NETWO
 
 OfferEvent::
 OfferEvent(list<ResourceId> given, list<ResourceId> recv, PlayerId player) : CatanEvent(Events::OFFER_TRADE, Sources::GUI, player), OfferData(given, recv) {}
+
+OfferEvent::
+OfferEvent(list<ResourceCard*> given, list<ResourceId> recv, PlayerId player) : CatanEvent(Events::OFFER_TRADE, Sources::GUI, player), OfferData(given, recv) {}

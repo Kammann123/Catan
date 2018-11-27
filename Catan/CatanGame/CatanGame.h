@@ -360,18 +360,14 @@ public:
 	void paySettlement(PlayerId playerID);
 
 	/*
-	* dockAccepts
-	* Validan si el muelle en cuestion acepta el conjunto de cartas dado
+	* accepts
+	* Validan si el muelle, banco en cuestion acepta el conjunto de cartas dado
 	* a modo de intercambio, cumpliendo las reglas respectivas de cada uno de ellos
 	*/
-	bool dockAccepts(list<ResourceId>& cards, unsigned int qty, ResourceId id);
-	bool dockAccepts(list<ResourceId>& cards, unsigned int qty);
-	bool dockAccepts(list<ResourceCard*>& cards, unsigned int qty, ResourceId id);
-	bool dockAccepts(list<ResourceCard*>& cards, unsigned int qty);
-
-	/*
-	*
-	*/
+	bool accepts(list<ResourceId>& cards, unsigned int qty, ResourceId id);
+	bool accepts(list<ResourceId>& cards, unsigned int qty);
+	bool accepts(list<ResourceCard*>& cards, unsigned int qty, ResourceId id);
+	bool accepts(list<ResourceCard*>& cards, unsigned int qty);
 
 	/*
 	* isValidDockExchange, isValidPlayerExchange, isValidBankExchange
@@ -384,6 +380,7 @@ public:
 	bool isValidPlayerExchange(list<ResourceCard*>& offeredCards, list<ResourceId>& requestedCards, PlayerId srcPlayerID);
 	bool isValidPlayerExchange(list<ResourceId>& offeredCards, list<ResourceId>& requestedCards, PlayerId srcPlayerID);
 	bool isValidBankExchange(list<ResourceCard*>& offeredCards, PlayerId playerID);
+	bool isValidBankExchange(list<ResourceId>& offeredCards, PlayerId playerID);
 
 	/*
 	* canPlayerAccept
