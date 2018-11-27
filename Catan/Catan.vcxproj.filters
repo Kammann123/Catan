@@ -43,14 +43,14 @@
     <Filter Include="CatanEvents">
       <UniqueIdentifier>{37c4fdbf-896a-43a3-a1f7-1754d34907b8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="CatanData">
-      <UniqueIdentifier>{3ea99685-f141-473c-90d5-eafe44ca6dcd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="CatanNetworking\NetworkingStates">
       <UniqueIdentifier>{76bcf697-69bf-414d-9b4e-45376105215f}</UniqueIdentifier>
     </Filter>
     <Filter Include="CatanGame\CatanStates">
       <UniqueIdentifier>{c7cf041d-9b43-4d3d-b53b-6f086448998b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CatanData">
+      <UniqueIdentifier>{3ea99685-f141-473c-90d5-eafe44ca6dcd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

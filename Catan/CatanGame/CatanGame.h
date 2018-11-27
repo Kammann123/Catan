@@ -370,6 +370,10 @@ public:
 	bool dockAccepts(list<ResourceCard*>& cards, unsigned int qty);
 
 	/*
+	*
+	*/
+
+	/*
 	* isValidDockExchange, isValidPlayerExchange, isValidBankExchange
 	* Valida intercambios de cartas realizados u ofrecidos por algun jugador, ya sea con otro jugador, como tambien con
 	* alguno de los muelles o bien el banco del juego. Estas validaciones implican verificar que sea posible la transaccion

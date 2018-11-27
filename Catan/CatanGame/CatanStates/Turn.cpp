@@ -2,6 +2,8 @@
 #include "GameError.h"
 #include "ThrowDices.h"
 #include "../../CatanEvents/BuildingEvent.h"
+#include "../../CatanEvents/OfferEvent.h"
+#include "../../CatanEvents/BankEvent.h"
 
 void
 Turn::handle(CatanEvent* event) {
@@ -29,19 +31,63 @@ Turn::handle(CatanEvent* event) {
 				switch (building->getType()) {
 
 					case BuildingType::CITY:
+						if (game.hasCityResources(building->getPlayer())) {
+							Building* settlement = game.isValidCity(building->getCoords(), building->getPlayer());
+							if (settlement) {
 
+								/* Ejecuto acciones construccion y cobro */
+								game.buildCity(settlement, building->getCoords(), building->getPlayer());
+								game.payCity(building->getPlayer());
+
+								/* Notifico */
+								game.setInfo("Turn - El jugador ha colocado ciudad correctamente!");
+								game.addNewEvent(event);
+								return;
+							}
+						}
 						break;
 
 					case BuildingType::ROAD:
+						if (game.hasRoadResources(building->getPlayer())) {
+							Building* neighbour = game.isValidRoad(building->getCoords(), building->getPlayer());
+							if (neighbour) {
+
+								/* Ejecuto acciones construccion y cobro */
+								game.buildRoad(neighbour, building->getCoords(), building->getPlayer());
+								game.payRoad(building->getPlayer());
+
+								/* Notifico */
+								game.setInfo("Turn - El jugador ha colocado road correctamente!");
+								game.addNewEvent(event);
+								return;
+							}
+						}
 						break;
 
 					case BuildingType::SETTLEMENT:
+						if (game.hasSettlementResources(building->getPlayer())) {
+							Building* neighbour = game.isValidCity(building->getCoords(), building->getPlayer());
+							if (neighbour) {
+
+								/* Ejecuto acciones construccion y cobro */
+								game.buildSettlement(neighbour, building->getCoords(), building->getPlayer());
+								game.paySettlement(building->getPlayer());
+
+								/* Notifico */
+								game.setInfo("Turn - El jugador ha colocado settlement correctamente!");
+								game.addNewEvent(event);
+								return;
+							}
+						}
 						break;
 				}
 				
 				break;
 
 			case CatanEvent::BANK_TRADE:
+				BankEvent * bank = (BankEvent*)event;
+
+
 				break;
 
 			case CatanEvent::OFFER_TRADE:
