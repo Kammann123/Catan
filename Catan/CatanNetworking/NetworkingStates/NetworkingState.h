@@ -27,10 +27,11 @@ public:
 	*
 	* -run: Recibe un paquete del extremo de comunicacion
 	* -update: Peticion de mandar un mensaje o paquete
-	* -what: Devuelve una descripcion del estado
+	* -context: Primera accion ejecutada al entrar al estado
 	*/
 	virtual void run(void) = 0;
 	virtual void update(void) = 0;
+	virtual void context(void) = 0;
 
 	unsigned int getId(void);
 

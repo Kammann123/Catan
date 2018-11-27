@@ -143,6 +143,7 @@ CatanNetworking::changeState(CatanNetworking::States state) {
 void
 CatanNetworking::changeState(NetworkingState* state) {
 	currState = state;
+	currState->context();
 }
 
 void

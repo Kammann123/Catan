@@ -16,6 +16,9 @@ HandshakingState::
 }
 
 void
+HandshakingState::context() {}
+
+void
 HandshakingState::run() {
 
 	/* Busco el socket de networking */

@@ -10,7 +10,10 @@
 #include <iostream>
 
 Disconnected::
-Disconnected(CatanNetworking& networking) : NetworkingState(networking, CatanNetworking::States::DISCONNECTED) {
+Disconnected(CatanNetworking& networking) : NetworkingState(networking, CatanNetworking::States::DISCONNECTED) {}
+
+void
+Disconnected::context() {
 	/* Calculo cantidad aleatoria de milisegundos */
 	unsigned int delay = rand() % (MAX_TIME - MIN_TIME) + MIN_TIME;
 	time = boost::chrono::milliseconds(delay);

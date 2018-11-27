@@ -6,8 +6,10 @@
 #include "Sync.h"
 
 Listening::
-Listening(CatanNetworking& networking) : NetworkingState(networking, CatanNetworking::States::LISTENING ) {
+Listening(CatanNetworking& networking) : NetworkingState(networking, CatanNetworking::States::LISTENING ) {}
 
+void
+Listening::context() {
 	/* Abro un nuevo socket como servidor */
 	unsigned int port = networking.getPort();
 	NetworkSocket* socket = new NetworkServer(port);
@@ -43,6 +45,3 @@ Listening::update() {
 	networking.setError("WaitSync - Hubo un error en el protocolo de sincronizacion!");
 	networking.changeState(new NetError(networking));
 }
-
-string
-Listening::what() { return string("LISTENING"); }

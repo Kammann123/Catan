@@ -58,6 +58,9 @@ Idle::
 	}
 }
 
+void
+Idle::context(void) {}
+
 void 
 Idle::run(void) {
 
