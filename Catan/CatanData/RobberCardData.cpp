@@ -32,3 +32,13 @@ list<ResourceCard*>&
 RobberCardData::getResourceCards(void) {
 	return this->cards;
 }
+
+bool
+RobberCardData::hasLocal(void) {
+	return (this->cards.size() > 0);
+}
+
+bool
+RobberCardData::hasRemote(void) {
+	return (this->resources.size() > 0);
+}

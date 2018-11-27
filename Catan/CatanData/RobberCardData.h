@@ -25,6 +25,10 @@ public:
 	list<ResourceId>& getResources(void);
 	list<ResourceCard*>& getResourceCards(void);
 
+	/* Notificaciones */
+	bool hasLocal(void);
+	bool hasRemote(void);
+
 private:
 	/*
 	* La informacion de la accion puede darse de forma
