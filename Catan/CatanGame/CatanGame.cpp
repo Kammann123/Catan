@@ -26,7 +26,7 @@ CatanGame::_init_game(void) {
 	this->state = new GameSync(*this);
 	this->longestRoad = PlayerId::PLAYER_NONE;
 	this->turn = PlayerId::PLAYER_NONE;
-	this->info = "";
+	this->description = "";
 
 	/* Limpio los diccionarios */
 	builtMap.clear();
@@ -129,7 +129,7 @@ CatanGame::handle(CatanEvent* event) {
 
 CatanGame::State
 CatanGame::getState(void) {
-	(State)this->state->getId();
+	return (State)this->state->getId();
 }
 
 string
@@ -905,6 +905,7 @@ CatanGame::isValidCity(Coord coords, PlayerId playerID) {
 			}
 		}
 	}
+	return nullptr;
 }
 
 Building*

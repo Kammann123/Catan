@@ -54,6 +54,7 @@ FirstBuilds::handle(CatanEvent* event) {
 				game.changeState(new GameError(game));
 			}
 			break;
+
 		case BUILD_ROAD:
 
 			/* Valido que haya llegado una construccion settlement */
