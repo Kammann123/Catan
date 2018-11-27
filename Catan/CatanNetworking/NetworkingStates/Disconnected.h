@@ -23,7 +23,6 @@ public:
 	/* Acciones del estado */
 	void run(void);
 	void update(void);
-	string what(void);
 
 public:
 	boost::chrono::steady_clock::duration time;

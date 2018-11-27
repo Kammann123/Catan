@@ -64,4 +64,7 @@ GameSync::handle(CatanEvent* event) {
 		*/
 		game.changeState(new GameError(game), "GameSync - Hubo un error en la secuencia del juego, se esperaba sincronizacion.");
 	}
+
+	/* Elimino el evento */
+	delete event;
 }

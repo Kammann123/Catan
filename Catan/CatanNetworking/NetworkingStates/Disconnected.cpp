@@ -10,7 +10,7 @@
 #include <iostream>
 
 Disconnected::
-Disconnected(CatanNetworking& networking) : NetworkingState(networking) {
+Disconnected(CatanNetworking& networking) : NetworkingState(networking, CatanNetworking::States::DISCONNECTED) {
 	/* Calculo cantidad aleatoria de milisegundos */
 	unsigned int delay = rand() % (MAX_TIME - MIN_TIME) + MIN_TIME;
 	time = boost::chrono::milliseconds(delay);
@@ -35,7 +35,7 @@ Disconnected::run() {
 		/* Verifico si esta conectado */
 		if (client->isConnected()) {
 			/* Cambio de estado, ya conecte como cliente */
-			networking.changeState(new WaitSync(networking));
+			networking.changeState(CatanNetworking::States::WAIT_SYNC);
 		}
 		else {
 
@@ -43,21 +43,18 @@ Disconnected::run() {
 			if ((boost::chrono::steady_clock::now() - start) > time) {
 				/* Cambio de estado, dejo de intentar como cliente */
 				delete networking.getSocket();
-				networking.changeState(new Listening(networking));
+				networking.changeState(CatanNetworking::States::LISTENING);
 			}
 		}
 	}
 	else {
 		/* Cambio a estado de error */
-		networking.changeState(new NetError(networking));
+		networking.changeState(CatanNetworking::States::NET_ERROR);
 	}
 }
 
 void
 Disconnected::update() {
 	networking.setError("WaitSync - Hubo un error en el protocolo de sincronizacion!");
-	networking.changeState(new NetError(networking));
+	networking.changeState(CatanNetworking::States::NET_ERROR);
 }
-
-string
-Disconnected::what() { return string("DISCONNECTED"); }

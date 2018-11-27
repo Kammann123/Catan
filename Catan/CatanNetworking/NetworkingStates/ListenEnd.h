@@ -5,8 +5,7 @@
 
 class ListenEnd : public HandshakingState {
 public:
-	ListenEnd(CatanNetworking& net) : HandshakingState(listenEndProtocol, net) { this->event = new SyncEvent(CatanEvent::Sources::NETWORKING); }
-	string what(void) { return "LISTEN_END";  }
+	ListenEnd(CatanNetworking& net) : HandshakingState(listenEndProtocol, net, CatanNetworking::States::LISTEN_END) { this->event = new SyncEvent(CatanEvent::Sources::NETWORKING); }
 	virtual bool isHeader(PacketHeader header) { return header == PacketHeader::I_WON; }
 private:
 	/* Metodos del protocolo */

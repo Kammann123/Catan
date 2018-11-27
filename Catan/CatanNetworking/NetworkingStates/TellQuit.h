@@ -4,8 +4,7 @@
 
 class TellQuit : public HandshakingState {
 public:
-	TellQuit(CatanNetworking& net) : HandshakingState(tellQuitProtocol, net) {}
-	string what(void) { return "TELL_QUIT"; }
+	TellQuit(CatanNetworking& net) : HandshakingState(tellQuitProtocol, net, CatanNetworking::States::TELL_QUIT) {}
 	virtual bool isHeader(PacketHeader header) { return header == PacketHeader::QUIT; }
 private:
 	/* Protocolo */
