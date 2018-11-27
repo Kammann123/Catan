@@ -13,6 +13,7 @@
 #include "../CatanEvents/KnightEvent.h"
 
 #include "CatanStates/GameSync.h"
+#include "CatanStates/GameEnd.h"
 
 #include <algorithm>
 #include <vector>
@@ -149,7 +150,7 @@ CatanGame::handle(CatanEvent* event) {
 		* en cuyo caso... adios!
 		*/
 		if (event->getEvent() == CatanEvent::Events::QUIT) {
-			// ----> CAMBIAR A ESTADO DE END <------
+			changeState(new GameEnd(*this), "CatanGame - El juego ha finalizado por cierre de alguna de las partes.");
 		}
 		else {
 
@@ -839,6 +840,21 @@ CatanGame::robberCards(list<ResourceId>& cards, PlayerId playerID) {
 	for (ResourceId card : cards) {
 		player.removeResourceCard(card);
 	}
+}
+
+bool
+CatanGame::validRobberMovement(Coord coord) {
+
+	/*
+	* Verifico que el robber vaya a una ubicacion valida
+	* en tierra y luego me fijo que este cambiando de posicion
+	*/
+	if (coord.isLand()) {
+		if (!(coord == robber.getCoord())) {
+			return true;
+		}
+	}
+	return false;
 }
 
 void

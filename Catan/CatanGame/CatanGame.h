@@ -288,6 +288,14 @@ public:
 	void robberCards(list<ResourceId>& cards, PlayerId playerID);
 
 	/*
+	* validRobberMovement
+	* Valida el movimiento del robber, con respecto a esto, tiene que ver
+	* que la coordenada sea valida, pero ademas, que el movimiento sea de cambio
+	* y no mantenerlo en la misma locacion.
+	*/
+	bool validRobberMovement(Coord coord);
+
+	/*
 	* moveRobber
 	* Permite mover el robber a una nueva ubicacion dentro del mapa.
 	*/
