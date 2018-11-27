@@ -42,7 +42,6 @@ listen(void) {
 		/* Inicializacion */
 		boost::system::error_code error;
 		boost::asio::ip::tcp::endpoint endpoint;
-		nonBlocking();
 
 		/* Acepto nueva conexion */
 		this->acceptor->accept(*socket, endpoint, error);
@@ -50,6 +49,7 @@ listen(void) {
 		/* Valido error */
 		if (!handleConnection(error)) {
 			toggleConnection();
+			nonBlocking();
 		}
 	}
 }
