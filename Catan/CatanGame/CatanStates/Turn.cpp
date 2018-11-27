@@ -10,6 +10,12 @@
 
 void
 Turn::handle(CatanEvent* event) {
+	BuildingEvent* building;
+	Building* settlement;
+	Building* neighbour;
+	OfferEvent* offer;
+	BankEvent* bank;
+	bool valid;
 
 	/*
 	* En este estado se aceptan diferentes acciones que el jugador
@@ -25,7 +31,7 @@ Turn::handle(CatanEvent* event) {
 		switch (event->getEvent()) {
 
 			case CatanEvent::Events::BUILDING:
-				BuildingEvent * building = (BuildingEvent*)event;
+				building = (BuildingEvent*)event;
 
 				/* Me fijo que tipo de construccion es la que quiere
 				* realizar, para lo cual luego, valido posibilidad economica,
@@ -35,7 +41,7 @@ Turn::handle(CatanEvent* event) {
 
 					case BuildingType::CITY:
 						if (game.hasCityResources(building->getPlayer())) {
-							Building* settlement = game.isValidCity(building->getCoords(), building->getPlayer());
+							settlement = game.isValidCity(building->getCoords(), building->getPlayer());
 							if (settlement) {
 
 								/* Ejecuto acciones construccion y cobro */
@@ -64,7 +70,7 @@ Turn::handle(CatanEvent* event) {
 
 					case BuildingType::ROAD:
 						if (game.hasRoadResources(building->getPlayer())) {
-							Building* neighbour = game.isValidRoad(building->getCoords(), building->getPlayer());
+							neighbour = game.isValidRoad(building->getCoords(), building->getPlayer());
 							if (neighbour) {
 
 								/* Ejecuto acciones construccion y cobro */
@@ -93,7 +99,7 @@ Turn::handle(CatanEvent* event) {
 
 					case BuildingType::SETTLEMENT:
 						if (game.hasSettlementResources(building->getPlayer())) {
-							Building* neighbour = game.isValidCity(building->getCoords(), building->getPlayer());
+							neighbour = game.isValidCity(building->getCoords(), building->getPlayer());
 							if (neighbour) {
 
 								/* Ejecuto acciones construccion y cobro */
@@ -124,14 +130,14 @@ Turn::handle(CatanEvent* event) {
 				break;
 
 			case CatanEvent::BANK_TRADE:
-				BankEvent * bank = (BankEvent*)event;
+				bank = (BankEvent*)event;
 
 				/* Verifico que sea una transaccion valida de tipo
 				* banco o maritima, luego valido el intercambio, 
 				* y en caso de cumplir, lo ejecuto
 				*/
 				if (bank->isBankTrade()) {
-					bool valid = false;
+					valid = false;
 
 					if (bank->hasLocal()) {
 						valid = game.isValidBankExchange(bank->getGivenCards(), bank->getPlayer());
@@ -156,7 +162,7 @@ Turn::handle(CatanEvent* event) {
 					}
 				}
 				else if (bank->isDockTrade()) {
-					bool valid = false;
+					valid = false;
 
 					if (bank->hasLocal()) {
 						valid = game.isValidDockExchange(bank->getGivenCards(), bank->getPlayer());
@@ -183,13 +189,12 @@ Turn::handle(CatanEvent* event) {
 				break;
 
 			case CatanEvent::OFFER_TRADE:
-				OfferEvent * offer = (OfferEvent*)event;
+				offer = (OfferEvent*)event;
 
 				/*
 				* Verifico que la oferta sea valida y posteriormente
 				* cambio de estado en caso de serla, a la espera de una respuesta
 				*/
-				bool valid = false;
 
 				if (offer->hasLocal()) {
 					valid = game.isValidPlayerExchange(offer->getGivenCards(), offer->getRecv(), offer->getPlayer());

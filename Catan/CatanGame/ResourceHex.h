@@ -15,6 +15,7 @@ public:
 	/*
 	* Constructor
 	*/
+	ResourceHex();
 	ResourceHex(const ResourceHex& copy);
 	ResourceHex(Coord coord_);
 	ResourceHex(ResourceId resource_, Coord coord_);
