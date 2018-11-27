@@ -39,7 +39,6 @@ connect(string ip, unsigned int port) {
 		/* Inicializo variables */
 		boost::asio::ip::tcp::resolver::iterator endpoint = resolver->resolve(boost::asio::ip::tcp::resolver::query(ip, to_string(port)));
 		boost::system::error_code error;
-		nonBlocking();
 
 		/* Intento realizar conexion */
 		boost::asio::connect(*socket, endpoint, error);
@@ -47,6 +46,7 @@ connect(string ip, unsigned int port) {
 		/* Verifico errores */
 		if (!handleConnection(error)) {
 			toggleConnection();
+			nonBlocking();
 		}
 	}
 }
