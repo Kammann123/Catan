@@ -351,6 +351,15 @@ public:
 	void buildSettlement(Building* building, Coord coords, PlayerId playerID);
 
 	/*
+	* payRoad, payCity, paySettlement
+	* Realiza el pago de estas construcciones, tomando los recursos
+	* necesitados del usuario en cuestion.
+	*/
+	void payRoad(PlayerId playerID);
+	void payCity(PlayerId playerID);
+	void paySettlement(PlayerId playerID);
+
+	/*
 	* dockAccepts
 	* Validan si el muelle en cuestion acepta el conjunto de cartas dado
 	* a modo de intercambio, cumpliendo las reglas respectivas de cada uno de ellos

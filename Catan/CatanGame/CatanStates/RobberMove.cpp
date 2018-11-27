@@ -1,5 +1,6 @@
 #include "RobberMove.h"
 #include "GameError.h"
+#include "Turn.h"
 
 void
 RobberMove::handle(CatanEvent* event) {
@@ -19,7 +20,7 @@ RobberMove::handle(CatanEvent* event) {
 				game.moveRobber(robberMove->getCoord());
 
 				/* Cambio de estado */
-				// ----> CAMBIO DE ESTADO A TURN <----
+				game.changeState(new Turn(game), "RobberMove - Robber movido correctamente!");
 
 				/* Notifico el evento */
 				game.addNewEvent(event);

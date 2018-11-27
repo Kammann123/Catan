@@ -1149,6 +1149,32 @@ CatanGame::buildSettlement(Building* building, Coord coords, PlayerId playerID)
 	updateDocks(coords, playerID);
 }
 
+void
+CatanGame::payRoad(PlayerId playerID) {
+	Player& player = getPlayer(playerID);
+
+	player.removeResourceCard(ResourceId::FOREST, ROAD_LUMBER_NEEDED);
+	player.removeResourceCard(ResourceId::HILL, ROAD_BRICK_NEEDED);
+}
+
+void
+CatanGame::payCity(PlayerId playerID) {
+	Player& player = getPlayer(playerID);
+
+	player.removeResourceCard(ResourceId::MOUNTAIN, CITY_ORE_NEEDED);
+	player.removeResourceCard(ResourceId::FIELD, CITY_GRAIN_NEEDED);
+}
+
+void
+CatanGame::paySettlement(PlayerId playerID) {
+	Player& player = getPlayer(playerID);
+
+	player.removeResourceCard(ResourceId::HILL, SETTLEMENT_BRICK_NEEDED);
+	player.removeResourceCard(ResourceId::FOREST, SETTLEMENT_LUMBER_NEEDED);
+	player.removeResourceCard(ResourceId::PASTURES, SETTLEMENT_WOOL_NEEDED);
+	player.removeResourceCard(ResourceId::FIELD, SETTLEMENT_GRAIN_NEEDED);
+}
+
 bool
 CatanGame::dockAccepts(list<ResourceId>& cards, unsigned int qty, ResourceId id) {
 
