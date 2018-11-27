@@ -213,7 +213,7 @@ handleError(boost::system::error_code error) {
 
 	/* Si hay algun error */
 	if (error) {
-		switch (error.value) {
+		switch (error.value()) {
 			/* Ante los siguientes errores, durante la emision o
 			* transmision de mensajes con el socket, se detecta una
 			* falla en la conexion, con lo cual, se aborta tal conexion
@@ -255,7 +255,7 @@ handleConnection(boost::system::error_code error) {
 
 	/* Verifico que exista error */
 	if (error) {
-		switch (error.value) {
+		switch (error.value()) {
 
 			/* Se definen todos aquellos codigos de error
 			* en los cuales asio define un estado que me interesa no tomar como

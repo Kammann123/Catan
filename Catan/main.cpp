@@ -6,23 +6,31 @@
 
 int main(int argc, char** argv) {
 
-	NetworkServer server = NetworkServer(13225);
+	string ip;
+	unsigned int port;
+
+	CONSOLE("Ingrese ip: ");
+	cin >> ip;
+	CONSOLE("Ingrese port: ");
+	cin >> port;
+
+	NetworkClient client = NetworkClient();
 
 	CONSOLE("Esperando conexiones...");
 
-	while (!server.isConnected()) {
-		server.listen();
+	while (!client.isConnected()) {
+		client.connect(ip, port);
 	}
 
 	CONSOLE("Servidor conectado con exito!");
 
-	while (server.good()) {
+	while (client.good()) {
 
-		server.run();
+		client.run();
 
-		if (server.hasReceived()) {
+		if (client.hasReceived()) {
 
-			NetworkPacket* packet = server.receive();
+			NetworkPacket* packet = client.receive();
 			CONSOLE("Recibido el mensaje: " + packet->getString());
 		}
 	}

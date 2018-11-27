@@ -161,6 +161,7 @@
     <ClInclude Include="CatanGame\ResourceHex.h" />
     <ClInclude Include="CatanGame\Robber.h" />
     <ClInclude Include="CatanGame\SeaHex.h" />
+    <ClInclude Include="CatanGui\AllegroWidgets\Widgets.h" />
     <ClInclude Include="CatanNetworking\CatanNetworking.h" />
     <ClInclude Include="CatanNetworking\NetworkHandlers\NetworkClient.h" />
     <ClInclude Include="CatanNetworking\NetworkHandlers\NetworkServer.h" />
