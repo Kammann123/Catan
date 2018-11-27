@@ -22,12 +22,6 @@ public:
 	*/
 	virtual void handle(CatanEvent* event) = 0;
 
-	/*
-	* getState
-	* Devuelve un valor representativo del estado interno o sub estado
-	* del presente estado de CatanGame, solo para aquellas que lo requieran
-	* en caso contrario, se deja una implementacion nula
-	*/
 	virtual unsigned int getState(void) { return 0; }
 
 	/*

@@ -13,6 +13,7 @@
 #include "../CatanEvents/KnightEvent.h"
 
 #include "CatanStates/GameSync.h"
+#include "CatanStates/GameEnd.h"
 
 #include <algorithm>
 #include <vector>
@@ -25,6 +26,7 @@ CatanGame::_init_game(void) {
 	this->prevState = nullptr;
 	this->state = new GameSync(*this);
 	this->longestRoad = PlayerId::PLAYER_NONE;
+	this->winner = PlayerId::PLAYER_NONE;
 	this->turn = PlayerId::PLAYER_NONE;
 	this->description = "";
 
@@ -81,6 +83,20 @@ CatanGame::_clear_resource_map(void) {
 }
 
 void
+CatanGame::_notify_change(void) {
+
+	/* Notifico a los observers */
+	notifyObservers();
+
+	/* Elimino el ultimo evento leido */
+	if (hasEvents()) {
+		CatanEvent* event = this->eventQueue.front();
+		this->eventQueue.pop_front();
+		delete event;
+	}
+}
+
+void
 CatanGame::setInfo(string info) {
 	this->description = info;
 }
@@ -123,8 +139,26 @@ CatanGame::handle(NetworkPacket* packet) {
 
 void
 CatanGame::handle(CatanEvent* event) {
-	this->state->handle(event);
-	delete event;
+
+	/*
+	* Valido que haya llegado verdaderamente un evento
+	* y no algun tipo de puntero nulo por algun error...
+	*/
+	if (event) {
+
+		/*
+		* Valido que el evento particular no sea de cierre
+		* en cuyo caso... adios!
+		*/
+		if (event->getEvent() == CatanEvent::Events::QUIT) {
+			changeState(new GameEnd(*this), "CatanGame - El juego ha finalizado por cierre de alguna de las partes.");
+		}
+		else {
+
+			this->state->handle(event);
+			delete event;
+		}
+	}
 }
 
 CatanGame::State
@@ -142,20 +176,6 @@ CatanGame::hasEvents(void) const {
 	return !(this->eventQueue.empty());
 }
 
-void
-CatanGame::_notify_change(void) {
-
-	/* Notifico a los observers */
-	notifyObservers();
-
-	/* Elimino el ultimo evento leido */
-	if (hasEvents()) {
-		CatanEvent* event = this->eventQueue.front();
-		this->eventQueue.pop_front();
-		delete event;
-	}
-}
-
 CatanEvent*
 CatanGame::getNextEvent(void) {
 	if (hasEvents()) {
@@ -165,6 +185,24 @@ CatanGame::getNextEvent(void) {
 	else {
 		return nullptr;
 	}
+}
+
+void
+CatanGame::changeState(CatanState* newState, string info) {
+
+	/*
+	* Guardo el mensaje descriptivo con informacion del cambio
+	* de estado, en caso de que tenga informacion o contenido
+	*/
+	if (info.size()) {
+		description = info;
+	}
+
+	/*
+	* Para cada uno de los estados, voy a llamar a sus constructores
+	* y a la sobrecarga de cambio de estado ya creada.
+	*/
+	changeState(newState);
 }
 
 void
@@ -178,6 +216,9 @@ CatanGame::changeState(CatanState* newState) {
 
 	/* Actualizo y cambio */
 	state = newState;
+
+	/* Notifico el cambio de estado a los observers */
+	_notify_change();
 }
 
 CatanEvent*
@@ -269,6 +310,9 @@ CatanGame::addNewEvent(NetworkPacket* packet) {
 void
 CatanGame::addNewEvent(CatanEvent* event) {
 	this->eventQueue.push_back(event);
+
+	/* Notifico el cambio de estado a los observers */
+	_notify_change();
 }
 
 PlayerId
@@ -435,11 +479,9 @@ CatanGame::generateTokens() {
 
 	/* Genero los numeros aleatorios */
 	tokens.push_back(2), tokens.push_back(12);
-	for (unsigned int i = 0; i < 16; i++) {
-		do {
-			token = RANDOM_DICE + RANDOM_DICE;
-		} while ( token == 7 || token == 2 || token == 12 );
-		tokens.push_back(token);
+	for (unsigned int i = 3; i <= 11; i++) {
+		tokens.push_back(i);
+		tokens.push_back(i);
 	}
 	random_shuffle(tokens.begin(), tokens.end());
 
@@ -518,28 +560,25 @@ CatanGame::verifyTokens(map<Coord, unsigned char> tokens) {
 	* y luego valido que los numeros esten en el rango que se 
 	* admite segun las reglas de Catan
 	*/
-	unsigned int fCounter = 0;
-	unsigned int sCounter = 0;
-	for (unsigned char i = MIN_LAND_COORD; i <= MAX_LAND_COORD; i++) {
-		if (tokens.find(i) == tokens.end()) {
+	map<unsigned int, unsigned int> tokenCounter;
+
+	for (unsigned int i = 3; i <= 11; i++) tokenCounter.insert(pair<unsigned int, unsigned int>(i, 2));
+	tokenCounter.insert(pair<unsigned int, unsigned int>(2, 1));
+	tokenCounter.insert(pair<unsigned int, unsigned int>(12, 1));
+
+	for (unsigned int i = MIN_LAND_COORD; i <= MAX_LAND_COORD; i++) {
+
+		if (tokenCounter.find(i) == tokenCounter.end()) {
 			return false;
+		}else if( tokenCounter[i] > 0 ){
+			tokenCounter[i] -= 1;
 		}
-		else {
-			if (tokens[i] < 2 || tokens[i] > 12 || tokens[i] == 7) {
-				return false;
-			}
-			else if (tokens[i] == 2) {
-				fCounter++;
-			}else if( tokens[i] == 12) {
-				sCounter++;
-			}
+		else if( tokenCounter[i] == 0) {
+			return false;
 		}
 	}
 
-	/*
-	* Verifico que los tokens 2 y 12 aparezcan unicamente una sola vez
-	*/
-	return (fCounter == 1 && sCounter == 1);
+	return true;
 }
 
 void
@@ -587,6 +626,16 @@ CatanGame::toggleTurn(void) {
 	turn = OPONENT_ID(turn);
 }
 
+bool
+CatanGame::validDices(unsigned int dices) {
+	return (dices > 2 && dices < 12);
+}
+
+bool
+CatanGame::validDices(unsigned int fDice, unsigned int sDice) {
+	return (fDice <= 6 && fDice >= 1) && (sDice <= 6 && sDice >= 1);
+}
+
 void
 CatanGame::assignResources(unsigned int dices) {
 
@@ -613,6 +662,24 @@ CatanGame::assignResources(unsigned int dices) {
 			if (building->getPlace().isVertexOf(hex.getCoord())) {
 				assignResources(building->getPlayer(), hex.getResource(), building->getType() == BuildingType::CITY ? 2 : 1);
 			}
+		}
+	}
+}
+
+void
+CatanGame::assignResources(BuildingType type, Coord coords, PlayerId playerId) {
+	
+	/*
+	* Verifico que si la coordenada corresponde correctamente a un punto
+	* , busco para cada uno de los hexagonos de recursos, y se lo asigno al player como
+	* corresponde.
+	*/
+	if (coords.isDot() && type != BuildingType::ROAD) {
+		list<Coord> landCoords = coords.getLandCoords();
+		
+		for (Coord coord : landCoords) {
+			ResourceHex resourceHex = resourceMap[coord];
+			assignResources(playerId, resourceHex.getResource(), type == BuildingType::CITY ? 2 : 1);
 		}
 	}
 }
@@ -787,6 +854,21 @@ CatanGame::robberCards(list<ResourceId>& cards, PlayerId playerID) {
 	for (ResourceId card : cards) {
 		player.removeResourceCard(card);
 	}
+}
+
+bool
+CatanGame::validRobberMovement(Coord coord) {
+
+	/*
+	* Verifico que el robber vaya a una ubicacion valida
+	* en tierra y luego me fijo que este cambiando de posicion
+	*/
+	if (coord.isLand()) {
+		if (!(coord == robber.getCoord())) {
+			return true;
+		}
+	}
+	return false;
 }
 
 void
@@ -1026,7 +1108,13 @@ CatanGame::buildRoad(Building* building, Coord coords, PlayerId playerID)
 	* y configuro los puntos del jugador 
 	*/
 	builtMap.push_back(newRoad);
-	getPlayer(playerID).addPoints(ROAD_BUILT_POINTS); 
+	getPlayer(playerID).addPoints(ROAD_BUILT_POINTS);
+
+	/* Actualizo camino mas largo */
+	updateLongestRoad();
+
+	/* Actualizo los puntos y veo ganador */
+	updateWinner();
 }
 
 void
@@ -1056,6 +1144,9 @@ CatanGame::buildCity(Building* building, Coord coords, PlayerId playerID)
 	getPlayer(playerID).giveBackBuilding(BuildingType::SETTLEMENT, building);
 	getPlayer(playerID).removePoints(SETTLEMENT_BUILT_POINTS);
 	getPlayer(playerID).addPoints(CITY_BUILT_POINTS);
+
+	/* Actualizo los puntos y veo ganador */
+	updateWinner();
 }
 
 void
@@ -1079,10 +1170,39 @@ CatanGame::buildSettlement(Building* building, Coord coords, PlayerId playerID)
 
 	/* Actualizo los docks disponibles del usuario/jugador */
 	updateDocks(coords, playerID);
+
+	/* Actualizo los puntos y veo ganador */
+	updateWinner();
+}
+
+void
+CatanGame::payRoad(PlayerId playerID) {
+	Player& player = getPlayer(playerID);
+
+	player.removeResourceCard(ResourceId::FOREST, ROAD_LUMBER_NEEDED);
+	player.removeResourceCard(ResourceId::HILL, ROAD_BRICK_NEEDED);
+}
+
+void
+CatanGame::payCity(PlayerId playerID) {
+	Player& player = getPlayer(playerID);
+
+	player.removeResourceCard(ResourceId::MOUNTAIN, CITY_ORE_NEEDED);
+	player.removeResourceCard(ResourceId::FIELD, CITY_GRAIN_NEEDED);
+}
+
+void
+CatanGame::paySettlement(PlayerId playerID) {
+	Player& player = getPlayer(playerID);
+
+	player.removeResourceCard(ResourceId::HILL, SETTLEMENT_BRICK_NEEDED);
+	player.removeResourceCard(ResourceId::FOREST, SETTLEMENT_LUMBER_NEEDED);
+	player.removeResourceCard(ResourceId::PASTURES, SETTLEMENT_WOOL_NEEDED);
+	player.removeResourceCard(ResourceId::FIELD, SETTLEMENT_GRAIN_NEEDED);
 }
 
 bool
-CatanGame::dockAccepts(list<ResourceId>& cards, unsigned int qty, ResourceId id) {
+CatanGame::accepts(list<ResourceId>& cards, unsigned int qty, ResourceId id) {
 
 	/* Verifico que la cantidad de cartas sea la pedida,
 	* y luego guardo y verifico que sean todas del mismo tipo
@@ -1100,7 +1220,7 @@ CatanGame::dockAccepts(list<ResourceId>& cards, unsigned int qty, ResourceId id)
 }
 
 bool
-CatanGame::dockAccepts(list<ResourceId>& cards, unsigned int qty) {
+CatanGame::accepts(list<ResourceId>& cards, unsigned int qty) {
 
 	/* Verifico que la cantidad de cartas sea la pedida,
 	* y luego guardo y verifico que sean todas del mismo tipo
@@ -1118,7 +1238,7 @@ CatanGame::dockAccepts(list<ResourceId>& cards, unsigned int qty) {
 }
 
 bool
-CatanGame::dockAccepts(list<ResourceCard*>& cards, unsigned int qty, ResourceId id) {
+CatanGame::accepts(list<ResourceCard*>& cards, unsigned int qty, ResourceId id) {
 
 	/* Verifico que la cantidad de cartas sea la pedida,
 	* y luego guardo y verifico que sean todas del mismo tipo
@@ -1136,7 +1256,7 @@ CatanGame::dockAccepts(list<ResourceCard*>& cards, unsigned int qty, ResourceId 
 }
 
 bool 
-CatanGame::dockAccepts(list<ResourceCard*>& cards, unsigned int qty) {
+CatanGame::accepts(list<ResourceCard*>& cards, unsigned int qty) {
 	
 	/* Verifico que la cantidad de cartas sea la pedida,
 	* y luego guardo y verifico que sean todas del mismo tipo
@@ -1165,32 +1285,32 @@ CatanGame::isValidDockExchange(list<ResourceCard*>& offeredCards, PlayerId playe
 		for (SeaId seaId : docks) {
 			switch (seaId) {
 			case SeaId::NORMAL:
-				if (dockAccepts(offeredCards, NORMAL_COUNT)) {
+				if (accepts(offeredCards, NORMAL_COUNT)) {
 					return true;
 				}
 				break;
 			case SeaId::WHEAT:
-				if (dockAccepts(offeredCards, WHEAT_COUNT, ResourceId::FIELD)) {
+				if (accepts(offeredCards, WHEAT_COUNT, ResourceId::FIELD)) {
 					return true;
 				}
 				break;
 			case SeaId::BRICK:
-				if (dockAccepts(offeredCards, BRICK_COUNT, ResourceId::HILL)) {
+				if (accepts(offeredCards, BRICK_COUNT, ResourceId::HILL)) {
 					return true;
 				}
 				break;
 			case SeaId::SHEEP:
-				if (dockAccepts(offeredCards, SHEEP_COUNT, ResourceId::PASTURES)) {
+				if (accepts(offeredCards, SHEEP_COUNT, ResourceId::PASTURES)) {
 					return true;
 				}
 				break;
 			case SeaId::STONE:
-				if (dockAccepts(offeredCards, STONE_COUNT, ResourceId::MOUNTAIN)) {
+				if (accepts(offeredCards, STONE_COUNT, ResourceId::MOUNTAIN)) {
 					return true;
 				}
 				break;
 			case SeaId::WOOD:
-				if (dockAccepts(offeredCards, WOOD_COUNT, ResourceId::FOREST)) {
+				if (accepts(offeredCards, WOOD_COUNT, ResourceId::FOREST)) {
 					return true;
 				}
 				break;
@@ -1212,32 +1332,32 @@ CatanGame::isValidDockExchange(list<ResourceId>& offeredCards, PlayerId playerId
 		for (SeaId seaId : docks) {
 			switch (seaId) {
 				case SeaId::NORMAL:
-					if (dockAccepts(offeredCards, NORMAL_COUNT)) {
+					if (accepts(offeredCards, NORMAL_COUNT)) {
 						return true;
 					}
 					break;
 				case SeaId::WHEAT:
-					if (dockAccepts(offeredCards, WHEAT_COUNT, ResourceId::FIELD)) {
+					if (accepts(offeredCards, WHEAT_COUNT, ResourceId::FIELD)) {
 						return true;
 					}
 					break;
 				case SeaId::BRICK:
-					if (dockAccepts(offeredCards, BRICK_COUNT, ResourceId::HILL)) {
+					if (accepts(offeredCards, BRICK_COUNT, ResourceId::HILL)) {
 						return true;
 					}
 					break;
 				case SeaId::SHEEP:
-					if (dockAccepts(offeredCards, SHEEP_COUNT, ResourceId::PASTURES)) {
+					if (accepts(offeredCards, SHEEP_COUNT, ResourceId::PASTURES)) {
 						return true;
 					}
 					break;
 				case SeaId::STONE:
-					if (dockAccepts(offeredCards, STONE_COUNT, ResourceId::MOUNTAIN)) {
+					if (accepts(offeredCards, STONE_COUNT, ResourceId::MOUNTAIN)) {
 						return true;
 					}
 					break;
 				case SeaId::WOOD:
-					if (dockAccepts(offeredCards, WOOD_COUNT, ResourceId::FOREST)) {
+					if (accepts(offeredCards, WOOD_COUNT, ResourceId::FOREST)) {
 						return true;
 					}
 					break;
@@ -1283,10 +1403,16 @@ CatanGame::isValidPlayerExchange(list<ResourceId>& offeredCards, list<ResourceId
 	);
 }
 
-bool 
+bool
 CatanGame::isValidBankExchange(list<ResourceCard*>& offeredCards, PlayerId playerID) {
 
-	return (offeredCards.size() == BANK_TRANSACTION_CARDS_COUNT && canPlayerAccept(offeredCards,playerID));
+	return accepts(offeredCards, BANK_TRANSACTION_CARDS_COUNT) && canPlayerAccept(offeredCards, playerID));
+}
+
+bool
+CatanGame::isValidBankExchange(list<ResourceId>& offeredCards, PlayerId playerID) {
+
+	return accepts(offeredCards, BANK_TRANSACTION_CARDS_COUNT) && canPlayerAccept(offeredCards, playerID));
 }
 
 bool
@@ -1420,3 +1546,22 @@ CatanGame::pass() {
 	this->turn = OPONENT_ID(this->turn);
 }
 
+bool
+CatanGame::hasWinner(void) {
+	return winner != PlayerId::PLAYER_NONE;
+}
+
+PlayerId
+CatanGame::getWinner(void) {
+	return winner;
+}
+
+void
+CatanGame::updateWinner(void) {
+	if (localPlayer.getVictoryPoints() == WINNER_POINTS) {
+		winner = PlayerId::PLAYER_ONE;
+	}
+	else if (remotePlayer.getVictoryPoints() == WINNER_POINTS) {
+		winner = PlayerId::PLAYER_TWO;
+	}
+}

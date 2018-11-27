@@ -43,14 +43,14 @@
     <Filter Include="CatanEvents">
       <UniqueIdentifier>{37c4fdbf-896a-43a3-a1f7-1754d34907b8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="CatanData">
-      <UniqueIdentifier>{3ea99685-f141-473c-90d5-eafe44ca6dcd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="CatanNetworking\NetworkingStates">
       <UniqueIdentifier>{76bcf697-69bf-414d-9b4e-45376105215f}</UniqueIdentifier>
     </Filter>
     <Filter Include="CatanGame\CatanStates">
       <UniqueIdentifier>{c7cf041d-9b43-4d3d-b53b-6f086448998b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CatanData">
+      <UniqueIdentifier>{3ea99685-f141-473c-90d5-eafe44ca6dcd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -390,6 +390,27 @@
     <ClInclude Include="CatanGame\CatanStates\GameError.h">
       <Filter>CatanGame\CatanStates</Filter>
     </ClInclude>
+    <ClInclude Include="CatanGame\CatanStates\RobberCards.h">
+      <Filter>CatanGame\CatanStates</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGame\CatanStates\RobberMove.h">
+      <Filter>CatanGame\CatanStates</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGame\CatanStates\ThrowDices.h">
+      <Filter>CatanGame\CatanStates</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGame\CatanStates\Turn.h">
+      <Filter>CatanGame\CatanStates</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGame\CatanStates\GameEnd.h">
+      <Filter>CatanGame\CatanStates</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGame\CatanStates\OfferAnswer.h">
+      <Filter>CatanGame\CatanStates</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGame\CatanStates\Winner.h">
+      <Filter>CatanGame\CatanStates</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FSM\EventQueue.cpp">
@@ -680,8 +701,32 @@
     <ClCompile Include="CatanGame\CatanStates\GameError.cpp">
       <Filter>CatanGame\CatanStates</Filter>
     </ClCompile>
+    <ClCompile Include="CatanGame\CatanStates\RobberCards.cpp">
+      <Filter>CatanGame\CatanStates</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGame\CatanStates\RobberMove.cpp">
+      <Filter>CatanGame\CatanStates</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGame\CatanStates\ThrowDices.cpp">
+      <Filter>CatanGame\CatanStates</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGame\CatanStates\Turn.cpp">
+      <Filter>CatanGame\CatanStates</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGame\CatanStates\GameEnd.cpp">
+      <Filter>CatanGame\CatanStates</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGame\CatanStates\OfferAnswer.cpp">
+      <Filter>CatanGame\CatanStates</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGame\CatanStates\Winner.cpp">
+      <Filter>CatanGame\CatanStates</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Pendientes a revision.txt" />
   </ItemGroup>
 </Project>

@@ -1,7 +1,7 @@
 #include "DicesData.h"
 
 DicesData::
-DicesData(unsigned int fDice, unsigned int sDice) : CatanData(CatanData::Type::DICES), firstDice(fDice), secondDice(sDice) {}
+DicesData(unsigned char fDice, unsigned char sDice) : CatanData(CatanData::Type::DICES), firstDice(fDice), secondDice(sDice) {}
 
 DicesData::
 DicesData() : CatanData(CatanData::Type::DICES) {
@@ -10,7 +10,7 @@ DicesData() : CatanData(CatanData::Type::DICES) {
 }
 
 bool
-DicesData::setFirstDice(unsigned int dice) {
+DicesData::setFirstDice(unsigned char dice) {
 
 	if (isValidDice(dice)) {
 		this->firstDice = dice;
@@ -22,7 +22,7 @@ DicesData::setFirstDice(unsigned int dice) {
 }
 
 bool
-DicesData::setSecondDice(unsigned int dice) {
+DicesData::setSecondDice(unsigned char dice) {
 
 	if (isValidDice(dice)) {
 		this->secondDice = dice;
@@ -33,17 +33,17 @@ DicesData::setSecondDice(unsigned int dice) {
 	}
 }
 
-unsigned int
+unsigned char
 DicesData::getDices(void) const {
-	return firstDice + secondDice;
+	return firstDice + secondDice - '0' - '0';
 }
 
-unsigned int
+unsigned char
 DicesData::getFirstDice(void) const {
-	return firstDice;
+	return firstDice - '0';
 }
 
-unsigned int
+unsigned char
 DicesData::getSecondDice(void) const {
-	return secondDice;
+	return secondDice - '0';
 }

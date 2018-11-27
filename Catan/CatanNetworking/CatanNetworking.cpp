@@ -162,7 +162,10 @@ CatanNetworking::update() {
 		/* Verifico que sea para mi, y no un echo! */
 		if (event->getSource() != CatanEvent::Sources::NETWORKING) {
 
-			/* Ejecuto tarea */
+			/*
+			* Surgieron o puede surgir, eventos que sean de interes para otras partes del programa
+			* pero no asi para el Networking, con lo cual, se presupone que los deberia ignorar el programa
+			*/
 			this->currState->update();
 		}
 	}
@@ -243,12 +246,6 @@ CatanNetworking::getEventPacket(CatanEvent* event) {
 			return new NetworkPacket(PacketHeader::ROAD_BUILDING);
 			break;
 	}
-	
-	/*
-	* A modo preventido, se supone que no debiera permitirse que pasen aquellos eventos que
-	* no nos resultan de importancia en CatanNetworking de CatanGame, por tanto, aquellos
-	* errores que los dejen pasar, seran temporales, y podran ser encontrados con esta excepcion,
-	* ya que no es de interes manejar el flujo ante esa eventualidad.
-	*/
-	throw exception("HandshakingState - Un evento del CatanGame no pudo ser parseado en paquete");
+
+	return nullptr;
 }

@@ -20,8 +20,7 @@ GameSync::handle(CatanEvent* event) {
 		game.generateTurn();
 
 		/* Paso a nuevo estado de primeras construcciones */
-		game.setInfo("GameSync - Se genero el entorno del juego correctamente!");
-		game.changeState(new FirstBuilds(game));
+		game.changeState(new FirstBuilds(game), "GameSync - Se genero el entorno del juego correctamente!");
 	}
 	else if (event->getEvent() == CatanEvent::Events::SYNC) {
 
@@ -47,8 +46,7 @@ GameSync::handle(CatanEvent* event) {
 				game.setTurn(turn);
 
 				/* Paso a nuevo estado de primeras construcciones */
-				game.setInfo("GameSync - Sincronizacion recibida exitosamente!");
-				game.changeState(new FirstBuilds(game));
+				game.changeState(new FirstBuilds(game), "GameSync - Sincronizacion recibida exitosamente!");
 			}
 		}
 
@@ -56,8 +54,7 @@ GameSync::handle(CatanEvent* event) {
 		* Se genero un error, por lo cual se debe pasar a dicho estado
 		* y comunicar un mensaje apropiado
 		*/
-		game.setInfo("GameSync - La informacion recibida de sincronizacion era invalida.");
-		game.changeState(new GameError(game));
+		game.changeState(new GameError(game), "GameSync - La informacion recibida de sincronizacion era invalida.");
 	}
 	else {
 
@@ -65,7 +62,6 @@ GameSync::handle(CatanEvent* event) {
 		* Ante la aparicion de un error, guardo un mensaje de error y paso el
 		* catan a un estado de error, con un mensaje descriptivo 
 		*/
-		game.setInfo("GameSync - Hubo un error en la secuencia del juego, se esperaba sincronizacion.");
-		game.changeState(new GameError(game));
+		game.changeState(new GameError(game), "GameSync - Hubo un error en la secuencia del juego, se esperaba sincronizacion.");
 	}
 }

@@ -3,8 +3,8 @@
 #include "CatanState.h"
 #include "../CatanGame.h"
 
-class GameError : public CatanState {
+class Turn : public CatanState {
 public:
-	GameError(CatanGame& game);
+	Turn(CatanGame& _game) : CatanState(_game, CatanGame::State::TURN) {}
 	void handle(CatanEvent* event);
 };

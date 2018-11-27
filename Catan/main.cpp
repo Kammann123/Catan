@@ -6,14 +6,7 @@
 int main(int argc, char** argv) {
 
 	CatanGame game("Juan Carlos Catan");
-
-	string ip;
-	unsigned int port;
-	cout << "Direccion IP: ";
-	cin >> ip;
-	cout << "Puerto: ";
-	cin >> port;
-	CatanNetworking net(ip, port, game);
+	CatanNetworking net("193.168.0.3", 13225, game);
 
 	game.attach(&net);
 
@@ -36,5 +29,4 @@ int main(int argc, char** argv) {
 	}
 
 	CONSOLE(net.getError());
-
 }

@@ -62,6 +62,8 @@
 #define SETTLEMENT_BUILT_POINTS		1
 #define CITY_BUILT_POINTS			2
 
+#define WINNER_POINTS		8
+
 #define RANDOM_DICE	((rand() % 6) + 1)
 
 #define OPONENT_ID(id)	(id == PlayerId::PLAYER_ONE ? PlayerId::PLAYER_TWO : PlayerId::PLAYER_ONE)
@@ -70,13 +72,31 @@
 using namespace std;
 
 /*
+* Aclaracion sobre el FLUJO de los estados logicos del juego
+*
+* El juego esta implementado como una FSM con State Pattern,
+* para cada uno de sus estados existe una clase, en la cual se define
+* un metodo virtual handle, al cual se llama siempre desde el handle
+* de CatanGame, de esa forma, estado a estado, se reciben los "estimulos"
+* y se interpreta, si son "validos", si se realizan acciones y se guardan eventos
+* y los cambios de CatanGame.
+*
+* + Los cambios de estado son propios de cada estado
+* + Cada estado agrega los nuevos eventos segun lo ocurrido
+* + El estado de error inhabilita a CatanGame, y manda evento de error
+* + La notificacion de cambios en CatanGame es en changeState y en addNewEvent
+* + El juego se deberia cerrar en GAME_ERROR o en GAME_END
+* + Detalles de cada cambio de estado con .info()
+* + Informacion de los cambios como acciones en .getNextEvent()
+*/
+
+/*
 * CatanGame
 * Se definen las reglas del juego y la clase con la informacion sobre la partida actual
 * asi como el Modelo para la implementacion de MVC y luego el Context para el State pattern.
 *
 * Consideraciones:
 *	+ Se define como PLAYER_ONE al jugador local y PLAYER_TWO al oponente.
-*
 */
 class CatanGame : public Subject{
 public:
@@ -86,7 +106,9 @@ public:
 	* en funcion de los cuales se crean clases para la 
 	* la fsm implementada con State Pattern
 	*/
-	enum State : unsigned int {GAME_SYNC, FIRST_BUILDS, TURN_DICES, TURN, WINNER, GAME_END, GAME_ERROR};
+	enum State : unsigned int {GAME_SYNC, FIRST_BUILDS, THROW_DICES, 
+		ROBBER_CARD, ROBBER_MOVE, TURN, OFFER_ANSWER, WINNER, 
+		GAME_END, GAME_ERROR};
 
 	/* Constructor y destructor */
 	CatanGame(string localPlayerName);
@@ -127,6 +149,7 @@ public:
 	* changeState
 	* Cambia de estado el context CatanGame
 	*/
+	void changeState(CatanState* newState, string info);
 	void changeState(CatanState* newState);
 
 	CatanState* getCurrentState(void);
@@ -205,12 +228,24 @@ public:
 	void toggleTurn(void);
 
 	/*
+	* validDices
+	* Valida que el par de dados sea correcto, dentro del rango esperado
+	* es en mismo sentido que validar si fueron dados de robber,
+	* su definicion puede ser trivial, pero sostiene la idea de pasa por
+	* CatanGame, para la definicion logica de las reglas del juego.
+	* Si mañana CatanGame no tuviera dados de 6 caras, se cambiaria facilmente.
+	*/
+	bool validDices(unsigned int dices);
+	bool validDices(unsigned int fDice, unsigned int sDice);
+
+	/*
 	* assignResources
 	* Al notificar un valor de dados jugados, el juego asigna
 	* correspondientemente a cada jugar los recursos que reciben
 	* segun el numero y los settlements como debe ser.
 	*/
 	void assignResources(unsigned int dices);
+	void assignResources(BuildingType type, Coord coords, PlayerId playerId);
 	void assignResources(PlayerId player, ResourceId resource, unsigned int qty);
 
 	/*
@@ -254,6 +289,14 @@ public:
 	*/
 	void robberCards(list<ResourceCard*>& cards, PlayerId playerID);
 	void robberCards(list<ResourceId>& cards, PlayerId playerID);
+
+	/*
+	* validRobberMovement
+	* Valida el movimiento del robber, con respecto a esto, tiene que ver
+	* que la coordenada sea valida, pero ademas, que el movimiento sea de cambio
+	* y no mantenerlo en la misma locacion.
+	*/
+	bool validRobberMovement(Coord coord);
 
 	/*
 	* moveRobber
@@ -311,14 +354,23 @@ public:
 	void buildSettlement(Building* building, Coord coords, PlayerId playerID);
 
 	/*
-	* dockAccepts
-	* Validan si el muelle en cuestion acepta el conjunto de cartas dado
+	* payRoad, payCity, paySettlement
+	* Realiza el pago de estas construcciones, tomando los recursos
+	* necesitados del usuario en cuestion.
+	*/
+	void payRoad(PlayerId playerID);
+	void payCity(PlayerId playerID);
+	void paySettlement(PlayerId playerID);
+
+	/*
+	* accepts
+	* Validan si el muelle, banco en cuestion acepta el conjunto de cartas dado
 	* a modo de intercambio, cumpliendo las reglas respectivas de cada uno de ellos
 	*/
-	bool dockAccepts(list<ResourceId>& cards, unsigned int qty, ResourceId id);
-	bool dockAccepts(list<ResourceId>& cards, unsigned int qty);
-	bool dockAccepts(list<ResourceCard*>& cards, unsigned int qty, ResourceId id);
-	bool dockAccepts(list<ResourceCard*>& cards, unsigned int qty);
+	bool accepts(list<ResourceId>& cards, unsigned int qty, ResourceId id);
+	bool accepts(list<ResourceId>& cards, unsigned int qty);
+	bool accepts(list<ResourceCard*>& cards, unsigned int qty, ResourceId id);
+	bool accepts(list<ResourceCard*>& cards, unsigned int qty);
 
 	/*
 	* isValidDockExchange, isValidPlayerExchange, isValidBankExchange
@@ -331,6 +383,7 @@ public:
 	bool isValidPlayerExchange(list<ResourceCard*>& offeredCards, list<ResourceId>& requestedCards, PlayerId srcPlayerID);
 	bool isValidPlayerExchange(list<ResourceId>& offeredCards, list<ResourceId>& requestedCards, PlayerId srcPlayerID);
 	bool isValidBankExchange(list<ResourceCard*>& offeredCards, PlayerId playerID);
+	bool isValidBankExchange(list<ResourceId>& offeredCards, PlayerId playerID);
 
 	/*
 	* canPlayerAccept
@@ -355,6 +408,14 @@ public:
 	* Ejecuta la accion de pasar de turno
 	*/
 	void pass(void);
+
+	/*
+	* Metodos de control del final de juego
+	* por victoria de uno de los jugadores de la partida
+	*/
+	bool hasWinner(void);
+	PlayerId getWinner(void);
+	void updateWinner(void);
 
 	/*
 	* addNewEvent
@@ -399,7 +460,8 @@ private:
 	CatanState* state;
 	CatanState* prevState;
 
-private:
+	PlayerId winner;
+
 	string description;
 	map<PlayerId, unsigned int> playerLongestRoad;
 	map<PlayerId, list<SeaId>> playerDocks;

@@ -146,8 +146,15 @@
     <ClInclude Include="CatanGame\CatanGame.h" />
     <ClInclude Include="CatanGame\CatanStates\CatanState.h" />
     <ClInclude Include="CatanGame\CatanStates\FirstBuilds.h" />
+    <ClInclude Include="CatanGame\CatanStates\GameEnd.h" />
     <ClInclude Include="CatanGame\CatanStates\GameError.h" />
     <ClInclude Include="CatanGame\CatanStates\GameSync.h" />
+    <ClInclude Include="CatanGame\CatanStates\OfferAnswer.h" />
+    <ClInclude Include="CatanGame\CatanStates\RobberCards.h" />
+    <ClInclude Include="CatanGame\CatanStates\RobberMove.h" />
+    <ClInclude Include="CatanGame\CatanStates\ThrowDices.h" />
+    <ClInclude Include="CatanGame\CatanStates\Turn.h" />
+    <ClInclude Include="CatanGame\CatanStates\Winner.h" />
     <ClInclude Include="CatanGame\Coord.h" />
     <ClInclude Include="CatanGame\Player.h" />
     <ClInclude Include="CatanGame\ResourceCard.h" />
@@ -261,8 +268,15 @@
     <ClCompile Include="CatanGame\Building.cpp" />
     <ClCompile Include="CatanGame\CatanGame.cpp" />
     <ClCompile Include="CatanGame\CatanStates\FirstBuilds.cpp" />
+    <ClCompile Include="CatanGame\CatanStates\GameEnd.cpp" />
     <ClCompile Include="CatanGame\CatanStates\GameError.cpp" />
     <ClCompile Include="CatanGame\CatanStates\GameSync.cpp" />
+    <ClCompile Include="CatanGame\CatanStates\OfferAnswer.cpp" />
+    <ClCompile Include="CatanGame\CatanStates\RobberCards.cpp" />
+    <ClCompile Include="CatanGame\CatanStates\RobberMove.cpp" />
+    <ClCompile Include="CatanGame\CatanStates\ThrowDices.cpp" />
+    <ClCompile Include="CatanGame\CatanStates\Turn.cpp" />
+    <ClCompile Include="CatanGame\CatanStates\Winner.cpp" />
     <ClCompile Include="CatanGame\Coord.cpp" />
     <ClCompile Include="CatanGame\Player.cpp" />
     <ClCompile Include="CatanGame\ResourceCard.cpp" />
@@ -329,6 +343,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Pendientes a revision.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

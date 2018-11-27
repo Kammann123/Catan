@@ -36,22 +36,27 @@ FirstBuilds::handle(CatanEvent* event) {
 							/* Realizo la construccion */
 							game.buildSettlement(nullptr, building->getCoords(), building->getPlayer());
 
+							/* Asigno recursos en la segunda vuelta */
+							if (stage > 1) {
+								game.assignResources(building->getType(), building->getCoords(), building->getPlayer());
+							}
+
+							/* Guardo el evento de construccion */
+							game.addNewEvent(event);
+
 							/* Cambio de estado interno */
 							state = FBStates::BUILD_ROAD;
 							return;
 						}
 					}
-					game.setInfo("FirstBuilds - Peticion de construccion de SETTLEMENT no cumple validacion.");
-					game.changeState(new GameError(game));
+					game.changeState(new GameError(game), "FirstBuilds - Peticion de construccion de SETTLEMENT no cumple validacion.");
 				}
 				else {
-					game.setInfo("FirstBuilds - Construccion invalida, se esperaba settlement.");
-					game.changeState(new GameError(game));
+					game.changeState(new GameError(game), "FirstBuilds - Construccion invalida, se esperaba settlement.");
 				}
 			}
 			else {
-				game.setInfo("FirstBuilds - Se esperaba una construccion. Accion invalida.");
-				game.changeState(new GameError(game));
+				game.changeState(new GameError(game), "FirstBuilds - Se esperaba una construccion. Accion invalida.");
 			}
 			break;
 
@@ -73,6 +78,9 @@ FirstBuilds::handle(CatanEvent* event) {
 							/* Realizo la construccion */
 							game.buildRoad(neighbour, building->getCoords(), building->getPlayer());
 
+							/* Guardo el evento de construccion */
+							game.addNewEvent(event);
+
 							/* Cambio de estado interno */
 							state = FBStates::BUILD_SETTLEMENT;
 							stage++;
@@ -87,17 +95,14 @@ FirstBuilds::handle(CatanEvent* event) {
 							return;
 						}
 					}
-					game.setInfo("FirstBuilds - Peticion de construccion de ROAD no cumple validacion.");
-					game.changeState(new GameError(game));
+					game.changeState(new GameError(game), "FirstBuilds - Peticion de construccion de ROAD no cumple validacion.");
 				}
 				else {
-					game.setInfo("FirstBuilds - Construccion invalida, se esperaba road.");
-					game.changeState(new GameError(game));
+					game.changeState(new GameError(game), "FirstBuilds - Construccion invalida, se esperaba road.");
 				}
 			}
 			else {
-				game.setInfo("FirstBuilds - Se esperaba una construccion. Accion invalida.");
-				game.changeState(new GameError(game));
+				game.changeState(new GameError(game), "FirstBuilds - Se esperaba una construccion. Accion invalida.");
 			}
 			break;
 	}
