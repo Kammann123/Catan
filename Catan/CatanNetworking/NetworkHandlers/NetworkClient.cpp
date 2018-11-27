@@ -37,14 +37,13 @@ connect(string ip, unsigned int port) {
 	if (!isConnected()) {
 
 		/* Inicializo variables */
-		boost::asio::ip::tcp::endpoint endpoint(boost::asio::ip::address::from_string(ip), port);
+		boost::asio::ip::tcp::resolver::iterator endpoint = resolver->resolve(boost::asio::ip::tcp::resolver::query(ip, to_string(port)));
 		boost::system::error_code error;
 
 		/* Intento realizar conexion */
-		this->socket->connect(endpoint, error);
+		boost::asio::connect(*socket, endpoint, error);
 
-		if (error != boost::asio::error::connection_refused) {
-
+		if (error != boost::asio::error::connection_refused && error != boost::asio::error::timed_out){
 			/* Verifico errores */
 			if (!handleError(error)) {
 				if (error != boost::asio::error::would_block)	toggleConnection();
