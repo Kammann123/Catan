@@ -6,7 +6,7 @@
 int main(int argc, char** argv) {
 
 	CatanGame game("Juan Carlos Catan");
-	CatanNetworking net("127.0.0.1", 12345, game);
+	CatanNetworking net("193.168.0.3", 13225, game);
 
 	game.attach(&net);
 
@@ -29,5 +29,4 @@ int main(int argc, char** argv) {
 	}
 
 	CONSOLE(net.getError());
-
 }

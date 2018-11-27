@@ -390,6 +390,18 @@
     <ClInclude Include="CatanGame\CatanStates\GameError.h">
       <Filter>CatanGame\CatanStates</Filter>
     </ClInclude>
+    <ClInclude Include="CatanGame\CatanStates\RobberCards.h">
+      <Filter>CatanGame\CatanStates</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGame\CatanStates\RobberMove.h">
+      <Filter>CatanGame\CatanStates</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGame\CatanStates\ThrowDices.h">
+      <Filter>CatanGame\CatanStates</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGame\CatanStates\Turn.h">
+      <Filter>CatanGame\CatanStates</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FSM\EventQueue.cpp">
@@ -680,8 +692,23 @@
     <ClCompile Include="CatanGame\CatanStates\GameError.cpp">
       <Filter>CatanGame\CatanStates</Filter>
     </ClCompile>
+    <ClCompile Include="CatanGame\CatanStates\RobberCards.cpp">
+      <Filter>CatanGame\CatanStates</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGame\CatanStates\RobberMove.cpp">
+      <Filter>CatanGame\CatanStates</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGame\CatanStates\ThrowDices.cpp">
+      <Filter>CatanGame\CatanStates</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGame\CatanStates\Turn.cpp">
+      <Filter>CatanGame\CatanStates</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Pendientes a revision.txt" />
   </ItemGroup>
 </Project>

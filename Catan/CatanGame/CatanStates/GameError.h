@@ -5,6 +5,6 @@
 
 class GameError : public CatanState {
 public:
-	GameError(CatanGame& game) : CatanState(game, CatanGame::State::GAME_ERROR) {}
+	GameError(CatanGame& game);
 	void handle(CatanEvent* event);
 };

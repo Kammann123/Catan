@@ -12,24 +12,24 @@ class DicesData : public CatanData {
 public:
 
 	/* Constructor */
-	DicesData(unsigned int fDice, unsigned int sDice);
+	DicesData(unsigned char fDice, unsigned char sDice);
 	DicesData();
 
 	/* 
 	* Setters de los campos de dados
 	*/
-	bool setFirstDice(unsigned int dice);
-	bool setSecondDice(unsigned int dice);
+	bool setFirstDice(unsigned char dice);
+	bool setSecondDice(unsigned char dice);
 
 	/*
 	* Getters que devuelven la 
 	* informacion de los dados
 	*/
-	unsigned int getDices(void) const;
-	unsigned int getFirstDice(void) const;
-	unsigned int getSecondDice(void) const;
+	unsigned char getDices(void) const;
+	unsigned char getFirstDice(void) const;
+	unsigned char getSecondDice(void) const;
 
 private:
-	unsigned int firstDice;
-	unsigned int secondDice;
+	unsigned char firstDice;
+	unsigned char secondDice;
 };

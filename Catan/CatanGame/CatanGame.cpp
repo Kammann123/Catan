@@ -81,6 +81,20 @@ CatanGame::_clear_resource_map(void) {
 }
 
 void
+CatanGame::_notify_change(void) {
+
+	/* Notifico a los observers */
+	notifyObservers();
+
+	/* Elimino el ultimo evento leido */
+	if (hasEvents()) {
+		CatanEvent* event = this->eventQueue.front();
+		this->eventQueue.pop_front();
+		delete event;
+	}
+}
+
+void
 CatanGame::setInfo(string info) {
 	this->description = info;
 }
@@ -123,8 +137,10 @@ CatanGame::handle(NetworkPacket* packet) {
 
 void
 CatanGame::handle(CatanEvent* event) {
-	this->state->handle(event);
-	delete event;
+	if (event) {
+		this->state->handle(event);
+		delete event;
+	}
 }
 
 CatanGame::State
@@ -142,20 +158,6 @@ CatanGame::hasEvents(void) const {
 	return !(this->eventQueue.empty());
 }
 
-void
-CatanGame::_notify_change(void) {
-
-	/* Notifico a los observers */
-	notifyObservers();
-
-	/* Elimino el ultimo evento leido */
-	if (hasEvents()) {
-		CatanEvent* event = this->eventQueue.front();
-		this->eventQueue.pop_front();
-		delete event;
-	}
-}
-
 CatanEvent*
 CatanGame::getNextEvent(void) {
 	if (hasEvents()) {
@@ -165,6 +167,24 @@ CatanGame::getNextEvent(void) {
 	else {
 		return nullptr;
 	}
+}
+
+void
+CatanGame::changeState(CatanState* newState, string info) {
+
+	/*
+	* Guardo el mensaje descriptivo con informacion del cambio
+	* de estado, en caso de que tenga informacion o contenido
+	*/
+	if (info.size()) {
+		description = info;
+	}
+
+	/*
+	* Para cada uno de los estados, voy a llamar a sus constructores
+	* y a la sobrecarga de cambio de estado ya creada.
+	*/
+	changeState(newState);
 }
 
 void
@@ -178,6 +198,9 @@ CatanGame::changeState(CatanState* newState) {
 
 	/* Actualizo y cambio */
 	state = newState;
+
+	/* Notifico el cambio de estado a los observers */
+	_notify_change();
 }
 
 CatanEvent*
@@ -269,6 +292,9 @@ CatanGame::addNewEvent(NetworkPacket* packet) {
 void
 CatanGame::addNewEvent(CatanEvent* event) {
 	this->eventQueue.push_back(event);
+
+	/* Notifico el cambio de estado a los observers */
+	_notify_change();
 }
 
 PlayerId
@@ -585,6 +611,16 @@ CatanGame::setTurn(PlayerId playerId) {
 void
 CatanGame::toggleTurn(void) {
 	turn = OPONENT_ID(turn);
+}
+
+bool
+CatanGame::validDices(unsigned int dices) {
+	return (dices > 2 && dices < 12);
+}
+
+bool
+CatanGame::validDices(unsigned int fDice, unsigned int sDice) {
+	return (fDice <= 6 && fDice >= 1) && (sDice <= 6 && sDice >= 1);
 }
 
 void

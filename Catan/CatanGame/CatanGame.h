@@ -70,13 +70,31 @@
 using namespace std;
 
 /*
+* Aclaracion sobre el FLUJO de los estados logicos del juego
+*
+* El juego esta implementado como una FSM con State Pattern,
+* para cada uno de sus estados existe una clase, en la cual se define
+* un metodo virtual handle, al cual se llama siempre desde el handle
+* de CatanGame, de esa forma, estado a estado, se reciben los "estimulos"
+* y se interpreta, si son "validos", si se realizan acciones y se guardan eventos
+* y los cambios de CatanGame.
+*
+* + Los cambios de estado son propios de cada estado
+* + Cada estado agrega los nuevos eventos segun lo ocurrido
+* + El estado de error inhabilita a CatanGame, y manda evento de error
+* + La notificacion de cambios en CatanGame es en changeState y en addNewEvent
+* + El juego se deberia cerrar en GAME_ERROR o en GAME_END
+* + Detalles de cada cambio de estado con .info()
+* + Informacion de los cambios como acciones en .getNextEvent()
+*/
+
+/*
 * CatanGame
 * Se definen las reglas del juego y la clase con la informacion sobre la partida actual
 * asi como el Modelo para la implementacion de MVC y luego el Context para el State pattern.
 *
 * Consideraciones:
 *	+ Se define como PLAYER_ONE al jugador local y PLAYER_TWO al oponente.
-*
 */
 class CatanGame : public Subject{
 public:
@@ -86,7 +104,9 @@ public:
 	* en funcion de los cuales se crean clases para la 
 	* la fsm implementada con State Pattern
 	*/
-	enum State : unsigned int {GAME_SYNC, FIRST_BUILDS, TURN_DICES, TURN, WINNER, GAME_END, GAME_ERROR};
+	enum State : unsigned int {GAME_SYNC, FIRST_BUILDS, THROW_DICES, 
+		ROBBER_CARD, ROBBER_MOVE, TURN, OFFER_ANSWER, WINNER, 
+		GAME_END, GAME_ERROR};
 
 	/* Constructor y destructor */
 	CatanGame(string localPlayerName);
@@ -127,6 +147,7 @@ public:
 	* changeState
 	* Cambia de estado el context CatanGame
 	*/
+	void changeState(CatanState* newState, string info);
 	void changeState(CatanState* newState);
 
 	CatanState* getCurrentState(void);
@@ -203,6 +224,17 @@ public:
 	void setGlobalMap(map<Coord, MapValue> gameMap, map<Coord, unsigned char> tokens);
 	void setTurn(PlayerId playerId);
 	void toggleTurn(void);
+
+	/*
+	* validDices
+	* Valida que el par de dados sea correcto, dentro del rango esperado
+	* es en mismo sentido que validar si fueron dados de robber,
+	* su definicion puede ser trivial, pero sostiene la idea de pasa por
+	* CatanGame, para la definicion logica de las reglas del juego.
+	* Si mañana CatanGame no tuviera dados de 6 caras, se cambiaria facilmente.
+	*/
+	bool validDices(unsigned int dices);
+	bool validDices(unsigned int fDice, unsigned int sDice);
 
 	/*
 	* assignResources

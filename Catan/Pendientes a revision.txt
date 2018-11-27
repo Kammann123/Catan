@@ -1,0 +1,15 @@
+[ PENDIENTES A REVISION ]
+Se listan aspectos del programa o el codigo que van surgiendo
+durante algunas fases de la programacion, que no den lugar
+a su verificacion o correccion en el momento, pero se anotan
+para revisar posteriormente.
+
+Listado:
+	+ Revisar la liberacion de memoria de los paquetes de networking,
+	eventos, y los objetos del juego, algo de todo esto se esta escapando...
+	+ Revisar como se agregan los nuevos protocolos para no generar un desastre
+	y hacer facil agregar nuevamente cosas como development cards
+	+ Importante, ver el flujo de los tipos de datos de networking al juego,
+	de gui al juego y en ambos sentidos inversos. Por ejemplo, los dices
+	se reciben y transmiten como ASCII, en el juego se usan como numero
+	, pero cuando se los genera en GUI, se los genera como ASCII? Si no, es error.
