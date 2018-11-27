@@ -31,17 +31,17 @@ Listening::run() {
 			/* Comunico a CatanGame evento de sincronizacion */
 			networking.getGame().handle(new CatanEvent(CatanEvent::Events::ASK_SYNC, CatanEvent::Sources::NETWORKING, PlayerId::PLAYER_TWO));
 			/* Cambio de estado a sincronizacion */
-			networking.changeState(new Sync(networking));
+			networking.changeState(CatanNetworking::States::SYNC);
 		}
 	}
 	else {
 		/* Cambio de estado a error */
-		networking.changeState(new NetError(networking));
+		networking.changeState(CatanNetworking::States::NET_ERROR);
 	}
 }
 
 void
 Listening::update() {
 	networking.setError("WaitSync - Hubo un error en el protocolo de sincronizacion!");
-	networking.changeState(new NetError(networking));
+	networking.changeState(CatanNetworking::States::NET_ERROR);
 }
