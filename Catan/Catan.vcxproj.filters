@@ -52,6 +52,9 @@
     <Filter Include="CatanData">
       <UniqueIdentifier>{3ea99685-f141-473c-90d5-eafe44ca6dcd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CatanGui\AllegroWidgets">
+      <UniqueIdentifier>{21e3adf1-2c88-4226-b854-b449460fa780}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FSM\EventGenerator.h">
@@ -410,6 +413,9 @@
     </ClInclude>
     <ClInclude Include="CatanGame\CatanStates\Winner.h">
       <Filter>CatanGame\CatanStates</Filter>
+    </ClInclude>
+    <ClInclude Include="Widgets.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
