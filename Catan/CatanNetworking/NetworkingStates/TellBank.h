@@ -4,8 +4,7 @@
 
 class TellBank : public HandshakingState {
 public:
-	TellBank(CatanNetworking& net) : HandshakingState(tellBankProtocol, net) {}
-	string what(void) { return "TELL_BANK"; }
+	TellBank(CatanNetworking& net) : HandshakingState(tellBankProtocol, net, CatanNetworking::States::TELL_BANK) {}
 	virtual bool isHeader(PacketHeader header) { return header == PacketHeader::BANK_TRADE;  }
 private:
 	/* Protocolo */

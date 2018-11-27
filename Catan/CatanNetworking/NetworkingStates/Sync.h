@@ -4,8 +4,7 @@
 
 class Sync : public HandshakingState {
 public:
-	Sync(CatanNetworking net) : HandshakingState(syncProtocol, net) {}
-	string what(void) { return "SERVER_SYNC"; }
+	Sync(CatanNetworking net) : HandshakingState(syncProtocol, net, CatanNetworking::States::SYNC) {}
 	virtual bool isHeader(PacketHeader header) { return header == PacketHeader::NAME; }
 private:
 	/* Metodos del protocolo */

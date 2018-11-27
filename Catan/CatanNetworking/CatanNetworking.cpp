@@ -24,18 +24,38 @@
 #include "../CatanEvents/CatanEvent.h"
 
 #include "NetworkingStates/Disconnected.h"
+#include "NetworkingStates/Listening.h"
+#include "NetworkingStates/WaitSync.h"
+#include "NetworkingStates/Sync.h"
+#include "NetworkingStates/Idle.h"
+#include "NetworkingStates/NetError.h"
 
 #include <exception>
 
+#define allocate(_key, _constr, ...) {_key, (NetworkingState*)new _constr(__VA_ARGS__)}
+
 CatanNetworking::
 CatanNetworking(string ip, unsigned int port, CatanGame& _game) : Observer(), game(_game){
+	/* Inicializacion */
 	this->ip = ip;
 	this->port = port;
 	this->socket = nullptr;
 	this->status = true;
 	this->error = "";
-	this->prevState = nullptr;
-	this->currState = new Disconnected(*this);
+
+	/* Creo todos los estados */
+	states.clear();
+	states = {
+		allocate(States::DISCONNECTED, Disconnected, *this),
+		allocate(States::LISTENING, Listening, *this),
+		allocate(States::IDLE, Idle, *this),
+		allocate(States::WAIT_SYNC, WaitSync, *this),
+		allocate(States::SYNC, WaitSync, *this),
+		allocate(States::NET_ERROR, NetError, *this)
+	};
+
+	/* Estado inicial */
+	changeState(States::DISCONNECTED);
 }
 
 CatanNetworking::
@@ -44,13 +64,16 @@ CatanNetworking::
 		delete socket;
 	if (this->currState)
 		delete this->currState;
-	if (this->prevState)
-		delete this->prevState;
+	for (auto state : states) {
+		if (state.second) {
+			delete state.second;
+		}
+	}
 }
 
-string
-CatanNetworking::what(void) {
-	return this->currState->what();
+CatanNetworking::States 
+CatanNetworking::getNetworkingState(void) {
+	return (CatanNetworking::States )this->currState->getId();
 }
 
 unsigned int 
@@ -112,12 +135,13 @@ CatanNetworking::verifyStatus(void) const {
 	}
 }
 
+void 
+CatanNetworking::changeState(CatanNetworking::States state) {
+	changeState(states[state]);
+}
+
 void
 CatanNetworking::changeState(NetworkingState* state) {
-	if (prevState) {
-		delete prevState;
-	}
-	prevState = currState;
 	currState = state;
 }
 

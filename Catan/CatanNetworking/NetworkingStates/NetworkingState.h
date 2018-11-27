@@ -19,7 +19,7 @@ public:
 	/*
 	* Constructor de NetworkingState
 	*/
-	NetworkingState(CatanNetworking& _networking);
+	NetworkingState(CatanNetworking& _networking, unsigned int id);
 	~NetworkingState();
 
 	/*
@@ -31,8 +31,10 @@ public:
 	*/
 	virtual void run(void) = 0;
 	virtual void update(void) = 0;
-	virtual string what(void) = 0;
+
+	unsigned int getId(void);
 
 protected:
 	CatanNetworking& networking;
+	unsigned int id;
 };

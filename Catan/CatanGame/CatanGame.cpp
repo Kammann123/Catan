@@ -156,7 +156,6 @@ CatanGame::handle(CatanEvent* event) {
 		else {
 
 			this->state->handle(event);
-			delete event;
 		}
 	}
 }
@@ -209,7 +208,8 @@ void
 CatanGame::changeState(CatanState* newState) {
 
 	/* Borro el previo */
-	delete prevState;
+	if(prevState)
+		delete prevState;
 
 	/* Guardo previo */
 	prevState = state;

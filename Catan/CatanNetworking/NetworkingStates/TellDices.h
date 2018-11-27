@@ -4,8 +4,7 @@
 
 class TellDices : public HandshakingState {
 public:
-	TellDices(CatanNetworking& net) : HandshakingState(tellDicesProtocol, net) {}
-	string what(void) { return "TELL_DICES"; }
+	TellDices(CatanNetworking& net) : HandshakingState(tellDicesProtocol, net, CatanNetworking::States::TELL_DICES) {}
 	virtual bool isHeader(PacketHeader header) { return header == PacketHeader::PASS;  }
 private:
 	/* Metodos del protocolo */

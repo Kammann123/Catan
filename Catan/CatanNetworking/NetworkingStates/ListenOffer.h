@@ -4,7 +4,7 @@
 
 class ListenOffer : public HandshakingState {
 public:
-	ListenOffer(CatanNetworking& net) : HandshakingState(listenOfferProtocol, net) {}
+	ListenOffer(CatanNetworking& net) : HandshakingState(listenOfferProtocol, net, CatanNetworking::States::LISTEN_OFFER) {}
 	string what(void) { return "LISTEN_OFFER"; }
 	virtual bool isHeader(PacketHeader header) { return header == PacketHeader::OFFER_TRADE;  }
 private:

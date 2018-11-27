@@ -4,8 +4,7 @@
 
 class TellOffer : public HandshakingState {
 public:
-	TellOffer(CatanNetworking& net) : HandshakingState(tellOfferProtocol, net) {}
-	string what(void) { return "TELL_OFFER"; }
+	TellOffer(CatanNetworking& net) : HandshakingState(tellOfferProtocol, net, CatanNetworking::States::TELL_OFFER) {}
 	virtual bool isHeader(PacketHeader header) { return header == PacketHeader::OFFER_TRADE; }
 private:
 	/* Metodos del protocolo */

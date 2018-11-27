@@ -21,7 +21,6 @@ public:
 	/* Acciones del estado */
 	virtual void run(void);
 	virtual void update(void);
-	virtual string what(void);
 
 private:
 	list<HandshakingState*> listeners;

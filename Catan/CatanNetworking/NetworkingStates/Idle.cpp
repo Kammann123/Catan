@@ -19,7 +19,7 @@
 #define allocate(_constructor, ...)	(HandshakingState*)new _constructor(__VA_ARGS__)
 
 Idle::
-Idle(CatanNetworking& _networking) : NetworkingState(_networking) {
+Idle(CatanNetworking& _networking) : NetworkingState(_networking, CatanNetworking::States::IDLE) {
 	
 	/* 
 	* Se abren y crean las listas con los listeners y tellers 
@@ -65,7 +65,7 @@ Idle::run(void) {
 	NetworkSocket* socket = networking.getSocket();
 
 	/* Reviso mensajes */
-	if (socket->hasReceived() ){
+	if (socket->hasReceived()){
 
 		/* Ojeo el paquete que llego */
 		NetworkPacket* packet = socket->look();
@@ -84,7 +84,7 @@ Idle::run(void) {
 
 		/* No detecto nada! Error :'( */
 		networking.setError("Idle - Error de protocolo, no se reconoce la peticion.");
-		networking.changeState(new NetError(networking));
+		networking.changeState(CatanNetworking::States::NET_ERROR);
 	}
 }
 
@@ -109,10 +109,5 @@ Idle::update(void) {
 
 	/* No detecto nada! Error :'( */
 	networking.setError("Idle - Error de protocolo, no se reconoce la peticion.");
-	networking.changeState(new NetError(networking));
-}
-
-string
-Idle::what(void) {
-	return string("IDLE");
+	networking.changeState(CatanNetworking::States::NET_ERROR);
 }

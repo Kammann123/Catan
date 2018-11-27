@@ -18,5 +18,4 @@ public:
 	/* Acciones del estado */
 	void run(void);
 	void update(void);
-	string what(void);
 };

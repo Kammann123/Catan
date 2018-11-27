@@ -4,8 +4,7 @@
 
 class TellEnd : public HandshakingState {
 public:
-	TellEnd(CatanNetworking& net) : HandshakingState(tellEndProtocol, net) {}
-	string what(void) { return "TELL_END"; }
+	TellEnd(CatanNetworking& net) : HandshakingState(tellEndProtocol, net, CatanNetworking::States::TELL_END) {}
 	virtual bool isHeader(PacketHeader header) { return header == PacketHeader::I_WON;  }
 private:
 	/* Metodos del protocolo */

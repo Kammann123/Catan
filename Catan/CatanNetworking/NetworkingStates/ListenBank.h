@@ -4,8 +4,7 @@
 
 class ListenBank : public HandshakingState {
 public:
-	ListenBank(CatanNetworking& net) : HandshakingState(listenBankProtocol, net) {}
-	string what(void) { return "LISTEN_BANK"; }
+	ListenBank(CatanNetworking& net) : HandshakingState(listenBankProtocol, net, CatanNetworking::States::LISTEN_BANK) {}
 	virtual bool isHeader(PacketHeader header) { return header == PacketHeader::BANK_TRADE; }
 private:
 	/* Metodos del protocolo */

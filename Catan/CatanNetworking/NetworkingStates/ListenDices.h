@@ -4,8 +4,7 @@
 
 class ListenDices : public HandshakingState {
 public:
-	ListenDices(CatanNetworking& net) : HandshakingState(listenDicesProtocol, net) {}
-	string what(void) { return "LISTEN_DICES"; }
+	ListenDices(CatanNetworking& net) : HandshakingState(listenDicesProtocol, net, CatanNetworking::States::LISTEN_DICES) {}
 	virtual bool isHeader(PacketHeader header) { return header == PacketHeader::PASS; }
 private:
 	/* Metodos del protocolo */

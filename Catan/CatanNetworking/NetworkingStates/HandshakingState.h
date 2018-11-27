@@ -12,7 +12,7 @@
 class HandshakingState : public NetworkingState {
 public:
 	/* Constructor */
-	HandshakingState(Protocol* p, CatanNetworking& net);
+	HandshakingState(Protocol* p, CatanNetworking& net, unsigned int id);
 	~HandshakingState();
 
 	/* 
@@ -25,7 +25,6 @@ public:
 	/* Acciones del estado */
 	virtual void run(void);
 	virtual void update(void);
-	virtual string what(void);
 private:
 	Protocol * handshakingProtocol;
 };
