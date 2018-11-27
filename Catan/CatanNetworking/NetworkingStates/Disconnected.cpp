@@ -17,7 +17,7 @@ Disconnected(CatanNetworking& networking) : NetworkingState(networking) {
 	start = boost::chrono::steady_clock::now();
 
 	/* Creo el socket como cliente */
-	NetworkSocket* socket = new NetworkClient;
+	NetworkSocket* socket = new NetworkClient();
 	networking.setSocket(socket);
 }
 

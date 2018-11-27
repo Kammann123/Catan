@@ -38,6 +38,7 @@ int main(int argc, char** argv) {
 		else {
 			CONSOLE("Hubo un error durante la ejecucion de networking!");
 			CONSOLE(net.getError());
+			break;
 		}
 
 		if (gameStatus != game.getState()) {
