@@ -13,7 +13,7 @@ using namespace std;
 void clientTester(void);
 void serverTester(void);
 
-int main(int argc, char** argv) {
+int tester(int argc, char** argv) {
 
 	CONSOLE("Cliente o Server? Y/N: ");
 	unsigned char answer;
@@ -21,6 +21,8 @@ int main(int argc, char** argv) {
 
 	if (answer == 'Y')	clientTester();
 	else if (answer == 'N') serverTester();
+
+	return 0;
 }
 
 void clientTester(void) {

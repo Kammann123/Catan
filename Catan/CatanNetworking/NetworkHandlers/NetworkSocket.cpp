@@ -271,7 +271,7 @@ handleConnection(boost::system::error_code error) {
 			case boost::asio::error::not_connected:
 			case boost::asio::error::not_found:
 			case boost::asio::error::would_block:
-				return false;
+				return true;
 
 			/*
 			* En los que casos que me interesa que sea un error

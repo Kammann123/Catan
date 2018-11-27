@@ -339,7 +339,8 @@
     <ClCompile Include="FSM\EventQueue.cpp" />
     <ClCompile Include="FSM\GenericEvent.cpp" />
     <ClCompile Include="FSM\GenericFsm.cpp" />
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="networkingTester.cpp" />
+    <ClCompile Include="socketTester.cpp" />
     <ClCompile Include="MVC\Observer.cpp" />
     <ClCompile Include="MVC\Subject.cpp" />
     <ClCompile Include="Widgets.cpp" />
