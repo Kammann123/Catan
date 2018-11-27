@@ -1,4 +1,5 @@
 #include "RobberCards.h"
+#include "RobberMove.h"
 #include "GameError.h"
 #include "../../CatanEvents/RobberCardEvent.h"
 
@@ -39,14 +40,14 @@ RobberCards::handle(CatanEvent* event) {
 
 				/* Cambio de estado a la siguiente espera */
 				if (player == game.getTurn()) {
-					// ----> CAMBIAR A ROBBER MOVE <----
+					game.changeState(new RobberMove(game), "RobberCards - El segundo jugador descarto cartas correctamente!");
 				}
 				else {
 					if (game.hasRobberCards(game.getTurn())) {
 						game.changeState(new RobberCards(game, game.getTurn()), "RobberCards - El primer jugador descarto cartas correctamente!");
 					}
 					else {
-						// ----> CAMBIAR A ROBBER MOVE <----
+						game.changeState(new RobberMove(game), "RobberCards - El segundo jugador no tenia cartas para descartar!");
 					}
 				}
 

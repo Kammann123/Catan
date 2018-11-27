@@ -1,5 +1,7 @@
 #include "ThrowDices.h"
 #include "GameError.h"
+#include "RobberCards.h"
+#include "RobberMove.h"
 
 void
 ThrowDices::handle(CatanEvent* event) {
@@ -28,14 +30,14 @@ ThrowDices::handle(CatanEvent* event) {
 				if (game.isRobberDices(dices->getDices())) {
 
 					if ( game.hasRobberCards(OPONENT_ID(game.getTurn())) ) {
-						//	----> CAMBIO DE ESTADO A ROBBER CARDS <----
+						game.changeState(new RobberCards(game, game.getTurn()), "ThrowDices - El primer jugador debe descartar cartas!");
 					}
 					else {
 						if (game.hasRobberCards(game.getTurn())) {
-							// -----> CAMBIO DE ESTADO A ROBBER CARDS <-----
+							game.changeState(new RobberCards(game, game.getTurn()), "ThrowDices - El segundo jugador debe descartar cartas!");
 						}
 						else {
-							// -----> CAMBIO DE ESTADO A ROBBER MOVE <-----
+							game.changeState(new RobberMove(game), "ThrowDices - Nadie debe descartar cartas.");
 						}
 					}
 				}
