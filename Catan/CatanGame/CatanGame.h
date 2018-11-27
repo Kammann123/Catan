@@ -62,6 +62,8 @@
 #define SETTLEMENT_BUILT_POINTS		1
 #define CITY_BUILT_POINTS			2
 
+#define WINNER_POINTS		8
+
 #define RANDOM_DICE	((rand() % 6) + 1)
 
 #define OPONENT_ID(id)	(id == PlayerId::PLAYER_ONE ? PlayerId::PLAYER_TWO : PlayerId::PLAYER_ONE)
@@ -407,6 +409,14 @@ public:
 	void pass(void);
 
 	/*
+	* Metodos de control del final de juego
+	* por victoria de uno de los jugadores de la partida
+	*/
+	bool hasWinner(void);
+	PlayerId getWinner(void);
+	void updateWinner(void);
+
+	/*
 	* addNewEvent
 	* Agrega un nuevo evento a la cola
 	*/
@@ -449,7 +459,8 @@ private:
 	CatanState* state;
 	CatanState* prevState;
 
-private:
+	PlayerId winner;
+
 	string description;
 	map<PlayerId, unsigned int> playerLongestRoad;
 	map<PlayerId, list<SeaId>> playerDocks;

@@ -26,6 +26,7 @@ CatanGame::_init_game(void) {
 	this->prevState = nullptr;
 	this->state = new GameSync(*this);
 	this->longestRoad = PlayerId::PLAYER_NONE;
+	this->winner = PlayerId::PLAYER_NONE;
 	this->turn = PlayerId::PLAYER_NONE;
 	this->description = "";
 
@@ -478,11 +479,9 @@ CatanGame::generateTokens() {
 
 	/* Genero los numeros aleatorios */
 	tokens.push_back(2), tokens.push_back(12);
-	for (unsigned int i = 0; i < 16; i++) {
-		do {
-			token = RANDOM_DICE + RANDOM_DICE;
-		} while ( token == 7 || token == 2 || token == 12 );
-		tokens.push_back(token);
+	for (unsigned int i = 3; i <= 11; i++) {
+		tokens.push_back(i);
+		tokens.push_back(i);
 	}
 	random_shuffle(tokens.begin(), tokens.end());
 
@@ -561,28 +560,25 @@ CatanGame::verifyTokens(map<Coord, unsigned char> tokens) {
 	* y luego valido que los numeros esten en el rango que se 
 	* admite segun las reglas de Catan
 	*/
-	unsigned int fCounter = 0;
-	unsigned int sCounter = 0;
-	for (unsigned char i = MIN_LAND_COORD; i <= MAX_LAND_COORD; i++) {
-		if (tokens.find(i) == tokens.end()) {
+	map<unsigned int, unsigned int> tokenCounter;
+
+	for (unsigned int i = 3; i <= 11; i++) tokenCounter.insert(pair<unsigned int, unsigned int>(i, 2));
+	tokenCounter.insert(pair<unsigned int, unsigned int>(2, 1));
+	tokenCounter.insert(pair<unsigned int, unsigned int>(12, 1));
+
+	for (unsigned int i = MIN_LAND_COORD; i <= MAX_LAND_COORD; i++) {
+
+		if (tokenCounter.find(i) == tokenCounter.end()) {
 			return false;
+		}else if( tokenCounter[i] > 0 ){
+			tokenCounter[i] -= 1;
 		}
-		else {
-			if (tokens[i] < 2 || tokens[i] > 12 || tokens[i] == 7) {
-				return false;
-			}
-			else if (tokens[i] == 2) {
-				fCounter++;
-			}else if( tokens[i] == 12) {
-				sCounter++;
-			}
+		else if( tokenCounter[i] == 0) {
+			return false;
 		}
 	}
 
-	/*
-	* Verifico que los tokens 2 y 12 aparezcan unicamente una sola vez
-	*/
-	return (fCounter == 1 && sCounter == 1);
+	return true;
 }
 
 void
@@ -1094,7 +1090,13 @@ CatanGame::buildRoad(Building* building, Coord coords, PlayerId playerID)
 	* y configuro los puntos del jugador 
 	*/
 	builtMap.push_back(newRoad);
-	getPlayer(playerID).addPoints(ROAD_BUILT_POINTS); 
+	getPlayer(playerID).addPoints(ROAD_BUILT_POINTS);
+
+	/* Actualizo camino mas largo */
+	updateLongestRoad();
+
+	/* Actualizo los puntos y veo ganador */
+	updateWinner();
 }
 
 void
@@ -1124,6 +1126,9 @@ CatanGame::buildCity(Building* building, Coord coords, PlayerId playerID)
 	getPlayer(playerID).giveBackBuilding(BuildingType::SETTLEMENT, building);
 	getPlayer(playerID).removePoints(SETTLEMENT_BUILT_POINTS);
 	getPlayer(playerID).addPoints(CITY_BUILT_POINTS);
+
+	/* Actualizo los puntos y veo ganador */
+	updateWinner();
 }
 
 void
@@ -1147,6 +1152,9 @@ CatanGame::buildSettlement(Building* building, Coord coords, PlayerId playerID)
 
 	/* Actualizo los docks disponibles del usuario/jugador */
 	updateDocks(coords, playerID);
+
+	/* Actualizo los puntos y veo ganador */
+	updateWinner();
 }
 
 void
@@ -1520,3 +1528,22 @@ CatanGame::pass() {
 	this->turn = OPONENT_ID(this->turn);
 }
 
+bool
+CatanGame::hasWinner(void) {
+	return winner != PlayerId::PLAYER_NONE;
+}
+
+PlayerId
+CatanGame::getWinner(void) {
+	return winner;
+}
+
+void
+CatanGame::updateWinner(void) {
+	if (localPlayer.getVictoryPoints() == WINNER_POINTS) {
+		winner = PlayerId::PLAYER_ONE;
+	}
+	else if (remotePlayer.getVictoryPoints() == WINNER_POINTS) {
+		winner = PlayerId::PLAYER_TWO;
+	}
+}
