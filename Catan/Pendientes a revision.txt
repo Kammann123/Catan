@@ -7,9 +7,20 @@ para revisar posteriormente.
 Listado:
 	+ Revisar la liberacion de memoria de los paquetes de networking,
 	eventos, y los objetos del juego, algo de todo esto se esta escapando...
+
 	+ Revisar como se agregan los nuevos protocolos para no generar un desastre
 	y hacer facil agregar nuevamente cosas como development cards
+	
 	+ Importante, ver el flujo de los tipos de datos de networking al juego,
 	de gui al juego y en ambos sentidos inversos. Por ejemplo, los dices
 	se reciben y transmiten como ASCII, en el juego se usan como numero
 	, pero cuando se los genera en GUI, se los genera como ASCII? Si no, es error.
+	
+	+ Revisar conexion networking, en una PC funciona, pero parece que
+	entre varias PC no esta arrancando, ademas, en el flujo del protocolo,
+	hay un error generado durante los cambios de estados, algo mal con
+	los punteros?
+
+	+ Revisar que todos los datos y eventos estaban en funcion del
+	paquete remoto, falta la informacion si la fuente es local!
+	Por ejemplo, con los ResourceCards....
