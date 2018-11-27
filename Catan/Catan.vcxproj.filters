@@ -506,9 +506,6 @@
     <ClCompile Include="CatanNetworking\NetworkParsers\TokenParser.cpp">
       <Filter>CatanNetworking\NetworkParsers</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
     <ClCompile Include="CatanNetworking\NetworkHandlers\NetworkSocket.cpp">
       <Filter>CatanNetworking\NetworkHandlers</Filter>
     </ClCompile>
@@ -729,6 +726,12 @@
       <Filter>CatanEvents</Filter>
     </ClCompile>
     <ClCompile Include="Widgets.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="socketTester.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="networkingTester.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
