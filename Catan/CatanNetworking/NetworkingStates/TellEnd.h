@@ -9,6 +9,7 @@ public:
 	virtual bool isHeader(PacketHeader header) { return header == PacketHeader::I_WON;  }
 private:
 	/* Metodos del protocolo */
+	void askSync(NetworkPacket* packet) { networking.getGame().handle(new CatanEvent(CatanEvent::Events::ASK_SYNC, CatanEvent::Sources::NETWORKING, PlayerId::PLAYER_TWO) ); }
 	void gameOver(NetworkPacket* packet) { networking.getGame().handle(new CatanEvent(CatanEvent::Events::GAME_OVER, CatanEvent::Sources::NETWORKING, PlayerId::PLAYER_TWO)); }
 	void playAgain(NetworkPacket* packet) { networking.getGame().handle(new CatanEvent(CatanEvent::Events::PLAY_AGAIN, CatanEvent::Sources::NETWORKING, PlayerId::PLAYER_TWO)); }
 	NetworkPacket* getMap(void) { return new MapPacket(networking.getGame().getMap()); }
@@ -26,7 +27,7 @@ private:
 			),
 		p_send("OVER_ACK", tag(PROTOCOL_DONE), PacketHeader::ACK),
 		p_if_send("AGAIN_ANSWER",
-			p_wait_send("ANSWER_OK", tag("OK_ACK"), PacketHeader::PLAY_AGAIN),
+			p_wait_send("ANSWER_OK", tag("OK_ACK"), bind(&TellEnd::askSync, this, _1), PacketHeader::PLAY_AGAIN),
 			p_wait_send("ANSWER_NO", tag("NO_ACK"), PacketHeader::GAME_OVER)
 		),
 		p_recv("NO_ACK", tag(PROTOCOL_DONE), PacketHeader::ACK),

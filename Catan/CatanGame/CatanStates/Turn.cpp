@@ -1,5 +1,6 @@
 #include "Turn.h"
 #include "GameError.h"
+#include "Winner.h"
 #include "ThrowDices.h"
 #include "OfferAnswer.h"
 
@@ -40,10 +41,22 @@ Turn::handle(CatanEvent* event) {
 								/* Ejecuto acciones construccion y cobro */
 								game.buildCity(settlement, building->getCoords(), building->getPlayer());
 								game.payCity(building->getPlayer());
-
-								/* Notifico */
-								game.setInfo("Turn - El jugador ha colocado ciudad correctamente!");
 								game.addNewEvent(event);
+
+								/* Verifico si gano... */
+								if (game.hasWinner()) {
+									/* Mando el evento de ganador/perdedor */
+									CatanEvent::Events endingEvent = PlayerId::PLAYER_ONE == game.getWinner() ? CatanEvent::Events::WON : CatanEvent::Events::LOST;
+									game.addNewEvent(new CatanEvent(endingEvent, CatanEvent::Sources::NETWORKING, PlayerId::PLAYER_ONE));
+
+									/* Cambio de estado a ganador */
+									game.changeState(new Winner(game), "Turn - Un jugador ha ganado la partida!");
+								}
+								else {
+
+									/* Notifico */
+									game.setInfo("Turn - El jugador ha colocado ciudad correctamente!");
+								}
 								return;
 							}
 						}
@@ -57,10 +70,22 @@ Turn::handle(CatanEvent* event) {
 								/* Ejecuto acciones construccion y cobro */
 								game.buildRoad(neighbour, building->getCoords(), building->getPlayer());
 								game.payRoad(building->getPlayer());
-
-								/* Notifico */
-								game.setInfo("Turn - El jugador ha colocado road correctamente!");
 								game.addNewEvent(event);
+
+								/* Verifico si gano... */
+								if (game.hasWinner()) {
+									/* Mando el evento de ganador/perdedor */
+									CatanEvent::Events endingEvent = PlayerId::PLAYER_ONE == game.getWinner() ? CatanEvent::Events::WON : CatanEvent::Events::LOST;
+									game.addNewEvent(new CatanEvent(endingEvent, CatanEvent::Sources::NETWORKING, PlayerId::PLAYER_ONE));
+
+									/* Cambio de estado a ganador */
+									game.changeState(new Winner(game), "Turn - Un jugador ha ganado la partida!");
+								}
+								else {
+
+									/* Notifico */
+									game.setInfo("Turn - El jugador ha colocado road correctamente!");
+								}
 								return;
 							}
 						}
@@ -74,10 +99,22 @@ Turn::handle(CatanEvent* event) {
 								/* Ejecuto acciones construccion y cobro */
 								game.buildSettlement(neighbour, building->getCoords(), building->getPlayer());
 								game.paySettlement(building->getPlayer());
-
-								/* Notifico */
-								game.setInfo("Turn - El jugador ha colocado settlement correctamente!");
 								game.addNewEvent(event);
+
+								/* Verifico si gano... */
+								if (game.hasWinner()) {
+									/* Mando el evento de ganador/perdedor */
+									CatanEvent::Events endingEvent = PlayerId::PLAYER_ONE == game.getWinner() ? CatanEvent::Events::WON : CatanEvent::Events::LOST;
+									game.addNewEvent(new CatanEvent(endingEvent, CatanEvent::Sources::NETWORKING, PlayerId::PLAYER_ONE));
+
+									/* Cambio de estado a ganador */
+									game.changeState(new Winner(game), "Turn - Un jugador ha ganado la partida!");
+								}
+								else {
+
+									/* Notifico */
+									game.setInfo("Turn - El jugador ha colocado settlement correctamente!");
+								}
 								return;
 							}
 						}

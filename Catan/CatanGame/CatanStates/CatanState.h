@@ -22,6 +22,8 @@ public:
 	*/
 	virtual void handle(CatanEvent* event) = 0;
 
+	virtual unsigned int getState(void) { return 0; }
+
 	/*
 	* getId
 	* Devuelve la definicion del estado de la implementacion, es basicamente
