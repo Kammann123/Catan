@@ -144,8 +144,10 @@
     <ClInclude Include="CatanEvents\YOPEvent.h" />
     <ClInclude Include="CatanGame\Building.h" />
     <ClInclude Include="CatanGame\CatanGame.h" />
-    <ClInclude Include="CatanGame\CatanState.h" />
-    <ClInclude Include="CatanGame\CatanStatus.h" />
+    <ClInclude Include="CatanGame\CatanStates\CatanState.h" />
+    <ClInclude Include="CatanGame\CatanStates\FirstBuilds.h" />
+    <ClInclude Include="CatanGame\CatanStates\GameError.h" />
+    <ClInclude Include="CatanGame\CatanStates\GameSync.h" />
     <ClInclude Include="CatanGame\Coord.h" />
     <ClInclude Include="CatanGame\Player.h" />
     <ClInclude Include="CatanGame\ResourceCard.h" />
@@ -258,7 +260,9 @@
     <ClCompile Include="CatanEvents\YOPEvent.cpp" />
     <ClCompile Include="CatanGame\Building.cpp" />
     <ClCompile Include="CatanGame\CatanGame.cpp" />
-    <ClCompile Include="CatanGame\CatanStatus.cpp" />
+    <ClCompile Include="CatanGame\CatanStates\FirstBuilds.cpp" />
+    <ClCompile Include="CatanGame\CatanStates\GameError.cpp" />
+    <ClCompile Include="CatanGame\CatanStates\GameSync.cpp" />
     <ClCompile Include="CatanGame\Coord.cpp" />
     <ClCompile Include="CatanGame\Player.cpp" />
     <ClCompile Include="CatanGame\ResourceCard.cpp" />

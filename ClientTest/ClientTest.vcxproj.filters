@@ -234,9 +234,6 @@
     <ClCompile Include="..\Catan\CatanGame\CatanGame.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="..\Catan\CatanGame\CatanStatus.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
     <ClCompile Include="..\Catan\CatanGame\Player.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
@@ -295,6 +292,18 @@
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="..\Catan\CatanNetworking\CatanNetworking.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Catan\CatanGame\Coord.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Catan\CatanGame\CatanStates\FirstBuilds.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Catan\CatanGame\CatanStates\GameError.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Catan\CatanGame\CatanStates\GameSync.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
@@ -630,6 +639,21 @@
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="..\Catan\CatanNetworking\CatanNetworking.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Catan\CatanGame\Coord.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Catan\CatanGame\CatanStates\CatanState.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Catan\CatanGame\CatanStates\FirstBuilds.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Catan\CatanGame\CatanStates\GameError.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Catan\CatanGame\CatanStates\GameSync.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

@@ -12,6 +12,8 @@
 #include "../CatanEvents/YOPEvent.h"
 #include "../CatanEvents/KnightEvent.h"
 
+#include "CatanStates/GameSync.h"
+
 #include <algorithm>
 #include <vector>
 #include <time.h>
@@ -21,9 +23,10 @@ CatanGame::_init_game(void) {
 
 	/* Inicializacion de variables */
 	this->prevState = nullptr;
-	this->state = nullptr;
+	this->state = new GameSync(*this);
 	this->longestRoad = PlayerId::PLAYER_NONE;
 	this->turn = PlayerId::PLAYER_NONE;
+	this->description = "";
 
 	/* Limpio los diccionarios */
 	builtMap.clear();
@@ -78,6 +81,11 @@ CatanGame::_clear_resource_map(void) {
 }
 
 void
+CatanGame::setInfo(string info) {
+	this->description = info;
+}
+
+void
 CatanGame::_clear_sea_map(void) {
 	seaMap.clear();
 }
@@ -117,6 +125,16 @@ void
 CatanGame::handle(CatanEvent* event) {
 	this->state->handle(event);
 	delete event;
+}
+
+CatanGame::State
+CatanGame::getState(void) {
+	return (State)this->state->getId();
+}
+
+string
+CatanGame::info(void) {
+	return description;
 }
 
 bool
@@ -384,7 +402,8 @@ CatanGame::generateMap() {
 	}
 
 	/* Ubicamos aleatoriamente desert */
-	resourceMap.insert(pair<unsigned char, ResourceHex>(coords.back(), ResourceHex(ResourceId::DESERT, coords.back())));
+	resourceMap.insert(pair<Coord, ResourceHex>(coords.back(), ResourceHex(ResourceId::DESERT, coords.back())));
+	moveRobber(coords.back());
 }
 
 void
@@ -540,6 +559,11 @@ CatanGame::setGlobalMap(map<Coord, MapValue> gameMap, map<Coord, unsigned char> 
 		
 		ResourceHex hex = ResourceHex((ResourceId)gameMap[i], (unsigned int)tokens[i], i);
 		resourceMap.insert( pair<Coord, ResourceHex>(i, hex) );
+
+		/* Ubicamos el robber */
+		if (hex.getResource() == ResourceId::DESERT) {
+			moveRobber(hex.getCoord());
+		}
 	}
 
 	/*
@@ -551,6 +575,16 @@ CatanGame::setGlobalMap(map<Coord, MapValue> gameMap, map<Coord, unsigned char> 
 		SeaHex hex = SeaHex(i, (SeaId)gameMap[i]);
 		seaMap.insert( pair<Coord, SeaHex>(i, hex) );
 	}
+}
+
+void
+CatanGame::setTurn(PlayerId playerId) {
+	turn = playerId;
+}
+
+void
+CatanGame::toggleTurn(void) {
+	turn = OPONENT_ID(turn);
 }
 
 void
@@ -695,8 +729,43 @@ CatanGame::getLongestRoad(Building* building, unsigned int length) {
 }
 
 bool
+CatanGame::isRobberDices(unsigned int dices) {
+	return dices == ROBBER_CARDS_COUNT;
+}
+
+bool
 CatanGame::hasRobberCards(PlayerId playerID) {
 	return (getPlayer(playerID).getResourceCount() > ROBBER_CARDS_COUNT);
+}
+
+bool
+CatanGame::validateRobberCards(list<ResourceCard*>& cards, PlayerId playerID) {
+
+	/*
+	* Calculo la cantidad de cartas que debiera entregar el jugador
+	* correspondiente, y lo almaceno temporalmente
+	*/
+	unsigned int shouldGive = getPlayer(playerID).getResourceCount() / 2;
+
+	/* 
+	* Valido la cantidad de cartas entregadas
+	*/
+	return cards.size() == shouldGive;
+}
+
+bool
+CatanGame::validateRobberCards(list<ResourceId>& cards, PlayerId playerID) {
+
+	/*
+	* Calculo la cantidad de cartas que debiera entregar el jugador
+	* correspondiente, y lo almaceno temporalmente
+	*/
+	unsigned int shouldGive = getPlayer(playerID).getResourceCount() / 2;
+
+	/*
+	* Valido la cantidad de cartas entregadas
+	*/
+	return cards.size() == shouldGive;
 }
 
 void
@@ -836,6 +905,7 @@ CatanGame::isValidCity(Coord coords, PlayerId playerID) {
 			}
 		}
 	}
+	return nullptr;
 }
 
 Building*
@@ -885,6 +955,24 @@ CatanGame::isValidSettlement(Coord coords, PlayerId playerID) {
 	}
 
 	return nullptr;
+}
+
+bool 
+CatanGame::validFirstSettlement(Coord coords, PlayerId playerId) {
+
+	/*
+	* Verifico que la construccion sea en una coordenada valida
+	* y luego verifico que no existe ninguna construccion en ese punto
+	*/
+	if (coords.isDot()) {
+		for (Building* building : builtMap) {
+			if (building->getPlace() == coords) {
+				return false;
+			}
+		}
+		return true;
+	}
+	return false;
 }
 
 bool
@@ -978,8 +1066,10 @@ CatanGame::buildSettlement(Building* building, Coord coords, PlayerId playerID)
 	*/
 	Building* newSettlement = getPlayer(playerID).popSettlement();
 	newSettlement->setPlace(coords);
-	newSettlement->addNeighbour(building);
-	building->addNeighbour(newSettlement);
+	if (building) {
+		newSettlement->addNeighbour(building);
+		building->addNeighbour(newSettlement);
+	}
 
 	/*
 	* Agrego la nueva construccion al tablero y le asigno el puntaje

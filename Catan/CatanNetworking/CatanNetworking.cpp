@@ -114,7 +114,9 @@ CatanNetworking::verifyStatus(void) const {
 
 void
 CatanNetworking::changeState(NetworkingState* state) {
-	delete prevState;
+	if (prevState) {
+		delete prevState;
+	}
 	prevState = currState;
 	currState = state;
 }

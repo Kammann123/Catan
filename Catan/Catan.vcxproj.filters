@@ -49,6 +49,9 @@
     <Filter Include="CatanNetworking\NetworkingStates">
       <UniqueIdentifier>{76bcf697-69bf-414d-9b4e-45376105215f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CatanGame\CatanStates">
+      <UniqueIdentifier>{c7cf041d-9b43-4d3d-b53b-6f086448998b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FSM\EventGenerator.h">
@@ -205,12 +208,6 @@
       <Filter>CatanGame</Filter>
     </ClInclude>
     <ClInclude Include="CatanGame\Robber.h">
-      <Filter>CatanGame</Filter>
-    </ClInclude>
-    <ClInclude Include="CatanGame\CatanStatus.h">
-      <Filter>CatanGame</Filter>
-    </ClInclude>
-    <ClInclude Include="CatanGame\CatanState.h">
       <Filter>CatanGame</Filter>
     </ClInclude>
     <ClInclude Include="CatanData\BankData.h">
@@ -381,6 +378,18 @@
     <ClInclude Include="CatanGame\Coord.h">
       <Filter>CatanGame</Filter>
     </ClInclude>
+    <ClInclude Include="CatanGame\CatanStates\CatanState.h">
+      <Filter>CatanGame\CatanStates</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGame\CatanStates\FirstBuilds.h">
+      <Filter>CatanGame\CatanStates</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGame\CatanStates\GameSync.h">
+      <Filter>CatanGame\CatanStates</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGame\CatanStates\GameError.h">
+      <Filter>CatanGame\CatanStates</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FSM\EventQueue.cpp">
@@ -536,9 +545,6 @@
     <ClCompile Include="CatanGame\Robber.cpp">
       <Filter>CatanGame</Filter>
     </ClCompile>
-    <ClCompile Include="CatanGame\CatanStatus.cpp">
-      <Filter>CatanGame</Filter>
-    </ClCompile>
     <ClCompile Include="CatanData\BankData.cpp">
       <Filter>CatanData</Filter>
     </ClCompile>
@@ -664,6 +670,15 @@
     </ClCompile>
     <ClCompile Include="CatanEvents\KnightEvent.cpp">
       <Filter>CatanEvents</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGame\CatanStates\FirstBuilds.cpp">
+      <Filter>CatanGame\CatanStates</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGame\CatanStates\GameSync.cpp">
+      <Filter>CatanGame\CatanStates</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGame\CatanStates\GameError.cpp">
+      <Filter>CatanGame\CatanStates</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

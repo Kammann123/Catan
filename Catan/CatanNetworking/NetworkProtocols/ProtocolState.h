@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../NetworkPackets/NetworkPacket.h"
-#include "../../CatanGame/CatanStatus.h"
 #include "ProtocolTag.h"
 
 #include <functional>
