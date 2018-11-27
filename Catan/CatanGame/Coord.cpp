@@ -264,6 +264,30 @@ Coord::getCoords(void)  {
 	return coords;
 }
 
+list<Coord> 
+Coord::getLandCoords(void) {
+	list<Coord> landCoords;
+	for (unsigned char c : coords) {
+		Coord myCoord = Coord(c);
+		if (myCoord.isLand()) {
+			landCoords.push_back(myCoord);
+		}
+	}
+	return landCoords;
+}
+
+list<Coord> 
+Coord::getSeaCoords(void) {
+	list<Coord> landCoords;
+	for (unsigned char c : coords) {
+		Coord myCoord = Coord(c);
+		if (myCoord.isSea()) {
+			landCoords.push_back(myCoord);
+		}
+	}
+	return landCoords;
+}
+
 string::iterator 
 Coord::begin(void) {
 	return coords.begin();

@@ -667,6 +667,24 @@ CatanGame::assignResources(unsigned int dices) {
 }
 
 void
+CatanGame::assignResources(BuildingType type, Coord coords, PlayerId playerId) {
+	
+	/*
+	* Verifico que si la coordenada corresponde correctamente a un punto
+	* , busco para cada uno de los hexagonos de recursos, y se lo asigno al player como
+	* corresponde.
+	*/
+	if (coords.isDot() && type != BuildingType::ROAD) {
+		list<Coord> landCoords = coords.getLandCoords();
+		
+		for (Coord coord : landCoords) {
+			ResourceHex resourceHex = resourceMap[coord];
+			assignResources(playerId, resourceHex.getResource(), type == BuildingType::CITY ? 2 : 1);
+		}
+	}
+}
+
+void
 CatanGame::assignResources(PlayerId player, ResourceId resource, unsigned int qty) {
 	/*
 	* Busco al jugador y luego creo la cantidad de cartas necesaria

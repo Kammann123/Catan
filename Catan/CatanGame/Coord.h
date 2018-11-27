@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <list>
 #include <exception>
 
 using namespace std;
@@ -69,6 +70,8 @@ public:
 	void forceDot(void);
 
 	string getCoords(void);
+	list<Coord> getLandCoords(void);
+	list<Coord> getSeaCoords(void);
 
 	string::iterator begin(void);
 	string::iterator end(void);

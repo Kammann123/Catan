@@ -36,6 +36,11 @@ FirstBuilds::handle(CatanEvent* event) {
 							/* Realizo la construccion */
 							game.buildSettlement(nullptr, building->getCoords(), building->getPlayer());
 
+							/* Asigno recursos en la segunda vuelta */
+							if (stage > 1) {
+								game.assignResources(building->getType(), building->getCoords(), building->getPlayer());
+							}
+
 							/* Guardo el evento de construccion */
 							game.addNewEvent(event);
 

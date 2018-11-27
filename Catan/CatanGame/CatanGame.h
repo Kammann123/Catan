@@ -245,6 +245,7 @@ public:
 	* segun el numero y los settlements como debe ser.
 	*/
 	void assignResources(unsigned int dices);
+	void assignResources(BuildingType type, Coord coords, PlayerId playerId);
 	void assignResources(PlayerId player, ResourceId resource, unsigned int qty);
 
 	/*
