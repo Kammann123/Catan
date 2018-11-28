@@ -20,6 +20,11 @@ HandshakingState::setProtocol(Protocol* protocol) {
 	this->handshakingProtocol = protocol;
 }
 
+Protocol*
+HandshakingState::getProtocol(void) {
+	return this->handshakingProtocol;
+}
+
 void
 HandshakingState::context() { handshakingProtocol->start(); }
 

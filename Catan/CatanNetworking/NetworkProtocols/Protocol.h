@@ -54,6 +54,12 @@ public:
 	void send(NetworkPacket* packet);
 	void recv(NetworkPacket* packet);
 
+	/* getType - Devuelve el tipo de estado de protocolo del primer estado del 
+	* del protocolo de comunicacion con lo cual se permite determinar el caracter
+	* del mismo, sea LISTENER o TELLER, en caso de ser BOTH, se toma como ambos...
+	*/
+	ProtocolState::ProtocolType getType(void);
+
 	/*
 	* reset
 	* Reinicia el protocolo a su estado inicial por defecto.

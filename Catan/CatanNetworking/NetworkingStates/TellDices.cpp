@@ -5,9 +5,11 @@ TellDices(CatanNetworking& net) : HandshakingState(net, CatanNetworking::States:
 	/* Defino el protocolo */
 	Protocol * tellDicesProtocol = protocol(
 		socket_send(networking.getSocket()),
-		"WAIT_PASS",
-		p_recv("WAIT_PASS", tag("SEND_DICES"), PacketHeader::PASS),
-		p_wait_send("SEND_DICES", cond_tag(bind(&TellDices::isRobber, this), "REMOTE_CARDS", "DICES_ACK"), PacketHeader::DICES_ARE),
+		"PASS_OR_DICES",
+		p_if("PASS_OR_DICES", 
+			p_recv("WAIT_PASS", tag("SEND_DICES"), PacketHeader::PASS),
+			p_wait_send("SEND_DICES", cond_tag(bind(&TellDices::isRobber, this), "REMOTE_CARDS", "DICES_ACK"), PacketHeader::DICES_ARE)
+		),
 		p_if_recv("REMOTE_CARDS",
 			p_recv("REMOTE_ROBBER", tag("LOCAL_ROBBER"), bind(&TellDices::remoteRobberCards, this, _1), PacketHeader::ROBBER_CARDS),
 			p_recv("REMOTE_ACK", tag("LOCAL_ROBBER"), PacketHeader::ACK)

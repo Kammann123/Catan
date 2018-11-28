@@ -69,8 +69,6 @@ CatanNetworking::
 ~CatanNetworking(void) {
 	if (socket)
 		delete socket;
-	if (this->currState)
-		delete this->currState;
 	for (auto state : states) {
 		if (state.second) {
 			delete state.second;

@@ -34,6 +34,14 @@ class ProtocolState {
 public:
 
 	/*
+	* ProtocolType - Se define un tipo de protocol state y protocol
+	* para definir si tanto el estado como el comienzo del protocolo esta definido
+	* como de emision o recepcion de mensaje, para manejar dinamicamente o virtualmente
+	* el dispatch de los mensajes
+	*/
+	enum ProtocolType : unsigned int {LISTENER, TELLER, BOTH};
+
+	/*
 	* ProtocolState
 	* Se permite construir un estado del protocol con o sin,
 	* callback de notificacion y con callback para mandar mensaje.
@@ -98,6 +106,7 @@ public:
 	virtual ProtocolStatus send(NetworkPacket* packet) = 0;
 	virtual ProtocolStatus recv(NetworkPacket* packet) = 0;
 	virtual ProtocolStatus solve(void) = 0;
+	virtual ProtocolType getType(void) = 0;
 	virtual map<string, ProtocolState*>* getSubStates(void);
 
 protected:

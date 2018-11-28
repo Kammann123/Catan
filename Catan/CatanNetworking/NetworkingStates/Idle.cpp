@@ -22,21 +22,18 @@ Idle::
 Idle(CatanNetworking& _networking) : NetworkingState(_networking, CatanNetworking::States::IDLE) {
 	
 	/* 
-	* Se abren y crean las listas con los listeners y tellers 
+	* Se abren y crean los listeners y tellers 
 	* para responder a peticiones ya sea de salida o entrada
 	* para intercambio de datos. Notese que manejar nuevos protocolos
 	* es adherir nuevos Listen y Tell objects.
 	*/
-	listeners = {
+	handlers = {
 		allocate(ListenBank, _networking),
 		allocate(ListenBuilding, _networking),
 		allocate(ListenDices, _networking),
 		allocate(ListenEnd, _networking),
 		allocate(ListenOffer, _networking),
-		allocate(ListenQuit, _networking)
-	};
-
-	tellers = {
+		allocate(ListenQuit, _networking),
 		allocate(TellBank, _networking),
 		allocate(TellBuilding, _networking),
 		allocate(TellDices, _networking),
@@ -48,12 +45,8 @@ Idle(CatanNetworking& _networking) : NetworkingState(_networking, CatanNetworkin
 
 Idle::
 ~Idle(void) {
-	for (HandshakingState* state : listeners) {
+	for (HandshakingState* state : handlers) {
 		if(state)
-			delete state;
-	}
-	for (HandshakingState* state : tellers) {
-		if (state)
 			delete state;
 	}
 }
@@ -74,14 +67,18 @@ Idle::run(void) {
 		NetworkPacket* packet = socket->look();
 
 		/* Verifico si se puede hacer un dispatch */
-		for (HandshakingState* state : listeners) {
+		for (HandshakingState* state : handlers) {
 
-			if (state->isHeader(packet->getHeader())) {
+			/* Verifico que el handler sea listener o both */
+			if (state->getProtocol()->getType() == ProtocolState::ProtocolType::LISTENER || state->getProtocol()->getType() == ProtocolState::ProtocolType::BOTH) {
 
-				/* Paso a ese estado! */
-				networking.changeState(state);
-				networking.run();
-				return;
+				if (state->isHeader(packet->getHeader())) {
+
+					/* Paso a ese estado! */
+					networking.changeState(state);
+					networking.run();
+					return;
+				}
 			}
 		}
 
@@ -99,14 +96,17 @@ Idle::update(void) {
 	NetworkPacket* packet = networking.getEventPacket(event);
 
 	/* Veo si alguno puede manejar */
-	for (HandshakingState* state : tellers) {
+	for (HandshakingState* state : handlers) {
 
-		if (state->isHeader(packet->getHeader())) {
+		/* Verifico que el handler sea teller o both */
+		if (state->getProtocol()->getType() == ProtocolState::ProtocolType::TELLER || state->getProtocol()->getType() == ProtocolState::ProtocolType::BOTH) {
+			if (state->isHeader(packet->getHeader())) {
 
-			/* Paso a ese estado! */
-			networking.changeState(state);
-			networking.update();
-			return;
+				/* Paso a ese estado! */
+				networking.changeState(state);
+				networking.update();
+				return;
+			}
 		}
 	}
 

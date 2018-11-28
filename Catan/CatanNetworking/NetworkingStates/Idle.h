@@ -24,6 +24,5 @@ public:
 	virtual void context(void);
 
 private:
-	list<HandshakingState*> listeners;
-	list<HandshakingState*> tellers;
+	list<HandshakingState*> handlers;
 };

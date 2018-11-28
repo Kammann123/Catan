@@ -81,6 +81,11 @@ Protocol::resetTime(void) {
 	}
 }
 
+ProtocolState::ProtocolType
+Protocol::getType(void) {
+	return states[startState]->getType();
+}
+
 ProtocolStatus
 Protocol::getStatus(void) {
 

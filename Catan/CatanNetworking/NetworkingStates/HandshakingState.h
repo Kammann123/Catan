@@ -21,6 +21,7 @@ public:
 	* del protocolo de comunicacion
 	*/
 	void setProtocol(Protocol* protocol);
+	Protocol* getProtocol(void);
 
 	/* 
 	* isHeader

@@ -34,6 +34,7 @@ public:
 	virtual ProtocolStatus send(NetworkPacket* packet);
 	virtual ProtocolStatus recv(NetworkPacket* packet);
 	virtual ProtocolStatus solve(void);
+	virtual ProtocolType getType(void);
 
 private:
 	PacketCallback callback;

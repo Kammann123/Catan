@@ -40,3 +40,8 @@ ProtocolStatus
 PSWaitSend::solve(void) {
 	return ProtocolStatus::OK;
 }
+
+ProtocolState::ProtocolType
+PSWaitSend::getType(void) {
+	return ProtocolType::TELLER;
+}

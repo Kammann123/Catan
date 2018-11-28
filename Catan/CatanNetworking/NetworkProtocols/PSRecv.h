@@ -1,7 +1,6 @@
 #pragma once
 
 #include "ProtocolState.h"
-#include "PSIfRecv.h"
 
 #include <list>
 
@@ -34,6 +33,7 @@ public:
 	virtual ProtocolStatus send(NetworkPacket* packet);
 	virtual ProtocolStatus recv(NetworkPacket* packet);
 	virtual ProtocolStatus solve(void);
+	virtual ProtocolType getType(void);
 
 private:
 	list<PacketHeader> expected;

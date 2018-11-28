@@ -330,12 +330,6 @@
     <ClInclude Include="CatanNetworking\NetworkProtocols\StringTag.h">
       <Filter>CatanNetworking\NetworkProtocols</Filter>
     </ClInclude>
-    <ClInclude Include="CatanNetworking\NetworkProtocols\PSIfRecv.h">
-      <Filter>CatanNetworking\NetworkProtocols</Filter>
-    </ClInclude>
-    <ClInclude Include="CatanNetworking\NetworkProtocols\PSIfSend.h">
-      <Filter>CatanNetworking\NetworkProtocols</Filter>
-    </ClInclude>
     <ClInclude Include="CatanNetworking\NetworkingStates\TellDices.h">
       <Filter>CatanNetworking\NetworkingStates</Filter>
     </ClInclude>
@@ -419,6 +413,9 @@
     </ClInclude>
     <ClInclude Include="CatanGui\AllegroWidgets\Widgets.h">
       <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanNetworking\NetworkProtocols\PSIf.h">
+      <Filter>CatanNetworking\NetworkProtocols</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -674,12 +671,6 @@
     <ClCompile Include="CatanNetworking\NetworkProtocols\StringTag.cpp">
       <Filter>CatanNetworking\NetworkProtocols</Filter>
     </ClCompile>
-    <ClCompile Include="CatanNetworking\NetworkProtocols\PSIfRecv.cpp">
-      <Filter>CatanNetworking\NetworkProtocols</Filter>
-    </ClCompile>
-    <ClCompile Include="CatanNetworking\NetworkProtocols\PSIfSend.cpp">
-      <Filter>CatanNetworking\NetworkProtocols</Filter>
-    </ClCompile>
     <ClCompile Include="CatanNetworking\NetworkingStates\Listening.cpp">
       <Filter>CatanNetworking\NetworkingStates</Filter>
     </ClCompile>
@@ -778,6 +769,9 @@
     </ClCompile>
     <ClCompile Include="CatanEvents\KnightEvent.cpp">
       <Filter>CatanEvents</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkProtocols\PSIf.cpp">
+      <Filter>CatanNetworking\NetworkProtocols</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

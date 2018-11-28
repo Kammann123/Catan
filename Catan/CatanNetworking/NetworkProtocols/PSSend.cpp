@@ -21,3 +21,8 @@ PSSend::solve(void) {
 
 	return ProtocolStatus::DONE;
 }
+
+ProtocolState::ProtocolType
+PSSend::getType(void) {
+	return ProtocolState::TELLER;
+}
