@@ -27,7 +27,7 @@ ListenEnd(CatanNetworking& net) : HandshakingState(net, CatanNetworking::States:
 		),
 		p_send("TURN_ACK", tag(PROTOCOL_DONE), PacketHeader::ACK)
 	);
-	this->setProtocol(listenEndProtoco);
+	this->setProtocol(listenEndProtocol);
 }
 
 bool 

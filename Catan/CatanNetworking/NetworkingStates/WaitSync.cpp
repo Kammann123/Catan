@@ -61,7 +61,7 @@ WaitSync::setTurn(NetworkPacket* packet) {
 
 bool
 WaitSync::doIStart(void){
-	return networking.getGame().getTurn() == PlayerId::PLAYER_ONE
+	return networking.getGame().getTurn() == PlayerId::PLAYER_ONE;
 }
 
 void 

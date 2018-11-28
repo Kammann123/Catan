@@ -19,6 +19,6 @@ ListenOffer::isHeader(PacketHeader header) {
 }
 
 void 
-ListenOffer::getOffer(NetworkPacket* packet) { 7
+ListenOffer::getOffer(NetworkPacket* packet) {
 	networking.getGame().handle(packet); 
 }

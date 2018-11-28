@@ -737,51 +737,51 @@
     <ClCompile Include="CatanEvents\KnightEvent.cpp">
       <Filter>CatanEvents</Filter>
     </ClCompile>
-    <ClCompile Include="ListenBuilding.cpp">
+    <ClCompile Include="CatanNetworking\NetworkingStates\ListenBank.cpp">
       <Filter>CatanNetworking\NetworkingStates</Filter>
     </ClCompile>
-    <ClCompile Include="ListenDices.cpp">
+    <ClCompile Include="CatanNetworking\NetworkingStates\ListenBuilding.cpp">
       <Filter>CatanNetworking\NetworkingStates</Filter>
     </ClCompile>
-    <ClCompile Include="ListenEnd.cpp">
+    <ClCompile Include="CatanNetworking\NetworkingStates\ListenDices.cpp">
       <Filter>CatanNetworking\NetworkingStates</Filter>
     </ClCompile>
-    <ClCompile Include="ListenOffer.cpp">
+    <ClCompile Include="CatanNetworking\NetworkingStates\ListenEnd.cpp">
       <Filter>CatanNetworking\NetworkingStates</Filter>
     </ClCompile>
-    <ClCompile Include="ListenQuit.cpp">
+    <ClCompile Include="CatanNetworking\NetworkingStates\ListenOffer.cpp">
       <Filter>CatanNetworking\NetworkingStates</Filter>
     </ClCompile>
-    <ClCompile Include="TellEnd.cpp">
+    <ClCompile Include="CatanNetworking\NetworkingStates\ListenQuit.cpp">
       <Filter>CatanNetworking\NetworkingStates</Filter>
     </ClCompile>
-    <ClCompile Include="TellDices.cpp">
+    <ClCompile Include="CatanNetworking\NetworkingStates\Sync.cpp">
       <Filter>CatanNetworking\NetworkingStates</Filter>
     </ClCompile>
-    <ClCompile Include="TellBuilding.cpp">
+    <ClCompile Include="CatanNetworking\NetworkingStates\TellBank.cpp">
       <Filter>CatanNetworking\NetworkingStates</Filter>
     </ClCompile>
-    <ClCompile Include="TellOffer.cpp">
+    <ClCompile Include="CatanNetworking\NetworkingStates\TellBuilding.cpp">
       <Filter>CatanNetworking\NetworkingStates</Filter>
     </ClCompile>
-    <ClCompile Include="TellQuit.cpp">
+    <ClCompile Include="CatanNetworking\NetworkingStates\TellDices.cpp">
       <Filter>CatanNetworking\NetworkingStates</Filter>
     </ClCompile>
-    <ClCompile Include="Sync.cpp">
+    <ClCompile Include="CatanNetworking\NetworkingStates\TellEnd.cpp">
       <Filter>CatanNetworking\NetworkingStates</Filter>
     </ClCompile>
-    <ClCompile Include="WaitSync.cpp">
+    <ClCompile Include="CatanNetworking\NetworkingStates\TellOffer.cpp">
+      <Filter>CatanNetworking\NetworkingStates</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkingStates\TellQuit.cpp">
+      <Filter>CatanNetworking\NetworkingStates</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkingStates\WaitSync.cpp">
       <Filter>CatanNetworking\NetworkingStates</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="ListenBank.cpp">
-      <Filter>CatanNetworking\NetworkingStates</Filter>
-    </None>
-    <None Include="TellBank.cpp">
-      <Filter>CatanNetworking\NetworkingStates</Filter>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Pendientes a revision.txt" />

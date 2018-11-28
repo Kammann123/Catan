@@ -9,7 +9,7 @@ TellOffer(CatanNetworking& net) : HandshakingState(net, CatanNetworking::States:
 		p_wait_send("SEND_OFFER", tag("ANSWER"), PacketHeader::OFFER_TRADE),
 		p_recv("ANSWER", tag(PROTOCOL_DONE), bind(&TellOffer::tradeAnswer, this, _1), { PacketHeader::YES, PacketHeader::NO })
 	);
-	this->setProtoco(tellOfferProtocol);
+	this->setProtocol(tellOfferProtocol);
 }
 
 bool 

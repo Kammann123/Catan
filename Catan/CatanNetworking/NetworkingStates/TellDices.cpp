@@ -32,6 +32,7 @@ TellDices::isRobber(void) {
 	return networking.getGame().isRobberStatus();
 }
 
-void remoteRobberCards(NetworkPacket* packet) { 
+void 
+TellDices::remoteRobberCards(NetworkPacket* packet) { 
 	networking.getGame().handle(packet); 
 }

@@ -292,9 +292,23 @@
     <ClCompile Include="CatanNetworking\NetworkingStates\Disconnected.cpp" />
     <ClCompile Include="CatanNetworking\NetworkingStates\HandshakingState.cpp" />
     <ClCompile Include="CatanNetworking\NetworkingStates\Idle.cpp" />
+    <ClCompile Include="CatanNetworking\NetworkingStates\ListenBank.cpp" />
+    <ClCompile Include="CatanNetworking\NetworkingStates\ListenBuilding.cpp" />
+    <ClCompile Include="CatanNetworking\NetworkingStates\ListenDices.cpp" />
+    <ClCompile Include="CatanNetworking\NetworkingStates\ListenEnd.cpp" />
     <ClCompile Include="CatanNetworking\NetworkingStates\Listening.cpp" />
+    <ClCompile Include="CatanNetworking\NetworkingStates\ListenOffer.cpp" />
+    <ClCompile Include="CatanNetworking\NetworkingStates\ListenQuit.cpp" />
     <ClCompile Include="CatanNetworking\NetworkingStates\NetError.cpp" />
     <ClCompile Include="CatanNetworking\NetworkingStates\NetworkingState.cpp" />
+    <ClCompile Include="CatanNetworking\NetworkingStates\Sync.cpp" />
+    <ClCompile Include="CatanNetworking\NetworkingStates\TellBank.cpp" />
+    <ClCompile Include="CatanNetworking\NetworkingStates\TellBuilding.cpp" />
+    <ClCompile Include="CatanNetworking\NetworkingStates\TellDices.cpp" />
+    <ClCompile Include="CatanNetworking\NetworkingStates\TellEnd.cpp" />
+    <ClCompile Include="CatanNetworking\NetworkingStates\TellOffer.cpp" />
+    <ClCompile Include="CatanNetworking\NetworkingStates\TellQuit.cpp" />
+    <ClCompile Include="CatanNetworking\NetworkingStates\WaitSync.cpp" />
     <ClCompile Include="CatanNetworking\NetworkPackets\BankPacket.cpp" />
     <ClCompile Include="CatanNetworking\NetworkPackets\BuildingPacket.cpp" />
     <ClCompile Include="CatanNetworking\NetworkPackets\CardIsPacket.cpp" />
@@ -339,28 +353,14 @@
     <ClCompile Include="FSM\EventQueue.cpp" />
     <ClCompile Include="FSM\GenericEvent.cpp" />
     <ClCompile Include="FSM\GenericFsm.cpp" />
-    <ClCompile Include="ListenBuilding.cpp" />
-    <ClCompile Include="ListenDices.cpp" />
-    <ClCompile Include="ListenEnd.cpp" />
-    <ClCompile Include="ListenOffer.cpp" />
-    <ClCompile Include="ListenQuit.cpp" />
     <ClCompile Include="networkingTester.cpp" />
     <ClCompile Include="socketTester.cpp" />
     <ClCompile Include="MVC\Observer.cpp" />
     <ClCompile Include="MVC\Subject.cpp" />
-    <ClCompile Include="Sync.cpp" />
-    <ClCompile Include="TellBuilding.cpp" />
-    <ClCompile Include="TellDices.cpp" />
-    <ClCompile Include="TellEnd.cpp" />
-    <ClCompile Include="TellOffer.cpp" />
-    <ClCompile Include="TellQuit.cpp" />
-    <ClCompile Include="WaitSync.cpp" />
     <ClCompile Include="Widgets.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ListenBank.cpp" />
     <None Include="packages.config" />
-    <None Include="TellBank.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Pendientes a revision.txt" />

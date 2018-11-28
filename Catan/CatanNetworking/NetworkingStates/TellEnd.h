@@ -10,6 +10,7 @@ private:
 	void askSync(NetworkPacket* packet);
 	void gameOver(NetworkPacket* packet);
 	void playAgain(NetworkPacket* packet);
-	NetworkPacket* getTokens(void);
+	NetworkPacket* getTokens(void); 
+	NetworkPacket* getMap(void);
 	bool whoStarts(void);
 };
