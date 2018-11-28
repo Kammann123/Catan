@@ -35,15 +35,15 @@ DicesData::setSecondDice(unsigned char dice) {
 
 unsigned char
 DicesData::getDices(void) const {
-	return firstDice + secondDice - '0' - '0';
+	return firstDice + secondDice;
 }
 
 unsigned char
 DicesData::getFirstDice(void) const {
-	return firstDice - '0';
+	return firstDice;
 }
 
 unsigned char
 DicesData::getSecondDice(void) const {
-	return secondDice - '0';
+	return secondDice;
 }

@@ -6,6 +6,7 @@
 #include <vector>
 
 #include "CatanEvents/BuildingEvent.h"
+#include "CatanEvents/DicesEvent.h"
 
 using namespace std;
 
@@ -13,6 +14,8 @@ using namespace std;
 
 CatanEvent* ui(void);
 CatanEvent* build(void);
+CatanEvent* dices(void);
+CatanEvent* random_dices(void);
 
 int main(int argc, char** argv) {
 	string localName;
@@ -84,7 +87,9 @@ CatanEvent* ui(void) {
 	unsigned char buff = _getch();
 
 	cout << "[UserInterface] Hola Mortal, al momento de ahora puedes hacer las siguientes funciones:" << endl
-		<< "\t+ \"B\": Realizar una construccion" << endl;
+		<< "\t+ \"B\": Realizar una construccion" << endl
+		<< "\t+ \"D\": Tirar dados elegidos" << endl
+		<< "\t+ \"R\": Tirar dados al azar" << endl;
 
 	cout << "Eleccion: ";
 	cin >> buff;
@@ -94,6 +99,15 @@ CatanEvent* ui(void) {
 		
 		case 'B':
 			return build();
+			break;
+
+		case 'R':
+			return random_dices();
+			break;
+
+		case 'D':
+			return dices();
+			break;
 
 		default:
 			return nullptr;
@@ -129,4 +143,28 @@ CatanEvent* build(void) {
 			return nullptr;
 			break;
 	}
+}
+
+CatanEvent* dices(void) {
+
+	unsigned int fDice, sDice;
+
+	cout << "Primer dado: ";
+	cin >> fDice;
+	cout << endl << "Segundo dado: ";
+	cin >> sDice;
+
+	CatanEvent* dicesEvent = new DicesEvent(fDice, sDice, PlayerId::PLAYER_ONE);
+
+	return dicesEvent;
+
+}
+
+CatanEvent* random_dices(void) {
+	unsigned char fDice = RANDOM_DICE;
+	unsigned char sDice = RANDOM_DICE;
+
+	CatanEvent* dicesEvent = new DicesEvent(fDice, sDice, PlayerId::PLAYER_ONE);
+
+	return dicesEvent;
 }

@@ -24,8 +24,8 @@ DicesPacket::getDataStream(unsigned int& length) {
 	/* Guardo y armo el paquete */
 	length = bufferLength;
 	buff[0] = (unsigned char)this->header;
-	buff[1] = this->getFirstDice();
-	buff[2] = this->getSecondDice();
+	buff[1] = this->getFirstDice() + '0';
+	buff[2] = this->getSecondDice() + '0';
 	
 	/* Devuelvo */
 	return buff;
