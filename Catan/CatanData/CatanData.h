@@ -20,6 +20,8 @@ enum class ResourceId : MapValue {
 	PASTURES = 0x4F,
 	DESERT = 0x4E
 };
+extern const char* resourceStrings[6];
+extern const char* landStrings[6];
 
 /*
 * SeaId

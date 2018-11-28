@@ -50,6 +50,7 @@ public:
 	* Devuelve el resource del resourceHex
 	*/
 	ResourceId getResource(void);
+	const char* getLand(void);
 
 	/*
 	* setResource()

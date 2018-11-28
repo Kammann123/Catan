@@ -20,6 +20,7 @@ public:
 	* Devuelve tipo de recurso
 	*/
 	ResourceId getResourceId(void);
+	const char* getResource(void);
 
 	/*
 	* getPlayerId
