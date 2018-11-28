@@ -28,7 +28,7 @@ public:
 	* Devuelve si es header inicial del protocolo para dar inicio
 	* a su sequencia, sirve para hacer validaciones y dispatch
 	*/
-	virtual bool isHeader(PacketHeader header) = 0;
+	bool isHeader(PacketHeader header);
 	
 	/* Acciones del estado */
 	virtual void run(void);

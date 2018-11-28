@@ -6,7 +6,6 @@
 class ListenEnd : public HandshakingState {
 public:
 	ListenEnd(CatanNetworking& net);
-	virtual bool isHeader(PacketHeader header);
 private:
 	void userWon(NetworkPacket* packet);
 	void gameOver(NetworkPacket* packet);

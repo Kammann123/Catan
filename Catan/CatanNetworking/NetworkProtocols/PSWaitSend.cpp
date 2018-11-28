@@ -45,3 +45,8 @@ ProtocolState::ProtocolType
 PSWaitSend::getType(void) {
 	return ProtocolType::TELLER;
 }
+
+bool
+PSWaitSend::isHeader(PacketHeader header) {
+	return find(expected.begin(), expected.end(), header) != expected.end();
+}

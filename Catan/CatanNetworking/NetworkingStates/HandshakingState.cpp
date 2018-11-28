@@ -26,7 +26,14 @@ HandshakingState::getProtocol(void) {
 }
 
 void
-HandshakingState::context() { handshakingProtocol->start(); }
+HandshakingState::context() { 
+	handshakingProtocol->start(); 
+}
+
+bool
+HandshakingState::isHeader(PacketHeader header) {
+	return this->handshakingProtocol->isHeader(header);
+}
 
 void
 HandshakingState::run() {

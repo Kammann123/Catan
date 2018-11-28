@@ -25,11 +25,6 @@ TellDices(CatanNetworking& net) : HandshakingState(net, CatanNetworking::States:
 }
 
 bool 
-TellDices::isHeader(PacketHeader header) { 
-	return header == PacketHeader::PASS || header == PacketHeader::DICES_ARE; 
-}
-
-bool 
 TellDices::isRobber(void) { 
 	return networking.getGame().isRobberStatus();
 }

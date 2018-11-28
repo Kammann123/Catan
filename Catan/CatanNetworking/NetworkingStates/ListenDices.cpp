@@ -48,8 +48,3 @@ void
 ListenDices::setRobberMove(NetworkPacket* packet) {
 	networking.getGame().handle(packet); 
 }
-
-bool
-ListenDices::isHeader(PacketHeader header) {
-	return header == PacketHeader::PASS || header == PacketHeader::DICES_ARE;
-}

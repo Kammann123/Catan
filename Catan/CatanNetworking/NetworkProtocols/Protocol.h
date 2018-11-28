@@ -61,6 +61,13 @@ public:
 	ProtocolState::ProtocolType getType(void);
 
 	/*
+	* isHeader
+	* Devuelve true si el header en particular marca el inicio de la secuencia
+	* del protocolo en cuestion.
+	*/
+	bool isHeader(PacketHeader header);
+
+	/*
 	* reset
 	* Reinicia el protocolo a su estado inicial por defecto.
 	*/

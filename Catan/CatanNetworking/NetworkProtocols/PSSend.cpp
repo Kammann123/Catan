@@ -26,3 +26,8 @@ ProtocolState::ProtocolType
 PSSend::getType(void) {
 	return ProtocolState::TELLER;
 }
+
+bool
+PSSend::isHeader(PacketHeader header) {
+	return header == this->header;
+}

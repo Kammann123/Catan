@@ -12,11 +12,6 @@ ListenQuit(CatanNetworking& net) : HandshakingState(net, CatanNetworking::States
 	this->setProtocol(listenQuitProtocol);
 }
 
-bool 
-ListenQuit::isHeader(PacketHeader header) {
-	return header == PacketHeader::QUIT;
-}
-
 void 
 ListenQuit::setQuit(NetworkPacket* packet) { 
 	networking.getGame().handle(new CatanEvent(CatanEvent::Events::QUIT, CatanEvent::Sources::NETWORKING, PlayerId::PLAYER_TWO)); 

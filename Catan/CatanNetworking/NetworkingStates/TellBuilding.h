@@ -5,5 +5,4 @@
 class TellBuilding : public HandshakingState {
 public:
 	TellBuilding(CatanNetworking& net);
-	virtual bool isHeader(PacketHeader header);
 };

@@ -29,3 +29,8 @@ ProtocolState::ProtocolType
 PSDataSend::getType(void) {
 	return ProtocolState::TELLER;
 }
+
+bool
+PSDataSend::isHeader(PacketHeader header) {
+	return false;
+}

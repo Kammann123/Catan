@@ -72,3 +72,13 @@ ProtocolState::ProtocolType
 PSIf::getType(void) {
 	return ProtocolType::BOTH;
 }
+
+bool
+PSIf::isHeader(PacketHeader header) {
+	for (auto state : states) {
+		if (state.second->isHeader(header)) {
+			return true;
+		}
+	}
+	return false;
+}

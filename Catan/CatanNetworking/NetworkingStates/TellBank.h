@@ -5,5 +5,4 @@
 class TellBank : public HandshakingState {
 public:
 	TellBank(CatanNetworking& net);
-	virtual bool isHeader(PacketHeader header);
 };

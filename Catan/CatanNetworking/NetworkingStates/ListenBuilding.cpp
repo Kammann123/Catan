@@ -13,11 +13,6 @@ ListenBuilding(CatanNetworking& net) : HandshakingState(net, CatanNetworking::St
 	this->setProtocol(listenBuildingProtocol);
 }
 
-bool
-ListenBuilding::isHeader(PacketHeader header) {
-	return header == PacketHeader::CITY || header == PacketHeader::ROAD || header == PacketHeader::SETTLEMENT;
-}
-
 void
 ListenBuilding::getBuilding(NetworkPacket* packet) { 
 	networking.getGame().handle(packet);

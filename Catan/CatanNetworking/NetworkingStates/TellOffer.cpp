@@ -12,11 +12,6 @@ TellOffer(CatanNetworking& net) : HandshakingState(net, CatanNetworking::States:
 	this->setProtocol(tellOfferProtocol);
 }
 
-bool 
-TellOffer::isHeader(PacketHeader header) { 
-	return header == PacketHeader::OFFER_TRADE; 
-}
-
 void 
 TellOffer::tradeAnswer(NetworkPacket* packet) {
 	networking.getGame().handle(packet);

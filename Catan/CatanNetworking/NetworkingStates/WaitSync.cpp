@@ -27,11 +27,6 @@ WaitSync(CatanNetworking& net) : HandshakingState(net, CatanNetworking::States::
 	this->setProtocol(waitSyncProtocol);
 }
 
-bool 
-WaitSync::isHeader(PacketHeader header) { 
-	return header == PacketHeader::NAME; 
-}
-
 NetworkPacket * 
 WaitSync::getLocalName(void) { 
 	return new NamePacket(networking.getGame().getLocalName()); 

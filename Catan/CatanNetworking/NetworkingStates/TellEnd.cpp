@@ -29,11 +29,6 @@ TellEnd(CatanNetworking& net) : HandshakingState(net, CatanNetworking::States::T
 	this->setProtocol(tellEndProtocol);
 }	
 
-bool 
-TellEnd::isHeader(PacketHeader header) { 
-	return header == PacketHeader::I_WON; 
-}
-
 void 
 TellEnd::askSync(NetworkPacket* packet) { 
 	networking.getGame().handle(new CatanEvent(CatanEvent::Events::ASK_SYNC, CatanEvent::Sources::NETWORKING, PlayerId::PLAYER_TWO)); 

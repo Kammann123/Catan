@@ -11,8 +11,3 @@ TellBank(CatanNetworking& net) : HandshakingState(net, CatanNetworking::States::
 	);
 	this->setProtocol(tellBankProtocol);
 }
-
-bool
-TellBank::isHeader(PacketHeader header) {
-	return header == PacketHeader::BANK_TRADE;
-}

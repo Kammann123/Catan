@@ -23,11 +23,6 @@ Sync(CatanNetworking& net) : HandshakingState(net, CatanNetworking::States::SYNC
 	this->setProtocol(syncProtocol);
 }
 
-bool 
-Sync::isHeader(PacketHeader header) { 
-	return header == PacketHeader::NAME; 
-}
-
 void
 Sync::setRemoteName(NetworkPacket* packet) { 
 	networking.getGame().setRemoteName(((NamePacket*)packet)->getName()); 

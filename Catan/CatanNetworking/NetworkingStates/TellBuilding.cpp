@@ -11,8 +11,3 @@ TellBuilding(CatanNetworking& net) : HandshakingState(net, CatanNetworking::Stat
 	);
 	this->setProtocol(tellBuildingProtocol);
 }
-
-bool
-TellBuilding::isHeader(PacketHeader header) {
-	return header == PacketHeader::ROAD || header == PacketHeader::CITY || header == PacketHeader::SETTLEMENT;
-}

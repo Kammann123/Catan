@@ -5,5 +5,4 @@
 class TellQuit : public HandshakingState {
 public:
 	TellQuit(CatanNetworking& net);
-	virtual bool isHeader(PacketHeader header);
 };

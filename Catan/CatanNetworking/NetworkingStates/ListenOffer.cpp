@@ -13,11 +13,6 @@ ListenOffer(CatanNetworking& net) : HandshakingState(net, CatanNetworking::State
 	this->setProtocol(listenOfferProtocol);
 }
 
-bool 
-ListenOffer::isHeader(PacketHeader header) { 
-	return header == PacketHeader::OFFER_TRADE; 
-}
-
 void 
 ListenOffer::getOffer(NetworkPacket* packet) {
 	networking.getGame().handle(packet); 

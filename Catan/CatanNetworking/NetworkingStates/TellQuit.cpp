@@ -11,8 +11,3 @@ TellQuit(CatanNetworking& net) : HandshakingState(net, CatanNetworking::States::
 	);
 	this->setProtocol(tellQuitProtocol);
 }
-
-bool
-TellQuit::isHeader(PacketHeader header) {
-	return header == PacketHeader::QUIT;
-}

@@ -13,11 +13,6 @@ ListenBank(CatanNetworking& net) : HandshakingState(net, CatanNetworking::States
 	this->setProtocol(listenBankProtocol);
 }
 
-bool
-ListenBank::isHeader(PacketHeader header) {
-	return header == PacketHeader::BANK_TRADE;
-}
-
 void
 ListenBank::getBank(NetworkPacket* packet) {
 	networking.getGame().handle(packet);

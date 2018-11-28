@@ -26,6 +26,7 @@ public:
 	virtual ProtocolStatus solve(void);
 	virtual ProtocolType getType(void);
 	virtual map<string, ProtocolState*>* getSubStates(void);
+	virtual bool isHeader(PacketHeader header);
 
 private:
 	map<string, ProtocolState*> states;

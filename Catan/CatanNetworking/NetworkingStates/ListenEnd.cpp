@@ -30,11 +30,6 @@ ListenEnd(CatanNetworking& net) : HandshakingState(net, CatanNetworking::States:
 	this->setProtocol(listenEndProtocol);
 }
 
-bool 
-ListenEnd::isHeader(PacketHeader header) {
-	return header == PacketHeader::I_WON; 
-}
-
 void
 ListenEnd::userWon(NetworkPacket* packet) { 
 	networking.getGame().handle(new CatanEvent(CatanEvent::Events::WON, CatanEvent::Sources::NETWORKING, PlayerId::PLAYER_TWO)); 

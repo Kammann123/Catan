@@ -41,3 +41,8 @@ ProtocolState::ProtocolType
 PSRecv::getType(void) {
 	return ProtocolType::LISTENER;
 }
+
+bool
+PSRecv::isHeader(PacketHeader header) {
+	return find(expected.begin(), expected.end(), header) != expected.end();
+}

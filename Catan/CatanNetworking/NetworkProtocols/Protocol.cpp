@@ -201,3 +201,8 @@ Protocol::verifyStatus(void) const {
 		throw exception("Protocol - verifyStatus - El protocolo tuvo un error, revisar getStatus!");
 	}
 }
+
+bool
+Protocol::isHeader(PacketHeader header) {
+	return states[startState]->isHeader(header);
+}

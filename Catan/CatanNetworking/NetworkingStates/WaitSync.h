@@ -6,7 +6,6 @@
 class WaitSync : public HandshakingState {
 public:
 	WaitSync(CatanNetworking& net);
-	virtual bool isHeader(PacketHeader header);
 private:
 	NetworkPacket * getLocalName(void);
 	void setRemoteName(NetworkPacket* packet);
