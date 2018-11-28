@@ -24,3 +24,8 @@ PSDataSend::solve(void) {
 
 	return ProtocolStatus::DONE;
 }
+
+ProtocolState::ProtocolType 
+PSDataSend::getType(void) {
+	return ProtocolState::TELLER;
+}

@@ -2,15 +2,20 @@
 
 #include "ProtocolState.h"
 
+#include <map>
+
+using namespace std;
+
 /*
-* PSIfSend
-* Permite definir un estado para accionar segun cada WaitSend que se permita
-* de forma condicional
+* PSIf
+* Permite manejar un estado de protocolo en el cual se puede decidir
+* entre diferentes opciones validas para manejar el flujo de la comunicacion
+* determinando diferentes ProtocolStates como validos, ya sean Listeners o Tellers
 */
-class PSIfSend : public ProtocolState {
+class PSIf : public ProtocolState {
 public:
 	/* Constructores */
-	PSIfSend(map<string, ProtocolState*> states);
+	PSIf(map<string, ProtocolState*> states);
 
 	/*
 	* Implementacion de las rutinas de operacion del
@@ -19,6 +24,7 @@ public:
 	virtual ProtocolStatus send(NetworkPacket* packet);
 	virtual ProtocolStatus recv(NetworkPacket* packet);
 	virtual ProtocolStatus solve(void);
+	virtual ProtocolType getType(void);
 	virtual map<string, ProtocolState*>* getSubStates(void);
 
 private:

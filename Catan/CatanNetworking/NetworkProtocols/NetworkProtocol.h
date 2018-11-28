@@ -12,8 +12,7 @@
 #include "PSWaitSend.h"
 #include "PSDataSend.h"
 #include "PSSend.h"
-#include "PSIfSend.h"
-#include "PSIfRecv.h"
+#include "PSIf.h"
 
 #include "../NetworkHandlers/NetworkServer.h"
 #include "../NetworkHandlers/NetworkClient.h"
@@ -48,8 +47,7 @@ using namespace std::placeholders;
 #define SEND(...)	new PSSend(__VA_ARGS__)
 #define WAIT_SEND(...)	new PSWaitSend(__VA_ARGS__)
 #define	DATA_SEND(...)	new PSDataSend(__VA_ARGS__)
-#define IF_RECV(...)	new PSIfRecv(__VA_ARGS__)
-#define IF_SEND(...)	new PSIfSend(__VA_ARGS__)
+#define IF(...)	new PSIf(__VA_ARGS__)
 
 /* Macros de sockets 
 *	Macros para facilitar la creacion del callback para mandar mensajes
@@ -147,10 +145,15 @@ using namespace std::placeholders;
 *						wait_send("SCND_TAG", tag("SCND_STATE"), ROBBER_MOVE)
 *					)
 *
+* NOTA: El p_if, p_if_send, p_if_recv, son todo lo mismo, bien podria haber solamente un p_if,
+*	pero se mantiene disponible el send/recv ante unas modificaciones que se hicieron, con lo que cual
+*	se busca mantener la compatibilidad con lo previamente hecho.
+*
 */
 #define p_recv(_tag, ...)			{_tag, RECV(__VA_ARGS__)}
 #define p_send(_tag, ...)			{_tag, SEND(__VA_ARGS__)}
 #define p_wait_send(_tag, ...)	{_tag, WAIT_SEND(__VA_ARGS__)}
 #define p_data_send(_tag, ...)	{_tag, DATA_SEND(__VA_ARGS__)}
-#define p_if_recv(_tag, ...)		{_tag, IF_RECV({__VA_ARGS__})}
-#define p_if_send(_tag, ...)		{_tag, IF_SEND({__VA_ARGS__})}
+#define p_if_recv(_tag, ...)		{_tag, IF({__VA_ARGS__})}
+#define p_if_send(_tag, ...)		{_tag, IF({__VA_ARGS__})}
+#define p_if(_tag, ...)				{_tag, IF({__vA_ARGS__})}

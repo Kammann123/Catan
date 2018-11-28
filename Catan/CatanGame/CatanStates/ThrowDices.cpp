@@ -2,6 +2,7 @@
 #include "GameError.h"
 #include "RobberCards.h"
 #include "RobberMove.h"
+#include "Turn.h"
 
 void
 ThrowDices::handle(CatanEvent* event) {
@@ -48,7 +49,7 @@ ThrowDices::handle(CatanEvent* event) {
 					* del turo del jugador
 					*/
 					game.assignResources(dices->getDices());
-					// -----> CAMBIO DE ESTADO A TURN <-------
+					game.changeState(new Turn(game), "ThrowDices - El jugador ha tirado los dados! Ahora debe actuar en su turno.");
 				}
 
 				/* Notifico la accion a los observers */

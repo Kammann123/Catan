@@ -36,3 +36,8 @@ ProtocolStatus
 PSRecv::solve(void) {
 	return ProtocolStatus::OK;
 }
+
+ProtocolState::ProtocolType
+PSRecv::getType(void) {
+	return ProtocolType::LISTENER;
+}
