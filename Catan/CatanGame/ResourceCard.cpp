@@ -17,6 +17,10 @@ ResourceId ResourceCard::getResourceId()
 	return resourceId;
 }
 
+const char* ResourceCard::getResource(void) {
+	return resourceStrings[(unsigned int)resourceId];
+}
+
 PlayerId ResourceCard::getPlayerId()
 {
 	return playerId;

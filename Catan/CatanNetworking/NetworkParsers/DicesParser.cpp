@@ -9,7 +9,7 @@ generateEvent(unsigned char byte) {
 		newEvent = new HeaderEvent(byte);
 	}
 	else if ( state == States::FIRST_DICE || state == States::SECOND_DICE ) {
-		if (isValidDice(byte)) {
+		if (isValidDice(byte - '0')) {
 			newEvent = new DiceEvent(byte);
 		}
 		else {
@@ -30,12 +30,12 @@ init(GenericEvent* event) {
 
 void DicesParser::
 setDice(GenericEvent* event) {
-	this->packet->setFirstDice(((DiceEvent*)event)->getData());
+	this->packet->setFirstDice(((DiceEvent*)event)->getData() - '0');
 }
 
 void DicesParser::
 done(GenericEvent* event) {
-	this->packet->setSecondDice(((DiceEvent*)event)->getData());
+	this->packet->setSecondDice(((DiceEvent*)event)->getData() - '0');
 
 	fsmEvent = new DoneEvent(this->packet);
 

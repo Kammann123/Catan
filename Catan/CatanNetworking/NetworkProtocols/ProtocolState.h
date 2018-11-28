@@ -75,7 +75,7 @@ public:
 	* setSocket
 	* Configura el socket para mandar los mensajes
 	*/
-	void setSocket(NetworkSocket** socket);
+	virtual void setSocket(NetworkSocket** socket);
 
 	/*
 	* canSend

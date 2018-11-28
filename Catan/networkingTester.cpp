@@ -7,6 +7,7 @@
 
 #include "CatanEvents/BuildingEvent.h"
 #include "CatanEvents/DicesEvent.h"
+#include "CatanEvents/BankEvent.h"
 
 using namespace std;
 
@@ -16,6 +17,7 @@ CatanEvent* ui(void);
 CatanEvent* build(void);
 CatanEvent* dices(void);
 CatanEvent* random_dices(void);
+CatanEvent* bank_trade(void);
 
 int main(int argc, char** argv) {
 	string localName;
@@ -89,7 +91,8 @@ CatanEvent* ui(void) {
 	cout << "[UserInterface] Hola Mortal, al momento de ahora puedes hacer las siguientes funciones:" << endl
 		<< "\t+ \"B\": Realizar una construccion" << endl
 		<< "\t+ \"D\": Tirar dados elegidos" << endl
-		<< "\t+ \"R\": Tirar dados al azar" << endl;
+		<< "\t+ \"R\": Tirar dados al azar" << endl
+		<< "\t+ \"T\": Intercambiar con el banco" << endl;
 
 	cout << "Eleccion: ";
 	cin >> buff;
@@ -167,4 +170,82 @@ CatanEvent* random_dices(void) {
 	CatanEvent* dicesEvent = new DicesEvent(fDice, sDice, PlayerId::PLAYER_ONE);
 
 	return dicesEvent;
+}
+
+CatanEvent* bank_trade(void) {
+	cout << "[Intercambio con banco]" << endl;
+	cout << "Cartas para dar: " << endl;
+	cout << "\t" << "+0: Lumber" << endl;
+	cout << "\t" << "+1: Brick" << endl;
+	cout << "\t" << "+2: Ore" << endl;
+	cout << "\t" << "+3: Grain" << endl;
+	cout << "\t" << "+4: Wool" << endl;
+	unsigned char give;
+	cin >> give;
+	if (give >= '0' && give <= '4') {
+
+		ResourceId giveId = ResourceId::DESERT;
+
+		switch (give) {
+			case '0':
+				giveId = ResourceId::FOREST;
+				break;
+			case '1':
+				giveId = ResourceId::HILL;
+				break;
+			case '2':
+				giveId = ResourceId::MOUNTAIN;
+				break;
+			case '3':
+				giveId = ResourceId::FIELD;
+				break;
+			case '4':
+				giveId = ResourceId::PASTURES;
+				break;
+		}
+
+		list<ResourceId> givenResources;
+		for (unsigned int i = 4; i > 0; i--) {
+			givenResources.push_back(giveId);
+		}
+
+		cout << "Vas a dar 4 de esas cartas, y que queres recibir? " << endl;
+		cout << "\t" << "+0: Lumber" << endl;
+		cout << "\t" << "+1: Brick" << endl;
+		cout << "\t" << "+2: Ore" << endl;
+		cout << "\t" << "+3: Grain" << endl;
+		cout << "\t" << "+4: Wool" << endl;
+		unsigned char recv;
+		cin >> recv;
+
+		if (recv >= '0' && recv <= '4') {
+
+
+			ResourceId recvId = ResourceId::DESERT;
+
+			switch (recv) {
+				case '0':
+					recvId = ResourceId::FOREST;
+					break;
+				case '1':
+					recvId = ResourceId::HILL;
+					break;
+				case '2':
+					recvId = ResourceId::MOUNTAIN;
+					break;
+				case '3':
+					recvId = ResourceId::FIELD;
+					break;
+				case '4':
+					recvId = ResourceId::PASTURES;
+					break;
+			}
+			list<ResourceId> recvResources;
+			recvResources.push_back(recvId);
+
+			return new BankEvent(givenResources, recvResources);
+		}
+	}
+
+	return nullptr;
 }
