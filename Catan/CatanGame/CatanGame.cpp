@@ -19,6 +19,12 @@
 #include <vector>
 #include <time.h>
 
+const char* CatanGame::StateString[11] = { 
+	"GAME_SYNC", "FIRST_BUILDS", "THROW_DICES", 
+	"ROBBER_CARD", "ROBBER_MOVE", "ROBBER_MOVE", 
+	"TURN", "OFFER_ANSWER", "WINNER", "GAME_END", "GAME_ERROR"
+};
+
 void
 CatanGame::_init_game(void) {
 
@@ -163,6 +169,11 @@ CatanGame::handle(CatanEvent* event) {
 CatanGame::State
 CatanGame::getState(void) {
 	return (State)this->state->getId();
+}
+
+const char* 
+CatanGame::getStateString(void) {
+	return StateString[this->state->getId()];
 }
 
 string

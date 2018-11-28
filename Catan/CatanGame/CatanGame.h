@@ -106,6 +106,8 @@ public:
 	* en funcion de los cuales se crean clases para la 
 	* la fsm implementada con State Pattern
 	*/
+	static const char* StateString[11];
+
 	enum State : unsigned int {GAME_SYNC, FIRST_BUILDS, THROW_DICES, 
 		ROBBER_CARD, ROBBER_MOVE, TURN, OFFER_ANSWER, WINNER, 
 		GAME_END, GAME_ERROR};
@@ -123,6 +125,7 @@ public:
 	void handle(NetworkPacket* packet);
 	void handle(CatanEvent* event);
 	State getState(void);
+	const char* getStateString(void);
 
 	/*
 	* info

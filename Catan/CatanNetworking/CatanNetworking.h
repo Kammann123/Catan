@@ -33,6 +33,8 @@ public:
 	/*
 	* Estados de funcionamiento del CatanNetworking
 	*/
+	static const char* StateString[17];
+
 	enum States : unsigned int {DISCONNECTED, LISTENING, WAIT_SYNC, SYNC, IDLE, NET_ERROR,
 		LISTEN_BANK, LISTEN_BUILDING, LISTEN_DICES, LISTEN_END, LISTEN_OFFER, LISTEN_QUIT,
 		TELL_BANK, TELL_BUILDING, TELL_DICES, TELL_END, TELL_OFFER, TELL_QUIT};
@@ -62,8 +64,10 @@ public:
 
 	/*
 	* Devuelve identificador del estado de networking
+	* ya segun su id, o un string representativo del estado
 	*/
 	CatanNetworking::States getNetworkingState(void);
+	const char* getNetworkingString(void);
 
 	/*
 	* getState

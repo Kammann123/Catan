@@ -9,7 +9,7 @@ using namespace std;
 
 int main(int argc, char** argv) {
 
-	vector<string> netStrings = {"DISCONNECTED", "LISTENING", "WAIT_SYNC", "SYNC", "IDLE", "NET_ERROR" };
+	vector<string> netStrings = {};
 	
 	string localName;
 	string ip;
