@@ -1,18 +1,18 @@
 #include "PSRecv.h"
 
 PSRecv::
-PSRecv(ProtocolTag* tag, NotifyCallback notify, list<PacketHeader> _expected) : ProtocolState(tag, notify), expected(_expected) {}
+PSRecv(ProtocolTag* tag, NotifyCallback notify, list<PacketHeader> _expected) : ProtocolState(tag, notify, ProtocolType::LISTENER), expected(_expected) {}
 
 PSRecv::
-PSRecv(ProtocolTag* tag, NotifyCallback notify, PacketHeader _expected) : ProtocolState(tag, notify) {
+PSRecv(ProtocolTag* tag, NotifyCallback notify, PacketHeader _expected) : ProtocolState(tag, notify, ProtocolType::LISTENER) {
 	expected.push_back(_expected);
 }
 
 PSRecv::
-PSRecv(ProtocolTag* tag, list<PacketHeader> _expected) : ProtocolState(tag), expected(_expected) {}
+PSRecv(ProtocolTag* tag, list<PacketHeader> _expected) : ProtocolState(tag, ProtocolType::LISTENER), expected(_expected) {}
 
 PSRecv::
-PSRecv(ProtocolTag* tag, PacketHeader _expected) : ProtocolState(tag) {
+PSRecv(ProtocolTag* tag, PacketHeader _expected) : ProtocolState(tag, ProtocolType::LISTENER) {
 	expected.push_back(_expected);
 }
 
@@ -35,11 +35,6 @@ PSRecv::recv(NetworkPacket* packet) {
 ProtocolStatus
 PSRecv::solve(void) {
 	return ProtocolStatus::OK;
-}
-
-ProtocolState::ProtocolType
-PSRecv::getType(void) {
-	return ProtocolType::LISTENER;
 }
 
 bool

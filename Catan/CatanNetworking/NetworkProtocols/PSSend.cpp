@@ -1,7 +1,7 @@
 #include "PSSend.h"
 
 PSSend::
-PSSend(ProtocolTag* tag, PacketHeader _header) : ProtocolState(tag), header(_header) {}
+PSSend(ProtocolTag* tag, PacketHeader _header) : ProtocolState(tag, ProtocolType::TELLER), header(_header) {}
 
 ProtocolStatus
 PSSend::send(NetworkPacket* packet) {
@@ -20,11 +20,6 @@ PSSend::solve(void) {
 	sendPacket(packet);
 
 	return ProtocolStatus::DONE;
-}
-
-ProtocolState::ProtocolType
-PSSend::getType(void) {
-	return ProtocolState::TELLER;
 }
 
 bool

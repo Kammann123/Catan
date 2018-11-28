@@ -1,10 +1,10 @@
 #include "PSDataSend.h"
 
 PSDataSend::
-PSDataSend(ProtocolTag* tag, NotifyCallback _notify, PacketCallback _callback) : ProtocolState(tag, _notify), callback(_callback) {}
+PSDataSend(ProtocolTag* tag, NotifyCallback _notify, PacketCallback _callback) : ProtocolState(tag, _notify, ProtocolState::TELLER), callback(_callback) {}
 
 PSDataSend::
-PSDataSend(ProtocolTag* tag, PacketCallback _callback) : ProtocolState(tag), callback(_callback) {}
+PSDataSend(ProtocolTag* tag, PacketCallback _callback) : ProtocolState(tag, ProtocolState::TELLER), callback(_callback) {}
 
 ProtocolStatus
 PSDataSend::send(NetworkPacket* packet) {
@@ -23,11 +23,6 @@ PSDataSend::solve(void) {
 	sendPacket(packet);
 
 	return ProtocolStatus::DONE;
-}
-
-ProtocolState::ProtocolType 
-PSDataSend::getType(void) {
-	return ProtocolState::TELLER;
 }
 
 bool

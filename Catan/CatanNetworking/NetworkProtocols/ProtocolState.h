@@ -46,9 +46,9 @@ public:
 	* Se permite construir un estado del protocol con o sin,
 	* callback de notificacion y con callback para mandar mensaje.
 	*/
-	ProtocolState(ProtocolTag* tag, NotifyCallback notify, NetworkSocket** socket);
-	ProtocolState(ProtocolTag* tag, NotifyCallback callback);
-	ProtocolState(ProtocolTag* tag);
+	ProtocolState(ProtocolTag* tag, NotifyCallback notify, NetworkSocket** socket, ProtocolType _type);
+	ProtocolState(ProtocolTag* tag, NotifyCallback callback, ProtocolType _type);
+	ProtocolState(ProtocolTag* tag, ProtocolType _type);
 	virtual ~ProtocolState();
 
 	/*
@@ -91,6 +91,13 @@ public:
 	void sendPacket(NetworkPacket* packet);
 
 	/*
+	* getType
+	* Devuelve el tipo de estado de protocol, para saber si 
+	* debe recibir, mandar o puede ser cualquiera de las dos.
+	*/
+	ProtocolType getType(void);
+
+	/*
 	* getNextTag
 	* Devuelve el siguiente tag del estado del protocolo
 	*/
@@ -106,7 +113,6 @@ public:
 	virtual ProtocolStatus send(NetworkPacket* packet) = 0;
 	virtual ProtocolStatus recv(NetworkPacket* packet) = 0;
 	virtual ProtocolStatus solve(void) = 0;
-	virtual ProtocolType getType(void) = 0;
 	virtual bool isHeader(PacketHeader header) = 0;
 	virtual map<string, ProtocolState*>* getSubStates(void);
 
@@ -114,7 +120,7 @@ protected:
 	ProtocolTag* tag;
 
 	NetworkSocket** socket;
-
+	ProtocolType type;
 	NotifyCallback notifyCallback;
 	bool hasNotify;
 };

@@ -3,26 +3,34 @@
 #include <exception>
 
 ProtocolState::
-ProtocolState(ProtocolTag* tag, NotifyCallback notify, NetworkSocket** socket) {
+ProtocolState(ProtocolTag* tag, NotifyCallback notify, NetworkSocket** socket, ProtocolType _type) {
 	this->tag = tag;
 	this->notifyCallback = notify;
 	this->hasNotify = true;
 	this->socket = socket;
+	this->type = _type;
 }
 
 ProtocolState::
-ProtocolState(ProtocolTag* tag, NotifyCallback callback) {
+ProtocolState(ProtocolTag* tag, NotifyCallback callback, ProtocolType _type) {
 	this->tag = tag;
 	this->notifyCallback = callback;
 	this->hasNotify = true;
 	this->socket = nullptr;
+	this->type = _type;
 }
 
 ProtocolState::
-ProtocolState(ProtocolTag* tag) {
+ProtocolState(ProtocolTag* tag, ProtocolType _type) {
 	this->tag = tag;
 	this->hasNotify = false;
 	this->socket = nullptr;
+	this->type = _type;
+}
+
+ProtocolState::ProtocolType
+ProtocolState::getType(void) {
+	return type;
 }
 
 ProtocolState::~ProtocolState(void) {

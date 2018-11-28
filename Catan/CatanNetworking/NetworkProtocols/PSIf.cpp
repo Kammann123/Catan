@@ -1,7 +1,7 @@
 #include "PSIf.h"
 
 PSIf::
-PSIf(map<string, ProtocolState*> states) : ProtocolState(nullptr) {
+PSIf(map<string, ProtocolState*> states) : ProtocolState(nullptr, ProtocolState::BOTH) {
 	this->states = states;
 }
 
@@ -66,11 +66,6 @@ PSIf::solve(void) {
 map<string, ProtocolState*>*
 PSIf::getSubStates(void) {
 	return &states;
-}
-
-ProtocolState::ProtocolType
-PSIf::getType(void) {
-	return ProtocolType::BOTH;
 }
 
 bool
