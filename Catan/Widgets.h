@@ -1,9 +1,14 @@
 #pragma once
 #include "allegro5/allegro.h"
 #include "allegro5/allegro_font.h"
+#include "MVC/Controller.h"
+#include "MVC/Observer.h"
+#include "MVC/Subject.h"
 #include <string>
 
 using namespace std;
+
+enum class FrameState {IDLE, FOCUSED, SELECTED};
 
 typedef void(*callback)(void*);
 using pixel = unsigned int;
@@ -123,4 +128,106 @@ private:
 
 };
 
+/************************************************************************************************************************************************/
+/************************************************************************************************************************************************/
+/************************************************************************************************************************************************/
 
+
+											/*  NUEVA IMPLEMENTACION */
+/*
+* Clase FrameUI
+* Clase base para un widget (modelo)
+*/
+
+class FrameUI : public Subject 
+{
+public:
+		
+	FrameUI(unsigned int width_, unsigned int height_, ImageCoords_t coords, callback onClick_, callback onExit_, callback onRelease_, callback onEnter);
+	FrameUI(unsigned int width_, unsigned int height_, double x_, double y_, callback onClick_, callback onExit_, callback onRelease_, callback onEnter);
+	~FrameUI();
+
+	/* Getters */
+
+	unsigned int getWidth(void);
+	unsigned int getHeigth(void);
+	ImageCoords_t getCoords(void);
+	FrameState getState(void);
+	callback getOnClickCallback(void);
+	callback getOnExitCallback(void);
+	callback getOnReleaseCallback(void);
+	callback getOnEnterCallback(void);
+
+	/* Setters */
+
+	void setWidth(unsigned int newWidth);
+	void setHeight(unsigned int newHeigth);
+	void setCoords(ImageCoords_t newCoords);
+	void setXCoord(unsigned int newX);
+	void setYCoord(unsigned int newY);
+	void setState(FrameState newState);
+	void setOnClickCallback(callback newCallback);
+	void setOnEnterCallback(callback newCallback);
+	void setOnExitCallback(callback newCallback);
+	void setOnReleaseCallback(callback newCallback);
+
+
+	
+private:
+
+	unsigned int width;
+	unsigned int height;
+	ImageCoords_t coords;
+	FrameState	currentState;
+	callback onClick;
+	callback onExit;
+	callback onRelease;
+	callback onEnter;
+	
+
+};
+
+
+class FrameUIController: public Controller
+{
+public:
+
+	FrameUIController(FrameUI& model_);
+	~FrameUIController();
+
+	/*
+	* parseMouseEvent()
+	* Parser de un evento de mouse de Allegro
+	*/
+	void parseMouseEvent(ALLEGRO_EVENT* ev_);
+	void parseKeyboardEvent(ALLEGRO_EVENT* ev_);
+
+private:
+	FrameUI& model;
+	//FrameUIView& view;
+};
+
+class TextUI
+{
+public:
+	//Constructores y destructor
+	TextUI(string initialText, ImageCoords_t coords);
+	TextUI(string initialText, ImageCoords_t coords, ALLEGRO_FONT* font_);
+	TextUI(string initialText, double x_, double y_);
+	TextUI(string initialText, double x_, double y_, ALLEGRO_FONT* font_);
+	~TextUI();
+
+	//Getters
+	string get_text();
+	//Setters
+	void set_text(string text_);
+	void set_coords(ImageCoords_t coords_);
+	void set_coords(double x_, double y_);
+	//Otros metodos
+	void erase_text();
+
+private:
+	string text;
+	ALLEGRO_FONT* font;
+	ImageCoords_t coords;
+};

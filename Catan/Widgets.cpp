@@ -208,3 +208,120 @@ string Label::getText(void)
 {
 	return text;
 }
+
+unsigned int FrameUI::
+getWidth(void)
+{
+	return width;
+}
+
+unsigned int FrameUI::getHeigth(void)
+{
+	return height;
+}
+
+ImageCoords_t FrameUI::
+getCoords(void)
+{
+	return coords;
+}
+
+FrameState FrameUI::getState(void)
+{
+	return currentState;
+}
+
+callback FrameUI::
+getOnClickCallback(void)
+{
+	return onClick;
+}
+
+callback FrameUI::
+getOnExitCallback(void)
+{
+	return onExit;
+}
+
+callback FrameUI::getOnReleaseCallback(void)
+{
+	return onRelease;
+}
+
+callback FrameUI::
+getOnEnterCallback(void)
+{
+	return onEnter;
+}
+
+void FrameUI::
+setWidth(unsigned int newWidth)
+{
+	width = newWidth;
+}
+
+void FrameUI::
+setHeight(unsigned int newHeigth)
+{
+	height = newHeigth;
+}
+
+void FrameUI::
+setCoords(ImageCoords_t newCoords)
+{
+	coords = newCoords;
+}
+
+void FrameUI::
+setXCoord(unsigned int newX)
+{
+	coords.x = newX;
+}
+
+void FrameUI::
+setYCoord(unsigned int newY)
+{
+	coords.y = newY;
+}
+
+void FrameUI::
+setState(FrameState newState)
+{
+	currentState = newState;
+}
+
+void FrameUI::
+setOnClickCallback(callback newCallback)
+{
+	onClick = newCallback;
+}
+
+void FrameUI::
+setOnEnterCallback(callback newCallback)
+{
+	onEnter = newCallback;
+}
+
+void FrameUI::
+setOnExitCallback(callback newCallback)
+{
+	onExit = newCallback;
+}
+
+void FrameUI::
+setOnReleaseCallback(callback newCallback)
+{
+	onRelease = newCallback;
+}
+
+void FrameUIController::
+parseMouseEvent(ALLEGRO_EVENT * ev_)
+{
+
+}
+
+void FrameUIController::
+parseKeyboardEvent(ALLEGRO_EVENT * ev_)
+{
+	
+}
