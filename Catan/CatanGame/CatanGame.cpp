@@ -727,7 +727,7 @@ CatanGame::assignResources(PlayerId player, ResourceId resource, unsigned int qt
 	* Busco al jugador y luego creo la cantidad de cartas necesaria
 	* y le entrego una por una todas las que piden que le asigne
 	*/
-	Player playerObject = getPlayer(player);
+	Player& playerObject = getPlayer(player);
 
 	while (qty) {
 		playerObject.addResourceCard(new ResourceCard(player, resource));

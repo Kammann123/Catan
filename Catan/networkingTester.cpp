@@ -15,7 +15,6 @@ CatanEvent* ui(void);
 CatanEvent* build(void);
 
 int main(int argc, char** argv) {
-	
 	string localName;
 	string ip;
 	unsigned int port;
@@ -61,6 +60,9 @@ int main(int argc, char** argv) {
 		/* Corremos el juego */
 		if (gameStatus != game.getState()) {
 			gameStatus = game.getState();
+			if(gameStatus == CatanGame::State::FIRST_BUILDS){
+				CONSOLE("Juega el jugador " + string((char*)(game.getTurn() == PlayerId::PLAYER_ONE? "LOCAL" : "OPONENTE")));
+			}
 			CONSOLE("Game cambio de estado: " + string((char*)game.getStateString()));
 			CONSOLE(game.info());
 		}
@@ -84,8 +86,11 @@ CatanEvent* ui(void) {
 	cout << "[UserInterface] Hola Mortal, al momento de ahora puedes hacer las siguientes funciones:" << endl
 		<< "\t+ \"B\": Realizar una construccion" << endl;
 
+	cout << "Eleccion: ";
+	cin >> buff;
+	_getch();
 
-	switch( _getch() ){
+	switch( buff ){
 		
 		case 'B':
 			return build();
