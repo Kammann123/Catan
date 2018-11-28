@@ -1,10 +1,12 @@
 #include "Widgets.h"
 
 SelectionFeature::
-SelectionFeature(ALLEGRO_BITMAP * selectedBitmap_, ALLEGRO_BITMAP * focusedBitmap_)
+SelectionFeature(ALLEGRO_BITMAP* selectedBitmap_, ALLEGRO_BITMAP* focusedBitmap_, callback doIfSelected_, callback doIfFocused_)
 {
 	selectedBitmap = selectedBitmap_;
 	focusedBitmap = focusedBitmap_;
+	doIfSelected = doIfSelected_;
+	doIfFocused = doIfFocused_;
 	selected = false;
 	focused = false;
 }
@@ -52,7 +54,7 @@ isFocused(void)
 }
 
 TextField::
-TextField(pixel width_, pixel height_, ALLEGRO_FONT * font_, ALLEGRO_COLOR boxColor_)
+TextField(pixel width_, pixel height_, ALLEGRO_FONT * font_, ALLEGRO_COLOR boxColor_, callback doIfEnter_)
 {
 	height = height_;
 	width = width_;
@@ -60,6 +62,7 @@ TextField(pixel width_, pixel height_, ALLEGRO_FONT * font_, ALLEGRO_COLOR boxCo
 	boxColor = boxColor_;
 	font = font_;
 	selected = false;
+	doIfEnter = doIfEnter_;
 
 }
 

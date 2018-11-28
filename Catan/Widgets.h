@@ -5,6 +5,9 @@
 
 using namespace std;
 
+typedef void(*callback)(void*);
+using pixel = unsigned int;
+
 typedef struct 
 {
 	double x;
@@ -12,13 +15,12 @@ typedef struct
 
 }ImageCoords_t;
 
-//using callback = ; <---- ?????????????????????????????????????????????????????
-using pixel = unsigned int;
+
 
 class SelectionFeature {
 public:
 	/* Constructor / Destructor */
-	SelectionFeature(ALLEGRO_BITMAP* selectedBitmap_, ALLEGRO_BITMAP* focusedBitmap_);
+	SelectionFeature(ALLEGRO_BITMAP* selectedBitmap_, ALLEGRO_BITMAP* focusedBitmap_, callback doIfSelected_, callback doIfFocused_);
 	~SelectionFeature();
 
 	/* Setters */
@@ -36,13 +38,15 @@ private:
 	ALLEGRO_BITMAP* focusedBitmap;
 	bool selected;
 	bool focused;
+	callback doIfSelected;
+	callback doIfFocused;
 };
 
 
 class TextField {
 public:
 	/* Constructor / Destructor */
-	TextField(pixel width_, pixel height_, ALLEGRO_FONT* font_, ALLEGRO_COLOR boxColor_);
+	TextField(pixel width_, pixel height_, ALLEGRO_FONT* font_, ALLEGRO_COLOR boxColor_, callback doIfEnter_);
 	~TextField();
 
 	void addChar(unsigned char newChar);
@@ -66,9 +70,12 @@ private:
 	string text;
 	ALLEGRO_COLOR boxColor;
 	ALLEGRO_FONT* font;
+	callback doIfEnter;
 
 };
 
+
+/* Base Class */
 class ImageWidget{
 
 public:
@@ -81,7 +88,7 @@ public:
 	ALLEGRO_DISPLAY* getDisplay(void);
 	ImageCoords_t getCoords(void);
 
-
+			
 	/* Setters */
 	void setBitmap(ALLEGRO_BITMAP* newBitmap);
 	void setDisplay(ALLEGRO_DISPLAY* newDisplay);
@@ -93,3 +100,6 @@ private:
 	ALLEGRO_DISPLAY* display;
 	ImageCoords_t coords;
 };
+
+
+
