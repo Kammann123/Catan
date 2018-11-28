@@ -3,12 +3,11 @@
 #include <exception>
 
 ProtocolState::
-ProtocolState(ProtocolTag* tag, NotifyCallback notify, SendCallback send) {
+ProtocolState(ProtocolTag* tag, NotifyCallback notify, NetworkSocket** socket) {
 	this->tag = tag;
 	this->notifyCallback = notify;
 	this->hasNotify = true;
-	this->sendCallback = send;
-	this->hasSend = true;
+	this->socket = socket;
 }
 
 ProtocolState::
@@ -16,14 +15,14 @@ ProtocolState(ProtocolTag* tag, NotifyCallback callback) {
 	this->tag = tag;
 	this->notifyCallback = callback;
 	this->hasNotify = true;
-	this->hasSend = false;
+	this->socket = nullptr;
 }
 
 ProtocolState::
 ProtocolState(ProtocolTag* tag) {
 	this->tag = tag;
 	this->hasNotify = false;
-	this->hasSend = false;
+	this->socket = nullptr;
 }
 
 ProtocolState::~ProtocolState(void) {
@@ -72,21 +71,20 @@ ProtocolState::notify(NetworkPacket* packet) {
 }
 
 void
-ProtocolState::setSendCallback(SendCallback send) {
-	this->sendCallback = send;
-	this->hasSend = true;
+ProtocolState::setSocket(NetworkSocket** socket) {
+	this->socket = socket;
 }
 
 bool
 ProtocolState::canSend(void) const {
-	return this->hasSend;
+	return socket != nullptr;
 }
 
 void 
 ProtocolState::sendPacket(NetworkPacket* packet) {
-	if (!hasSend) {
+	if (!socket) {
 		throw exception("ProtocolState - sendPacket - Configuracion de callback no disponible!");
 	}
 
-	this->sendCallback(packet);
+	(*socket)->send(packet);
 }

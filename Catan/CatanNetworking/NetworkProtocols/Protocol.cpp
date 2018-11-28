@@ -3,7 +3,7 @@
 #include <list>
 
 Protocol::
-Protocol(SendCallback sendCallback, string start, unsigned int timeout, map<string, ProtocolState*> states) {
+Protocol(NetworkSocket** socket, string start, unsigned int timeout, map<string, ProtocolState*> states) {
 	/* Inicializo */
 	this->states = states;
 	this->currState = start;
@@ -13,12 +13,12 @@ Protocol(SendCallback sendCallback, string start, unsigned int timeout, map<stri
 	this->timeout = boost::chrono::milliseconds(timeout);
 	this->hasTimeout = true;
 
-	_init_callback(sendCallback);
+	_init_callback(socket);
 	_init_substates();
 }
 
 Protocol::
-Protocol(SendCallback sendCallback, string start, map<string, ProtocolState*> states) {
+Protocol(NetworkSocket** socket, string start, map<string, ProtocolState*> states) {
 	/* Inicializo */
 	this->states = states;
 	this->currState = start;
@@ -27,7 +27,7 @@ Protocol(SendCallback sendCallback, string start, map<string, ProtocolState*> st
 	this->error = "";
 	this->hasTimeout = false;
 
-	_init_callback(sendCallback);
+	_init_callback(socket);
 	_init_substates();
 }
 
@@ -40,11 +40,11 @@ Protocol::
 }
 
 void
-Protocol::_init_callback(SendCallback sendCallback) {
+Protocol::_init_callback(NetworkSocket** socket) {
 
 	/* Configuro el callback */
 	for (auto ps : this->states) {
-		ps.second->setSendCallback(sendCallback);
+		ps.second->setSocket(socket);
 	}
 }
 

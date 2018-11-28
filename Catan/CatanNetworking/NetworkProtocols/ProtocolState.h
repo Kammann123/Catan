@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../NetworkPackets/NetworkPacket.h"
+#include "../NetworkHandlers/NetworkSocket.h"
 #include "ProtocolTag.h"
 
 #include <functional>
@@ -15,12 +16,6 @@ using namespace std;
 * un posible error o estado.
 */
 using NotifyCallback = function<void(NetworkPacket*)>;
-
-/*
-* SendCallback - Transmision de mensajes a traves del handler
-* correspondiente.
-*/
-using SendCallback = function<void(NetworkPacket*)>;
 
 /*
 * ProtocolStatus - Verificacion de ejecucion del protocolo
@@ -43,7 +38,7 @@ public:
 	* Se permite construir un estado del protocol con o sin,
 	* callback de notificacion y con callback para mandar mensaje.
 	*/
-	ProtocolState(ProtocolTag* tag, NotifyCallback notify, SendCallback send);
+	ProtocolState(ProtocolTag* tag, NotifyCallback notify, NetworkSocket** socket);
 	ProtocolState(ProtocolTag* tag, NotifyCallback callback);
 	ProtocolState(ProtocolTag* tag);
 	virtual ~ProtocolState();
@@ -69,10 +64,10 @@ public:
 	bool shouldNotify(void) const;
 
 	/*
-	* setSendCallback
-	* Configura el callback para transmision de mensajes
+	* setSocket
+	* Configura el socket para mandar los mensajes
 	*/
-	void setSendCallback(SendCallback send);
+	void setSocket(NetworkSocket** socket);
 
 	/*
 	* canSend
@@ -107,8 +102,9 @@ public:
 
 protected:
 	ProtocolTag* tag;
+
+	NetworkSocket** socket;
+
 	NotifyCallback notifyCallback;
-	SendCallback sendCallback;
 	bool hasNotify;
-	bool hasSend;
 };

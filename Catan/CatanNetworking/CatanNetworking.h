@@ -105,7 +105,7 @@ public:
 
 	/* Getters paara los NetworkingStates */
 	CatanGame& getGame(void);
-	NetworkSocket* getSocket(void);
+	NetworkSocket*& getSocket(void);
 	string getIp(void);
 	unsigned int getPort(void);
 	void setSocket(NetworkSocket* socket);

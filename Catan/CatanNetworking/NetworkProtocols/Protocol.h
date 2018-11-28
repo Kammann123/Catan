@@ -29,8 +29,8 @@ public:
 	* - timeout: Tiempo maximo de espera en milisegundos
 	* - states: Estados del protocolo con sus tags respectivos
 	*/
-	Protocol(SendCallback sendCallback, string start, unsigned int timeout, map<string, ProtocolState*> states);
-	Protocol(SendCallback sendCallback, string start, map<string, ProtocolState*> states);
+	Protocol(NetworkSocket** socket, string start, unsigned int timeout, map<string, ProtocolState*> states);
+	Protocol(NetworkSocket** socket, string start, map<string, ProtocolState*> states);
 	~Protocol();
 
 	/*
@@ -88,7 +88,7 @@ private:
 	void verifyStatus(void) const;
 	
 	/* Rutionas de inicializacion */
-	void _init_callback(SendCallback sendCallback);
+	void _init_callback(NetworkSocket** socket);
 	void _init_substates();
 
 	ProtocolStatus status;

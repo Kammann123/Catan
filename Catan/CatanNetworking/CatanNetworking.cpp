@@ -86,7 +86,7 @@ CatanNetworking::getIp(void) {
 	return ip;
 }
 
-NetworkSocket*
+NetworkSocket*&
 CatanNetworking::getSocket() {
 	return socket;
 }

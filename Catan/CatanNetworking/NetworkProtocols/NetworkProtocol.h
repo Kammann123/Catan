@@ -55,7 +55,7 @@ using namespace std::placeholders;
 *	Macros para facilitar la creacion del callback para mandar mensajes
 *	dentro de un protocolo cualquiera, sea que se tiene un server o un client
 */
-#define socket_send(_socket)	bind(&NetworkSocket::send, _socket, _1)
+#define socket_send(_socket)	&_socket
 
 /* Macro para creacion de protocolos 
 *
