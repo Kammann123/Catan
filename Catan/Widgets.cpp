@@ -94,6 +94,12 @@ toggleSelection(void)
 	selected = !selected;
 }
 
+void TextField::
+clearSelection(void)
+{
+	selection = false;
+}
+
 bool TextField::
 isSelected(void)
 {
@@ -166,4 +172,11 @@ void ImageWidget::
 setCoords(ImageCoords_t newCoords)
 {
 	coords = newCoords;
+}
+
+void ImageWidget::
+setCoords(double x, double y)
+{
+	this->coords.x = x;
+	this->coords.y = y;
 }

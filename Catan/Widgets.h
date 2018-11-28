@@ -49,6 +49,7 @@ public:
 	void deleteChar(void);
 	void eraseAll(void);
 	void toggleSelection(void);
+	void clearSelection(void);
 
 	/* Getters */
 	bool isSelected(void);
@@ -85,6 +86,7 @@ public:
 	void setBitmap(ALLEGRO_BITMAP* newBitmap);
 	void setDisplay(ALLEGRO_DISPLAY* newDisplay);
 	void setCoords(ImageCoords_t newCoords);
+	void setCoords(double x, double y);
 
 private:
 	ALLEGRO_BITMAP* bitmap;
