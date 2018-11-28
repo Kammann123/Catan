@@ -1,6 +1,6 @@
 #include "FirstBuilds.h"
 #include "GameError.h"
-#include "Turn.h"
+#include "ThrowDices.h"
 
 #include "../../CatanEvents/BuildingEvent.h"
 
@@ -86,7 +86,7 @@ FirstBuilds::handle(CatanEvent* event) {
 							state = FBStates::BUILD_SETTLEMENT;
 							stage++;
 							if (stage == MAX_BUILD_STAGE) {
-								game.changeState(new Turn(game), "FirstBuilds - Construcciones iniciales realizadas! Comienza el primer turno.");
+								game.changeState(new ThrowDices(game), "FirstBuilds - Construcciones iniciales realizadas! Comienza el primer turno.");
 							}
 							else {
 								/* Verifico alternancia de turno */
