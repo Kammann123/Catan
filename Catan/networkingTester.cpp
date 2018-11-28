@@ -8,8 +8,6 @@ using namespace std;
 #define CONSOLE(msg)	cout << "[TESTING] " << msg << endl;
 
 int main(int argc, char** argv) {
-
-	vector<string> netStrings = {};
 	
 	string localName;
 	string ip;
@@ -35,9 +33,8 @@ int main(int argc, char** argv) {
 
 			if (netStatus != net.getNetworkingState()) {
 				netStatus = net.getNetworkingState();
-				CONSOLE("Networking cambio de estado: " + netStrings[netStatus]);
+				CONSOLE("Networking cambio de estado: " + string((char*)net.getNetworkingString()));
 			}
-
 		}
 		else {
 			CONSOLE("Hubo un error durante la ejecucion de networking!");
@@ -47,14 +44,14 @@ int main(int argc, char** argv) {
 
 		if (gameStatus != game.getState()) {
 			gameStatus = game.getState();
-			CONSOLE("Game cambio de estado: " + gameStatus);
+			CONSOLE("Game cambio de estado: " + string((char*)game.getStateString()));
 		}
 	}
 
 	if (game.getState() == CatanGame::State::GAME_ERROR) {
 		CONSOLE("El juego tuvo un error durante su ejecucion.");
 	}
-	else if(game.getState() == CatanGame::State::GAME_END) {
+	else if (game.getState() == CatanGame::State::GAME_END) {
 		CONSOLE("El juego ha finalizado.");
 	}
 	CONSOLE(game.info());
