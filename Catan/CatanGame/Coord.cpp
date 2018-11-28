@@ -610,13 +610,13 @@ Coord::_update_coord(void) {
 		if (coord == coords) {
 			type = Type::DOT;
 			return;
-
+		}
+	}
 	for (string coord : internalEdges) {
 		if (coord == coords) {
 			type = Type::EDGE;
 			return;
 		}
-	}}
 	}
 	for (string coord : externalEdges) {
 		if (coord == coords) {

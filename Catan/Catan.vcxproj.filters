@@ -734,9 +734,6 @@
     <ClCompile Include="networkingTester.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="CatanEvents\KnightEvent.cpp">
-      <Filter>CatanEvents</Filter>
-    </ClCompile>
     <ClCompile Include="CatanNetworking\NetworkingStates\ListenBank.cpp">
       <Filter>CatanNetworking\NetworkingStates</Filter>
     </ClCompile>
@@ -778,6 +775,9 @@
     </ClCompile>
     <ClCompile Include="CatanNetworking\NetworkingStates\WaitSync.cpp">
       <Filter>CatanNetworking\NetworkingStates</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanEvents\KnightEvent.cpp">
+      <Filter>CatanEvents</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

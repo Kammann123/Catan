@@ -31,7 +31,7 @@ public:
 	Coord& getCoords(void);
 	BuildingType getType(void);
 
-private:
+protected:
 	Coord coords;
 	BuildingType type;
 };
