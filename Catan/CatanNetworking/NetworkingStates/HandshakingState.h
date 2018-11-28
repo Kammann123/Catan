@@ -12,8 +12,15 @@
 class HandshakingState : public NetworkingState {
 public:
 	/* Constructor */
-	HandshakingState(Protocol* p, CatanNetworking& net, unsigned int id);
+	HandshakingState(CatanNetworking& net, unsigned int id);
 	~HandshakingState();
+
+	/*
+	* setProtocol
+	* Permite configurar el puntero para la ejecucion
+	* del protocolo de comunicacion
+	*/
+	void setProtocol(Protocol* protocol);
 
 	/* 
 	* isHeader

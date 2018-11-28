@@ -50,7 +50,7 @@ CatanNetworking(string ip, unsigned int port, CatanGame& _game) : Observer(), ga
 		allocate(States::LISTENING, Listening, *this),
 		allocate(States::IDLE, Idle, *this),
 		allocate(States::WAIT_SYNC, WaitSync, *this),
-		allocate(States::SYNC, WaitSync, *this),
+		allocate(States::SYNC, Sync, *this),
 		allocate(States::NET_ERROR, NetError, *this)
 	};
 

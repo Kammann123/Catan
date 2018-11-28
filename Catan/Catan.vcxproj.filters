@@ -737,6 +737,48 @@
     <ClCompile Include="CatanEvents\KnightEvent.cpp">
       <Filter>CatanEvents</Filter>
     </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkingStates\ListenBank.cpp">
+      <Filter>CatanNetworking\NetworkingStates</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkingStates\ListenBuilding.cpp">
+      <Filter>CatanNetworking\NetworkingStates</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkingStates\ListenDices.cpp">
+      <Filter>CatanNetworking\NetworkingStates</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkingStates\ListenEnd.cpp">
+      <Filter>CatanNetworking\NetworkingStates</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkingStates\ListenOffer.cpp">
+      <Filter>CatanNetworking\NetworkingStates</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkingStates\ListenQuit.cpp">
+      <Filter>CatanNetworking\NetworkingStates</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkingStates\Sync.cpp">
+      <Filter>CatanNetworking\NetworkingStates</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkingStates\TellBank.cpp">
+      <Filter>CatanNetworking\NetworkingStates</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkingStates\TellBuilding.cpp">
+      <Filter>CatanNetworking\NetworkingStates</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkingStates\TellDices.cpp">
+      <Filter>CatanNetworking\NetworkingStates</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkingStates\TellEnd.cpp">
+      <Filter>CatanNetworking\NetworkingStates</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkingStates\TellOffer.cpp">
+      <Filter>CatanNetworking\NetworkingStates</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkingStates\TellQuit.cpp">
+      <Filter>CatanNetworking\NetworkingStates</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanNetworking\NetworkingStates\WaitSync.cpp">
+      <Filter>CatanNetworking\NetworkingStates</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
