@@ -78,7 +78,6 @@ PSIf::isHeader(PacketHeader header) {
 	return false;
 }
 
-
 bool
 PSIf::isHeader(PacketHeader header, ProtocolState::ProtocolType asWhat) {
 	for (auto state : states) {
@@ -87,4 +86,16 @@ PSIf::isHeader(PacketHeader header, ProtocolState::ProtocolType asWhat) {
 		}
 	}
 	return false;
+}
+
+void 
+PSIf::setSocket(NetworkSocket** socket) {
+	this->socket = socket;
+
+	for (auto state : states) {
+
+		if (state.second) {
+			state.second->setSocket(socket);
+		}
+	}
 }

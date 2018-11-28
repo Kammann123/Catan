@@ -27,6 +27,7 @@ public:
 	virtual map<string, ProtocolState*>* getSubStates(void);
 	virtual bool isHeader(PacketHeader header);
 	virtual bool isHeader(PacketHeader header, ProtocolState::ProtocolType asWhat);
+	virtual void setSocket(NetworkSocket** socket);
 
 private:
 	map<string, ProtocolState*> states;
