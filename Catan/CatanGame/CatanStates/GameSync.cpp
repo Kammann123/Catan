@@ -21,6 +21,7 @@ GameSync::handle(CatanEvent* event) {
 
 		/* Paso a nuevo estado de primeras construcciones */
 		game.changeState(new FirstBuilds(game), "GameSync - Se genero el entorno del juego correctamente!");
+		return;
 	}
 	else if (event->getEvent() == CatanEvent::Events::SYNC) {
 
@@ -47,6 +48,7 @@ GameSync::handle(CatanEvent* event) {
 
 				/* Paso a nuevo estado de primeras construcciones */
 				game.changeState(new FirstBuilds(game), "GameSync - Sincronizacion recibida exitosamente!");
+				return;
 			}
 		}
 

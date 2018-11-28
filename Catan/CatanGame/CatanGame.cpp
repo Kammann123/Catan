@@ -516,6 +516,8 @@ CatanGame::generateTokens() {
 
 bool
 CatanGame::verifyMap(map<Coord, MapValue> gameMap) {
+	bool verify;
+
 	/*
 	* Primero verifico que existan en la definicion, todos los puntos
 	* del mapa, tanto de tierra como de mar, para lo cual
@@ -528,45 +530,49 @@ CatanGame::verifyMap(map<Coord, MapValue> gameMap) {
 			return false;
 		}
 
-		if (counter.find(i) == counter.end()) {
-			counter.insert(pair<MapValue, unsigned int>(i, 1));
+		if (counter.find(gameMap[i]) == counter.end()) {
+			counter.insert(pair<MapValue, unsigned int>(gameMap[i], 1));
 		}
 		else {
-			counter[i] += 1;
-		}
-	}
-
-	for (unsigned char i = MIN_LAND_COORD; i <= MAX_LAND_COORD; i++) {
-		if (gameMap.find(i) == gameMap.end()) {
 			return false;
 		}
-
-		if (counter.find(i) == counter.end()) {
-			counter.insert(pair<MapValue, unsigned int>(i, 1));
-		}
-		else {
-			counter[i] += 1;
-		}
 	}
-
 	/*
 	* Luego compruebo que los valores mantengan una relacion 
 	* correcta de cantidades, segun lo establecido por las reglas
 	* del juego Catan
 	*/
-	bool verify = (
-		counter[(MapValue)ResourceId::DESERT] == DESERT_HEX_COUNT &&
-		counter[(MapValue)ResourceId::HILL] == HILL_HEX_COUNT &&
-		counter[(MapValue)ResourceId::FOREST] == FOREST_HEX_COUNT &&
-		counter[(MapValue)ResourceId::MOUNTAIN] == MOUNTAIN_HEX_COUNT &&
-		counter[(MapValue)ResourceId::FIELD] == FIELD_HEX_COUNT &&
-		counter[(MapValue)ResourceId::PASTURES] == PASTURE_HEX_COUNT &&
+	verify = (
 		counter[(MapValue)SeaId::BRICK] == 1 &&
 		counter[(MapValue)SeaId::WOOD] == 1 &&
 		counter[(MapValue)SeaId::WHEAT] == 1 &&
 		counter[(MapValue)SeaId::SHEEP] == 1 &&
 		counter[(MapValue)SeaId::STONE] == 1 &&
 		counter[(MapValue)SeaId::NORMAL] == 1
+	);
+
+	if (!verify)	return false;
+
+	counter.clear();
+	for (unsigned char i = MIN_LAND_COORD; i <= MAX_LAND_COORD; i++) {
+		if (gameMap.find(i) == gameMap.end()) {
+			return false;
+		}
+
+		if (counter.find(gameMap[i]) == counter.end()) {
+			counter.insert(pair<MapValue, unsigned int>(gameMap[i], 1));
+		}
+		else {
+			counter[gameMap[i]] += 1;
+		}
+	}
+	verify = (
+		counter[(MapValue)ResourceId::DESERT] == DESERT_HEX_COUNT &&
+		counter[(MapValue)ResourceId::HILL] == HILL_HEX_COUNT &&
+		counter[(MapValue)ResourceId::FOREST] == FOREST_HEX_COUNT &&
+		counter[(MapValue)ResourceId::MOUNTAIN] == MOUNTAIN_HEX_COUNT &&
+		counter[(MapValue)ResourceId::FIELD] == FIELD_HEX_COUNT &&
+		counter[(MapValue)ResourceId::PASTURES] == PASTURE_HEX_COUNT
 	);
 
 	return verify;
@@ -580,21 +586,32 @@ CatanGame::verifyTokens(map<Coord, unsigned char> tokens) {
 	* y luego valido que los numeros esten en el rango que se 
 	* admite segun las reglas de Catan
 	*/
-	map<unsigned int, unsigned int> tokenCounter;
+	map<unsigned char, unsigned int> tokenCounter;
 
-	for (unsigned int i = 3; i <= 11; i++) tokenCounter.insert(pair<unsigned int, unsigned int>(i, 2));
-	tokenCounter.insert(pair<unsigned int, unsigned int>(2, 1));
-	tokenCounter.insert(pair<unsigned int, unsigned int>(12, 1));
-
-	for (unsigned int i = MIN_LAND_COORD; i <= MAX_LAND_COORD; i++) {
-
-		if (tokenCounter.find(i) == tokenCounter.end()) {
-			return false;
-		}else if( tokenCounter[i] > 0 ){
-			tokenCounter[i] -= 1;
+	for (unsigned char i = 3; i <= 11; i++) {
+		if (i != 7) {
+			tokenCounter.insert(pair<unsigned char, unsigned int>(i, 2));
 		}
-		else if( tokenCounter[i] == 0) {
+	}
+	tokenCounter.insert(pair<unsigned char, unsigned int>(2, 1));
+	tokenCounter.insert(pair<unsigned char, unsigned int>(12, 1));
+	tokenCounter.insert(pair<unsigned char, unsigned int>(0, 1));
+
+	for (unsigned char i = MIN_LAND_COORD; i <= MAX_LAND_COORD; i++) {
+		
+		if (tokens.find(i) == tokens.end()) {
 			return false;
+		}
+		else {
+			if (tokenCounter.find(tokens[i]) == tokenCounter.end()) {
+				return false;
+			}
+			else if (tokenCounter[tokens[i]] > 0) {
+				tokenCounter[tokens[i]] -= 1;
+			}
+			else if (tokenCounter[tokens[i]] == 0) {
+				return false;
+			}
 		}
 	}
 
