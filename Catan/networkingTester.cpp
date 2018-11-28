@@ -18,6 +18,7 @@ CatanEvent* build(void);
 CatanEvent* dices(void);
 CatanEvent* random_dices(void);
 CatanEvent* bank_trade(void);
+CatanEvent* pass(void);
 
 int main(int argc, char** argv) {
 	string localName;
@@ -92,7 +93,8 @@ CatanEvent* ui(void) {
 		<< "\t+ \"B\": Realizar una construccion" << endl
 		<< "\t+ \"D\": Tirar dados elegidos" << endl
 		<< "\t+ \"R\": Tirar dados al azar" << endl
-		<< "\t+ \"T\": Intercambiar con el banco" << endl;
+		<< "\t+ \"T\": Intercambiar con el banco" << endl
+		<< "\t+ \"P\": Pasar de turno" << endl;
 
 	cout << "Eleccion: ";
 	cin >> buff;
@@ -110,6 +112,14 @@ CatanEvent* ui(void) {
 
 		case 'D':
 			return dices();
+			break;
+
+		case 'T':
+			return bank_trade();
+			break;
+
+		case 'P':
+			return pass();
 			break;
 
 		default:
@@ -248,4 +258,9 @@ CatanEvent* bank_trade(void) {
 	}
 
 	return nullptr;
+}
+
+CatanEvent* pass(void) {
+
+	return new CatanEvent(CatanEvent::Events::PASS, CatanEvent::Sources::GUI, PlayerId::PLAYER_ONE);
 }
