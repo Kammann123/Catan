@@ -19,10 +19,10 @@
 #include <vector>
 #include <time.h>
 
-const char* CatanGame::StateString[11] = { 
+const char* CatanGame::StateString[10] = { 
 	"GAME_SYNC", "FIRST_BUILDS", "THROW_DICES", 
-	"ROBBER_CARD", "ROBBER_MOVE", "ROBBER_MOVE", 
-	"TURN", "OFFER_ANSWER", "WINNER", "GAME_END", "GAME_ERROR"
+	"ROBBER_CARD", "ROBBER_MOVE", "TURN", 
+	"OFFER_ANSWER", "WINNER", "GAME_END", "GAME_ERROR"
 };
 
 void
