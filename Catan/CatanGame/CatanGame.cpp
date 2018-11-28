@@ -357,6 +357,10 @@ CatanGame::getMap() {
 		/* Agrego al gameMap, los recursos id nomas */
 		gameMap[hex.first] = (MapValue)hex.second.getResource();
 	}
+	for (auto hex : seaMap) {
+		/* Agrego al gameMap, los recursos id nomas */
+		gameMap[hex.first] = (MapValue)hex.second.getDocks();
+	}
 
 	return gameMap;
 }
@@ -475,12 +479,15 @@ CatanGame::generateOcean() {
 void
 CatanGame::generateTokens() {
 	vector<unsigned char> tokens;
+	tokens.clear();
 
 	/* Genero los numeros aleatorios */
 	tokens.push_back(2), tokens.push_back(12);
-	for (unsigned int i = 3; i <= 11; i++) {
-		tokens.push_back(i);
-		tokens.push_back(i);
+	for (unsigned char i = 3; i <= 11; i++) {
+		if (i != 7) {
+			tokens.push_back(i);
+			tokens.push_back(i);
+		}
 	}
 	random_shuffle(tokens.begin(), tokens.end());
 
@@ -489,6 +496,9 @@ CatanGame::generateTokens() {
 		ResourceHex& resourceHex = hex.second;
 		if (resourceHex.getResource() != ResourceId::DESERT) {
 			resourceHex.setToken( tokens.back() ), tokens.pop_back();
+		}
+		else {
+			resourceHex.setToken(0);
 		}
 	}
 }

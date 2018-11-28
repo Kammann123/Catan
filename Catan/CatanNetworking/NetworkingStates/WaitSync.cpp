@@ -22,7 +22,7 @@ WaitSync(CatanNetworking& net) : HandshakingState(net, CatanNetworking::States::
 			p_recv("TURN", cond_tag(bind(&WaitSync::doIStart, this), PROTOCOL_DONE, "TURN_ACK"), bind(&WaitSync::setTurn, this, _1), { PacketHeader::YOU_START, PacketHeader::I_START })
 		),
 		p_send("NO_DEVS", tag("TURN"), PacketHeader::NO),
-		p_send("TURN_ACK", tag(PROTOCOL_DONE), ACK)
+		p_send("TURN_ACK", tag(PROTOCOL_DONE), PacketHeader::ACK)
 	);
 	this->setProtocol(waitSyncProtocol);
 }
