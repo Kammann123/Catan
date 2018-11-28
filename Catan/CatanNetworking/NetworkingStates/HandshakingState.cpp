@@ -6,7 +6,7 @@
 #include "NetError.h"
 
 HandshakingState::
-HandshakingState(Protocol* p, CatanNetworking& net, unsigned int id) : NetworkingState(net, id), handshakingProtocol(p) {}
+HandshakingState(CatanNetworking& net, unsigned int id) : NetworkingState(net, id) {}
 
 HandshakingState::
 ~HandshakingState() {
@@ -16,7 +16,12 @@ HandshakingState::
 }
 
 void
-HandshakingState::context() {}
+HandshakingState::setProtocol(Protocol* protocol) {
+	this->handshakingProtocol = protocol;
+}
+
+void
+HandshakingState::context() { handshakingProtocol->start(); }
 
 void
 HandshakingState::run() {

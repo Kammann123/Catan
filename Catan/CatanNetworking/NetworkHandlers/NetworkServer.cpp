@@ -8,6 +8,7 @@ NetworkServer(unsigned int port) : NetworkSocket() {
 		/* Creo y abro el acceptor y endpoint del server */
 		boost::asio::ip::tcp::endpoint endpoint(boost::asio::ip::tcp::v4(), port);
 		this->acceptor = new boost::asio::ip::tcp::acceptor(*this->handler, endpoint);
+		this->acceptor->non_blocking(true);
 	
 		/* Verifico ok! */
 		if (this->acceptor) {
