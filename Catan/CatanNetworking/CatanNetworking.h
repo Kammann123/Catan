@@ -33,7 +33,7 @@ public:
 	/*
 	* Estados de funcionamiento del CatanNetworking
 	*/
-	static const char* StateString[17];
+	static const char* StateString[18];
 
 	enum States : unsigned int {DISCONNECTED, LISTENING, WAIT_SYNC, SYNC, IDLE, NET_ERROR,
 		LISTEN_BANK, LISTEN_BUILDING, LISTEN_DICES, LISTEN_END, LISTEN_OFFER, LISTEN_QUIT,

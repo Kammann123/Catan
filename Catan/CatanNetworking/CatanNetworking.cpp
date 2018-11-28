@@ -35,7 +35,7 @@
 #define allocate(_key, _constr, ...) {_key, (NetworkingState*)new _constr(__VA_ARGS__)}
 
 const char*
-CatanNetworking::StateString[17] = {
+CatanNetworking::StateString[18] = {
 	"DISCONNECTED", "LISTENING", "WAIT_SYNC", "SYNC", "IDLE", "NET_ERROR",
 	"LISTEN_BANK", "LISTEN_BUILDING", "LISTEN_DICES", "LISTEN_END", "LISTEN_OFFER",
 	"LISTEN_QUIT", "TELL_BANK", "TELL_BUILDING", "TELL_DICES", "TELL_END", "TELL_OFFER", "TELL_QUIT"

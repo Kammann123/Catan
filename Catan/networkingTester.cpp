@@ -1,11 +1,18 @@
 #include "CatanNetworking/CatanNetworking.h"
 #include "CatanGame/CatanGame.h"
 
+#include <Windows.h>
+#include <conio.h>
 #include <vector>
+
+#include "CatanEvents/BuildingEvent.h"
 
 using namespace std;
 
 #define CONSOLE(msg)	cout << "[TESTING] " << msg << endl;
+
+CatanEvent* ui(void);
+CatanEvent* build(void);
 
 int main(int argc, char** argv) {
 	
@@ -28,6 +35,15 @@ int main(int argc, char** argv) {
 
 	while (game.getState() != CatanGame::State::GAME_ERROR && game.getState() != CatanGame::State::GAME_END) {
 
+		/* Corremos la ui */
+		if (_kbhit()) {
+			CatanEvent* event = ui();
+			if (event) {
+				game.handle(event);
+			}
+		}
+
+		/* Corremos el networking */
 		if (net.good()) {
 			net.run();
 
@@ -42,9 +58,11 @@ int main(int argc, char** argv) {
 			break;
 		}
 
+		/* Corremos el juego */
 		if (gameStatus != game.getState()) {
 			gameStatus = game.getState();
 			CONSOLE("Game cambio de estado: " + string((char*)game.getStateString()));
+			CONSOLE(game.info());
 		}
 	}
 
@@ -58,4 +76,52 @@ int main(int argc, char** argv) {
 	getchar();
 
 	return 0;
+}
+
+CatanEvent* ui(void) {
+	unsigned char buff = _getch();
+
+	cout << "[UserInterface] Hola Mortal, al momento de ahora puedes hacer las siguientes funciones:" << endl
+		<< "\t+ \"B\": Realizar una construccion" << endl;
+
+
+	switch( _getch() ){
+		
+		case 'B':
+			return build();
+
+		default:
+			return nullptr;
+			break;
+
+	}
+
+}
+
+CatanEvent* build(void) {
+
+	cout << endl << "[Construccion]" << endl;
+
+	unsigned char type;
+	string coords;
+
+	cout << "Tipo de construccion? (S: settlement - R: road - C: city) > ";
+	cin >> type;
+	cout << endl << "Coordenadas? > ";
+	cin >> coords;
+
+	switch (type) {
+		case 'S':
+			return new BuildingEvent(coords, BuildingType::SETTLEMENT);
+			break;
+		case 'R':
+			return new BuildingEvent(coords, BuildingType::ROAD);
+			break;
+		case 'C':
+			return new BuildingEvent(coords, BuildingType::CITY);
+			break;
+		default:
+			return nullptr;
+			break;
+	}
 }
