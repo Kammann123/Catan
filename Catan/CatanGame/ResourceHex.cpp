@@ -66,3 +66,8 @@ ResourceHex::getCoord(void)
 {
 	return coord;
 }
+
+const char* 
+ResourceHex::getLand(void) {
+	return landStrings[(unsigned int)resource];
+}

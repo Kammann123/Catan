@@ -2,6 +2,16 @@
 
 #define IS(value, compareValue, cast) ((value) == (cast)(compareValue))
 
+extern const char* resourceStrings[6] = {
+	"Lumber", "Brick", "Ore", "Grain",
+	"Wool", "Nothing(Desert)"
+};
+
+extern const char* landStrings[6] = {
+	"Forest", "Hill", "Mountain", "Field",
+	"Pastures", "Desert"
+};
+
 /* Funciones */
 bool isMapValue(unsigned char value) {
 
@@ -54,7 +64,7 @@ bool isDevCard(unsigned char value) {
 }
 
 bool isValidDice(unsigned char value) {
-	return (value >= '1' && value <= '6');
+	return (value >= 1 && value <= 6);
 }
 
 bool isMapPosition(unsigned char value) {
