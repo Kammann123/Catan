@@ -64,7 +64,7 @@ PSIf::solve(void) {
 }
 
 map<string, ProtocolState*>*
-PSIfSend::getSubStates(void) {
+PSIf::getSubStates(void) {
 	return &states;
 }
 

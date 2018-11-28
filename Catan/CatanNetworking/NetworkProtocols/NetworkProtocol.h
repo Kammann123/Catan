@@ -156,4 +156,4 @@ using namespace std::placeholders;
 #define p_data_send(_tag, ...)	{_tag, DATA_SEND(__VA_ARGS__)}
 #define p_if_recv(_tag, ...)		{_tag, IF({__VA_ARGS__})}
 #define p_if_send(_tag, ...)		{_tag, IF({__VA_ARGS__})}
-#define p_if(_tag, ...)				{_tag, IF({__vA_ARGS__})}
+#define p_if(_tag, ...)				{_tag, IF({__VA_ARGS__})}

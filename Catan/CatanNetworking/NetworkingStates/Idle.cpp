@@ -69,8 +69,8 @@ Idle::run(void) {
 		/* Verifico si se puede hacer un dispatch */
 		for (HandshakingState* state : handlers) {
 
-			/* Verifico que el handler sea teller o both */
-			if (state->getProtocol()->getType() == ProtocolState::ProtocolType::TELLER || state->getProtocol()->getType() == ProtocolState::ProtocolType::BOTH) {
+			/* Verifico que el handler sea listener o both */
+			if (state->getProtocol()->getType() == ProtocolState::ProtocolType::LISTENER || state->getProtocol()->getType() == ProtocolState::ProtocolType::BOTH) {
 
 				if (state->isHeader(packet->getHeader())) {
 
@@ -98,8 +98,8 @@ Idle::update(void) {
 	/* Veo si alguno puede manejar */
 	for (HandshakingState* state : handlers) {
 
-		/* Verifico que el handler sea listener o both */
-		if (state->getProtocol()->getType() == ProtocolState::ProtocolType::LISTENER || state->getProtocol()->getType() == ProtocolState::ProtocolType::BOTH) {
+		/* Verifico que el handler sea teller o both */
+		if (state->getProtocol()->getType() == ProtocolState::ProtocolType::TELLER || state->getProtocol()->getType() == ProtocolState::ProtocolType::BOTH) {
 			if (state->isHeader(packet->getHeader())) {
 
 				/* Paso a ese estado! */

@@ -6,9 +6,11 @@ ListenDices(CatanNetworking& net) : HandshakingState(net, CatanNetworking::State
 	/* Defino el protocolo en cuestion y lo configuro */
 	Protocol* listenDicesProtocol = protocol(
 		socket_send(networking.getSocket()),
-		"PASS",
-		p_wait_send("PASS", tag("RECV_DICES"), PacketHeader::PASS),
-		p_recv("RECV_DICES", list_tag(bind(&ListenDices::decideRobber, this), { "DICES_ACK", "SEND_CARDS", "WAIT_CARDS" }), bind(&ListenDices::setDices, this, _1), PacketHeader::DICES_ARE),
+		"PASS_OR_DICES",
+		p_if("PASS_OR_DICES",
+			p_wait_send("PASS", tag("RECV_DICES"), PacketHeader::PASS),
+			p_recv("RECV_DICES", list_tag(bind(&ListenDices::decideRobber, this), { "DICES_ACK", "SEND_CARDS", "WAIT_CARDS" }), bind(&ListenDices::setDices, this, _1), PacketHeader::DICES_ARE)
+		),
 		p_wait_send("SEND_CARDS", tag("SEND_ACK"), PacketHeader::ROBBER_CARDS),
 		p_send("WAIT_CARDS", tag("SEND_ACK"), PacketHeader::ACK),
 		p_if_recv("SEND_ACK",
