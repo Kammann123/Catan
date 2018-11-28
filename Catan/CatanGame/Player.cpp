@@ -6,7 +6,7 @@ Player::Player(PlayerId player) {
 	this->name = "";
 	this->player = player;
 	victoryPoints = 0;
-	resourceCards = {};
+	resourceCards = { new ResourceCard(ResourceId::FIELD), new ResourceCard(ResourceId::FIELD), new ResourceCard(ResourceId::FIELD), new ResourceCard(ResourceId::FIELD) };
 
 	/* Pido las construcciones */
 	_get_buildings(SETTLEMENT_COUNT, ROAD_COUNT, CITY_COUNT);
