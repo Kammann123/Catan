@@ -15,7 +15,6 @@ CatanEvent* ui(void);
 CatanEvent* build(void);
 
 int main(int argc, char** argv) {
-	
 	string localName;
 	string ip;
 	unsigned int port;
@@ -84,8 +83,8 @@ CatanEvent* ui(void) {
 	cout << "[UserInterface] Hola Mortal, al momento de ahora puedes hacer las siguientes funciones:" << endl
 		<< "\t+ \"B\": Realizar una construccion" << endl;
 
-
-	switch( _getch() ){
+	buff = _getch();
+	switch( buff ){
 		
 		case 'B':
 			return build();

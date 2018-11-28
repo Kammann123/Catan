@@ -105,7 +105,7 @@ Idle::update(void) {
 
 			/* Paso a ese estado! */
 			networking.changeState(state);
-			networking.run();
+			networking.update();
 			return;
 		}
 	}

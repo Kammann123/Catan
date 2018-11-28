@@ -223,34 +223,34 @@ CatanNetworking::getEventPacket(CatanEvent* event) {
 
 	switch (event->getEvent()) {
 		case CatanEvent::Events::THROW_DICES:
-			return new DicesPacket(*(DicesData*)event);
+			return new DicesPacket(*((DicesEvent*)event));
 			break;
 		case CatanEvent::Events::ROBBER_CARDS:
-			return new RobberCardPacket(*(RobberCardData*)event);
+			return new RobberCardPacket(*((RobberCardEvent*)event));
 			break;
 		case CatanEvent::Events::ROBBER_MOVE:
-			return new RobberMovePacket(*(RobberMoveData*)event);
+			return new RobberMovePacket(*((RobberMoveEvent*)event));
 			break;
 		case CatanEvent::Events::BUILDING:
-			return new BuildingPacket(*(BuildingData*)event);
+			return new BuildingPacket(*((BuildingEvent*)event));
 			break;
 		case CatanEvent::Events::BANK_TRADE:
-			return new BankPacket(*(BankData*)event);
+			return new BankPacket(*((BankEvent*)event));
 			break;
 		case CatanEvent::Events::OFFER_TRADE:
-			return new OfferPacket(*(OfferData*)event);
+			return new OfferPacket(*((OfferEvent*)event));
 			break;
 		case CatanEvent::Events::CARD_IS:
-			return new CardIsPacket(*(CardIsData*)event);
+			return new CardIsPacket(*((CardIsEvent*)event));
 			break;
 		case CatanEvent::Events::KNIGHT:
-			return new KnightPacket(*(KnightData*)event);
+			return new KnightPacket(*((KnightEvent*)event));
 			break;
 		case CatanEvent::Events::MONOPOLY:
-			return new MonopolyPacket(*(MonopolyData*)event);
+			return new MonopolyPacket(*((MonopolyEvent*)event));
 			break;
 		case CatanEvent::Events::YOP:
-			return new YOPPacket(*(YOPData*)event);
+			return new YOPPacket(*((YOPEvent*)event));
 			break;
 		case CatanEvent::Events::DEV_CARD:
 			return new NetworkPacket(PacketHeader::DEV_CARD);
