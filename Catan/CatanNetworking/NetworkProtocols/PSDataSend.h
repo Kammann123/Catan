@@ -35,6 +35,7 @@ public:
 	virtual ProtocolStatus recv(NetworkPacket* packet);
 	virtual ProtocolStatus solve(void);
 	virtual bool isHeader(PacketHeader header);
+	virtual bool isHeader(PacketHeader header, ProtocolState::ProtocolType asWhat);
 
 private:
 	PacketCallback callback;

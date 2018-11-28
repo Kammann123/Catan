@@ -114,6 +114,7 @@ public:
 	virtual ProtocolStatus recv(NetworkPacket* packet) = 0;
 	virtual ProtocolStatus solve(void) = 0;
 	virtual bool isHeader(PacketHeader header) = 0;
+	virtual bool isHeader(PacketHeader header, ProtocolState::ProtocolType asWhat) = 0;
 	virtual map<string, ProtocolState*>* getSubStates(void);
 
 protected:

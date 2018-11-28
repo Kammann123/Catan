@@ -29,3 +29,8 @@ bool
 PSDataSend::isHeader(PacketHeader header) {
 	return false;
 }
+
+bool
+PSDataSend::isHeader(PacketHeader header, ProtocolState::ProtocolType asWhat) {
+	return false;
+}

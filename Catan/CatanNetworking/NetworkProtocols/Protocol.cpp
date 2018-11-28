@@ -206,3 +206,8 @@ bool
 Protocol::isHeader(PacketHeader header) {
 	return states[startState]->isHeader(header);
 }
+
+bool
+Protocol::isHeader(PacketHeader header, ProtocolState::ProtocolType asWhat) {
+	return states[startState]->isHeader(header, asWhat);
+}

@@ -100,7 +100,7 @@ toggleSelection(void)
 void TextField::
 clearSelection(void)
 {
-	selection = false;
+	selected = false;
 }
 
 bool TextField::

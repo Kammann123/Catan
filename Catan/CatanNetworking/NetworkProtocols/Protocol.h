@@ -66,6 +66,7 @@ public:
 	* del protocolo en cuestion.
 	*/
 	bool isHeader(PacketHeader header);
+	bool isHeader(PacketHeader header, ProtocolState::ProtocolType asWhat);
 
 	/*
 	* reset

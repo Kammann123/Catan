@@ -35,6 +35,11 @@ HandshakingState::isHeader(PacketHeader header) {
 	return this->handshakingProtocol->isHeader(header);
 }
 
+bool
+HandshakingState::isHeader(PacketHeader header, ProtocolState::ProtocolType asWhat) {
+	return this->handshakingProtocol->isHeader(header, asWhat);
+}
+
 void
 HandshakingState::run() {
 

@@ -77,3 +77,14 @@ PSIf::isHeader(PacketHeader header) {
 	}
 	return false;
 }
+
+
+bool
+PSIf::isHeader(PacketHeader header, ProtocolState::ProtocolType asWhat) {
+	for (auto state : states) {
+		if (state.second->isHeader(header) && asWhat == state.second->getType()) {
+			return true;
+		}
+	}
+	return false;
+}

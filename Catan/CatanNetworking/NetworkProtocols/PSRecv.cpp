@@ -41,3 +41,8 @@ bool
 PSRecv::isHeader(PacketHeader header) {
 	return find(expected.begin(), expected.end(), header) != expected.end();
 }
+
+bool
+PSRecv::isHeader(PacketHeader header, ProtocolState::ProtocolType asWhat) {
+	return find(expected.begin(), expected.end(), header) != expected.end() && asWhat == type;
+}

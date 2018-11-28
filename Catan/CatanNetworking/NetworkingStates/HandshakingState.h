@@ -29,6 +29,7 @@ public:
 	* a su sequencia, sirve para hacer validaciones y dispatch
 	*/
 	bool isHeader(PacketHeader header);
+	bool isHeader(PacketHeader header, ProtocolState::ProtocolType asWhat);
 	
 	/* Acciones del estado */
 	virtual void run(void);

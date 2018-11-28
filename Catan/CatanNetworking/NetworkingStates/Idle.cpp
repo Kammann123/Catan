@@ -70,15 +70,13 @@ Idle::run(void) {
 		for (HandshakingState* state : handlers) {
 
 			/* Verifico que el handler sea listener o both */
-			if (state->getProtocol()->getType() == ProtocolState::ProtocolType::LISTENER || state->getProtocol()->getType() == ProtocolState::ProtocolType::BOTH) {
+			if (state->isHeader(packet->getHeader(), ProtocolState::ProtocolType::LISTENER) || state->isHeader(packet->getHeader(), ProtocolState::ProtocolType::BOTH)) {
 
-				if (state->isHeader(packet->getHeader())) {
-
-					/* Paso a ese estado! */
-					networking.changeState(state);
-					networking.run();
-					return;
-				}
+				/* Paso a ese estado! */
+				networking.changeState(state);
+				networking.run();
+				return;
+				
 			}
 		}
 
@@ -99,14 +97,12 @@ Idle::update(void) {
 	for (HandshakingState* state : handlers) {
 
 		/* Verifico que el handler sea teller o both */
-		if (state->getProtocol()->getType() == ProtocolState::ProtocolType::TELLER || state->getProtocol()->getType() == ProtocolState::ProtocolType::BOTH) {
-			if (state->isHeader(packet->getHeader())) {
+		if (state->isHeader(packet->getHeader(), ProtocolState::ProtocolType::TELLER) || state->isHeader(packet->getHeader(), ProtocolState::ProtocolType::BOTH)) {
 
-				/* Paso a ese estado! */
-				networking.changeState(state);
-				networking.update();
-				return;
-			}
+			/* Paso a ese estado! */
+			networking.changeState(state);
+			networking.update();
+			return;
 		}
 	}
 

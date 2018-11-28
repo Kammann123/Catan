@@ -26,3 +26,8 @@ bool
 PSSend::isHeader(PacketHeader header) {
 	return header == this->header;
 }
+
+bool
+PSSend::isHeader(PacketHeader header, ProtocolState::ProtocolType asWhat) {
+	return header == this->header && asWhat == type;
+}
