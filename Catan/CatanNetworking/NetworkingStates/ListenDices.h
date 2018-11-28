@@ -5,7 +5,7 @@
 class ListenDices : public HandshakingState {
 public:
 	ListenDices(CatanNetworking& net);
-	virtual bool isHeader(PacketHeader header) { return header == PacketHeader::PASS; }
+	virtual bool isHeader(PacketHeader header);
 private:
 	unsigned int decideRobber(void);
 	void setDices(NetworkPacket* packet);

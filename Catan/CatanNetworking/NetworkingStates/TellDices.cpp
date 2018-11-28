@@ -26,7 +26,7 @@ TellDices(CatanNetworking& net) : HandshakingState(net, CatanNetworking::States:
 
 bool 
 TellDices::isHeader(PacketHeader header) { 
-	return header == PacketHeader::PASS; 
+	return header == PacketHeader::PASS || header == PacketHeader::DICES_ARE; 
 }
 
 bool 
