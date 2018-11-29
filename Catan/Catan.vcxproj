@@ -169,6 +169,9 @@
     <ClInclude Include="CatanGui\AllegroUI\UIController.h" />
     <ClInclude Include="CatanGui\AllegroUI\UIDecorator.h" />
     <ClInclude Include="CatanGui\AllegroUI\UIModel.h" />
+    <ClInclude Include="CatanGui\AllegroWidgets\ButtonView.h" />
+    <ClInclude Include="CatanGui\AllegroWidgets\Label.h" />
+    <ClInclude Include="CatanGui\AllegroWidgets\TextField.h" />
     <ClInclude Include="CatanGui\AllegroWidgets\Widgets.h" />
     <ClInclude Include="CatanNetworking\CatanNetworking.h" />
     <ClInclude Include="CatanNetworking\NetworkHandlers\NetworkClient.h" />
@@ -243,7 +246,6 @@
     <ClInclude Include="FSM\GenericFsm.h" />
     <ClInclude Include="MVC\Observer.h" />
     <ClInclude Include="MVC\Subject.h" />
-    <ClInclude Include="Widgets.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CatanData\BankData.cpp" />
@@ -298,6 +300,9 @@
     <ClCompile Include="CatanGui\AllegroUI\UIController.cpp" />
     <ClCompile Include="CatanGui\AllegroUI\UIDecorator.cpp" />
     <ClCompile Include="CatanGui\AllegroUI\UIModel.cpp" />
+    <ClCompile Include="CatanGui\AllegroWidgets\ButtonView.cpp" />
+    <ClCompile Include="CatanGui\AllegroWidgets\Label.cpp" />
+    <ClCompile Include="CatanGui\AllegroWidgets\TextField.cpp" />
     <ClCompile Include="CatanNetworking\CatanNetworking.cpp" />
     <ClCompile Include="CatanNetworking\NetworkHandlers\NetworkClient.cpp" />
     <ClCompile Include="CatanNetworking\NetworkHandlers\NetworkServer.cpp" />

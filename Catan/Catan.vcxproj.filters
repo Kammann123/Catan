@@ -411,9 +411,6 @@
     <ClInclude Include="CatanGame\CatanStates\Winner.h">
       <Filter>CatanGame\CatanStates</Filter>
     </ClInclude>
-    <ClInclude Include="Widgets.h">
-      <Filter>CatanGui\AllegroWidgets</Filter>
-    </ClInclude>
     <ClInclude Include="CatanGui\AllegroWidgets\Widgets.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
@@ -437,6 +434,15 @@
     </ClInclude>
     <ClInclude Include="CatanGui\AllegroUI\UIDecorator.h">
       <Filter>CatanGui\AllegroUI</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGui\AllegroWidgets\Label.h">
+      <Filter>CatanGui\AllegroWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGui\AllegroWidgets\TextField.h">
+      <Filter>CatanGui\AllegroWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGui\AllegroWidgets\ButtonView.h">
+      <Filter>CatanGui\AllegroWidgets</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -808,6 +814,15 @@
     </ClCompile>
     <ClCompile Include="guitest.cpp">
       <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGui\AllegroWidgets\Label.cpp">
+      <Filter>CatanGui\AllegroWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGui\AllegroWidgets\TextField.cpp">
+      <Filter>CatanGui\AllegroWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGui\AllegroWidgets\ButtonView.cpp">
+      <Filter>CatanGui\AllegroWidgets</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
