@@ -346,7 +346,7 @@ CatanGame::getPrevState(void)
 
 bool
 CatanGame::isRobberStatus() {
-	return false;
+	return state->getId() == State::ROBBER_CARD || state->getId() == State::ROBBER_MOVE;
 }
 
 void
