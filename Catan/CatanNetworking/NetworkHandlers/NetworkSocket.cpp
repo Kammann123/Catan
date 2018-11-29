@@ -229,7 +229,6 @@ handleError(boost::system::error_code error) {
 			case boost::asio::error::network_unreachable:
 			case boost::asio::error::network_down:
 			case boost::asio::error::network_reset:
-			case boost::asio::error::not_connected:
 			case boost::asio::error::connection_aborted:
 			case boost::asio::error::connection_refused:
 			case boost::asio::error::connection_reset:
