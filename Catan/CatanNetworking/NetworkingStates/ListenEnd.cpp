@@ -3,9 +3,10 @@
 ListenEnd::
 ListenEnd(CatanNetworking& net) : HandshakingState(net, CatanNetworking::States::LISTEN_END) {
 	/* Creo el protocolo, lo defino y lo agrego */
-	Protocol* listenEndProtocol = protocol(
+	Protocol* listenEndProtocol = timeout_protocol(
 		socket_send(networking.getSocket()),
 		"WAIT_WON",
+		TIMEOUT_TIME,
 		p_recv("WAIT_WON", tag("DECIDE"), PacketHeader::I_WON),
 		p_if_send("DECIDE",
 			p_wait_send("DECIDE_AGAIN", tag("AGAIN_ANSWER"), PacketHeader::PLAY_AGAIN),

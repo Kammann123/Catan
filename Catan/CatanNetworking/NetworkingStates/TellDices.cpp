@@ -3,9 +3,10 @@
 TellDices::
 TellDices(CatanNetworking& net) : HandshakingState(net, CatanNetworking::States::TELL_DICES) {
 	/* Defino el protocolo */
-	Protocol * tellDicesProtocol = protocol(
+	Protocol * tellDicesProtocol = timeout_protocol(
 		socket_send(networking.getSocket()),
 		"PASS_OR_DICES",
+		TIMEOUT_TIME,
 		p_if("PASS_OR_DICES", 
 			p_recv("WAIT_PASS", tag("SEND_DICES"), PacketHeader::PASS),
 			p_wait_send("SEND_DICES", cond_tag(bind(&TellDices::isRobber, this), "REMOTE_CARDS", "DICES_ACK"), PacketHeader::DICES_ARE)

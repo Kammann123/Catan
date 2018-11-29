@@ -3,9 +3,10 @@
 WaitSync::
 WaitSync(CatanNetworking& net) : HandshakingState(net, CatanNetworking::States::WAIT_SYNC) { 
 /* Defino el protocolo y lo configuro */
-	Protocol * waitSyncProtocol = protocol(
+	Protocol * waitSyncProtocol = timeout_protocol(
 		socket_send(networking.getSocket()),
 		"LOCAL_REQUEST",
+		TIMEOUT_TIME,
 		p_recv("LOCAL_REQUEST", tag("LOCAL_SEND"), bind(&WaitSync::createEvent, this, _1), PacketHeader::NAME),
 		p_data_send("LOCAL_SEND", tag("LOCAL_ACK"), bind(&WaitSync::getLocalName, this)),
 		p_recv("LOCAL_ACK", tag("REMOTE_REQUEST"), PacketHeader::ACK),

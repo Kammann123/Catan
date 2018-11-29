@@ -10,7 +10,7 @@ Protocol(NetworkSocket** socket, string start, unsigned int timeout, map<string,
 	this->startState = start;
 	this->status = ProtocolStatus::OK;
 	this->error = "";
-	this->timeout = boost::chrono::milliseconds(timeout);
+	this->timeout = boost::chrono::seconds(timeout);
 	this->hasTimeout = true;
 
 	_init_callback(socket);

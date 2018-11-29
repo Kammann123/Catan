@@ -3,9 +3,10 @@
 TellEnd::
 TellEnd(CatanNetworking& net) : HandshakingState(net, CatanNetworking::States::TELL_END) {
 	/* Defino el protocolo */
-	Protocol* tellEndProtocol = protocol(
+	Protocol* tellEndProtocol = timeout_protocol(
 		socket_send(networking.getSocket()),
 		"I_WON",
+		TIMEOUT_TIME,
 		p_send("I_WON", tag("REMOTE_DECIDE"), PacketHeader::I_WON),
 		p_if_recv("REMOTE_DECIDE",
 			p_recv("WANTS_AGAIN", tag("AGAIN_ANSWER"), bind(&TellEnd::playAgain, this, _1), PacketHeader::PLAY_AGAIN),

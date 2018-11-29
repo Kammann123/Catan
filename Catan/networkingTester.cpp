@@ -198,13 +198,13 @@ CatanEvent* build(void) {
 
 	switch (type) {
 		case 'S':
-			return new BuildingEvent(coords, BuildingType::SETTLEMENT);
+			return new BuildingEvent(coords, BuildingType::SETTLEMENT, PlayerId::PLAYER_ONE);
 			break;
 		case 'R':
-			return new BuildingEvent(coords, BuildingType::ROAD);
+			return new BuildingEvent(coords, BuildingType::ROAD, PlayerId::PLAYER_ONE);
 			break;
 		case 'C':
-			return new BuildingEvent(coords, BuildingType::CITY);
+			return new BuildingEvent(coords, BuildingType::CITY, PlayerId::PLAYER_ONE);
 			break;
 		default:
 			return nullptr;
@@ -307,7 +307,7 @@ CatanEvent* bank_trade(void) {
 			list<ResourceId> recvResources;
 			recvResources.push_back(recvId);
 
-			return new BankEvent(givenResources, recvResources);
+			return new BankEvent(givenResources, recvResources, PlayerId::PLAYER_ONE);
 		}
 	}
 
@@ -389,7 +389,7 @@ CatanEvent* dock_trade(void) {
 			list<ResourceId> recvResources;
 			recvResources.push_back(recvId);
 
-			return new BankEvent(givenResources, recvResources);
+			return new BankEvent(givenResources, recvResources, PlayerId::PLAYER_ONE);
 		}
 	}
 

@@ -4,9 +4,10 @@ ListenDices::
 ListenDices(CatanNetworking& net) : HandshakingState(net, CatanNetworking::States::LISTEN_DICES) {
 
 	/* Defino el protocolo en cuestion y lo configuro */
-	Protocol* listenDicesProtocol = protocol(
+	Protocol* listenDicesProtocol = timeout_protocol(
 		socket_send(networking.getSocket()),
 		"PASS_OR_DICES",
+		TIMEOUT_TIME,
 		p_if("PASS_OR_DICES",
 			p_wait_send("PASS", tag("RECV_DICES"), PacketHeader::PASS),
 			p_recv("RECV_DICES", list_tag(bind(&ListenDices::decideRobber, this), { "DICES_ACK", "SEND_CARDS", "WAIT_CARDS" }), bind(&ListenDices::setDices, this, _1), PacketHeader::DICES_ARE)

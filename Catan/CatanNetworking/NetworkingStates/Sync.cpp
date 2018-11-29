@@ -3,9 +3,10 @@
 Sync::
 Sync(CatanNetworking& net) : HandshakingState(net, CatanNetworking::States::SYNC) {
 	/* Defino el protocolo */
-	Protocol * syncProtocol = protocol(
+	Protocol * syncProtocol = timeout_protocol(
 		socket_send(networking.getSocket()),
 		"REMOTE_NAME",
+		TIMEOUT_TIME,
 		p_send("REMOTE_NAME", tag("GET_REMOTE"), NAME),
 		p_recv("GET_REMOTE", tag("REMOTE_ACK"), bind(&Sync::setRemoteName, this, _1), NAME_IS),
 		p_send("REMOTE_ACK", tag("LOCAL_NAME"), ACK),

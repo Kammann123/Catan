@@ -37,8 +37,18 @@ connect(string ip, unsigned int port) {
 	if (!isConnected()) {
 
 		/* Inicializo variables */
-		boost::asio::ip::tcp::resolver::iterator endpoint = resolver->resolve(boost::asio::ip::tcp::resolver::query(ip, to_string(port)));
+		boost::asio::ip::tcp::resolver::iterator endpoint;
 		boost::system::error_code error;
+
+		/* Intento crear el resolver */
+		try {
+			endpoint = resolver->resolve(boost::asio::ip::tcp::resolver::query(ip, to_string(port)));
+		}
+		catch (...) {
+			this->status = false;
+			this->error = "NetworkClient - connect - No se pudo abrir una conexion con ese host. Invalido.";
+			return;
+		}
 
 		/* Intento realizar conexion */
 		boost::asio::connect(*socket, endpoint, error);

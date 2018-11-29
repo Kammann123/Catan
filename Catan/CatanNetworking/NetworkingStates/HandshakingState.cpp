@@ -69,6 +69,14 @@ HandshakingState::run() {
 				break;
 		}
 	}
+	else {
+
+		/* Verifico el timeout del protocolo */
+		if (handshakingProtocol->getStatus() == ProtocolStatus::TIMEOUT) {
+			networking.setError("HandshakingState - Hubo error de timeout en el protocolo.");
+			networking.changeState(CatanNetworking::States::NET_ERROR);
+		}
+	}
 }
 
 void
