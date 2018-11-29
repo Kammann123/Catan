@@ -154,6 +154,7 @@ void
 CatanNetworking::changeState(NetworkingState* state) {
 	currState = state;
 	currState->context();
+	currState->resetTime();
 }
 
 void

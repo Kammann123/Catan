@@ -8,6 +8,9 @@
 
 #include "NetworkingStates/NetworkingState.h"
 
+/* Timeout medido en minutos */
+#define NETWORKING_TIMEOUT 5
+
 using namespace std;
 
 /*

@@ -10,7 +10,7 @@
 #include <iostream>
 
 Disconnected::
-Disconnected(CatanNetworking& networking) : NetworkingState(networking, CatanNetworking::States::DISCONNECTED) {}
+Disconnected(CatanNetworking& networking) : NetworkingState(networking, NETWORKING_TIMEOUT, CatanNetworking::States::DISCONNECTED) {}
 
 void
 Disconnected::context() {

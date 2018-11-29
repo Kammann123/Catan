@@ -45,15 +45,15 @@ public:
 	*/
 	bool timeoutStatus(void);
 
-	unsigned int getId(void);
-
-protected:
-
 	/*
 	* resetTime
 	* Reinicia el punto de referencia para determinar el timeout
 	*/
 	void resetTime(void);
+
+	unsigned int getId(void);
+
+protected:
 
 	CatanNetworking& networking;
 	unsigned int id;

@@ -6,7 +6,7 @@
 #include "NetError.h"
 
 HandshakingState::
-HandshakingState(CatanNetworking& net, unsigned int id) : NetworkingState(net, id) {}
+HandshakingState(CatanNetworking& net, unsigned int id) : NetworkingState(net, NETWORKING_TIMEOUT, id) {}
 
 HandshakingState::
 ~HandshakingState() {

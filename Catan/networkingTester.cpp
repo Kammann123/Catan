@@ -85,11 +85,12 @@ int main(int argc, char** argv) {
 
 	if (game.getState() == CatanGame::State::GAME_ERROR) {
 		CONSOLE("El juego tuvo un error durante su ejecucion.");
+		CONSOLE(game.info());
 	}
 	else if (game.getState() == CatanGame::State::GAME_END) {
 		CONSOLE("El juego ha finalizado.");
+		CONSOLE(game.info());
 	}
-	CONSOLE(game.info());
 	getchar();
 
 	return 0;
