@@ -8,4 +8,5 @@ public:
 private:
 	bool isRobber(void);
 	void remoteRobberCards(NetworkPacket* packet);
+	void pass(NetworkPacket* packet);
 };

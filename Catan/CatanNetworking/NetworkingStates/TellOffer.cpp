@@ -15,5 +15,6 @@ TellOffer(CatanNetworking& net) : HandshakingState(net, CatanNetworking::States:
 
 void 
 TellOffer::tradeAnswer(NetworkPacket* packet) {
-	networking.getGame().handle(packet);
+	confirm(packet);
+	networking.getGame().syncHandle(packet);
 }

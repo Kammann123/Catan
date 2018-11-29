@@ -36,16 +36,19 @@ ListenDices::decideRobber(void) {
 }
 
 void 
-ListenDices::setDices(NetworkPacket* packet) { 
-	networking.getGame().handle(packet); 
+ListenDices::setDices(NetworkPacket* packet) {
+	confirm(packet);
+	networking.getGame().syncHandle(packet);
 }
 
 void 
 ListenDices::setRemoteCards(NetworkPacket* packet) { 
-	networking.getGame().handle(packet); 
+	confirm(packet);
+	networking.getGame().syncHandle(packet);
 }
 
 void 
 ListenDices::setRobberMove(NetworkPacket* packet) {
-	networking.getGame().handle(packet); 
+	confirm(packet);
+	networking.getGame().syncHandle(packet);
 }

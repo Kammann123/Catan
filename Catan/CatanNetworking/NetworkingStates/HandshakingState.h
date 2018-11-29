@@ -34,6 +34,13 @@ public:
 	*/
 	bool isHeader(PacketHeader header);
 	bool isHeader(PacketHeader header, ProtocolState::ProtocolType asWhat);
+
+	/*
+	* confirm
+	* Todos los handshaking tienen que confirmarle al juego jugadas
+	* notificando que la otra punta lo recibio ok.
+	*/
+	void confirm(NetworkPacket* packet);
 	
 	/* Acciones del estado */
 	virtual void run(void);

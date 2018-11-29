@@ -17,15 +17,15 @@ TellEnd(CatanNetworking& net) : HandshakingState(net, CatanNetworking::States::T
 			p_wait_send("ANSWER_OK", tag("OK_ACK"), bind(&TellEnd::askSync, this, _1), PacketHeader::PLAY_AGAIN),
 			p_wait_send("ANSWER_NO", tag("NO_ACK"), PacketHeader::GAME_OVER)
 		),
-		p_recv("NO_ACK", tag(PROTOCOL_DONE), PacketHeader::ACK),
-		p_recv("OK_ACK", tag("SEND_MAP"), PacketHeader::ACK),
+		p_recv("NO_ACK", tag(PROTOCOL_DONE), bind(&TellEnd::confirm, this, _1), PacketHeader::ACK),
+		p_recv("OK_ACK", tag("SEND_MAP"), bind(&TellEnd::confirm, this, _1), PacketHeader::ACK),
 		p_data_send("SEND_MAP", tag("MAP_ACK"), bind(&TellEnd::getMap, this)),
 		p_recv("MAP_ACK", tag("SEND_TOKEN"), PacketHeader::ACK),
 		p_data_send("SEND_TOKEN", tag("TOKEN_ACK"), bind(&TellEnd::getTokens, this)),
 		p_recv("TOKEN_ACK", cond_tag(bind(&TellEnd::whoStarts, this), "MY_TURN", "YOUR_TURN"), PacketHeader::ACK),
 		p_send("YOUR_TURN", tag(PROTOCOL_DONE), PacketHeader::YOU_START),
 		p_send("MY_TURN", tag("TURN_ACK"), PacketHeader::I_START),
-		p_recv("TURN_ACK", tag(PROTOCOL_DONE), PacketHeader::ACK)
+		p_recv("TURN_ACK", tag(PROTOCOL_DONE), bind(&TellEnd::confirm, this, _1), PacketHeader::ACK)
 	);
 	this->setProtocol(tellEndProtocol);
 }	
@@ -37,12 +37,14 @@ TellEnd::askSync(NetworkPacket* packet) {
 
 void
 TellEnd::gameOver(NetworkPacket* packet) { 
-	networking.getGame().handle(new CatanEvent(CatanEvent::Events::GAME_OVER, CatanEvent::Sources::NETWORKING, PlayerId::PLAYER_TWO)); 
+	confirm(packet);
+	networking.getGame().syncHandle(new CatanEvent(CatanEvent::Events::GAME_OVER, CatanEvent::Sources::NETWORKING, PlayerId::PLAYER_TWO));
 }
 
 void
-TellEnd::playAgain(NetworkPacket* packet) { 
-	networking.getGame().handle(new CatanEvent(CatanEvent::Events::PLAY_AGAIN, CatanEvent::Sources::NETWORKING, PlayerId::PLAYER_TWO)); 
+TellEnd::playAgain(NetworkPacket* packet) {
+	confirm(packet);
+	networking.getGame().syncHandle(new CatanEvent(CatanEvent::Events::PLAY_AGAIN, CatanEvent::Sources::NETWORKING, PlayerId::PLAYER_TWO));
 }
 
 NetworkPacket*

@@ -8,7 +8,7 @@ TellBuilding(CatanNetworking& net) : HandshakingState(net, CatanNetworking::Stat
 		"SEND_BUILD",
 		TIMEOUT_TIME,
 		p_wait_send("SEND_BUILD", tag("ACK"), { PacketHeader::ROAD, PacketHeader::CITY, PacketHeader::SETTLEMENT }),
-		p_recv("ACK", tag(PROTOCOL_DONE), PacketHeader::ACK)
+		p_recv("ACK", tag(PROTOCOL_DONE), bind(&TellBuilding::confirm, this, _1), PacketHeader::ACK)
 	);
 	this->setProtocol(tellBuildingProtocol);
 }

@@ -41,6 +41,11 @@ HandshakingState::isHeader(PacketHeader header, ProtocolState::ProtocolType asWh
 }
 
 void
+HandshakingState::confirm(NetworkPacket* packet) {
+	networking.getGame().confirm(PlayerId::PLAYER_TWO);
+}
+
+void
 HandshakingState::run() {
 
 	/* Busco el socket de networking */

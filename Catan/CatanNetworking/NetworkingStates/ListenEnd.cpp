@@ -33,17 +33,17 @@ ListenEnd(CatanNetworking& net) : HandshakingState(net, CatanNetworking::States:
 
 void
 ListenEnd::userWon(NetworkPacket* packet) { 
-	networking.getGame().handle(new CatanEvent(CatanEvent::Events::WON, CatanEvent::Sources::NETWORKING, PlayerId::PLAYER_TWO)); 
+	networking.getGame().syncHandle(new CatanEvent(CatanEvent::Events::WON, CatanEvent::Sources::NETWORKING, PlayerId::PLAYER_TWO));
 }
 
 void
 ListenEnd::gameOver(NetworkPacket* packet) { 
-	networking.getGame().handle(new CatanEvent(CatanEvent::Events::GAME_OVER, CatanEvent::Sources::NETWORKING, PlayerId::PLAYER_TWO)); 
+	networking.getGame().syncHandle(new CatanEvent(CatanEvent::Events::GAME_OVER, CatanEvent::Sources::NETWORKING, PlayerId::PLAYER_TWO));
 }
 
 void
 ListenEnd::playAgain(NetworkPacket* packet) { 
-	networking.getGame().handle(new CatanEvent(CatanEvent::Events::PLAY_AGAIN, CatanEvent::Sources::NETWORKING, PlayerId::PLAYER_TWO)); 
+	networking.getGame().syncHandle(new CatanEvent(CatanEvent::Events::PLAY_AGAIN, CatanEvent::Sources::NETWORKING, PlayerId::PLAYER_TWO));
 }
 
 void
