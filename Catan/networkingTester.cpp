@@ -97,7 +97,7 @@ int main(int argc, char** argv) {
 
 void gui(CatanGame& game) {
 
-	Player player = game.getPlayer(PlayerId::PLAYER_ONE);
+	Player& player = game.getPlayer(PlayerId::PLAYER_ONE);
 	list<ResourceCard*> cards = player.showCards();
 
 	cout << "[UserStatus] Hola, " << player.getName() << " tenes " << player.getVictoryPoints() << " puntos" << endl;
