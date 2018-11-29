@@ -171,7 +171,9 @@
     <ClInclude Include="CatanGui\AllegroUI\UIModel.h" />
     <ClInclude Include="CatanGui\AllegroWidgets\ButtonView.h" />
     <ClInclude Include="CatanGui\AllegroWidgets\Label.h" />
+    <ClInclude Include="CatanGui\AllegroWidgets\LabelView.h" />
     <ClInclude Include="CatanGui\AllegroWidgets\TextField.h" />
+    <ClInclude Include="CatanGui\AllegroWidgets\TextFieldView.h" />
     <ClInclude Include="CatanGui\AllegroWidgets\Widgets.h" />
     <ClInclude Include="CatanNetworking\CatanNetworking.h" />
     <ClInclude Include="CatanNetworking\NetworkHandlers\NetworkClient.h" />
@@ -302,7 +304,9 @@
     <ClCompile Include="CatanGui\AllegroUI\UIModel.cpp" />
     <ClCompile Include="CatanGui\AllegroWidgets\ButtonView.cpp" />
     <ClCompile Include="CatanGui\AllegroWidgets\Label.cpp" />
+    <ClCompile Include="CatanGui\AllegroWidgets\LabelView.cpp" />
     <ClCompile Include="CatanGui\AllegroWidgets\TextField.cpp" />
+    <ClCompile Include="CatanGui\AllegroWidgets\TextFieldView.cpp" />
     <ClCompile Include="CatanNetworking\CatanNetworking.cpp" />
     <ClCompile Include="CatanNetworking\NetworkHandlers\NetworkClient.cpp" />
     <ClCompile Include="CatanNetworking\NetworkHandlers\NetworkServer.cpp" />
