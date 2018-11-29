@@ -219,6 +219,10 @@ handleError(boost::system::error_code error) {
 			* falla en la conexion, con lo cual, se aborta tal conexion
 			* y actualiza estado en funcion de ello
 			*/
+			case boost::asio::error::not_connected:
+			case boost::asio::error::broken_pipe:
+			case boost::asio::error::eof:
+			case boost::asio::error::timed_out:
 			case boost::asio::error::host_not_found:
 			case boost::asio::error::host_not_found_try_again:
 			case boost::asio::error::host_unreachable:
