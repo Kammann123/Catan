@@ -9,6 +9,11 @@ MouseDecorator::
 ~MouseDecorator(void) {}
 
 void
+MouseDecorator::setFocusAction(Action focus) {
+	this->onFocus = focus;
+}
+
+void
 MouseDecorator::setExitACtion(Action exit) {
 	this->onExit = exit;
 }
