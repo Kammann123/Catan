@@ -183,3 +183,28 @@ setCoords(double x, double y)
 	this->coords.x = x;
 	this->coords.y = y;
 }
+
+Label::Label(ALLEGRO_FONT * font_, string initialText)
+{
+	text = initialText;
+	font = font_;
+}
+
+Label::~Label()
+{
+}
+
+void Label::eraseAll(void)
+{
+	text = "";
+}
+
+void Label::setText(string text_)
+{
+	text = text_;
+}
+
+string Label::getText(void)
+{
+	return text;
+}

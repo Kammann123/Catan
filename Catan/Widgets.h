@@ -102,4 +102,25 @@ private:
 };
 
 
+class Label {
+public:
+	/* Constructor / Destructor */
+	Label(ALLEGRO_FONT* font_, string initialText);
+	~Label();
+
+	void eraseAll(void);
+
+
+	/* Getters */
+	string getText(void);
+
+	/* Setters */
+	void setText(string text_);
+
+private:
+	string text;
+	ALLEGRO_FONT* font;
+
+};
+
 
