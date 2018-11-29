@@ -6,7 +6,7 @@
 #include "NetError.h"
 
 HandshakingState::
-HandshakingState(CatanNetworking& net, unsigned int id) : NetworkingState(net, id) {}
+HandshakingState(CatanNetworking& net, unsigned int id) : NetworkingState(net, NETWORKING_TIMEOUT, id) {}
 
 HandshakingState::
 ~HandshakingState() {
@@ -67,6 +67,14 @@ HandshakingState::run() {
 				networking.setError("HandshakingState - Hubo error de timeout en el protocolo.");
 				networking.changeState(CatanNetworking::States::NET_ERROR);
 				break;
+		}
+	}
+	else {
+
+		/* Verifico el timeout del protocolo */
+		if (handshakingProtocol->getStatus() == ProtocolStatus::TIMEOUT) {
+			networking.setError("HandshakingState - Hubo error de timeout en el protocolo.");
+			networking.changeState(CatanNetworking::States::NET_ERROR);
 		}
 	}
 }

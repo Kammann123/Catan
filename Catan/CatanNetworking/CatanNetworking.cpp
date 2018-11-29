@@ -154,6 +154,7 @@ void
 CatanNetworking::changeState(NetworkingState* state) {
 	currState = state;
 	currState->context();
+	currState->resetTime();
 }
 
 void
@@ -178,8 +179,20 @@ CatanNetworking::run() {
 	}
 
 	/* Ejecuto el run del estado */
-	if( this->good() )
-		this->currState->run();
+	if (this->good()) {
+
+		/*
+		* Verifico estado de error por timeout de la etapa
+		* del proceso networking
+		*/
+		if (this->currState->timeoutStatus()) {
+			this->currState->run();
+		}
+		else {
+			this->setError("CatanNetworking - El estado de networking ha tenido un error por timeout! Espera demasiado larga...");
+			this->changeState(CatanNetworking::NET_ERROR);
+		}
+	}
 }
 
 void

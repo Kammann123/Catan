@@ -12,7 +12,7 @@ class BankEvent : public CatanEvent, public BankData {
 public:
 	/* Constructores y destructores */
 	BankEvent(BankPacket* packet);
-	BankEvent(list<ResourceId> given, list<ResourceId> recv);
-	BankEvent(list<ResourceCard*> given, list<ResourceId> recv);
+	BankEvent(list<ResourceId> given, list<ResourceId> recv, PlayerId player);
+	BankEvent(list<ResourceCard*> given, list<ResourceId> recv, PlayerId player);
 	~BankEvent();
 };

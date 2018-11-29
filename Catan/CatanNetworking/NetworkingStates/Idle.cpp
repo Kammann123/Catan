@@ -19,7 +19,7 @@
 #define allocate(_constructor, ...)	(HandshakingState*)new _constructor(__VA_ARGS__)
 
 Idle::
-Idle(CatanNetworking& _networking) : NetworkingState(_networking, CatanNetworking::States::IDLE) {
+Idle(CatanNetworking& _networking) : NetworkingState(_networking, NETWORKING_TIMEOUT, CatanNetworking::States::IDLE) {
 	
 	/* 
 	* Se abren y crean los listeners y tellers 

@@ -26,7 +26,7 @@ public:
 	* entre pares para resolver alguna tarea.
 	* Requiere definirse:
 	* - sendCallback: Callback de transmision de paquete
-	* - timeout: Tiempo maximo de espera en milisegundos
+	* - timeout: Tiempo maximo de espera en segundos
 	* - states: Estados del protocolo con sus tags respectivos
 	*/
 	Protocol(NetworkSocket** socket, string start, unsigned int timeout, map<string, ProtocolState*> states);

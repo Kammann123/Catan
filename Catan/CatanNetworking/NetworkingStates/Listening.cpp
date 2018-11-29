@@ -6,7 +6,7 @@
 #include "Sync.h"
 
 Listening::
-Listening(CatanNetworking& networking) : NetworkingState(networking, CatanNetworking::States::LISTENING ) {}
+Listening(CatanNetworking& networking) : NetworkingState(networking, NETWORKING_TIMEOUT, CatanNetworking::States::LISTENING ) {}
 
 void
 Listening::context() {

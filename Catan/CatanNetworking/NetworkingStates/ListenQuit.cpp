@@ -3,9 +3,10 @@
 ListenQuit::
 ListenQuit(CatanNetworking& net) : HandshakingState(net, CatanNetworking::States::LISTEN_QUIT) {
 	/* Definicion del protocolo */
-	Protocol* listenQuitProtocol = protocol(
+	Protocol* listenQuitProtocol = timeout_protocol(
 		socket_send(networking.getSocket()),
 		"WAIT_QUIT",
+		TIMEOUT_TIME,
 		p_recv("WAIT_QUIT", tag("ACK"), { PacketHeader::QUIT }),
 		p_send("ACK", tag(PROTOCOL_DONE), PacketHeader::ACK)
 	);

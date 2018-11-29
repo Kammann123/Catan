@@ -4,6 +4,8 @@
 #include "../NetworkProtocols/NetworkProtocol.h"
 #include "../CatanNetworking.h"
 
+#define TIMEOUT_TIME	10
+
 /*
 * HandshakingState
 * Se define este estado del networking para determinar aquellos estados en los cuales
@@ -27,6 +29,8 @@ public:
 	* isHeader
 	* Devuelve si es header inicial del protocolo para dar inicio
 	* a su sequencia, sirve para hacer validaciones y dispatch
+	* y permite ademas comparar si es el tipo de estado que se desea
+	* LISTENER, TELLER o bien BOTH
 	*/
 	bool isHeader(PacketHeader header);
 	bool isHeader(PacketHeader header, ProtocolState::ProtocolType asWhat);
