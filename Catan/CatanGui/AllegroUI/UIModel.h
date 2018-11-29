@@ -28,7 +28,7 @@ public:
 	bool getVisible(void);
 	bool getEnable(void);
 
-private:
+protected:
 	bool enable;
 	bool visible;
 };

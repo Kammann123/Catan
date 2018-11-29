@@ -288,6 +288,7 @@
     <ClCompile Include="CatanGame\ResourceHex.cpp" />
     <ClCompile Include="CatanGame\Robber.cpp" />
     <ClCompile Include="CatanGame\SeaHex.cpp" />
+    <ClCompile Include="CatanGui\AllegroUI\FrameUI.cpp" />
     <ClCompile Include="CatanNetworking\CatanNetworking.cpp" />
     <ClCompile Include="CatanNetworking\NetworkHandlers\NetworkClient.cpp" />
     <ClCompile Include="CatanNetworking\NetworkHandlers\NetworkServer.cpp" />

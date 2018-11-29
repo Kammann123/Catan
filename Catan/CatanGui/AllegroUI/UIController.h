@@ -29,6 +29,6 @@ public:
 	virtual void parse(ALLEGRO_EVENT* event) = 0;
 	UIModel* getModel(void);
 
-private:
+protected:
 	UIModel * model;
 };

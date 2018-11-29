@@ -788,6 +788,9 @@
     <ClCompile Include="CatanNetworking\NetworkProtocols\PSIf.cpp">
       <Filter>CatanNetworking\NetworkProtocols</Filter>
     </ClCompile>
+    <ClCompile Include="CatanGui\AllegroUI\FrameUI.cpp">
+      <Filter>CatanGui\AllegroUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
