@@ -16,5 +16,6 @@ ListenOffer(CatanNetworking& net) : HandshakingState(net, CatanNetworking::State
 
 void 
 ListenOffer::getOffer(NetworkPacket* packet) {
-	networking.getGame().handle(packet); 
+	confirm(packet);
+	networking.getGame().syncHandle(packet);
 }

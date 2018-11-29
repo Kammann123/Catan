@@ -8,7 +8,7 @@ TellQuit(CatanNetworking& net) : HandshakingState(net, CatanNetworking::States::
 		"SEND_QUIT",
 		TIMEOUT_TIME,
 		p_send("SEND_QUIT", tag("ACK"), PacketHeader::QUIT),
-		p_recv("ACK", tag(PROTOCOL_DONE), PacketHeader::ACK)
+		p_recv("ACK", tag(PROTOCOL_DONE), bind(&TellQuit::confirm, this, _1), PacketHeader::ACK)
 	);
 	this->setProtocol(tellQuitProtocol);
 }

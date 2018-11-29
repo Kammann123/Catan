@@ -15,6 +15,7 @@ ListenBuilding(CatanNetworking& net) : HandshakingState(net, CatanNetworking::St
 }
 
 void
-ListenBuilding::getBuilding(NetworkPacket* packet) { 
-	networking.getGame().handle(packet);
+ListenBuilding::getBuilding(NetworkPacket* packet) {
+	confirm(packet);
+	networking.getGame().syncHandle(packet);
 }

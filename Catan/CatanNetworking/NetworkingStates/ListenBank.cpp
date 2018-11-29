@@ -16,5 +16,6 @@ ListenBank(CatanNetworking& net) : HandshakingState(net, CatanNetworking::States
 
 void
 ListenBank::getBank(NetworkPacket* packet) {
-	networking.getGame().handle(packet);
+	confirm(packet);
+	networking.getGame().syncHandle(packet);
 }

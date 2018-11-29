@@ -16,6 +16,16 @@ using namespace std;
 
 #define CONSOLE(msg)	cout << "[TESTING] " << msg << endl;
 
+class testUI : public Observer {
+public:
+	testUI(CatanGame& _game) : game(_game) {}
+	void update(void) { 
+		game.confirm(PlayerId::PLAYER_ONE);  
+	}
+private:
+	CatanGame & game;
+};
+
 CatanEvent* ui(CatanGame& game);
 CatanEvent* build(void);
 CatanEvent* dices(void);
@@ -41,8 +51,10 @@ int main(int argc, char** argv) {
 	cin >> port;
 
 	CatanGame game = CatanGame(localName);
+	testUI testUi(game);
 	CatanNetworking net = CatanNetworking(ip, port, game);
 	game.attach(&net);
+	game.attach(&testUi);
 	
 	CatanNetworking::States netStatus = CatanNetworking::States::DISCONNECTED;
 	CatanGame::State gameStatus = CatanGame::State::GAME_SYNC;
@@ -50,10 +62,13 @@ int main(int argc, char** argv) {
 	while (game.getState() != CatanGame::State::GAME_ERROR && game.getState() != CatanGame::State::GAME_END) {
 
 		/* Corremos la ui */
-		if (_kbhit()) {
-			CatanEvent* event = ui(game);
-			if (event) {
-				game.handle(event);
+		if (game.wasConfirmed()) {
+
+			if (_kbhit()) {
+				CatanEvent* event = ui(game);
+				if (event) {
+					game.syncHandle(event);
+				}
 			}
 		}
 

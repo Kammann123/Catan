@@ -14,6 +14,7 @@
 
 #include "CatanStates/GameSync.h"
 #include "CatanStates/GameEnd.h"
+#include "CatanStates/GameError.h"
 
 #include <algorithm>
 #include <vector>
@@ -141,19 +142,37 @@ void
 CatanGame::syncHandle(NetworkPacket* packet) {
 
 	CatanEvent* newEvent = this->getPacketEvent(packet);
-	syncHandle(newEvent);
+	if(newEvent)
+		syncHandle(newEvent);
 }
 
 void
 CatanGame::syncHandle(CatanEvent* event) {
 	if (wasConfirmed()) {
 		if (event) {
-			handle(event);
-		
-			if (getState() != GAME_SYNC && getState() != GAME_END && getState() != GAME_ERROR) {
-				waitConfirmation(OPONENT_ID(event->getPlayer()));
+
+			/*
+			* Valido que el evento particular no sea de cierre
+			* en cuyo caso... adios!
+			*/
+			if (event->getEvent() == CatanEvent::Events::QUIT) {
+				changeState(new GameEnd(*this), "CatanGame - El juego ha finalizado por cierre de alguna de las partes.");
+			}
+			else {
+				this->state->handle(event);
+
+				if (getState() != GAME_SYNC && getState() != GAME_END && getState() != GAME_ERROR) {
+					waitConfirmation(OPONENT_ID(event->getPlayer()));
+				}
+
+				/* Notifico el cambio de estado a los observers */
+				_notify_change();
 			}
 		}
+	}
+	else {
+		this->changeState(new GameError(*this), "CatanGame - Se intento realizar una accion de juego sin la confirmacion de la accion previa!");
+		delete event;
 	}
 }
 
@@ -203,9 +222,11 @@ CatanGame::handle(CatanEvent* event) {
 			changeState(new GameEnd(*this), "CatanGame - El juego ha finalizado por cierre de alguna de las partes.");
 		}
 		else {
-
 			this->state->handle(event);
 		}
+
+		/* Notifico el cambio de estado a los observers */
+		_notify_change();
 	}
 }
 
@@ -364,9 +385,6 @@ CatanGame::addNewEvent(NetworkPacket* packet) {
 void
 CatanGame::addNewEvent(CatanEvent* event) {
 	this->eventQueue.push_back(event);
-
-	/* Notifico el cambio de estado a los observers */
-	_notify_change();
 }
 
 PlayerId
