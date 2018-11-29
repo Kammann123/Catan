@@ -55,6 +55,9 @@
     <Filter Include="CatanGui\AllegroWidgets">
       <UniqueIdentifier>{21e3adf1-2c88-4226-b854-b449460fa780}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CatanGui\AllegroUI">
+      <UniqueIdentifier>{37693e98-e2a0-4805-bbd8-748a660fa626}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FSM\EventGenerator.h">
@@ -416,6 +419,18 @@
     </ClInclude>
     <ClInclude Include="CatanNetworking\NetworkProtocols\PSIf.h">
       <Filter>CatanNetworking\NetworkProtocols</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGui\AllegroUI\FrameUI.h">
+      <Filter>CatanGui\AllegroUI</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGui\AllegroUI\FrameUIController.h">
+      <Filter>CatanGui\AllegroUI</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGui\AllegroUI\UIController.h">
+      <Filter>CatanGui\AllegroUI</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGui\AllegroUI\UIModel.h">
+      <Filter>CatanGui\AllegroUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

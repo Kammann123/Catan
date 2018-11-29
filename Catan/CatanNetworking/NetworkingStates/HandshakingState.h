@@ -4,7 +4,7 @@
 #include "../NetworkProtocols/NetworkProtocol.h"
 #include "../CatanNetworking.h"
 
-#define TIMEOUT_TIME	10
+#define TIMEOUT_TIME	100
 
 /*
 * HandshakingState

@@ -56,13 +56,6 @@ public:
 	*/
 	void setPlayer(PlayerId player);
 
-private:
-	Coord place;
-	BuildingType type;
-	PlayerId player;
-
-public:
-
 	/*
 	* addNeighbour/removeNeighbour
 	* Agrego/Quito un vecino contiguo a la construccion, para ir armando
@@ -101,4 +94,7 @@ public:
 private:
 	list<Building*> neighbours;
 	bool visited;
+	Coord place;
+	BuildingType type;
+	PlayerId player;
 };
