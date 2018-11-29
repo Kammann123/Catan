@@ -312,3 +312,8 @@ Player::getResourceCard(ResourceId id) {
 	}
 	return temp;
 }
+
+list<ResourceCard*>
+Player::showCards(void) {
+	return resourceCards;
+}

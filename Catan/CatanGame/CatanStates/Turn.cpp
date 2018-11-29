@@ -220,6 +220,8 @@ Turn::handle(CatanEvent* event) {
 				game.toggleTurn();
 				game.changeState(new ThrowDices(game), "Turn - Cambio de turno!");
 				game.addNewEvent(event);
+				return;
+
 				break;
 
 		}

@@ -174,8 +174,6 @@ public:
 	map<Coord, MapValue> getMap(void);
 	map<Coord, unsigned char> getTokens(void);
 
-private:
-
 	/*
 	* getPlayer
 	* Permite obtener el objeto Player en funcion del id con el cual
@@ -257,6 +255,7 @@ public:
 	*/
 	void updateLongestRoad(void);
 	void getLongestRoad(Building* building, unsigned int length = 0);
+	bool isLongestRoad(PlayerId player);
 
 	/*
 	* isRobberDices

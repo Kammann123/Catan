@@ -785,6 +785,11 @@ CatanGame::updateLongestRoad(void) {
 	}
 }
 
+bool
+CatanGame::isLongestRoad(PlayerId player) {
+	return longestRoad == player;
+}
+
 void
 CatanGame::getLongestRoad(Building* building, unsigned int length) {
 	/*

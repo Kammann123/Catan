@@ -70,7 +70,7 @@ public:
 	void addResourceCard(list<ResourceCard*> cardsList);
 
 	/*
-	* removeResourceCard()
+	* removeResourceCard() o giveResourceCard o getResourceCard
 	* Quita una resource card del jugador
 	*/
 	void removeResourceCard(ResourceCard * card);
@@ -78,6 +78,12 @@ public:
 	void removeResourceCard(ResourceId resourceId, unsigned int qty);
 	list<ResourceCard*> giveResourceCard(ResourceId resourceId, unsigned int qty);
 	ResourceCard* getResourceCard(ResourceId id);
+
+	/*
+	* showCards
+	* Devuelve una lista con las cartas del jugador
+	*/
+	list<ResourceCard*> showCards(void);
 
 	/*
 	* getResourceCount
