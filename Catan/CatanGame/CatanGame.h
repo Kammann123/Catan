@@ -117,6 +117,21 @@ public:
 	CatanGame();
 	~CatanGame();
 
+public:
+	 
+	/* Se agrega la funcionalidad o wrapper para correr el juego
+	* en modo sincronizado, donde se permite que el usuario ejecute las mismas
+	* acciones sobre el juego que antes, pero esta vez con un control en una 
+	* capa superior, sobre si cada jugador confirma la jugada del otro.
+	*/
+	void syncHandle(NetworkPacket* packet);
+	void syncHandle(CatanEvent* event);
+
+	PlayerId whoConfirms(void);
+	bool wasConfirmed(void);
+	void waitConfirmation(PlayerId player);
+	void confirm(PlayerId player);
+
 	/*
 	* Metodos principales que definen el comportamiento de CatanGame,
 	* ya que son la entrada o verificacion de estados del mismo, y su definicion
@@ -467,4 +482,6 @@ private:
 	string description;
 	map<PlayerId, unsigned int> playerLongestRoad;
 	map<PlayerId, list<SeaId>> playerDocks;
+
+	PlayerId confirmationPlayer;
 };

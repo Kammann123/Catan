@@ -34,6 +34,7 @@ CatanGame::_init_game(void) {
 	this->longestRoad = PlayerId::PLAYER_NONE;
 	this->winner = PlayerId::PLAYER_NONE;
 	this->turn = PlayerId::PLAYER_NONE;
+	this->confirmationPlayer = PlayerId::PLAYER_NONE;
 	this->description = "";
 
 	/* Limpio los diccionarios */
@@ -134,6 +135,48 @@ CatanGame::
 	_free_buildings();
 	_free_events();
 	_free_states();
+}
+
+void
+CatanGame::syncHandle(NetworkPacket* packet) {
+
+	CatanEvent* newEvent = this->getPacketEvent(packet);
+	syncHandle(newEvent);
+}
+
+void
+CatanGame::syncHandle(CatanEvent* event) {
+	if (wasConfirmed()) {
+		if (event) {
+			handle(event);
+		
+			if (getState() != GAME_SYNC && getState() != GAME_END && getState() != GAME_ERROR) {
+				waitConfirmation(OPONENT_ID(event->getPlayer()));
+			}
+		}
+	}
+}
+
+PlayerId
+CatanGame::whoConfirms(void) {
+	return confirmationPlayer;
+}
+
+bool
+CatanGame::wasConfirmed(void) {
+	return confirmationPlayer == PlayerId::PLAYER_NONE;
+}
+
+void
+CatanGame::waitConfirmation(PlayerId player) {
+	confirmationPlayer = player;
+}
+
+void 
+CatanGame::confirm(PlayerId player) {
+	if (player == confirmationPlayer) {
+		confirmationPlayer = PlayerId::PLAYER_NONE;
+	}
 }
 
 void
