@@ -423,13 +423,13 @@
     <ClInclude Include="CatanGui\AllegroUI\FrameUI.h">
       <Filter>CatanGui\AllegroUI</Filter>
     </ClInclude>
-    <ClInclude Include="CatanGui\AllegroUI\FrameUIController.h">
-      <Filter>CatanGui\AllegroUI</Filter>
-    </ClInclude>
     <ClInclude Include="CatanGui\AllegroUI\UIController.h">
       <Filter>CatanGui\AllegroUI</Filter>
     </ClInclude>
     <ClInclude Include="CatanGui\AllegroUI\UIModel.h">
+      <Filter>CatanGui\AllegroUI</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGui\AllegroUI\MouseDecorator.h">
       <Filter>CatanGui\AllegroUI</Filter>
     </ClInclude>
   </ItemGroup>
@@ -789,6 +789,9 @@
       <Filter>CatanNetworking\NetworkProtocols</Filter>
     </ClCompile>
     <ClCompile Include="CatanGui\AllegroUI\FrameUI.cpp">
+      <Filter>CatanGui\AllegroUI</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGui\AllegroUI\MouseDecorator.cpp">
       <Filter>CatanGui\AllegroUI</Filter>
     </ClCompile>
   </ItemGroup>

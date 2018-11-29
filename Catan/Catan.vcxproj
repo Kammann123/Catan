@@ -162,7 +162,7 @@
     <ClInclude Include="CatanGame\Robber.h" />
     <ClInclude Include="CatanGame\SeaHex.h" />
     <ClInclude Include="CatanGui\AllegroUI\FrameUI.h" />
-    <ClInclude Include="CatanGui\AllegroUI\FrameUIController.h" />
+    <ClInclude Include="CatanGui\AllegroUI\MouseDecorator.h" />
     <ClInclude Include="CatanGui\AllegroUI\UIController.h" />
     <ClInclude Include="CatanGui\AllegroUI\UIModel.h" />
     <ClInclude Include="CatanGui\AllegroWidgets\Widgets.h" />
@@ -289,6 +289,7 @@
     <ClCompile Include="CatanGame\Robber.cpp" />
     <ClCompile Include="CatanGame\SeaHex.cpp" />
     <ClCompile Include="CatanGui\AllegroUI\FrameUI.cpp" />
+    <ClCompile Include="CatanGui\AllegroUI\MouseDecorator.cpp" />
     <ClCompile Include="CatanNetworking\CatanNetworking.cpp" />
     <ClCompile Include="CatanNetworking\NetworkHandlers\NetworkClient.cpp" />
     <ClCompile Include="CatanNetworking\NetworkHandlers\NetworkServer.cpp" />
