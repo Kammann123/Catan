@@ -432,6 +432,12 @@
     <ClInclude Include="CatanGui\AllegroUI\MouseDecorator.h">
       <Filter>CatanGui\AllegroUI</Filter>
     </ClInclude>
+    <ClInclude Include="CatanGui\AllegroUI\MouseController.h">
+      <Filter>CatanGui\AllegroUI</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGui\AllegroUI\UIDecorator.h">
+      <Filter>CatanGui\AllegroUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FSM\EventQueue.cpp">
@@ -731,13 +737,7 @@
     <ClCompile Include="CatanGame\CatanStates\Winner.cpp">
       <Filter>CatanGame\CatanStates</Filter>
     </ClCompile>
-    <ClCompile Include="Widgets.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
     <ClCompile Include="socketTester.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="networkingTester.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="CatanNetworking\NetworkingStates\ListenBank.cpp">
@@ -793,6 +793,21 @@
     </ClCompile>
     <ClCompile Include="CatanGui\AllegroUI\MouseDecorator.cpp">
       <Filter>CatanGui\AllegroUI</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGui\AllegroUI\MouseController.cpp">
+      <Filter>CatanGui\AllegroUI</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGui\AllegroUI\UIController.cpp">
+      <Filter>CatanGui\AllegroUI</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGui\AllegroUI\UIDecorator.cpp">
+      <Filter>CatanGui\AllegroUI</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGui\AllegroUI\UIModel.cpp">
+      <Filter>CatanGui\AllegroUI</Filter>
+    </ClCompile>
+    <ClCompile Include="guitest.cpp">
+      <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

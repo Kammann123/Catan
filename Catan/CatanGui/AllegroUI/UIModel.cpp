@@ -9,11 +9,13 @@ UIModel::
 void 
 UIModel::setVisible(bool visibleStatus) {
 	this->visible = visibleStatus;
+	notifyObservers();
 }
 
 void 
 UIModel::setEnable(bool enableStatus) {
 	this->enable = enableStatus;
+	notifyObservers();
 }
 
 bool 

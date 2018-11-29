@@ -40,6 +40,7 @@ public:
 	* Interfaz para el manejo de los estados, y su lectura.
 	*/
 	void setPosition(pos_t x, pos_t y);
+	void addPosition(pos_t x, pos_t y);
 	void setWidth(size_t width);
 	void setHeight(size_t height);
 	void setStatus(Status status);
@@ -49,6 +50,13 @@ public:
 	size_t getHeight(void);
 	pos_t xPos(void);
 	pos_t yPos(void);
+	
+	/*
+	* isInside
+	* Logica de control para determinar si una coordenada
+	* se ubica en su interior
+	*/
+	bool isInside(pos_t x, pos_t y);
 
 protected:
 	pos_t x;

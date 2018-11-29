@@ -1,6 +1,7 @@
 #pragma once
 
 #include "FrameUI.h"
+#include "UIDecorator.h"
 
 #include <functional>
 
@@ -10,7 +11,7 @@ using namespace std;
 * Action - Tipo de dato para callbacks ejecutados por el MouseDecorator
 *	+ Permite recibir y pasar como parametro un tipo void*
 */
-using Action = function<void(void*)>;
+using Action = function<void(void)>;
 
 /*
 * MouseDecorator
@@ -18,14 +19,14 @@ using Action = function<void(void*)>;
 * para agregarle funcionalidades de Mouse. Estas implican la interaccion con el
 * mismo, y asi mismo un conjunto de acciones que sean ejecutables en funcion de ello.
 */
-class MouseDecorator {
+class MouseDecorator : public UIDecorator {
 public:
 
 	/*
 	* MouseDecorator
 	* Se construye a partir de FrameUI, al cual se le agrega esta capacidad
 	* de funcionar como un decorator del mismo. No puede ser construido
-	* con un puntero nullptr, con lo cual se levantaran excepciones.
+	* con un puntero nullptr.
 	*/
 	MouseDecorator(FrameUI* frame, bool dragMode=false);
 	~MouseDecorator(void);
@@ -44,24 +45,23 @@ public:
 	/*
 	* Llamadas particulares a los callbacks para el controller
 	*/
-	void focus(void* data);
-	void exit(void* data);
-	void click(void* data);
-	void release(void* data);
-	void drag(void* data);
-	void drop(void* data);
-	void move(void* data);
+	void focus(void);
+	void exit(void);
+	void click(void);
+	void release(void);
+	void drag(void);
+	void drop(void);
+	void move(void);
 
 	/* Habilitacion del modo dragging con el mouse */
 	void setEnableDrag(bool dragStatus);
+	bool getEnableDrag(void);
 
-private:
+protected:
 
 	/*
-	* Puntero al FrameUI decorado y estado actual
-	* del modo dragging
+	* Estado actual del modo dragging
 	*/
-	FrameUI* frame;
 	bool enableDragging;
 
 	/*

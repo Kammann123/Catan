@@ -1,29 +1,12 @@
 #include "MouseDecorator.h"
 
 MouseDecorator::
-MouseDecorator(FrameUI* frame, bool dragMode) {
-
-	/*
-	* Si no se configura con un puntero distinto
-	* a nullptr, claramente hubo algun error que no tiene sentido
-	* permitir que continue, levanto excepcion.
-	*/
-	if (frame) {
-		this->frame = frame;
-		this->enableDragging = dragMode;
-	}
-	else {
-		throw exception("MouseDecorator - No se puede configurar sin un frame.");
-	}
+MouseDecorator(FrameUI* frame, bool dragMode) : UIDecorator(frame) {
+	this->enableDragging = dragMode;
 }
 
 MouseDecorator::
 ~MouseDecorator(void) {}
-
-void 
-MouseDecorator::setFocusAction(Action focus) {
-	this->onFocus = focus;
-}
 
 void
 MouseDecorator::setExitACtion(Action exit) {
@@ -56,41 +39,46 @@ MouseDecorator::setMoveAction(Action move) {
 }
 
 void
-MouseDecorator::focus(void* data) {
-	onFocus(data);
+MouseDecorator::focus(void) {
+	if(onFocus) onFocus();
 }
 
 void
-MouseDecorator::exit(void* data) {
-	onExit(data);
+MouseDecorator::exit(void) {
+	if(onExit)	onExit();
 }
 
 void
-MouseDecorator::click(void* data) {
-	onClick(data);
+MouseDecorator::click(void) {
+	if(onClick)	onClick();
 }
 
 void
-MouseDecorator::release(void* data) {
-	onRelease(data);
+MouseDecorator::release(void) {
+	if(onRelease)	onRelease();
 }
 
 void
-MouseDecorator::drag(void* data) {
-	onDrag(data);
+MouseDecorator::drag(void) {
+	if(onDrag)	onDrag();
 }
 
 void
-MouseDecorator::drop(void* data) {
-	onDrop(data);
+MouseDecorator::drop(void) {
+	if(onDrop)	onDrop();
 }
 
 void
-MouseDecorator::move(void* data) {
-	onMove(data);
+MouseDecorator::move(void) {
+	if(onMove)	onMove();
 }
 
 void
 MouseDecorator::setEnableDrag(bool dragStatus) {
 	this->enableDragging = dragStatus;
+}
+
+bool
+MouseDecorator::getEnableDrag(void) {
+	return this->enableDragging;
 }
