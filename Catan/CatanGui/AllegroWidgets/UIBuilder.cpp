@@ -13,7 +13,7 @@ createButton(string id, const char* focused, const char* selected, const char* i
 	if (focusedBitmap != nullptr && selectedBitmap != nullptr && idleBitmap != nullptr)
 	{
 		/* Creación del model */
-		MouseUI* model = new MouseUI(id);
+		MouseUI* model = new MouseUI(id, al_get_bitmap_width(idleBitmap), al_get_bitmap_height(idleBitmap));
 
 		/* Creación del controller */
 		MouseController* controller = new MouseController(model);
@@ -36,10 +36,10 @@ createButton(string id, const char* focused, const char* selected, const char* i
 
 
 UIComponent* UIBuilder::
-createTextField(ALLEGRO_FONT * font_, ALLEGRO_COLOR textColor_, WindowUI* interface_, string id, size_t size, TextUI::Mode mode) {
+createTextField(ALLEGRO_FONT * font_, size_t width, size_t height, ALLEGRO_COLOR textColor_, WindowUI* interface_, string id, size_t size, TextUI::Mode mode) {
 
 	/*Cracion del modelo*/
-	TextUI * textFieldModel = new TextUI(id, size, mode);
+	TextUI * textFieldModel = new TextUI(id, width, height, size, mode);
 
 	/*Cracion la View*/
 	TextFieldView * textFieldView = new TextFieldView(font_, textColor_, textFieldModel, interface_);
