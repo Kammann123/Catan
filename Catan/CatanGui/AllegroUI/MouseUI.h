@@ -1,7 +1,6 @@
 #pragma once
 
 #include "FrameUI.h"
-#include "UIDecorator.h"
 
 #include <functional>
 
@@ -11,25 +10,30 @@ using namespace std;
 * Action - Tipo de dato para callbacks ejecutados por el MouseDecorator
 *	+ Permite recibir y pasar como parametro un tipo void*
 */
-using Action = function<void(void)>;
+using Action = function<void(void*)>;
 
 /*
-* MouseDecorator
-* Modelizacion para el Decorator Pattern, de la decoracion de un FrameUI
+* MouseUI
+* Modelizacion para estado con el mouse a un FrameUI
 * para agregarle funcionalidades de Mouse. Estas implican la interaccion con el
 * mismo, y asi mismo un conjunto de acciones que sean ejecutables en funcion de ello.
 */
-class MouseDecorator : public UIDecorator {
+class MouseUI : public FrameUI {
 public:
 
-	/*
-	* MouseDecorator
-	* Se construye a partir de FrameUI, al cual se le agrega esta capacidad
-	* de funcionar como un decorator del mismo. No puede ser construido
-	* con un puntero nullptr.
+	/* Status - Definicion de los posibles estados de un MouseUI
+	* genericos para cualquier aplicacion, deberian abarcar cualquier estado
+	* que un decorador pueda implementar, pues el estado no depende del decorador para
+	* existir, pero si para ser alterado.
 	*/
-	MouseDecorator(FrameUI* frame, bool dragMode=false);
-	~MouseDecorator(void);
+	enum Status : unsigned int { IDLE, FOCUSED, SELECTED, DRAGGED };
+
+	/*
+	* MouseUI
+	* Se construye a partir de FrameUI
+	*/
+	MouseUI(string id, bool dragMode = false);
+	~MouseUI(void);
 
 	/*
 	* Configuracion del mouse decorator y sus callbacks
@@ -45,30 +49,34 @@ public:
 	/*
 	* Llamadas particulares a los callbacks para el controller
 	*/
-	void focus(void);
-	void exit(void);
-	void click(void);
-	void release(void);
-	void drag(void);
-	void drop(void);
-	void move(void);
+	void focus(void* data);
+	void exit(void* data);
+	void click(void* data);
+	void release(void* data);
+	void drag(void* data);
+	void drop(void* data);
+	void move(void* data);
 
 	/* Habilitacion del modo dragging con el mouse */
 	void setEnableDrag(bool dragStatus);
 	bool getEnableDrag(void);
 
+	void setStatus(Status status);
+	Status getStatus(void);
+
 protected:
 
 	/*
-	* Estado actual del modo dragging
+	* Estado actual y modo dragging
 	*/
 	bool enableDragging;
+	Status status;
 
 	/*
 	* Callbacks para las acciones de los estados que cambia el
 	* mouse decorator, cada uno de ellos es una ejecucion de las transiciones
 	* de estado que se dan en el mismo
- 	*/
+	*/
 	Action onFocus;
 	Action onExit;
 	Action onClick;

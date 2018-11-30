@@ -19,21 +19,14 @@ using size_t = unsigned int;
 * funcionalidades, y sus respectivos controladores.
 */
 class FrameUI : public UIModel {
-
 public:
-	/* Status - Definicion de los posibles estados de un FrameUI
-	* genericos para cualquier aplicacion, deberian abarcar cualquier estado 
-	* que un decorador pueda implementar, pues el estado no depende del decorador para 
-	* existir, pero si para ser alterado.
-	*/
-	enum Status : unsigned int { IDLE, FOCUSED, SELECTED, DRAGGED, ANIMATED };
 
 	/*
 	* FrameUI
 	* Se construye con un tamaño, y luego se posible definir,
 	* posiciones y estado inicial, de todas formas tiene argumento por defecto
 	*/
-	FrameUI(size_t width, size_t height, pos_t x = 0, pos_t y = 0, Status status = IDLE);
+	FrameUI(string id, size_t width, size_t height, pos_t x = 0, pos_t y = 0);
 	~FrameUI(void);
 
 	/*
@@ -43,9 +36,7 @@ public:
 	void addPosition(pos_t x, pos_t y);
 	void setWidth(size_t width);
 	void setHeight(size_t height);
-	void setStatus(Status status);
 
-	Status getStatus(void);
 	size_t getWidth(void);
 	size_t getHeight(void);
 	pos_t xPos(void);
@@ -63,5 +54,4 @@ protected:
 	pos_t y;
 	size_t height;
 	size_t width;
-	Status status;
 };

@@ -2,6 +2,10 @@
 
 #include "../../MVC/Subject.h"
 
+#include <string>
+
+using namespace std;
+
 /*
 * UIModel
 * Modelizacion basica de un modelo como elemento de la interfaz grafica
@@ -10,12 +14,11 @@
 */
 class UIModel : public Subject {
 public:
-
-	/*
-	* UIModel
+	
+	/* UIModel
 	* Se construye con un estado inicial no visible ni habilitado.
 	*/
-	UIModel(void);
+	UIModel(string id);
 	~UIModel(void);
 
 	/*
@@ -24,11 +27,14 @@ public:
 	*/
 	void setVisible(bool visibleStatus);
 	void setEnable(bool enableStatus);
+	void setId(string id);
 
 	bool getVisible(void);
 	bool getEnable(void);
+	string getId(void);
 
 protected:
 	bool enable;
 	bool visible;
+	string id;
 };

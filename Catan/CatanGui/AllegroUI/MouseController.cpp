@@ -1,7 +1,7 @@
 #include "MouseController.h"
 
 MouseController::
-MouseController(MouseDecorator* decorator) : UIController(decorator) {}
+MouseController(MouseUI* frame) : UIController(frame) {}
 
 MouseController::
 ~MouseController() {}
@@ -10,77 +10,83 @@ void
 MouseController::parse(ALLEGRO_EVENT* event) {
 
 	/*
-	* Obtengo el estado actual del FrameUI decorado
+	* Obtengo el estado actual del MouseUI decorado
 	* y reviso si me es de interes para el mouse
 	*/
-	MouseDecorator* decorator = (MouseDecorator*)getModel();
-	FrameUI* frame = (FrameUI*)decorator->getModel();
 
-	switch (frame->getStatus()) {
+	MouseUI* frame = (MouseUI*)model;
 
-		case FrameUI::Status::IDLE:
+	/*
+	* Verifico que este habilitado el controller y su modelo
+	*/
+	if (frame->getEnable()) {
+
+		switch (frame->getStatus()) {
+
+		case MouseUI::Status::IDLE:
 			if (event->type == ALLEGRO_EVENT_MOUSE_AXES) {
 				if (frame->isInside(event->mouse.x, event->mouse.y)) {
-					frame->setStatus(FrameUI::Status::FOCUSED);
-					decorator->focus();
+					frame->setStatus(MouseUI::Status::FOCUSED);
+					frame->focus(event);
 				}
 			}
 			break;
 
-		case FrameUI::Status::FOCUSED:
+		case MouseUI::Status::FOCUSED:
 			if (event->type == ALLEGRO_EVENT_MOUSE_AXES) {
 				if (!frame->isInside(event->mouse.x, event->mouse.y)) {
-					frame->setStatus(FrameUI::Status::IDLE);
-					decorator->exit();
+					frame->setStatus(MouseUI::Status::IDLE);
+					frame->exit(event);
 				}
 			}
 			else if (event->type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
-				frame->setStatus(FrameUI::Status::SELECTED);
-				decorator->click();
+				frame->setStatus(MouseUI::Status::SELECTED);
+				frame->click(event);
 			}
 			break;
 
-		case FrameUI::Status::SELECTED:
+		case MouseUI::Status::SELECTED:
 			if (event->type == ALLEGRO_EVENT_MOUSE_AXES) {
-				if (decorator->getEnableDrag()) {
-					frame->setStatus(FrameUI::Status::DRAGGED);
+				if (frame->getEnableDrag()) {
+					frame->setStatus(MouseUI::Status::DRAGGED);
 					frame->addPosition(event->mouse.dx, event->mouse.dy);
-					decorator->drag();
+					frame->drag(event);
 				}
 				else {
 					if (!frame->isInside(event->mouse.x, event->mouse.y)) {
-						frame->setStatus(FrameUI::Status::IDLE);
-						decorator->exit();
+						frame->setStatus(MouseUI::Status::IDLE);
+						frame->exit(event);
 					}
 				}
 			}
 			else if (event->type == ALLEGRO_EVENT_MOUSE_BUTTON_UP) {
-				frame->setStatus(FrameUI::Status::FOCUSED);
-				decorator->release();
+				frame->setStatus(MouseUI::Status::FOCUSED);
+				frame->release(event);
 			}
 			break;
 
-		case FrameUI::Status::DRAGGED:
+		case MouseUI::Status::DRAGGED:
 			if (event->type == ALLEGRO_EVENT_MOUSE_AXES) {
 				frame->addPosition(event->mouse.dx, event->mouse.dy);
-				decorator->drag();
+				frame->drag(event);
 			}
 			else if (event->type == ALLEGRO_EVENT_MOUSE_BUTTON_UP) {
 				if (!frame->isInside(event->mouse.x, event->mouse.y)) {
-					frame->setStatus(FrameUI::Status::IDLE);
-					decorator->exit();
+					frame->setStatus(MouseUI::Status::IDLE);
+					frame->exit(event);
 				}
 				else {
-					frame->setStatus(FrameUI::Status::FOCUSED);
-					decorator->drop();
+					frame->setStatus(MouseUI::Status::FOCUSED);
+					frame->drop(event);
 				}
 			}
 			else {
 				if (!frame->isInside(event->mouse.x, event->mouse.y)) {
-					frame->setStatus(FrameUI::Status::IDLE);
-					decorator->exit();
+					frame->setStatus(MouseUI::Status::IDLE);
+					frame->exit(event);
 				}
 			}
 			break;
+		}
 	}
 }

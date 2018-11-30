@@ -426,13 +426,7 @@
     <ClInclude Include="CatanGui\AllegroUI\UIModel.h">
       <Filter>CatanGui\AllegroUI</Filter>
     </ClInclude>
-    <ClInclude Include="CatanGui\AllegroUI\MouseDecorator.h">
-      <Filter>CatanGui\AllegroUI</Filter>
-    </ClInclude>
     <ClInclude Include="CatanGui\AllegroUI\MouseController.h">
-      <Filter>CatanGui\AllegroUI</Filter>
-    </ClInclude>
-    <ClInclude Include="CatanGui\AllegroUI\UIDecorator.h">
       <Filter>CatanGui\AllegroUI</Filter>
     </ClInclude>
     <ClInclude Include="CatanGui\AllegroWidgets\Label.h">
@@ -449,6 +443,18 @@
     </ClInclude>
     <ClInclude Include="CatanGui\AllegroWidgets\TextFieldView.h">
       <Filter>CatanGui\AllegroWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGui\AllegroUI\MouseUI.h">
+      <Filter>CatanGui\AllegroUI</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGui\AllegroUI\TextController.h">
+      <Filter>CatanGui\AllegroUI</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGui\AllegroUI\TextUI.h">
+      <Filter>CatanGui\AllegroUI</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGui\AllegroUI\WindowUI.h">
+      <Filter>CatanGui\AllegroUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -803,16 +809,10 @@
     <ClCompile Include="CatanGui\AllegroUI\FrameUI.cpp">
       <Filter>CatanGui\AllegroUI</Filter>
     </ClCompile>
-    <ClCompile Include="CatanGui\AllegroUI\MouseDecorator.cpp">
-      <Filter>CatanGui\AllegroUI</Filter>
-    </ClCompile>
     <ClCompile Include="CatanGui\AllegroUI\MouseController.cpp">
       <Filter>CatanGui\AllegroUI</Filter>
     </ClCompile>
     <ClCompile Include="CatanGui\AllegroUI\UIController.cpp">
-      <Filter>CatanGui\AllegroUI</Filter>
-    </ClCompile>
-    <ClCompile Include="CatanGui\AllegroUI\UIDecorator.cpp">
       <Filter>CatanGui\AllegroUI</Filter>
     </ClCompile>
     <ClCompile Include="CatanGui\AllegroUI\UIModel.cpp">
@@ -835,6 +835,18 @@
     </ClCompile>
     <ClCompile Include="CatanGui\AllegroWidgets\TextFieldView.cpp">
       <Filter>CatanGui\AllegroWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGui\AllegroUI\MouseUI.cpp">
+      <Filter>CatanGui\AllegroUI</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGui\AllegroUI\TextController.cpp">
+      <Filter>CatanGui\AllegroUI</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGui\AllegroUI\TextUI.cpp">
+      <Filter>CatanGui\AllegroUI</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGui\AllegroUI\WindowUI.cpp">
+      <Filter>CatanGui\AllegroUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

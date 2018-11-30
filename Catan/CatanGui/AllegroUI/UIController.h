@@ -26,7 +26,7 @@ public:
 	* de forma tal que con el mismo se pueda modificar los estados de habilitacion
 	* y ejecutar un parseo de los eventos de allegro
 	*/
-	virtual void parse(ALLEGRO_EVENT* event) = 0;
+	virtual void parse(ALLEGRO_EVENT* event) = 0; 
 	UIModel* getModel(void);
 
 protected:

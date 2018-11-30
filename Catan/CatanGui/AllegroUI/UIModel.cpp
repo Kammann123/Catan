@@ -1,7 +1,9 @@
 #include "UIModel.h"
 
 UIModel::
-UIModel() {}
+UIModel(string id) {
+	this->id = id;
+}
 
 UIModel::
 ~UIModel() {}
@@ -26,4 +28,14 @@ UIModel::getVisible(void) {
 bool 
 UIModel::getEnable(void) {
 	return this->enable;
+}
+
+void
+UIModel::setId(string id) {
+	this->id = id;
+}
+
+string
+UIModel::getId(void) {
+	return id;
 }

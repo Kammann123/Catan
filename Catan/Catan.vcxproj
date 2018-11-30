@@ -71,6 +71,9 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Allegro_AddonPrimitives>true</Allegro_AddonPrimitives>
+    <Allegro_AddonImage>true</Allegro_AddonImage>
+    <Allegro_AddonTTF>true</Allegro_AddonTTF>
+    <Allegro_AddonFont>true</Allegro_AddonFont>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -165,10 +168,12 @@
     <ClInclude Include="CatanGame\SeaHex.h" />
     <ClInclude Include="CatanGui\AllegroUI\FrameUI.h" />
     <ClInclude Include="CatanGui\AllegroUI\MouseController.h" />
-    <ClInclude Include="CatanGui\AllegroUI\MouseDecorator.h" />
+    <ClInclude Include="CatanGui\AllegroUI\MouseUI.h" />
+    <ClInclude Include="CatanGui\AllegroUI\TextController.h" />
+    <ClInclude Include="CatanGui\AllegroUI\TextUI.h" />
     <ClInclude Include="CatanGui\AllegroUI\UIController.h" />
-    <ClInclude Include="CatanGui\AllegroUI\UIDecorator.h" />
     <ClInclude Include="CatanGui\AllegroUI\UIModel.h" />
+    <ClInclude Include="CatanGui\AllegroUI\WindowUI.h" />
     <ClInclude Include="CatanGui\AllegroWidgets\ButtonView.h" />
     <ClInclude Include="CatanGui\AllegroWidgets\Label.h" />
     <ClInclude Include="CatanGui\AllegroWidgets\LabelView.h" />
@@ -298,10 +303,12 @@
     <ClCompile Include="CatanGame\SeaHex.cpp" />
     <ClCompile Include="CatanGui\AllegroUI\FrameUI.cpp" />
     <ClCompile Include="CatanGui\AllegroUI\MouseController.cpp" />
-    <ClCompile Include="CatanGui\AllegroUI\MouseDecorator.cpp" />
+    <ClCompile Include="CatanGui\AllegroUI\MouseUI.cpp" />
+    <ClCompile Include="CatanGui\AllegroUI\TextController.cpp" />
+    <ClCompile Include="CatanGui\AllegroUI\TextUI.cpp" />
     <ClCompile Include="CatanGui\AllegroUI\UIController.cpp" />
-    <ClCompile Include="CatanGui\AllegroUI\UIDecorator.cpp" />
     <ClCompile Include="CatanGui\AllegroUI\UIModel.cpp" />
+    <ClCompile Include="CatanGui\AllegroUI\WindowUI.cpp" />
     <ClCompile Include="CatanGui\AllegroWidgets\ButtonView.cpp" />
     <ClCompile Include="CatanGui\AllegroWidgets\Label.cpp" />
     <ClCompile Include="CatanGui\AllegroWidgets\LabelView.cpp" />

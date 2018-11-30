@@ -1,11 +1,11 @@
 #pragma once
 
 #include "UIController.h"
-#include "MouseDecorator.h"
+#include "MouseUI.h"
 
 /*
 * MouseController
-* Controller para un MouseDecorator que recibe los eventos de la interfaz
+* Controller para un MouseUI que recibe los eventos de la interfaz
 * grafica por Allegro y luego ejecuta un parseo para definir los estados
 * correspondientes en el mismo.
 */
@@ -16,7 +16,7 @@ public:
 	* MouseController
 	* Se lo construye con una referencia al MouseDecorator adecuado
 	*/
-	MouseController(MouseDecorator* decorator);
+	MouseController(MouseUI* frame);
 	~MouseController(void);
 
 	/*

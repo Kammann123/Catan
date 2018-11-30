@@ -1,12 +1,11 @@
 #include "FrameUI.h"
 
 FrameUI::
-FrameUI(size_t width, size_t height, pos_t x, pos_t y, Status status) {
+FrameUI(string id, size_t width, size_t height, pos_t x, pos_t y) : UIModel(id) {
 	this->width = width;
 	this->height = height;
 	this->x = x;
 	this->y = y;
-	this->status = status;
 }
 
 FrameUI::
@@ -36,17 +35,6 @@ void
 FrameUI::setHeight(size_t height) {
 	this->height = height;
 	notifyObservers();
-}
-
-void
-FrameUI::setStatus(Status status) {
-	this->status = status;
-	notifyObservers();
-}
-
-FrameUI::Status
-FrameUI::getStatus(void) {
-	return this->status;
 }
 
 size_t

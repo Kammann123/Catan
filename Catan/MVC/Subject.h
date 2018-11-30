@@ -25,13 +25,13 @@ public:
 	* attach
 	* Agrega observers al sujeto
 	*/
-	virtual bool attach(Observer* ptr);
+	bool attach(Observer* ptr);
 	
 	/*
 	* detach
 	* Remueve un observer del sujeto
 	*/
-	virtual bool detach(Observer* ptr);
+	bool detach(Observer* ptr);
 
 protected:
 
