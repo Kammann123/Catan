@@ -1,6 +1,13 @@
 #include "UIBuilder.h"
 
 UIComponent* UIBuilder::
+createSimpleButton(string id, const char* text, size_t height) {
+
+	/* Construyo el modelo primero */
+	TextUI* buttonModel = new TextUI(id, al_get_text_width(, text), height, strlen(text));
+}
+
+UIComponent* UIBuilder::
 createButton(string id, const char* focused, const char* selected, const char* idle, WindowUI* interface_)
 {
 	

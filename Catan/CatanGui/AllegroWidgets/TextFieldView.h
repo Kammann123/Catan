@@ -11,6 +11,7 @@
 #define FOCUSED_COLOR al_map_rgb(220, 220, 220)
 #define PERC_MARGIN 0.1
 
+#define TEXTFIELD_FONT	"textfont"
 
 class TextFieldView : public UIView
 {

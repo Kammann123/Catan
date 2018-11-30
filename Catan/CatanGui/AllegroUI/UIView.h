@@ -31,7 +31,7 @@ public:
 	* para ejecutar una actualizacion de la misma durante los cambios
 	* del modelo que se van detectando.
 	*/
-	UIView(WindowUI* interface_, UIModel* model_);
+	UIView(UIModel* model_);
 	~UIView();
 
 	/*
@@ -54,6 +54,12 @@ public:
 	ColorConfig& setColors(void);
 	TextConfig& setFonts(void);
 	ImageConfig& setImages(void);
+
+	/*
+	* Configuramos la relacion con una ventana
+	*/
+	void setWindow(WindowUI* interface_);
+	void clearWindow(void);
 
 protected:
 

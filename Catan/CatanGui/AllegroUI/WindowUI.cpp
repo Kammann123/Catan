@@ -180,11 +180,13 @@ WindowUI::run(void) {
 
 void
 WindowUI::attachComponent(UIComponent* component) {
+	component->getView()->setWindow(this);
 	components.push_back(component);
 }
 
 void
 WindowUI::detachComponent(UIComponent* component) {
+	component->getView()->clearWindow();
 	components.remove(component);
 }
 

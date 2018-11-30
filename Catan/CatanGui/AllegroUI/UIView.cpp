@@ -1,11 +1,8 @@
 #include "UIView.h"
 #include "WindowUI.h"
 
-
-
-UIView::UIView(WindowUI * interface_, UIModel * model_)
+UIView::UIView(UIModel * model_)
 {
-	interface = interface_;
 	model = model_;
 }
 
@@ -30,4 +27,14 @@ UIView::setFonts(void) {
 ImageConfig&
 UIView::setImages(void) {
 	return images;
+}
+
+void 
+UIView::setWindow(WindowUI* interface_) {
+	this->interface = interface_;
+}
+
+void 
+UIView::clearWindow(void) {
+	this->interface = nullptr;
 }
