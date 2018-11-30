@@ -11,9 +11,19 @@
 
 #include "UIComponent.h"
 
+#include <functional>
+
 #define DEFAULT_FPS 1.0/50
 
 #define WINDOW_BACKGROUND	"background" 
+
+#define MODEL(_component, _cast)	((_cast)(_component->getModel()))
+#define VIEW(_component, _cast) ((_cast)(_component->getView())
+
+using namespace std;
+using namespace std::placeholders;
+
+using Action = function<void(void*)>;
 
 /*
 * WindowUI
@@ -44,11 +54,13 @@ public:
 	void draw(void);
 
 	/*
-	* start
+	* start y stop
 	* Ejecuta las acciones necesarias previas al funcionamiento
-	* de la gui para garantizar que funcione correctamente
+	* de la gui para garantizar que funcione correctamente, luego
+	* permite parar el funcionamiento de la ui
 	*/
 	void start(void);
+	void stop(void);
 
 	/*
 	* run
@@ -98,8 +110,16 @@ public:
 	size_t getWidth(void);
 	double getFps(void);
 	
+	/*
+	* setBackground
+	* Configura los parametros del fondo de ventana
+	*/
 	void setBackground(unsigned char red, unsigned char green, unsigned char blue);
 	void setBackground(const char* image);
+
+	/* Configuracion del callback de cierre de ventana */
+	void setCloseAction(Action close);
+	void close(void* data);
 
 private:
 
@@ -118,7 +138,8 @@ private:
 	size_t width;
 	size_t height;
 	double fps;
-	
+	bool started;
+
 	ALLEGRO_DISPLAY * display;
 	ALLEGRO_EVENT_QUEUE * queue;
 	ALLEGRO_TIMER* timer;
@@ -126,6 +147,8 @@ private:
 
 	ColorConfig colors;
 	ImageConfig images;
+
+	Action onClose;
 
 	list<UIComponent*> components;
 };

@@ -53,7 +53,7 @@ SimpleButtonView::draw(void) {
 			textFont,
 			textColor,
 			button->xPos() + PADDING_X,
-			button->yPos() + button->getHeight() - PADDING_Y,
+			button->yPos() + (button->getHeight() - al_get_font_line_height(textFont)) / 2,
 			0,
 			button->getText().c_str()
 		);

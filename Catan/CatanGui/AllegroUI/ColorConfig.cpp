@@ -43,6 +43,7 @@ ColorConfig::setConfig(unsigned int index, unsigned char red, unsigned char gree
 			myConfig
 		)
 	);
+	return true;
 }
 
 bool
@@ -55,4 +56,5 @@ ColorConfig::setConfig(string index, unsigned char red, unsigned char green, uns
 			myConfig
 		)
 	);
+	return true;
 }
