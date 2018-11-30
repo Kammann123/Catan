@@ -17,7 +17,7 @@ class UIComponent{
 public:
 
 	/* Constructor / Destructor */
-	UIComponent(UIModel* model_ );
+	UIComponent(UIModel* model_, UIView* view_, list<UIController*> controllers_);
 	~UIComponent();
 
 	/*

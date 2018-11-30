@@ -1,9 +1,11 @@
 #include "UIComponent.h"
 
 UIComponent::
-UIComponent(UIModel * model_)
+UIComponent(UIModel* model_, UIView* view_, list<UIController*> controllers_)
 {
 	model = model_;
+	view = view_;
+	controllers = controllers_;
 }
 
 UIComponent::
