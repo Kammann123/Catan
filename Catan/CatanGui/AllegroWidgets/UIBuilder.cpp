@@ -31,3 +31,57 @@ createSimpleButton(string id, const char* text, size_t height) {
 	UIComponent* component = new UIComponent(buttonModel, buttonView, { buttonController });
 	return component;
 }
+
+UIComponent* UIBuilder::
+createButton(string id)
+{
+	
+		/* Creación del view */
+		ButtonView* view = new ButtonView();
+
+		/* Creación del model */
+		MouseUI* model = new MouseUI(id, 
+									al_get_bitmap_width(view->setImages()[(unsigned int)MouseUI::Status::IDLE].bitmap), 
+									al_get_bitmap_height(view->setImages()[(unsigned int)MouseUI::Status::IDLE].bitmap)
+									);
+
+		/* Attach model-view */
+		model->attach(view);
+		view->setModel(model);
+
+		/* Creación del controller */
+		MouseController* controller = new MouseController(model);
+
+		/* Creación del UIComponent */
+		UIComponent* component = new UIComponent(model, view, { controller });
+
+		return component;
+
+
+}
+
+UIComponent* UIBuilder::
+createTextField(size_t height, string id, size_t size, TextUI::Mode mode) {
+
+	/*Cracion de la View*/
+	TextFieldView * textFieldView = new TextFieldView();
+
+	string test(size, 'A'); 
+
+	/*Cracion del modelo*/
+	TextUI * textFieldModel = new TextUI(id, al_get_text_width(textFieldView->setFonts()[TF_FONT].font,test.c_str()), height, size, mode);
+
+
+	/*Attach modelo-vista*/
+	textFieldModel->attach(textFieldView);
+	textFieldView->setModel(textFieldModel);
+
+	/*Cracion el controller*/
+	TextController * textController = new TextController(textFieldModel);
+	MouseController * mouseController = new MouseController(textFieldModel);
+
+	/* Creación del UIComponent */
+	UIComponent* component = new UIComponent(textFieldModel, textFieldView, {textController, mouseController});
+
+	return component;
+}
