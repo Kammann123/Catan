@@ -35,13 +35,19 @@ TextUI::getText(void) {
 	return text;
 }
 
-Mode
+TextUI::Mode
 TextUI::getMode(void) {
 	return mode;
 }
 
 void
 TextUI::append(unsigned char value) {
+	/* Verifico no llegar al limite */
+	if (text.size() == size) {
+		return;
+	}
+
+	/* Hago el cambio de caracter */
 	switch (mode) {
 		case Mode::NUMBER:
 			if (_is_number(value)) {
@@ -80,7 +86,7 @@ TextUI::append(const char* value) {
 
 void
 TextUI::remove(void) {
-	this->text = this->text.substr(0, size() - 1);
+	this->text = this->text.substr(0, text.size() - 1);
 	notifyObservers();
 }
 

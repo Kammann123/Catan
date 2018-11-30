@@ -836,8 +836,14 @@
     <ClCompile Include="CatanGui\AllegroUI\UIView.cpp">
       <Filter>CatanGui\AllegroUI</Filter>
     </ClCompile>
-    <ClCompile Include="CatanGui\AllegroWidgets\UIBuilder.cpp">
-      <Filter>CatanGui\AllegroWidgets</Filter>
+    <ClCompile Include="CatanGui\AllegroUI\WindowUI.cpp">
+      <Filter>CatanGui\AllegroUI</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGui\AllegroUI\TextController.cpp">
+      <Filter>CatanGui\AllegroUI</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGui\AllegroUI\TextUI.cpp">
+      <Filter>CatanGui\AllegroUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -304,10 +304,13 @@
     <ClCompile Include="CatanGui\AllegroUI\FrameUI.cpp" />
     <ClCompile Include="CatanGui\AllegroUI\MouseController.cpp" />
     <ClCompile Include="CatanGui\AllegroUI\MouseDecorator.cpp" />
+    <ClCompile Include="CatanGui\AllegroUI\TextController.cpp" />
+    <ClCompile Include="CatanGui\AllegroUI\TextUI.cpp" />
     <ClCompile Include="CatanGui\AllegroUI\UIComponent.cpp" />
     <ClCompile Include="CatanGui\AllegroUI\UIController.cpp" />
     <ClCompile Include="CatanGui\AllegroUI\UIModel.cpp" />
     <ClCompile Include="CatanGui\AllegroUI\UIView.cpp" />
+    <ClCompile Include="CatanGui\AllegroUI\WindowUI.cpp" />
     <ClCompile Include="CatanGui\AllegroWidgets\ButtonView.cpp" />
     <ClCompile Include="CatanGui\AllegroWidgets\TextFieldView.cpp" />
     <ClCompile Include="CatanGui\AllegroWidgets\UIBuilder.cpp" />

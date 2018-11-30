@@ -9,7 +9,17 @@ UIComponent(UIModel* model_, UIView* view_, list<UIController*> controllers_)
 }
 
 UIComponent::
-~UIComponent() {}
+~UIComponent() {
+	if (model)
+		delete model;
+	if (view)
+		delete view;
+	
+	for (UIController* controller : controllers) {
+		if(controller)
+			delete controller;
+	}
+}
 
 void
 UIComponent::parse(ALLEGRO_EVENT* event) {
@@ -72,4 +82,10 @@ void UIComponent::
 clearController(void)
 {
 	this->controllers.clear();
+}
+
+string UIComponent::
+getId(void)
+{
+
 }
