@@ -36,6 +36,7 @@ public:
 	list<UIController*>& getController(void);
 	UIModel* getModel(void);
 	UIView* getView(void);
+	string getId(void);
 
 	/* Setters */
 	void setModel(UIModel* newModel);

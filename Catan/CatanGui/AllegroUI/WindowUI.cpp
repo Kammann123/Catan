@@ -1,7 +1,7 @@
 #include "WindowUI.h"
 
 /* Configuraciones e inicializacion estaticas de la clase WindowUI
-* para configurar correctamente la inicializacion de allegro
+*  configurar correctamente la inicializacion de allegro
 */
 bool WindowUI::allegroWasInit = false;
 
@@ -13,32 +13,182 @@ WindowUI::isAllegroInit(void) {
 void
 WindowUI::InitAllegro(void) {
 
-	/* Inicializo allegro en general */
-	if (!al_init()) {
-		return;
-	}
+	if( !allegroWasInit ){
 
-	/* Inicializo los addons */
-	if (!al_init_primitives_addon()) {
-		return;
-	}
-	if (!al_init_font_addon()) {
-		return;
-	}
-	if (!al_init_ttf_addon()) {
-		return;
-	}
-	if (!al_init_image_addon()) {
-		return;
-	}
+		/* Inicializo allegro en general */
+		if (!al_init()) {
+			return;
+		}
 
-	/* Instalo perifericos */
-	if (!al_install_keyboard()) {
-		return;
-	}
-	if (!al_install_mouse()) {
-		return;
-	}
+		/* Inicializo los addons */
+		if (!al_init_primitives_addon()) {
+			return;
+		}
+		if (!al_init_font_addon()) {
+			return;
+		}
+		if (!al_init_ttf_addon()) {
+			return;
+		}
+		if (!al_init_image_addon()) {
+			return;
+		}
 
-	allegroWasInit = true;
+		/* Instalo perifericos */
+		if (!al_install_keyboard()) {
+			return;
+		}
+		if (!al_install_mouse()) {
+			return;
+		}
+
+		allegroWasInit = true;
+	}
+}
+
+WindowUI::
+WindowUI(size_t width, size_t height, double fps) {
+	this->width = width;
+	this->height = height;
+	this->fps = fps;
+	this->display = nullptr;
+	this->queue = nullptr;
+	this->components.clear();
+
+	/*
+	* Construyo todos los elementos basicos que hacen
+	* al funcionamiento de la interfaz grafica
+	*/
+	_init_display();
+	_init_queue();
+	_init_timer();
+	_init_sources();
+}
+
+WindowUI::
+~WindowUI(void) {
+
+	/*
+	* Destruyo el display, la cola de eventos	
+	* y luego los componentes 
+	*/
+	_destroy_display();
+	_destroy_queue();
+	_destroy_timer();
+	_destroy_components();
+}
+
+void
+WindowUI::_init_display(void) {
+	if (display == nullptr) {
+		this->display = al_create_display(this->width, this->height);
+	}
+}
+
+void
+WindowUI::_init_queue(void) {
+	if (queue == nullptr) {
+		this->queue = al_create_event_queue();
+	}
+}
+
+void
+WindowUI::_init_sources(void) {
+	if (display && queue) {
+		al_register_event_source(queue, al_get_display_event_source(display));
+		al_register_event_source(queue, al_get_mouse_event_source());
+		al_register_event_source(queue, al_get_keyboard_event_source());
+		al_register_event_source(queue, al_get_timer_event_source(timer));
+	}
+}
+
+void
+WindowUI::_init_timer(void) {
+	if (timer == nullptr) {
+		this->timer = al_create_timer(fps);
+	}
+}
+
+void 
+WindowUI::_destroy_display(void) {
+	if (display) {
+		al_destroy_display(display);
+	}
+}
+
+void
+WindowUI::_destroy_queue(void) {
+	if (queue) {
+		al_destroy_event_queue(queue);
+	}
+}
+
+void
+WindowUI::_destroy_timer(void) {
+	if (timer) {
+		al_destroy_timer(timer);
+	}
+}
+
+void
+WindowUI::_destroy_components(void) {
+	for (UIComponent* component : components) {
+		delete component;
+	}
+}
+
+void
+WindowUI::draw(void) {
+	for (UIComponent* component : components) {
+		component->draw();
+	}
+}
+
+void
+WindowUI::start(void) {
+	al_start_timer(timer);
+}
+
+void
+WindowUI::run(void) {
+	/*
+	* Busco en la cola de eventos si existen nuevos,
+	* en caso de haberlos, los reparto en la interfaz grafica...
+	* sus controllers
+	*/
+	if (al_get_next_event(queue, &event)) {
+		for (UIComponent* component : components) {
+			component->parse(&event);
+		}
+	}
+}
+
+void
+WindowUI::attachComponent(UIComponent* component) {
+	components.push_back(component);
+}
+
+void
+WindowUI::detachComponent(UIComponent* component) {
+	components.remove(component);
+}
+
+bool
+WindowUI::isOpen(void) {
+	return display != nullptr;
+}
+
+size_t 
+WindowUI::getHeight(void) {
+	return height;
+}
+
+size_t
+WindowUI::getWidth(void) {
+	return width;
+}
+
+double
+WindowUI::getFps(void) {
+	return fps;
 }
