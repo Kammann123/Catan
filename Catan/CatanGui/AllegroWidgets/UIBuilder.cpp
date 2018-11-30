@@ -93,7 +93,10 @@ createTextBox(string id, size_t size, TextUI::Mode mode)
 	string test(size, 'A');
 
 	/*Cracion del modelo*/
-	TextUI * textBoxModel = new TextUI(id, TF_PADDING_X * 2 + al_get_text_width(textBoxView->setFonts()[TF_FONT].font, test.c_str()), TF_PADDING_Y * 2 + al_get_font_line_height(textBoxView->setFonts()[TF_FONT].font), size, mode);
+	TextUI * textBoxModel = new TextUI(id,
+		al_get_bitmap_width(textBoxView->setImages()[MouseUI::Status::IDLE].bitmap),
+		al_get_bitmap_height(textBoxView->setImages()[MouseUI::Status::IDLE].bitmap),
+		size, mode);
 
 
 	/*Attach modelo-vista*/
