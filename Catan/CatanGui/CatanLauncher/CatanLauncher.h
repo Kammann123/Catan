@@ -1,6 +1,7 @@
 #pragma once
 
 #include "CatanContext.h"
+#include "MainMenu.h"
 
 /*
 * CatanLauncher
@@ -44,4 +45,5 @@ public:
 private:
 	States state;
 	CatanContext context;
+	MainMenu mainmenu;
 };

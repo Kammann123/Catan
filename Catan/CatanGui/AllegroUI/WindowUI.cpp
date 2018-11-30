@@ -172,14 +172,29 @@ WindowUI::start(void) {
 	_init_timer();
 	_init_sources();
 
+	/* Inicio el timer */
 	al_start_timer(timer);
 	
+	/* Inicio la musica */
+	if (sounds.has(WINDOW_MUSIC)) {
+		al_play_sample(sounds[WINDOW_MUSIC].sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, &music);
+		musicPlaying = true;
+	}
+
+	/* Inicio el dibujo */
 	started = true;
 	draw();
 }
 
 void
 WindowUI::stop(void) {
+	/* Paro el sonido */
+	if (musicPlaying) {
+		al_stop_sample(&music);
+		musicPlaying = false;
+	}
+
+	/* Paro el timer y el dibujo */
 	al_stop_timer(timer);
 	started = false;
 }
@@ -280,6 +295,11 @@ WindowUI::setBackground(unsigned char red, unsigned char green, unsigned char bl
 void
 WindowUI::setBackground(const char* image) {
 	images.setConfig(WINDOW_BACKGROUND, image);
+}
+
+void 
+WindowUI::setMusic(const char* image) {
+	sounds.setConfig(WINDOW_MUSIC, image);
 }
 
 void

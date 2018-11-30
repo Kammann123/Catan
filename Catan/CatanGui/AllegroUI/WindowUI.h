@@ -10,6 +10,7 @@
 
 #include "ColorConfig.h"
 #include "ImageConfig.h"
+#include "SoundConfig.h"
 
 #include "UIComponent.h"
 
@@ -18,6 +19,7 @@
 #define DEFAULT_FPS 1.0/50
 
 #define WINDOW_BACKGROUND	"background" 
+#define WINDOW_MUSIC		"music"
 
 #define MODEL(_component, _cast)	((_cast)(_component->getModel()))
 #define VIEW(_component, _cast) ((_cast)(_component->getView())
@@ -118,6 +120,12 @@ public:
 	*/
 	void setBackground(unsigned char red, unsigned char green, unsigned char blue);
 	void setBackground(const char* image);
+	
+	/*
+	* setMusic
+	* Configura los parametros del fondo de ventana
+	*/
+	void setMusic(const char* image);
 
 	/* Configuracion del callback de cierre de ventana */
 	void setCloseAction(Action close);
@@ -146,14 +154,17 @@ private:
 	size_t height;
 	double fps;
 	bool started;
+	bool musicPlaying;
 
 	ALLEGRO_DISPLAY * display;
 	ALLEGRO_EVENT_QUEUE * queue;
 	ALLEGRO_TIMER* timer;
 	ALLEGRO_EVENT event;
+	ALLEGRO_SAMPLE_ID music;
 
 	ColorConfig colors;
 	ImageConfig images;
+	SoundConfig sounds;
 
 	Action onClose;
 

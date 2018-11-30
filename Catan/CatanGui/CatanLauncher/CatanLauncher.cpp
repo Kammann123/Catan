@@ -1,7 +1,7 @@
 #include "CatanLauncher.h"
 
 CatanLauncher::
-CatanLauncher() {
+CatanLauncher() : mainmenu(*this) {
 	this->state = States::MAIN_MENU;
 }
 
@@ -14,6 +14,12 @@ CatanLauncher::run() {
 	switch ( state ) {
 
 		case MAIN_MENU:
+			if (!mainmenu.isOpen()) {
+				mainmenu.start();
+			}
+			else {
+				mainmenu.run();
+			}
 			break;
 
 		case CONNECT_MENU:

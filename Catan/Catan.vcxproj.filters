@@ -492,6 +492,9 @@
     <ClInclude Include="CatanGui\CatanLauncher\CatanLauncher.h">
       <Filter>CatanGui\CatanLauncher</Filter>
     </ClInclude>
+    <ClInclude Include="CatanGui\CatanLauncher\MainMenu.h">
+      <Filter>CatanGui\CatanLauncher</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FSM\EventQueue.cpp">
@@ -912,6 +915,9 @@
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="CatanGui\CatanLauncher\CatanLauncher.cpp">
+      <Filter>CatanGui\CatanLauncher</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGui\CatanLauncher\MainMenu.cpp">
       <Filter>CatanGui\CatanLauncher</Filter>
     </ClCompile>
   </ItemGroup>
