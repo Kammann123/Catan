@@ -5,6 +5,10 @@
 #include "../AllegroUI/MouseUI.h"
 #include "../AllegroUI/WindowUI.h"
 
+#define DEFAULT_IDLE_SAMPLE ""
+#define DEFAULT_SELECTED_SAMPLE ""
+#define DEFAULT_FOCUSED_SAMPLE ""
+#define DEFAULT_DRAGGED_SAMPLE DEFAULT_SELECTED_SAMPLE
 
 class SoundStatusView : public UIView
 {
