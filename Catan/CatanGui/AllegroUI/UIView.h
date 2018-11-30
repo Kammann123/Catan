@@ -36,7 +36,8 @@ public:
 	*/
 	virtual void draw(void) = 0;
 
-private:
+protected:
+
 	WindowUI* interface;
 	UIModel* model;
 };
