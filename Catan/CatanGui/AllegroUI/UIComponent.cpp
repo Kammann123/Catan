@@ -7,14 +7,28 @@ UIComponent(UIModel * model_)
 }
 
 UIComponent::
-~UIComponent()
-{
+~UIComponent() {}
+
+void
+UIComponent::parse(ALLEGRO_EVENT* event) {
+	for (UIController* controller : controllers) {
+		if (this->model->getEnable()) {
+			controller->parse(event);
+		}
+	}
+}
+
+void
+UIComponent::draw(void) {
+	if (this->model->getVisible()) {
+		view->draw();
+	}
 }
 
 list<UIController*>& UIComponent::
 getController(void)
 {
-	return controller;
+	return controllers;
 }
 
 UIModel * UIComponent::
@@ -43,17 +57,17 @@ setView(UIView * newView)
 void UIComponent::
 appendController(UIController * newController)
 {
-	controller.push_back(newController);
+	controllers.push_back(newController);
 }
 
 void UIComponent::
 removeController(UIController* thisController)
 {
-	this->controller.remove(thisController);
+	this->controllers.remove(thisController);
 }
 
 void UIComponent::
 clearController(void)
 {
-	this->controller.clear();
+	this->controllers.clear();
 }

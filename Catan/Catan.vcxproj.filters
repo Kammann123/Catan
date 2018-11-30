@@ -842,6 +842,15 @@
     <ClCompile Include="CatanGui\AllegroWidgets\TextFieldView.cpp">
       <Filter>CatanGui\AllegroWidgets</Filter>
     </ClCompile>
+    <ClCompile Include="CatanGui\AllegroUI\MouseDecorator.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGui\AllegroUI\UIComponent.cpp">
+      <Filter>CatanGui\AllegroUI</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGui\AllegroUI\UIView.cpp">
+      <Filter>CatanGui\AllegroUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
