@@ -1,10 +1,10 @@
 #include "UIComponent.h"
 
 UIComponent::
-UIComponent(UIModel* model_, UIView* view_, list<UIController*> controllers_)
+UIComponent(UIModel* model_, list<UIView*> view_, list<UIController*> controllers_)
 {
 	model = model_;
-	view = view_;
+	views = view_;
 	controllers = controllers_;
 }
 
@@ -12,8 +12,11 @@ UIComponent::
 ~UIComponent() {
 	if (model)
 		delete model;
-	if (view)
-		delete view;
+	
+	for (UIView* view : views) {
+		if (view)
+			delete view;
+	}
 	
 	for (UIController* controller : controllers) {
 		if(controller)
@@ -23,8 +26,8 @@ UIComponent::
 
 void
 UIComponent::parse(ALLEGRO_EVENT* event) {
-	for (UIController* controller : controllers) {
-		if (this->model->getEnable()) {
+	if (this->model->getEnable()) {
+		for (UIController* controller : controllers) {
 			controller->parse(event);
 		}
 	}
@@ -33,7 +36,9 @@ UIComponent::parse(ALLEGRO_EVENT* event) {
 void
 UIComponent::draw(void) {
 	if (this->model->getVisible()) {
-		view->draw();
+		for (UIView* view : views) {
+			view->draw();
+		}
 	}
 }
 
@@ -49,9 +54,9 @@ getModel(void)
 	return model;
 }
 
-UIView * UIComponent::getView(void)
+list<UIView *> UIComponent::getView(void)
 {
-	return view;
+	return views;
 }
 
 void UIComponent::
@@ -60,10 +65,24 @@ setModel(UIModel * newModel)
 	model = newModel;
 }
 
-void UIComponent::
-setView(UIView * newView)
-{
-	view = newView;
+void
+UIComponent::appendView(UIView* view) {
+	views.push_back(view);
+}
+
+void 
+UIComponent::removeView(UIView* view) {
+	views.remove(view);
+}
+
+void 
+UIComponent::clearView(UIView* view) {
+	for (UIView* view : views) {
+		if (view) {
+			delete view;
+		}
+	}
+	views.clear();
 }
 
 void UIComponent::
@@ -81,6 +100,10 @@ removeController(UIController* thisController)
 void UIComponent::
 clearController(void)
 {
+	for (UIController* controller : controllers) {
+		if (controller)
+			delete controller;
+	}
 	this->controllers.clear();
 }
 

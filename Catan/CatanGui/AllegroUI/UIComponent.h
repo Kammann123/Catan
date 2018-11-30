@@ -17,7 +17,7 @@ class UIComponent{
 public:
 
 	/* Constructor / Destructor */
-	UIComponent(UIModel* model_, UIView* view_, list<UIController*> controllers_);
+	UIComponent(UIModel* model_, list<UIView*> view_, list<UIController*> controllers_);
 	~UIComponent();
 
 	/*
@@ -34,19 +34,23 @@ public:
 
 	/* Getters */
 	list<UIController*>& getController(void);
+	list<UIView*> getView(void);
 	UIModel* getModel(void);
-	UIView* getView(void);
 	string getId(void);
 
 	/* Setters */
 	void setModel(UIModel* newModel);
-	void setView(UIView* newView);
+
+	void appendView(UIView* view);
+	void removeView(UIView* view);
+	void clearView(UIView* view);
+
 	void appendController(UIController* newController);
 	void removeController(UIController* thisController);
 	void clearController(void);
 
 private:
 	list<UIController*> controllers;
+	list<UIView*> views;
 	UIModel* model;
-	UIView* view;
 };

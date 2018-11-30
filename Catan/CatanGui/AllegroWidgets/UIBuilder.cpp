@@ -31,7 +31,7 @@ createSimpleButton(string id, const char* text, size_t height) {
 	buttonModel->attach(buttonView);
 	
 	/* Creo el UIComponent y lo devuelvo */
-	UIComponent* component = new UIComponent(buttonModel, buttonView, { buttonController });
+	UIComponent* component = new UIComponent(buttonModel, { buttonView }, { buttonController });
 	return component;
 }
 
@@ -56,7 +56,7 @@ createButton(string id)
 		MouseController* controller = new MouseController(model);
 
 		/* Creación del UIComponent */
-		UIComponent* component = new UIComponent(model, view, { controller });
+		UIComponent* component = new UIComponent(model, { view }, { controller });
 
 		return component;
 }
@@ -81,7 +81,7 @@ createTextField(string id, size_t size, TextUI::Mode mode) {
 	MouseController * mouseController = new MouseController(textFieldModel);
 
 	/* Creación del UIComponent */
-	UIComponent* component = new UIComponent(textFieldModel, textFieldView, {textController, mouseController});
+	UIComponent* component = new UIComponent(textFieldModel, { textFieldView }, { textController, mouseController });
 
 	return component;
 }
@@ -109,7 +109,34 @@ createTextBox(string id, size_t size, TextUI::Mode mode)
 	MouseController * mouseController = new MouseController(textBoxModel);
 
 	/* Creación del UIComponent */
-	UIComponent* component = new UIComponent(textBoxModel, textBoxView, { textController, mouseController });
+	UIComponent* component = new UIComponent(textBoxModel, { textBoxView }, { textController, mouseController });
 
+	return component;
+}
+
+UIComponent* UIBuilder::
+createLabel(string id, size_t size)
+{
+	/* Creación de la View */
+	LabelView* labelView = new LabelView();
+
+	string test(size, 'A');
+
+	/* Creación del modelo */
+	TextUI* labelModel = new TextUI(id, TF_PADDING_X * 2 + al_get_text_width(labelView->setFonts()[TF_FONT].font, test.c_str()), TF_PADDING_Y * 2 + al_get_font_line_height(labelView->setFonts()[TF_FONT].font), size, TextUI::EVERYTHING);
+
+	/*Attach modelo-vista*/
+	labelModel->attach(labelView);
+	labelView->setModel(labelModel);
+
+	UIComponent* component = new UIComponent(labelModel, { labelView }, {});
+	return component;
+}
+
+UIComponent * UIBuilder::attachSample(UIComponent * component)
+{
+	SoundStatusView * soundView = new SoundStatusView((MouseUI *)(component)->getModel());
+	(component)->getModel()->attach(soundView);
+	component->appendView(soundView);
 	return component;
 }

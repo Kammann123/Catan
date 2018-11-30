@@ -33,6 +33,15 @@ WindowUI::InitAllegro(void) {
 		if (!al_init_image_addon()) {
 			return;
 		}
+		if (!al_install_audio()) {
+			return;
+		}
+		if (!al_init_acodec_addon()) {
+			return;
+		}
+		if (!al_reserve_samples(1)) {
+			return;
+		}
 
 		/* Instalo perifericos */
 		if (!al_install_keyboard()) {
@@ -199,13 +208,17 @@ WindowUI::run(void) {
 
 void
 WindowUI::attachComponent(UIComponent* component) {
-	component->getView()->setWindow(this);
+	for (UIView* view : component->getView()) {
+		view->setWindow(this);
+	}
 	components.push_back(component);
 }
 
 void
 WindowUI::detachComponent(UIComponent* component) {
-	component->getView()->clearWindow();
+	for (UIView* view : component->getView()) {
+		view->clearWindow();
+	}
 	components.remove(component);
 }
 

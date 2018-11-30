@@ -38,14 +38,10 @@ int main(int argc, char** argv) {
 
 MenuGui::MenuGui() : WindowUI(1000, 800) {
 	/* Creamos los componentes */
-	UIComponent* textBox = UIBuilder::createTextBox("boxOne", 50, TextUI::Mode::NUMBER);
+	UIComponent* textBox = UIBuilder::attachSample(UIBuilder::createButton("button"));
 
 	/* Attacheo los componentes */
 	this->attachComponent(textBox);
-
-	/* Configuro los componentes */
-	MODEL(textBox, TextUI*)->setPosition(200, 100);
-	MODEL(textBox, TextUI*)->setEnterAction(bind(&MenuGui::onEnter, this, _1));
 
 	/* Configuro el Window */
 	this->setBackground(0, 0, 0);

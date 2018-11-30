@@ -74,6 +74,8 @@
     <Allegro_AddonImage>true</Allegro_AddonImage>
     <Allegro_AddonTTF>true</Allegro_AddonTTF>
     <Allegro_AddonFont>true</Allegro_AddonFont>
+    <Allegro_AddonAudio>true</Allegro_AddonAudio>
+    <Allegro_AddonAcodec>true</Allegro_AddonAcodec>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -330,6 +332,7 @@
     <ClCompile Include="CatanGui\AllegroWidgets\LabelView.cpp" />
     <ClCompile Include="CatanGui\AllegroWidgets\SimpleButtonView.cpp" />
     <ClCompile Include="CatanGui\AllegroWidgets\SoundStatusView.cpp" />
+    <ClCompile Include="CatanGui\AllegroWidgets\TextBoxView.cpp" />
     <ClCompile Include="CatanGui\AllegroWidgets\TextFieldView.cpp" />
     <ClCompile Include="CatanGui\AllegroWidgets\UIBuilder.cpp" />
     <ClCompile Include="CatanGui\CatanLauncher\CatanContext.cpp" />
@@ -401,6 +404,7 @@
     <ClCompile Include="FSM\GenericEvent.cpp" />
     <ClCompile Include="FSM\GenericFsm.cpp" />
     <ClCompile Include="guitest.cpp" />
+    <ClCompile Include="launcher.cpp" />
     <ClCompile Include="socketTester.cpp" />
     <ClCompile Include="MVC\Observer.cpp" />
     <ClCompile Include="MVC\Subject.cpp" />
