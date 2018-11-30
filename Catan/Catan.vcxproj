@@ -182,6 +182,7 @@
     <ClInclude Include="CatanGui\AllegroUI\WindowUI.h" />
     <ClInclude Include="CatanGui\AllegroWidgets\ButtonView.h" />
     <ClInclude Include="CatanGui\AllegroWidgets\SimpleButtonView.h" />
+    <ClInclude Include="CatanGui\AllegroWidgets\TextBoxView.h" />
     <ClInclude Include="CatanGui\AllegroWidgets\TextFieldView.h" />
     <ClInclude Include="CatanGui\AllegroWidgets\UIBuilder.h" />
     <ClInclude Include="CatanGui\AllegroWidgets\Widgets.h" />
@@ -322,6 +323,7 @@
     <ClCompile Include="CatanGui\AllegroUI\WindowUI.cpp" />
     <ClCompile Include="CatanGui\AllegroWidgets\ButtonView.cpp" />
     <ClCompile Include="CatanGui\AllegroWidgets\SimpleButtonView.cpp" />
+    <ClCompile Include="CatanGui\AllegroWidgets\TextBoxView.cpp" />
     <ClCompile Include="CatanGui\AllegroWidgets\TextFieldView.cpp" />
     <ClCompile Include="CatanGui\AllegroWidgets\UIBuilder.cpp" />
     <ClCompile Include="CatanNetworking\CatanNetworking.cpp" />

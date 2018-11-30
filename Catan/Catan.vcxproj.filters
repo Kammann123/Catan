@@ -429,6 +429,12 @@
     <ClInclude Include="CatanGui\AllegroUI\MouseController.h">
       <Filter>CatanGui\AllegroUI</Filter>
     </ClInclude>
+    <ClInclude Include="CatanGui\AllegroWidgets\ButtonView.h">
+      <Filter>CatanGui\AllegroWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGui\AllegroWidgets\TextFieldView.h">
+      <Filter>CatanGui\AllegroWidgets</Filter>
+    </ClInclude>
     <ClInclude Include="CatanGui\AllegroUI\UIComponent.h">
       <Filter>CatanGui\AllegroUI</Filter>
     </ClInclude>
@@ -465,10 +471,7 @@
     <ClInclude Include="CatanGui\AllegroWidgets\SimpleButtonView.h">
       <Filter>CatanGui\AllegroWidgets</Filter>
     </ClInclude>
-    <ClInclude Include="CatanGui\AllegroWidgets\ButtonView.h">
-      <Filter>CatanGui\AllegroWidgets</Filter>
-    </ClInclude>
-    <ClInclude Include="CatanGui\AllegroWidgets\TextFieldView.h">
+    <ClInclude Include="CatanGui\AllegroWidgets\TextBoxView.h">
       <Filter>CatanGui\AllegroWidgets</Filter>
     </ClInclude>
   </ItemGroup>
@@ -833,6 +836,12 @@
     <ClCompile Include="CatanGui\AllegroUI\UIModel.cpp">
       <Filter>CatanGui\AllegroUI</Filter>
     </ClCompile>
+    <ClCompile Include="CatanGui\AllegroWidgets\ButtonView.cpp">
+      <Filter>CatanGui\AllegroWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGui\AllegroWidgets\TextFieldView.cpp">
+      <Filter>CatanGui\AllegroWidgets</Filter>
+    </ClCompile>
     <ClCompile Include="CatanGui\AllegroUI\UIComponent.cpp">
       <Filter>CatanGui\AllegroUI</Filter>
     </ClCompile>
@@ -847,6 +856,9 @@
     </ClCompile>
     <ClCompile Include="CatanGui\AllegroUI\TextUI.cpp">
       <Filter>CatanGui\AllegroUI</Filter>
+    </ClCompile>
+    <ClCompile Include="networkingTester.cpp">
+      <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="CatanGui\AllegroUI\MouseUI.cpp">
       <Filter>CatanGui\AllegroUI</Filter>
@@ -869,13 +881,7 @@
     <ClCompile Include="CatanGui\AllegroWidgets\SimpleButtonView.cpp">
       <Filter>CatanGui\AllegroWidgets</Filter>
     </ClCompile>
-    <ClCompile Include="guitest.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="CatanGui\AllegroWidgets\TextFieldView.cpp">
-      <Filter>CatanGui\AllegroWidgets</Filter>
-    </ClCompile>
-    <ClCompile Include="CatanGui\AllegroWidgets\ButtonView.cpp">
+    <ClCompile Include="CatanGui\AllegroWidgets\TextBoxView.cpp">
       <Filter>CatanGui\AllegroWidgets</Filter>
     </ClCompile>
   </ItemGroup>
