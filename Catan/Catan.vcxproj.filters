@@ -815,17 +815,11 @@
     <ClCompile Include="CatanGui\AllegroUI\UIModel.cpp">
       <Filter>CatanGui\AllegroUI</Filter>
     </ClCompile>
-    <ClCompile Include="guitest.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
     <ClCompile Include="CatanGui\AllegroWidgets\ButtonView.cpp">
       <Filter>CatanGui\AllegroWidgets</Filter>
     </ClCompile>
     <ClCompile Include="CatanGui\AllegroWidgets\TextFieldView.cpp">
       <Filter>CatanGui\AllegroWidgets</Filter>
-    </ClCompile>
-    <ClCompile Include="CatanGui\AllegroUI\MouseDecorator.cpp">
-      <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="CatanGui\AllegroUI\UIComponent.cpp">
       <Filter>CatanGui\AllegroUI</Filter>
@@ -840,6 +834,12 @@
       <Filter>CatanGui\AllegroUI</Filter>
     </ClCompile>
     <ClCompile Include="CatanGui\AllegroUI\TextUI.cpp">
+      <Filter>CatanGui\AllegroUI</Filter>
+    </ClCompile>
+    <ClCompile Include="networkingTester.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGui\AllegroUI\MouseUI.cpp">
       <Filter>CatanGui\AllegroUI</Filter>
     </ClCompile>
   </ItemGroup>

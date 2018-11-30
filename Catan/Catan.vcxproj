@@ -302,7 +302,7 @@
     <ClCompile Include="CatanGame\SeaHex.cpp" />
     <ClCompile Include="CatanGui\AllegroUI\FrameUI.cpp" />
     <ClCompile Include="CatanGui\AllegroUI\MouseController.cpp" />
-    <ClCompile Include="CatanGui\AllegroUI\MouseDecorator.cpp" />
+    <ClCompile Include="CatanGui\AllegroUI\MouseUI.cpp" />
     <ClCompile Include="CatanGui\AllegroUI\TextController.cpp" />
     <ClCompile Include="CatanGui\AllegroUI\TextUI.cpp" />
     <ClCompile Include="CatanGui\AllegroUI\UIComponent.cpp" />
@@ -379,7 +379,7 @@
     <ClCompile Include="FSM\EventQueue.cpp" />
     <ClCompile Include="FSM\GenericEvent.cpp" />
     <ClCompile Include="FSM\GenericFsm.cpp" />
-    <ClCompile Include="guitest.cpp" />
+    <ClCompile Include="networkingTester.cpp" />
     <ClCompile Include="socketTester.cpp" />
     <ClCompile Include="MVC\Observer.cpp" />
     <ClCompile Include="MVC\Subject.cpp" />

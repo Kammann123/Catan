@@ -85,5 +85,5 @@ clearController(void)
 string UIComponent::
 getId(void)
 {
-
+	return this->model->getId();
 }

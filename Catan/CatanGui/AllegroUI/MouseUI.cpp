@@ -1,7 +1,7 @@
 #include "MouseUI.h"
 
 MouseUI::
-MouseUI(string id, bool dragMode) : FrameUI(id) {
+MouseUI(string id, size_t width, size_t height, bool dragMode) : FrameUI(id, width, height) {
 	this->enableDragging = dragMode;
 }
 

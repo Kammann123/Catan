@@ -32,7 +32,7 @@ public:
 	* MouseUI
 	* Se construye a partir de FrameUI
 	*/
-	MouseUI(string id, bool dragMode = false);
+	MouseUI(string id, size_t width, size_t height, bool dragMode = false);
 	~MouseUI(void);
 
 	/*

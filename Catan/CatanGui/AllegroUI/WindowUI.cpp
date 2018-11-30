@@ -142,6 +142,7 @@ WindowUI::draw(void) {
 	for (UIComponent* component : components) {
 		component->draw();
 	}
+	al_flip_display();
 }
 
 void

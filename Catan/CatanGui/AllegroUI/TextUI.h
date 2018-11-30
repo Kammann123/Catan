@@ -22,7 +22,7 @@ public:
 	* Se construye con el modo que por defecto permite que entre
 	* cualquier cosa al mismo.
 	*/
-	TextUI(string id, size_t size, Mode mode = EVERYTHING);
+	TextUI(string id, size_t width, size_t height, size_t size, Mode mode = EVERYTHING);
 	~TextUI();
 
 	/*

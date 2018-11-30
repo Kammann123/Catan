@@ -1,7 +1,7 @@
 #include "TextUI.h"
 
 TextUI::
-TextUI(string id, size_t size, Mode mode) : MouseUI(id) {
+TextUI(string id, size_t width, size_t height, size_t size, Mode mode) : MouseUI(id, width, height) {
 	this->text = "";
 	this->mode = mode;
 	this->size = size;
@@ -68,7 +68,7 @@ TextUI::append(unsigned char value) {
 			this->text += value;
 			break;
 	}
-	notifyObservers;
+	notifyObservers();
 }
 
 void
