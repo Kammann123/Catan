@@ -5,6 +5,7 @@
 #include "../AllegroWidgets/TextFieldView.h"
 #include "../AllegroWidgets/TextBoxView.h"
 #include "../AllegroWidgets/LabelView.h"
+#include "../AllegroWidgets/SoundStatusView.h"
 
 #include "../AllegroUI/MouseUI.h"
 #include "../AllegroUI/TextUI.h"
@@ -111,20 +112,4 @@ createTextBox(string id, size_t size, TextUI::Mode mode)
 	UIComponent* component = new UIComponent(textBoxModel, textBoxView, { textController, mouseController });
 
 	return component;
-}
-
-UIComponent* UIBuilder::
-createLabel(string id, size_t size)
-{
-	/* Creación de la View */
-	LabelView* labelView = new LabelView();
-
-	string test(size, 'A');
-
-	/* Creación del modelo */
-	TextUI* labelModel = new TextUI(id, TF_PADDING_X * 2 + al_get_text_width(labelView->setFonts()[TF_FONT].font, test.c_str()), TF_PADDING_Y * 2 + al_get_font_line_height(labelView->setFonts()[TF_FONT].font), size, TextUI::EVERYTHING);
-
-	/*Attach modelo-vista*/
-	labelModel->attach(labelView);
-	labelView->setModel(labelModel);
 }

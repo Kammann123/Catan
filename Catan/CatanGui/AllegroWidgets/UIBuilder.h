@@ -5,6 +5,7 @@
 #include "../AllegroUI/TextUI.h"
 
 
+
 class UIBuilder
 {
 public:
@@ -14,4 +15,5 @@ public:
 	static UIComponent* createSimpleButton(string id, const char* text, size_t height);
 	static UIComponent* createTextBox(string id, size_t size, TextUI::Mode mode = TextUI::Mode::EVERYTHING);
 	static UIComponent* createLabel(string id, size_t size);
+	static UIComponent* attachSample(UIComponent ** component);
 };

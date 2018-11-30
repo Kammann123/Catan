@@ -5,6 +5,7 @@
 #include "TextConfig.h"
 #include "ImageConfig.h"
 #include "ColorConfig.h"
+#include "SoundConfig.h"
 
 #include "UIModel.h"
 
@@ -55,6 +56,7 @@ public:
 	ColorConfig& setColors(void);
 	TextConfig& setFonts(void);
 	ImageConfig& setImages(void);
+	SoundConfig& setSamples(void);
 
 	/*
 	* Configuramos la relacion con una ventana
@@ -72,4 +74,5 @@ protected:
 	ColorConfig colors;
 	TextConfig fonts;
 	ImageConfig images;
+	SoundConfig samples;
 };
