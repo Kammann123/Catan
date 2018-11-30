@@ -453,6 +453,9 @@
     <ClInclude Include="CatanGui\AllegroUI\WindowUI.h">
       <Filter>CatanGui\AllegroUI</Filter>
     </ClInclude>
+    <ClInclude Include="CatanGui\AllegroWidgets\UIBuilder.h">
+      <Filter>CatanGui\AllegroWidgets</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FSM\EventQueue.cpp">
@@ -832,6 +835,9 @@
     </ClCompile>
     <ClCompile Include="CatanGui\AllegroUI\UIView.cpp">
       <Filter>CatanGui\AllegroUI</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGui\AllegroWidgets\UIBuilder.cpp">
+      <Filter>CatanGui\AllegroWidgets</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
