@@ -54,6 +54,8 @@ WindowUI(size_t width, size_t height, double fps) {
 	this->display = nullptr;
 	this->queue = nullptr;
 	this->components.clear();
+	colors.clear();
+	images.clear();
 
 	/*
 	* Construyo todos los elementos basicos que hacen
@@ -139,9 +141,21 @@ WindowUI::_destroy_components(void) {
 
 void
 WindowUI::draw(void) {
+
+	/* Limpio la pantalla con su fondo */
+	if (colors.has(WINDOW_BACKGROUND)) {
+		al_clear_to_color(colors[WINDOW_BACKGROUND].color);
+	}
+	if (images.has(WINDOW_BACKGROUND)) {
+		al_draw_bitmap(images[WINDOW_BACKGROUND].bitmap, 0, 0, 0);
+	}
+
+	/* Redibujo los componentes */
 	for (UIComponent* component : components) {
 		component->draw();
 	}
+
+	/* Actualizo pantalla */
 	al_flip_display();
 }
 
@@ -192,6 +206,16 @@ WindowUI::visibleComponent(string id, bool value) {
 	}
 }
 
+UIComponent*
+WindowUI::operator[](string id) {
+	for (UIComponent* component : components) {
+		if (component->getId() == id) {
+			return component;
+		}
+	}
+	return nullptr;
+}
+
 bool
 WindowUI::isOpen(void) {
 	return display != nullptr;
@@ -210,4 +234,14 @@ WindowUI::getWidth(void) {
 double
 WindowUI::getFps(void) {
 	return fps;
+}
+
+void
+WindowUI::setBackground(unsigned char red, unsigned char green, unsigned char blue) {
+	colors.setConfig(WINDOW_BACKGROUND, red, green, blue);
+}
+
+void
+WindowUI::setBackground(const char* image) {
+	images.setConfig(WINDOW_BACKGROUND, image);
 }

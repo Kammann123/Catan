@@ -17,3 +17,17 @@ UIView::update(void) {
 	this->interface->draw();
 }
 
+ColorConfig&
+UIView::setColors(void) {
+	return colors;
+}
+
+TextConfig&
+UIView::setFonts(void) {
+	return fonts;
+}
+
+ImageConfig&
+UIView::setImages(void) {
+	return images;
+}

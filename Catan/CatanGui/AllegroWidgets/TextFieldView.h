@@ -6,7 +6,6 @@
 #include "../AllegroUI/TextUI.h"
 #include "../AllegroUI/UIView.h"
 
-
 #define IDLE_COLOR al_map_rgb(255, 255, 255)
 #define SELECTED_COLOR al_map_rgb(0, 255, 0)
 #define FOCUSED_COLOR al_map_rgb(220, 220, 220)

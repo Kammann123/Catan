@@ -6,9 +6,14 @@
 #include "allegro5/allegro_primitives.h"
 #include "allegro5/allegro_ttf.h"
 
+#include "ColorConfig.h"
+#include "ImageConfig.h"
+
 #include "UIComponent.h"
 
 #define DEFAULT_FPS 1.0/50
+
+#define WINDOW_BACKGROUND	"background" 
 
 /*
 * WindowUI
@@ -83,9 +88,18 @@ public:
 	*/
 	bool isOpen(void);
 
+	/*
+	* operator[] - Para acceder mas facilmente
+	* a los diferentes componentes segun su id.
+	*/
+	UIComponent* operator[](string id);
+
 	size_t getHeight(void);
 	size_t getWidth(void);
 	double getFps(void);
+	
+	void setBackground(unsigned char red, unsigned char green, unsigned char blue);
+	void setBackground(const char* image);
 
 private:
 
@@ -109,7 +123,9 @@ private:
 	ALLEGRO_EVENT_QUEUE * queue;
 	ALLEGRO_TIMER* timer;
 	ALLEGRO_EVENT event;
-	ALLEGRO_COLOR background;
+
+	ColorConfig colors;
+	ImageConfig images;
 
 	list<UIComponent*> components;
 };
