@@ -34,7 +34,7 @@ draw(void)
 			this->colors[TF_TEXT_COLOR].color,
 			pointer->xPos() + TF_PADDING_X,
 			pointer->yPos() + TF_PADDING_Y,
-			ALLEGRO_ALIGN_CENTRE,
+			0,
 			pointer->getText().c_str()
 		);		
 	}
