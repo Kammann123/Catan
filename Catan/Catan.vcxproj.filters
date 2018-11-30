@@ -414,9 +414,6 @@
     <ClInclude Include="CatanGame\CatanStates\Winner.h">
       <Filter>CatanGame\CatanStates</Filter>
     </ClInclude>
-    <ClInclude Include="CatanGui\AllegroWidgets\Widgets.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="CatanNetworking\NetworkProtocols\PSIf.h">
       <Filter>CatanNetworking\NetworkProtocols</Filter>
     </ClInclude>
@@ -477,8 +474,14 @@
     <ClInclude Include="CatanGui\AllegroWidgets\TextBoxView.h">
       <Filter>CatanGui\AllegroWidgets</Filter>
     </ClInclude>
-    <ClInclude Include="CatanGui\CatanLauncher\CatanContext.h">
-      <Filter>CatanGui\CatanLauncher</Filter>
+    <ClInclude Include="CatanGui\AllegroUI\SoundConfig.h">
+      <Filter>CatanGui\AllegroUI</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGui\AllegroWidgets\SoundStatusView.h">
+      <Filter>CatanGui\AllegroWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGui\AllegroWidgets\LabelView.h">
+      <Filter>CatanGui\AllegroWidgets</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -884,14 +887,14 @@
     <ClCompile Include="CatanGui\AllegroWidgets\SimpleButtonView.cpp">
       <Filter>CatanGui\AllegroWidgets</Filter>
     </ClCompile>
-    <ClCompile Include="CatanGui\AllegroWidgets\TextBoxView.cpp">
-      <Filter>CatanGui\AllegroWidgets</Filter>
-    </ClCompile>
     <ClCompile Include="guitest.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="CatanGui\CatanLauncher\CatanContext.cpp">
-      <Filter>CatanGui\CatanLauncher</Filter>
+    <ClCompile Include="CatanGui\AllegroWidgets\SoundStatusView.cpp">
+      <Filter>CatanGui\AllegroWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGui\AllegroWidgets\LabelView.cpp">
+      <Filter>CatanGui\AllegroWidgets</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

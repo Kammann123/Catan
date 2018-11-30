@@ -4,6 +4,8 @@
 #include "../AllegroWidgets/ButtonView.h"
 #include "../AllegroWidgets/TextFieldView.h"
 #include "../AllegroWidgets/TextBoxView.h"
+#include "../AllegroWidgets/LabelView.h"
+#include "../AllegroWidgets/SoundStatusView.h"
 
 #include "../AllegroUI/MouseUI.h"
 #include "../AllegroUI/TextUI.h"
@@ -90,7 +92,6 @@ createTextBox(string id, size_t size, TextUI::Mode mode)
 	/*Cracion de la View*/
 	TextBoxView * textBoxView = new TextBoxView();
 
-	string test(size, 'A');
 
 	/*Cracion del modelo*/
 	TextUI * textBoxModel = new TextUI(id,

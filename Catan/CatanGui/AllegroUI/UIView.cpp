@@ -33,6 +33,12 @@ UIView::setImages(void) {
 	return images;
 }
 
+SoundConfig& 
+UIView::setSamples(void)
+{
+	return samples;
+}
+
 void 
 UIView::setWindow(WindowUI* interface_) {
 	this->interface = interface_;
