@@ -21,7 +21,7 @@ draw(void)
 }
 
 ButtonView::
-ButtonView(WindowUI* interface_, MouseUI* model_) : UIView(interface_, model_)
+ButtonView(MouseUI* model_) : UIView(model_)
 {
 	images.setConfig(MouseUI::Status::IDLE, DEFAULT_IDLE_BITMAP);
 	images.setConfig(MouseUI::Status::SELECTED, DEFAULT_SELECTED_BITMAP);

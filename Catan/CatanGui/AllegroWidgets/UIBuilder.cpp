@@ -32,50 +32,45 @@ createSimpleButton(string id, const char* text, size_t height) {
 }
 
 UIComponent* UIBuilder::
-createButton(string id, const char* focused, const char* selected, const char* idle, WindowUI* interface_)
+createButton(string id)
 {
 	
-	ALLEGRO_BITMAP* focusedBitmap = al_load_bitmap(focused);
-	ALLEGRO_BITMAP* selectedBitmap = al_load_bitmap(selected);
-	ALLEGRO_BITMAP* idleBitmap = al_load_bitmap(idle);
+		/* Creación del view */
+		ButtonView* view = new ButtonView();
 
-	UIComponent* ret = nullptr;
-
-	if (focusedBitmap != nullptr && selectedBitmap != nullptr && idleBitmap != nullptr)
-	{
 		/* Creación del model */
-		MouseUI* model = new MouseUI(id, al_get_bitmap_width(idleBitmap), al_get_bitmap_height(idleBitmap));
+		MouseUI* model = new MouseUI(id, al_get_bitmap_width(view->setImages[MouseUI::Status::IDLE].bitmap), al_get_bitmap_height(view->setImages[MouseUI::Status::IDLE].bitmap));
+
+		/* Attach model-view */
+		model->attach(view);
+		view->setModel(model);
 
 		/* Creación del controller */
 		MouseController* controller = new MouseController(model);
 
-		/* Creación del view */
-		ButtonView* view = new ButtonView(focusedBitmap, selectedBitmap, idleBitmap, interface_, model);
-
-		/* Attach model-view */
-		model->attach(view);
-
 		/* Creación del UIComponent */
 		UIComponent* component = new UIComponent(model, view, { controller });
 
-		ret = component;
-	}
+		return component;
 
-	return ret;
 
 }
 
 UIComponent* UIBuilder::
-createTextField(ALLEGRO_FONT * font_, size_t width, size_t height, ALLEGRO_COLOR textColor_, WindowUI* interface_, string id, size_t size, TextUI::Mode mode) {
+createTextField(size_t height, string id, size_t size, TextUI::Mode mode) {
+
+	/*Cracion de la View*/
+	TextFieldView * textFieldView = new TextFieldView();
+
+	string test(size, 'A'); 
 
 	/*Cracion del modelo*/
-	TextUI * textFieldModel = new TextUI(id, width, height, size, mode);
+	TextUI * textFieldModel = new TextUI(id, al_get_text_width(textFieldView->setFonts[TF_FONT].font,test.c_str()), height, size, mode);
 
-	/*Cracion la View*/
-	TextFieldView * textFieldView = new TextFieldView(font_, textColor_, textFieldModel, interface_);
 
 	/*Attach modelo-vista*/
 	textFieldModel->attach(textFieldView);
+	textFieldView->setModel(textFieldModel);
 
 	/*Cracion el controller*/
 	TextController * textController = new TextController(textFieldModel);

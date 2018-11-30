@@ -1,14 +1,14 @@
 #include "TextFieldView.h"
 
 TextFieldView::
-TextFieldView(TextUI* model_, WindowUI* interface_) : UIView(interface_, model_)
+TextFieldView(TextUI* model_) : UIView(model_)
 {
-	colors.setConfig(MouseUI::Status::IDLE, DEFAULT_BACKGROUND_IDLE_COLOR);
-	colors.setConfig(MouseUI::Status::DRAGGED, DEFAULT_BACKGROUND_DRAGGED_COLOR);
-	colors.setConfig(MouseUI::Status::SELECTED, DEFAULT_BACKGROUND_SELECTED_COLOR);
-	colors.setConfig(MouseUI::Status::FOCUSED, DEFAULT_BACKGROUND_FOCUSED_COLOR);
-	colors.setConfig(TEXT_COLOR, DEFAULT_TEXT_COLOR);
-	fonts.setConfig(FONT, DEFAULT_FONT, DEFAULT_FONT_SIZE);
+	colors.setConfig(MouseUI::Status::IDLE, TF_DEFAULT_BACKGROUND_IDLE_COLOR);
+	colors.setConfig(MouseUI::Status::DRAGGED, TF_DEFAULT_BACKGROUND_DRAGGED_COLOR);
+	colors.setConfig(MouseUI::Status::SELECTED, TF_DEFAULT_BACKGROUND_SELECTED_COLOR);
+	colors.setConfig(MouseUI::Status::FOCUSED, TF_DEFAULT_BACKGROUND_FOCUSED_COLOR);
+	colors.setConfig(TF_TEXT_COLOR, TF_DEFAULT_TEXT_COLOR);
+	fonts.setConfig(TF_FONT, DEFAULT_FONT, TF_DEFAULT_FONT_SIZE);
 }
 
 TextFieldView::
@@ -34,10 +34,10 @@ draw(void)
 			);
 
 			al_draw_text(
-				this->fonts[FONT].font,
-				this->colors[TEXT_COLOR].color,
-				pointer->xPos() + pointer->getWidth() * PERC_MARGIN,
-				pointer->yPos() + pointer->getHeight() * PERC_MARGIN / 2,
+				this->fonts[TF_FONT].font,
+				this->colors[TF_TEXT_COLOR].color,
+				pointer->xPos() + pointer->getWidth() * TF_PERC_MARGIN,
+				pointer->yPos() + pointer->getHeight() * TF_PERC_MARGIN / 2,
 				ALLEGRO_ALIGN_CENTRE,
 				pointer->getText().c_str());
 
