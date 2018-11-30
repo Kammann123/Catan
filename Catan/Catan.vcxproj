@@ -166,9 +166,11 @@
     <ClInclude Include="CatanGui\AllegroUI\FrameUI.h" />
     <ClInclude Include="CatanGui\AllegroUI\MouseController.h" />
     <ClInclude Include="CatanGui\AllegroUI\MouseDecorator.h" />
+    <ClInclude Include="CatanGui\AllegroUI\UIComponent.h" />
     <ClInclude Include="CatanGui\AllegroUI\UIController.h" />
     <ClInclude Include="CatanGui\AllegroUI\UIDecorator.h" />
     <ClInclude Include="CatanGui\AllegroUI\UIModel.h" />
+    <ClInclude Include="CatanGui\AllegroUI\UIView.h" />
     <ClInclude Include="CatanGui\AllegroWidgets\ButtonView.h" />
     <ClInclude Include="CatanGui\AllegroWidgets\Label.h" />
     <ClInclude Include="CatanGui\AllegroWidgets\LabelView.h" />
@@ -299,9 +301,11 @@
     <ClCompile Include="CatanGui\AllegroUI\FrameUI.cpp" />
     <ClCompile Include="CatanGui\AllegroUI\MouseController.cpp" />
     <ClCompile Include="CatanGui\AllegroUI\MouseDecorator.cpp" />
+    <ClCompile Include="CatanGui\AllegroUI\UIComponent.cpp" />
     <ClCompile Include="CatanGui\AllegroUI\UIController.cpp" />
     <ClCompile Include="CatanGui\AllegroUI\UIDecorator.cpp" />
     <ClCompile Include="CatanGui\AllegroUI\UIModel.cpp" />
+    <ClCompile Include="CatanGui\AllegroUI\UIView.cpp" />
     <ClCompile Include="CatanGui\AllegroWidgets\ButtonView.cpp" />
     <ClCompile Include="CatanGui\AllegroWidgets\Label.cpp" />
     <ClCompile Include="CatanGui\AllegroWidgets\LabelView.cpp" />

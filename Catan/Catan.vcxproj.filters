@@ -450,6 +450,12 @@
     <ClInclude Include="CatanGui\AllegroWidgets\TextFieldView.h">
       <Filter>CatanGui\AllegroWidgets</Filter>
     </ClInclude>
+    <ClInclude Include="CatanGui\AllegroUI\UIComponent.h">
+      <Filter>CatanGui\AllegroUI</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGui\AllegroUI\UIView.h">
+      <Filter>CatanGui\AllegroUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FSM\EventQueue.cpp">
@@ -835,6 +841,12 @@
     </ClCompile>
     <ClCompile Include="CatanGui\AllegroWidgets\TextFieldView.cpp">
       <Filter>CatanGui\AllegroWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGui\AllegroUI\UIComponent.cpp">
+      <Filter>CatanGui\AllegroUI</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGui\AllegroUI\UIView.cpp">
+      <Filter>CatanGui\AllegroUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
