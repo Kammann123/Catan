@@ -47,6 +47,7 @@ TextConfig::setConfig(unsigned int index, const char* font, int size) {
 		intConfig.insert( pair<unsigned int, config_t>(index, myConfig) );
 		return true;
 	}
+	throw exception("TextConfig - No pudo cargar fuente!");
 	return false;
 }
 
@@ -60,6 +61,7 @@ TextConfig::setConfig(string index, const char* font, int size){
 		stringConfig.insert(pair<string, config_t>(index, myConfig));
 		return true;
 	}
+	throw exception("TextConfig - No pudo cargar fuente!");
 	return false;
 }
 

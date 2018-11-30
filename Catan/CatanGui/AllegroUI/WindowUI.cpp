@@ -276,3 +276,18 @@ void
 WindowUI::close(void* data) {
 	if (onClose) onClose(data);
 }
+
+void
+WindowUI::shutdown(void) {
+
+	/*
+	* Destruyo el display, la cola de eventos
+	* y luego los componentes
+	*/
+	_destroy_display();
+	_destroy_queue();
+	_destroy_timer();
+	_destroy_components();
+
+	started = false;
+}

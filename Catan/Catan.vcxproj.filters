@@ -465,6 +465,12 @@
     <ClInclude Include="CatanGui\AllegroWidgets\SimpleButtonView.h">
       <Filter>CatanGui\AllegroWidgets</Filter>
     </ClInclude>
+    <ClInclude Include="CatanGui\AllegroWidgets\ButtonView.h">
+      <Filter>CatanGui\AllegroWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGui\AllegroWidgets\TextFieldView.h">
+      <Filter>CatanGui\AllegroWidgets</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FSM\EventQueue.cpp">
@@ -865,6 +871,12 @@
     </ClCompile>
     <ClCompile Include="guitest.cpp">
       <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGui\AllegroWidgets\TextFieldView.cpp">
+      <Filter>CatanGui\AllegroWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGui\AllegroWidgets\ButtonView.cpp">
+      <Filter>CatanGui\AllegroWidgets</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

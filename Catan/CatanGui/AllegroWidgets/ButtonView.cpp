@@ -8,14 +8,12 @@ draw(void)
 	if(model->getVisible())
 	{
 		MouseUI* pointer = (MouseUI*)model;
-		al_draw_rotated_bitmap(images[pointer->getStatus()].bitmap, 
-								al_get_bitmap_width(images[pointer->getStatus()].bitmap) / 2,
-								al_get_bitmap_height(images[pointer->getStatus()].bitmap) / 2,
-								pointer->xPos(), 
-								pointer->yPos(),
-								NO_ROTATION, 
-								NO_FLAGS
-								);
+		al_draw_bitmap(
+			images[pointer->getStatus()].bitmap,
+			pointer->xPos(),
+			pointer->yPos(),
+			NO_FLAGS
+		);
 	}
 	
 }

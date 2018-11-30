@@ -46,6 +46,7 @@ ImageConfig::setConfig(unsigned int index, const char* image) {
 		intConfig.insert(pair<unsigned int, config_t>(index, myBitmap));
 		return true;
 	}
+	throw exception("ImageConfig - No pudo cargar imagen!");
 	return false;
 }
 
@@ -61,6 +62,7 @@ ImageConfig::setConfig(string index, const char* image) {
 		stringConfig.insert(pair<string, config_t>(index, myBitmap));
 		return true;
 	}
+	throw exception("ImageConfig - No pudo cargar imagen!");
 	return false;
 }
 

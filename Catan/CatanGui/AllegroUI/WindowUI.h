@@ -121,6 +121,11 @@ public:
 	void setCloseAction(Action close);
 	void close(void* data);
 
+	/*
+	* shutdown - Cierra todo
+	*/
+	void shutdown(void);
+
 private:
 
 	/* Rutinas de inicializacion de la ventana */
