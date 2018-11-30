@@ -66,6 +66,18 @@ public:
 	void detachComponent(UIComponent* component);
 
 	/*
+	* enableComponent
+	* Habilita un componente determinado
+	*/
+	void enableComponent(string id, bool value);
+
+	/* 
+	* visibleComponent
+	* Habilita la visibilidad del componente
+	*/
+	void visibleComponent(string id, bool value);
+
+	/*
 	* isOpen
 	* Devuelve si esta abierta la ventana o no
 	*/

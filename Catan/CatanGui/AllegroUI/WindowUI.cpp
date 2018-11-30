@@ -173,6 +173,24 @@ WindowUI::detachComponent(UIComponent* component) {
 	components.remove(component);
 }
 
+void
+WindowUI::enableComponent(string id, bool value) {
+	for (UIComponent* component : components) {
+		if (component->getId() == id) {
+			component->getModel()->setEnable(value);
+		}
+	}
+}
+
+void
+WindowUI::visibleComponent(string id, bool value) {
+	for (UIComponent* component : components) {
+		if (component->getId() == id) {
+			component->getModel()->setVisible(value);
+		}
+	}
+}
+
 bool
 WindowUI::isOpen(void) {
 	return display != nullptr;
