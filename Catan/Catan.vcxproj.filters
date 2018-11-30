@@ -471,6 +471,9 @@
     <ClInclude Include="CatanGui\AllegroWidgets\SimpleButtonView.h">
       <Filter>CatanGui\AllegroWidgets</Filter>
     </ClInclude>
+    <ClInclude Include="CatanGui\AllegroWidgets\TextBoxView.h">
+      <Filter>CatanGui\AllegroWidgets</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FSM\EventQueue.cpp">
@@ -876,6 +879,9 @@
       <Filter>CatanGui\AllegroWidgets</Filter>
     </ClCompile>
     <ClCompile Include="CatanGui\AllegroWidgets\SimpleButtonView.cpp">
+      <Filter>CatanGui\AllegroWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGui\AllegroWidgets\TextBoxView.cpp">
       <Filter>CatanGui\AllegroWidgets</Filter>
     </ClCompile>
   </ItemGroup>
