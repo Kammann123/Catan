@@ -1,8 +1,13 @@
 #include "TextFieldView.h"
 
 
-TextFieldView::
-TextFieldView(TextField& model_) :model(model_) {}
+
+TextFieldView::TextFieldView(ALLEGRO_FONT * font_, ALLEGRO_COLOR textColor_, TextUI * model_, WindowUI* interface_) : UIView(interface_, model_)
+{
+	font = font_;
+	textColor = textColor_;
+	
+}
 
 TextFieldView::
 ~TextFieldView()
@@ -10,48 +15,40 @@ TextFieldView::
 }
 
 void TextFieldView::
-update(void)
+draw(void)
 {
 	ALLEGRO_COLOR backColor;
-
-	switch (model.getStatus())
+	MouseUI* pointer = (MouseUI*)model;
+	switch (pointer->getStatus())
 	{
-	case FrameUI::Status::IDLE:
-		backColor = IDLE_BACK_COLOR;
+	case MouseUI::Status::IDLE:
+		backgroundColor = IDLE_COLOR;
 		break;
 
-	case FrameUI::Status::SELECTED:
-		backColor = SELECTED_BACK_COLOR;
+	case MouseUI::Status::SELECTED:
+	case MouseUI::Status::DRAGGED:
+		backgroundColor = SELECTED_COLOR;
 		break;
 
-	case FrameUI::Status::FOCUSED:
-		backColor = FOCUSED_BACK_COLOR;
-		break;
-
-	case FrameUI::Status::ANIMATED:
-		// que hacemos?
-		break;
-
-	case FrameUI::Status::DRAGGED:
-		// que hacemos?
+	case MouseUI::Status::FOCUSED:
+		backgroundColor = FOCUSED_COLOR;
 		break;
 
 	}
-	al_set_target_bitmap(al_get_backbuffer(display));
 
 	al_draw_filled_rectangle(
-		model.xPos(),
-		model.yPos(),
-		model.xPos() + model.getWidth(),
-		model.yPos() + model.getHeight(),
-		backColor
+		pointer->xPos(),
+		pointer->yPos(),
+		pointer->xPos() + pointer->getWidth(),
+		pointer->yPos() + pointer->getHeight(),
+		backgroundColor
 	);
 
 	al_draw_text(
-		DEFAULT_FONT,
-		DEFAULT_TEXT_COLOR,
-		model.xPos() + model.getWidth() * PERC_MARGIN,
-		model.yPos() + model.getHeight() * PERC_MARGIN / 2,
+		font,
+		textColor,
+		pointer->xPos() + pointer->getWidth() * PERC_MARGIN,
+		pointer->yPos() + pointer->getHeight() * PERC_MARGIN / 2,
 		ALLEGRO_ALIGN_CENTRE,
-		model.getText.c_str());
+		pointer->getText.c_str());
 }
