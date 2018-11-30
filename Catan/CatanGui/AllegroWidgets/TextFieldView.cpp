@@ -39,10 +39,6 @@ draw(void)
 				pointer->xPos() + pointer->getWidth() * TF_PERC_MARGIN,
 				pointer->yPos() + pointer->getHeight() * TF_PERC_MARGIN / 2,
 				ALLEGRO_ALIGN_CENTRE,
-				pointer->getText().c_str());
-
-		
-
-		
+				pointer->getText().c_str());		
 	}
 }

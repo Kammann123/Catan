@@ -10,6 +10,6 @@ class UIBuilder
 public:
 	/* Métodos de construcción */
 	static UIComponent* createButton(string id);
-	static UIComponent* createTextField(size_t height, string id, size_t size, TextUI::Mode mode);
+	static UIComponent* createTextField(string id, size_t size, TextUI::Mode mode=TextUI::Mode::EVERYTHING);
 	static UIComponent* createSimpleButton(string id, const char* text, size_t height);
 };

@@ -56,12 +56,10 @@ createButton(string id)
 		UIComponent* component = new UIComponent(model, view, { controller });
 
 		return component;
-
-
 }
 
 UIComponent* UIBuilder::
-createTextField(size_t height, string id, size_t size, TextUI::Mode mode) {
+createTextField(string id, size_t size, TextUI::Mode mode) {
 
 	/*Cracion de la View*/
 	TextFieldView * textFieldView = new TextFieldView();
@@ -69,7 +67,7 @@ createTextField(size_t height, string id, size_t size, TextUI::Mode mode) {
 	string test(size, 'A'); 
 
 	/*Cracion del modelo*/
-	TextUI * textFieldModel = new TextUI(id, al_get_text_width(textFieldView->setFonts()[TF_FONT].font,test.c_str()), height, size, mode);
+	TextUI * textFieldModel = new TextUI(id, TF_PADDING_X * 2 + al_get_text_width(textFieldView->setFonts()[TF_FONT].font,test.c_str()), TF_PADDING_Y * 2 + al_get_font_line_height(textFieldView->setFonts()[TF_FONT].font), size, mode);
 
 
 	/*Attach modelo-vista*/

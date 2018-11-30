@@ -36,6 +36,9 @@ ColorConfig::remove(unsigned int index) {
 bool
 ColorConfig::setConfig(unsigned int index, unsigned char red, unsigned char green, unsigned char blue) {
 	config_t myConfig;
+	if (intConfig.find(index) != intConfig.end()) {
+		intConfig.erase(index);
+	}
 	myConfig.color = al_map_rgb(red, green, blue);
 	intConfig.insert(
 		pair<unsigned int, config_t>(
@@ -49,6 +52,9 @@ ColorConfig::setConfig(unsigned int index, unsigned char red, unsigned char gree
 bool
 ColorConfig::setConfig(string index, unsigned char red, unsigned char green, unsigned char blue) {
 	config_t myConfig;
+	if (stringConfig.find(index) != stringConfig.end()) {
+		stringConfig.erase(index);
+	}
 	myConfig.color = al_map_rgb(red, green, blue);
 	stringConfig.insert(
 		pair<string, config_t>(

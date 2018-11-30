@@ -1,8 +1,9 @@
 #include "MouseUI.h"
 
 MouseUI::
-MouseUI(string id, size_t width, size_t height, bool dragMode) : FrameUI(id, width, height) {
+MouseUI(string id, size_t width, size_t height, bool dragMode, bool holdMode) : FrameUI(id, width, height) {
 	this->enableDragging = dragMode;
+	this->enableHold = holdMode;
 }
 
 MouseUI::
@@ -97,4 +98,14 @@ MouseUI::setStatus(Status status) {
 MouseUI::Status
 MouseUI::getStatus(void) {
 	return this->status;
+}
+
+void
+MouseUI::setEnableHold(bool holdStatus) {
+	this->enableHold = holdStatus;
+}
+
+bool
+MouseUI::getEnableHold(void) {
+	return enableHold;
 }
