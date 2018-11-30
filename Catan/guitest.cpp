@@ -37,20 +37,12 @@ int main(int argc, char** argv) {
 
 MenuGui::MenuGui() : WindowUI(1000, 800) {
 	/* Creamos los componentes */
-	UIComponent* myButton = UIBuilder::createButton("button");
-	UIComponent* myButtonOne = UIBuilder::createButton("buttonOne");
 	UIComponent* textBox = UIBuilder::createTextField("boxOne", 20);
 
 	/* Attacheo los componentes */
-	this->attachComponent(myButton);
-	this->attachComponent(myButtonOne);
 	this->attachComponent(textBox);
 
 	/* Configuro los componentes */
-	MODEL(myButton, MouseUI*)->setPosition(200, 250);
-	MODEL(myButton, MouseUI*)->setClickAction(bind(&MenuGui::onClick, this, _1));
-	MODEL(myButtonOne, MouseUI*)->setPosition(200, 450);
-	MODEL(myButtonOne, MouseUI*)->setClickAction(bind(&MenuGui::onClick, this, _1));
 	MODEL(textBox, TextUI*)->setPosition(200, 100);
 
 	/* Configuro el Window */

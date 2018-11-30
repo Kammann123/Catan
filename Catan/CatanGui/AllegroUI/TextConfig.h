@@ -2,10 +2,6 @@
 
 #include "Config.h"
 
-#define DEFAULT_FONT	"CatanGui\\Fonts\\LOVES.ttf"
-#define DEFAULT_INDEX	"default"
-#define DEFAULT_SIZE	11
-
 /*
 * TextConfig - Configura y almacena fonts
 */

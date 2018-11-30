@@ -2,7 +2,6 @@
 
 TextConfig::
 TextConfig() {
-	setConfig(DEFAULT_INDEX, DEFAULT_FONT, DEFAULT_SIZE);
 }
 
 TextConfig::
