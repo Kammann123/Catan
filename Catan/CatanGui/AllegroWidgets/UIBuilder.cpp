@@ -39,7 +39,10 @@ createButton(string id)
 		ButtonView* view = new ButtonView();
 
 		/* Creación del model */
-		MouseUI* model = new MouseUI(id, al_get_bitmap_width(view->setImages[MouseUI::Status::IDLE].bitmap), al_get_bitmap_height(view->setImages[MouseUI::Status::IDLE].bitmap));
+		MouseUI* model = new MouseUI(id, 
+									al_get_bitmap_width(view->setImages()[(unsigned int)MouseUI::Status::IDLE].bitmap), 
+									al_get_bitmap_height(view->setImages()[(unsigned int)MouseUI::Status::IDLE].bitmap)
+									);
 
 		/* Attach model-view */
 		model->attach(view);
@@ -65,7 +68,7 @@ createTextField(size_t height, string id, size_t size, TextUI::Mode mode) {
 	string test(size, 'A'); 
 
 	/*Cracion del modelo*/
-	TextUI * textFieldModel = new TextUI(id, al_get_text_width(textFieldView->setFonts[TF_FONT].font,test.c_str()), height, size, mode);
+	TextUI * textFieldModel = new TextUI(id, al_get_text_width(textFieldView->setFonts()[TF_FONT].font,test.c_str()), height, size, mode);
 
 
 	/*Attach modelo-vista*/
