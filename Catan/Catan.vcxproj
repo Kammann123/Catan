@@ -186,6 +186,7 @@
     <ClInclude Include="CatanGui\AllegroWidgets\TextFieldView.h" />
     <ClInclude Include="CatanGui\AllegroWidgets\UIBuilder.h" />
     <ClInclude Include="CatanGui\AllegroWidgets\Widgets.h" />
+    <ClInclude Include="CatanGui\CatanLauncher\CatanContext.h" />
     <ClInclude Include="CatanNetworking\CatanNetworking.h" />
     <ClInclude Include="CatanNetworking\NetworkHandlers\NetworkClient.h" />
     <ClInclude Include="CatanNetworking\NetworkHandlers\NetworkServer.h" />
@@ -326,6 +327,7 @@
     <ClCompile Include="CatanGui\AllegroWidgets\TextBoxView.cpp" />
     <ClCompile Include="CatanGui\AllegroWidgets\TextFieldView.cpp" />
     <ClCompile Include="CatanGui\AllegroWidgets\UIBuilder.cpp" />
+    <ClCompile Include="CatanGui\CatanLauncher\CatanContext.cpp" />
     <ClCompile Include="CatanNetworking\CatanNetworking.cpp" />
     <ClCompile Include="CatanNetworking\NetworkHandlers\NetworkClient.cpp" />
     <ClCompile Include="CatanNetworking\NetworkHandlers\NetworkServer.cpp" />

@@ -58,6 +58,9 @@
     <Filter Include="CatanGui\AllegroUI">
       <UniqueIdentifier>{37693e98-e2a0-4805-bbd8-748a660fa626}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CatanGui\CatanLauncher">
+      <UniqueIdentifier>{05e8aa29-aaeb-4ee5-b3ff-743e9753649f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FSM\EventGenerator.h">
@@ -474,6 +477,9 @@
     <ClInclude Include="CatanGui\AllegroWidgets\TextBoxView.h">
       <Filter>CatanGui\AllegroWidgets</Filter>
     </ClInclude>
+    <ClInclude Include="CatanGui\CatanLauncher\CatanContext.h">
+      <Filter>CatanGui\CatanLauncher</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FSM\EventQueue.cpp">
@@ -857,9 +863,6 @@
     <ClCompile Include="CatanGui\AllegroUI\TextUI.cpp">
       <Filter>CatanGui\AllegroUI</Filter>
     </ClCompile>
-    <ClCompile Include="networkingTester.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
     <ClCompile Include="CatanGui\AllegroUI\MouseUI.cpp">
       <Filter>CatanGui\AllegroUI</Filter>
     </ClCompile>
@@ -883,6 +886,12 @@
     </ClCompile>
     <ClCompile Include="CatanGui\AllegroWidgets\TextBoxView.cpp">
       <Filter>CatanGui\AllegroWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="guitest.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGui\CatanLauncher\CatanContext.cpp">
+      <Filter>CatanGui\CatanLauncher</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

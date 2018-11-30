@@ -42,9 +42,9 @@ CatanNetworking::StateString[18] = {
 };
 
 CatanNetworking::
-CatanNetworking(string ip, unsigned int port, CatanGame& _game) : Observer(), game(_game){
+CatanNetworking(CatanGame& _game) : Observer(), game(_game){
 	/* Inicializacion */
-	this->ip = ip;
+	this->ip = "";
 	this->port = port;
 	this->socket = nullptr;
 	this->status = true;
@@ -74,6 +74,16 @@ CatanNetworking::
 			delete state.second;
 		}
 	}
+}
+
+void
+CatanNetworking::setIp(string ip) {
+	this->ip = ip;
+}
+
+void
+CatanNetworking::setPort(unsigned int port) {
+	this->port = port;
 }
 
 CatanNetworking::States 

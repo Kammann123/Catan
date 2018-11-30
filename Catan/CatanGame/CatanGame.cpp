@@ -415,6 +415,11 @@ CatanGame::setRemoteName(string remoteName) {
 	this->remotePlayer.setName(remoteName);
 }
 
+void
+CatanGame::setLocalName(string localName) {
+	this->localPlayer.setName(localName);
+}
+
 string
 CatanGame::getLocalName() {
 	return this->localPlayer.getName();

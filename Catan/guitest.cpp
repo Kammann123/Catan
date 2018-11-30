@@ -38,7 +38,7 @@ int main(int argc, char** argv) {
 
 MenuGui::MenuGui() : WindowUI(1000, 800) {
 	/* Creamos los componentes */
-	UIComponent* textBox = UIBuilder::createTextBox("boxOne", 50);
+	UIComponent* textBox = UIBuilder::createTextBox("boxOne", 50, TextUI::Mode::NUMBER);
 
 	/* Attacheo los componentes */
 	this->attachComponent(textBox);
