@@ -8,14 +8,19 @@
 #define NO_FLAGS 0
 #define NO_ROTATION 0
 
+#define DEFAULT_IDLE_BITMAP "llenar esto"
+#define DEFAULT_SELECTED_BITMAP "llenar esto"
+#define DEFAULT_FOCUSED_BITMAP "llenar esto"
+#define DEFAULT_DRAGGED_BITMAP DEFAULT_SELECTED_BITMAP
+
 class ButtonView : public UIView
 {
 public:
-	ButtonView(ALLEGRO_BITMAP* focused, ALLEGRO_BITMAP* selected, ALLEGRO_BITMAP* idle, WindowUI* interface_, MouseUI* model_);
+	ButtonView( WindowUI* interface_, MouseUI* model_);
 	void draw(void);
 
 private:
-	ALLEGRO_BITMAP* focusedBitmap;
+	/*ALLEGRO_BITMAP* focusedBitmap;
 	ALLEGRO_BITMAP* selectedBitmap;
-	ALLEGRO_BITMAP* idleBitmap;
+	ALLEGRO_BITMAP* idleBitmap;*/
 };

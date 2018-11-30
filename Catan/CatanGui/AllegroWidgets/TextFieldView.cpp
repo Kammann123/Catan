@@ -1,10 +1,14 @@
 #include "TextFieldView.h"
 
-TextFieldView::TextFieldView(ALLEGRO_FONT * font_, ALLEGRO_COLOR textColor_, TextUI * model_, WindowUI* interface_) : UIView(interface_, model_)
+TextFieldView::
+TextFieldView(TextUI* model_, WindowUI* interface_) : UIView(interface_, model_)
 {
-	font = font_;
-	textColor = textColor_;
-	
+	colors.setConfig(MouseUI::Status::IDLE, DEFAULT_BACKGROUND_IDLE_COLOR);
+	colors.setConfig(MouseUI::Status::DRAGGED, DEFAULT_BACKGROUND_DRAGGED_COLOR);
+	colors.setConfig(MouseUI::Status::SELECTED, DEFAULT_BACKGROUND_SELECTED_COLOR);
+	colors.setConfig(MouseUI::Status::FOCUSED, DEFAULT_BACKGROUND_FOCUSED_COLOR);
+	colors.setConfig(TEXT_COLOR, DEFAULT_TEXT_COLOR);
+	fonts.setConfig(FONT, DEFAULT_FONT, DEFAULT_FONT_SIZE);
 }
 
 TextFieldView::
@@ -20,37 +24,25 @@ draw(void)
 
 	if (pointer->getVisible()) {
 
-		switch (pointer->getStatus())
-		{
-		case MouseUI::Status::IDLE:
-			backgroundColor = IDLE_COLOR;
-			break;
+	
+			al_draw_filled_rectangle(
+				pointer->xPos(),
+				pointer->yPos(),
+				pointer->xPos() + pointer->getWidth(),
+				pointer->yPos() + pointer->getHeight(),
+				this->colors[pointer->getStatus()].color
+			);
 
-		case MouseUI::Status::SELECTED:
-		case MouseUI::Status::DRAGGED:
-			backgroundColor = SELECTED_COLOR;
-			break;
+			al_draw_text(
+				this->fonts[FONT].font,
+				this->colors[TEXT_COLOR].color,
+				pointer->xPos() + pointer->getWidth() * PERC_MARGIN,
+				pointer->yPos() + pointer->getHeight() * PERC_MARGIN / 2,
+				ALLEGRO_ALIGN_CENTRE,
+				pointer->getText().c_str());
 
-		case MouseUI::Status::FOCUSED:
-			backgroundColor = FOCUSED_COLOR;
-			break;
+		
 
-		}
-
-		al_draw_filled_rectangle(
-			pointer->xPos(),
-			pointer->yPos(),
-			pointer->xPos() + pointer->getWidth(),
-			pointer->yPos() + pointer->getHeight(),
-			backgroundColor
-		);
-
-		al_draw_text(
-			font,
-			textColor,
-			pointer->xPos() + pointer->getWidth() * PERC_MARGIN,
-			pointer->yPos() + pointer->getHeight() * PERC_MARGIN / 2,
-			ALLEGRO_ALIGN_CENTRE,
-			pointer->getText().c_str());
+		
 	}
 }
