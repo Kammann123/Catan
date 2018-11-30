@@ -3,6 +3,7 @@
 #include "../AllegroWidgets/SimpleButtonView.h"
 #include "../AllegroWidgets/ButtonView.h"
 #include "../AllegroWidgets/TextFieldView.h"
+#include "../AllegroWidgets/TextBoxView.h"
 
 #include "../AllegroUI/MouseUI.h"
 #include "../AllegroUI/TextUI.h"
@@ -79,6 +80,32 @@ createTextField(string id, size_t size, TextUI::Mode mode) {
 
 	/* Creación del UIComponent */
 	UIComponent* component = new UIComponent(textFieldModel, textFieldView, {textController, mouseController});
+
+	return component;
+}
+
+UIComponent* UIBuilder::
+createTextBox(string id, size_t size, TextUI::Mode mode)
+{
+	/*Cracion de la View*/
+	TextBoxView * textBoxView = new TextBoxView();
+
+	string test(size, 'A');
+
+	/*Cracion del modelo*/
+	TextUI * textBoxModel = new TextUI(id, TF_PADDING_X * 2 + al_get_text_width(textBoxView->setFonts()[TF_FONT].font, test.c_str()), TF_PADDING_Y * 2 + al_get_font_line_height(textBoxView->setFonts()[TF_FONT].font), size, mode);
+
+
+	/*Attach modelo-vista*/
+	textBoxModel->attach(textBoxView);
+	textBoxView->setModel(textBoxModel);
+
+	/*Cracion el controller*/
+	TextController * textController = new TextController(textBoxModel);
+	MouseController * mouseController = new MouseController(textBoxModel);
+
+	/* Creación del UIComponent */
+	UIComponent* component = new UIComponent(textBoxModel, textBoxView, { textController, mouseController });
 
 	return component;
 }
