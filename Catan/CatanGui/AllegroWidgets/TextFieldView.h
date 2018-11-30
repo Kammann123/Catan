@@ -1,28 +1,27 @@
 #pragma once
-#include "../../MVC/Observer.h"
-#include "../AllegroUI/FrameUI.h"
 #include "allegro5/allegro.h"
 #include "allegro5/allegro_primitives.h"
 #include "allegro5/allegro_font.h"
 #include "allegro5/allegro_ttf.h"
-#include "TextField.h"
+#include "../AllegroUI/TextUI.h"
+#include "../AllegroUI/UIView.h"
 
 
-#define DEFAULT_FONT		al_load_ttf_font("arial.ttf",10,0)
-#define DEFAULT_TEXT_COLOR	al_map_rgb(0,0,0)
-#define IDLE_BACK_COLOR		al_map_rgb(255,255,255)
-#define FOCUSED_BACK_COLOR	al_map_rgb(220,220,220)
-#define SELECTED_BACK_COLOR	al_map_rgb(0,255,0)
+#define IDLE_COLOR al_map_rgb(255, 255, 255)
+#define SELECTED_COLOR al_map_rgb(0, 255, 0)
+#define FOCUSED_COLOR al_map_rgb(220, 220, 220)
+#define PERC_MARGIN 0.1
 
 
-class TextFieldView : public Observer
+class TextFieldView : public UIView
 {
 public:
-	TextFieldView(TextField& model_);
+	TextFieldView(ALLEGRO_FONT* font_, ALLEGRO_COLOR textColor_, TextUI* model_, WindowUI* interface_);
 	~TextFieldView();
-	void update(void);
+	void draw(void);
 
 private:
-	TextField& model;
-	ALLEGRO_DISPLAY* display;
+	ALLEGRO_FONT* font;
+	ALLEGRO_COLOR backgroundColor;
+	ALLEGRO_COLOR textColor;
 };

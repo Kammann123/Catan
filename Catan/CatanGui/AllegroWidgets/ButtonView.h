@@ -12,7 +12,6 @@ class ButtonView : public UIView
 {
 public:
 	ButtonView(ALLEGRO_BITMAP* focused, ALLEGRO_BITMAP* selected, ALLEGRO_BITMAP* idle, WindowUI* interface_, MouseUI* model_);
-	void update(void);
 	void draw(void);
 
 private:

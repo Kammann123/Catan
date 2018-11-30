@@ -429,16 +429,7 @@
     <ClInclude Include="CatanGui\AllegroUI\MouseController.h">
       <Filter>CatanGui\AllegroUI</Filter>
     </ClInclude>
-    <ClInclude Include="CatanGui\AllegroWidgets\Label.h">
-      <Filter>CatanGui\AllegroWidgets</Filter>
-    </ClInclude>
-    <ClInclude Include="CatanGui\AllegroWidgets\TextField.h">
-      <Filter>CatanGui\AllegroWidgets</Filter>
-    </ClInclude>
     <ClInclude Include="CatanGui\AllegroWidgets\ButtonView.h">
-      <Filter>CatanGui\AllegroWidgets</Filter>
-    </ClInclude>
-    <ClInclude Include="CatanGui\AllegroWidgets\LabelView.h">
       <Filter>CatanGui\AllegroWidgets</Filter>
     </ClInclude>
     <ClInclude Include="CatanGui\AllegroWidgets\TextFieldView.h">
@@ -827,16 +818,7 @@
     <ClCompile Include="guitest.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="CatanGui\AllegroWidgets\Label.cpp">
-      <Filter>CatanGui\AllegroWidgets</Filter>
-    </ClCompile>
-    <ClCompile Include="CatanGui\AllegroWidgets\TextField.cpp">
-      <Filter>CatanGui\AllegroWidgets</Filter>
-    </ClCompile>
     <ClCompile Include="CatanGui\AllegroWidgets\ButtonView.cpp">
-      <Filter>CatanGui\AllegroWidgets</Filter>
-    </ClCompile>
-    <ClCompile Include="CatanGui\AllegroWidgets\LabelView.cpp">
       <Filter>CatanGui\AllegroWidgets</Filter>
     </ClCompile>
     <ClCompile Include="CatanGui\AllegroWidgets\TextFieldView.cpp">
