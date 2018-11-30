@@ -2,7 +2,7 @@
 #include "allegro5/allegro_primitives.h"
 
 SimpleButtonView::
-SimpleButtonView(WindowUI* interface_, UIModel* model_) : UIView(interface_, model_) {
+SimpleButtonView() : UIView() {
 	images.clear();
 
 	colors.setConfig(SIMPLE_BUTTON_TEXTCOLOR, DEFAULT_SP_TEXTCOLOR);

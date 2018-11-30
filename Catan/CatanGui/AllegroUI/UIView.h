@@ -32,6 +32,7 @@ public:
 	* del modelo que se van detectando.
 	*/
 	UIView(UIModel* model_);
+	UIView();
 	~UIView();
 
 	/*
@@ -57,9 +58,11 @@ public:
 
 	/*
 	* Configuramos la relacion con una ventana
+	* y al modelo
 	*/
 	void setWindow(WindowUI* interface_);
 	void clearWindow(void);
+	void setModel(UIModel* model_);
 
 protected:
 

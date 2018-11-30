@@ -19,7 +19,7 @@
 
 class SimpleButtonView : public UIView {
 public:
-	SimpleButtonView(WindowUI* interface_, UIModel* model_);
+	SimpleButtonView();
 	~SimpleButtonView();
 	virtual void draw(void);
 };

@@ -1,12 +1,4 @@
 #pragma once
-#include "../AllegroWidgets/ButtonView.h"
-#include "../AllegroWidgets/TextFieldView.h"
-
-#include "../AllegroUI/MouseUI.h"
-#include "../AllegroUI/TextUI.h"
-
-#include "../AllegroUI/MouseController.h"
-#include "../AllegroUI/TextController.h"
 
 #include "../AllegroUI/WindowUI.h"
 #include "../AllegroUI/UIComponent.h"
