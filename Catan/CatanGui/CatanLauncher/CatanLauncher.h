@@ -15,8 +15,33 @@ public:
 	/*
 	* States - Estados o etapas del launcher.
 	*/
+	enum States : unsigned int { MAIN_MENU, CONNECT_MENU, GAME_WINDOW, LAUNCHER_CLOSE };
+
+	/* Constructor */
+	CatanLauncher();
+
+	/*
+	* run - Corre un ciclo del launcher.
+	*/
+	void run(void);
+
+	/*
+	* alive - Determina el si launcher sigue abierto,
+	* o si bien, ha finalizado.
+	*/
+	bool alive(void);
+
+	/*
+	* change - Cambia el estado del launcher
+	*/
+	void change(States newState);
+
+	/*
+	* Acceso a la informacion del contexto
+	*/
+	CatanContext& getContext(void);
 
 private:
-
+	States state;
 	CatanContext context;
 };

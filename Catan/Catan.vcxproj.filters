@@ -489,6 +489,9 @@
     <ClInclude Include="CatanGui\CatanLauncher\CatanContext.h">
       <Filter>CatanGui\CatanLauncher</Filter>
     </ClInclude>
+    <ClInclude Include="CatanGui\CatanLauncher\CatanLauncher.h">
+      <Filter>CatanGui\CatanLauncher</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FSM\EventQueue.cpp">
@@ -788,9 +791,6 @@
     <ClCompile Include="CatanGame\CatanStates\Winner.cpp">
       <Filter>CatanGame\CatanStates</Filter>
     </ClCompile>
-    <ClCompile Include="socketTester.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
     <ClCompile Include="CatanNetworking\NetworkingStates\ListenBank.cpp">
       <Filter>CatanNetworking\NetworkingStates</Filter>
     </ClCompile>
@@ -893,9 +893,6 @@
     <ClCompile Include="CatanGui\AllegroWidgets\SimpleButtonView.cpp">
       <Filter>CatanGui\AllegroWidgets</Filter>
     </ClCompile>
-    <ClCompile Include="guitest.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
     <ClCompile Include="CatanGui\AllegroWidgets\SoundStatusView.cpp">
       <Filter>CatanGui\AllegroWidgets</Filter>
     </ClCompile>
@@ -913,6 +910,9 @@
     </ClCompile>
     <ClCompile Include="launcher.cpp">
       <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGui\CatanLauncher\CatanLauncher.cpp">
+      <Filter>CatanGui\CatanLauncher</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

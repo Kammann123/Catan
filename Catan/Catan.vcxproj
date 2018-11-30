@@ -192,6 +192,7 @@
     <ClInclude Include="CatanGui\AllegroWidgets\UIBuilder.h" />
     <ClInclude Include="CatanGui\AllegroWidgets\Widgets.h" />
     <ClInclude Include="CatanGui\CatanLauncher\CatanContext.h" />
+    <ClInclude Include="CatanGui\CatanLauncher\CatanLauncher.h" />
     <ClInclude Include="CatanNetworking\CatanNetworking.h" />
     <ClInclude Include="CatanNetworking\NetworkHandlers\NetworkClient.h" />
     <ClInclude Include="CatanNetworking\NetworkHandlers\NetworkServer.h" />
@@ -336,6 +337,7 @@
     <ClCompile Include="CatanGui\AllegroWidgets\TextFieldView.cpp" />
     <ClCompile Include="CatanGui\AllegroWidgets\UIBuilder.cpp" />
     <ClCompile Include="CatanGui\CatanLauncher\CatanContext.cpp" />
+    <ClCompile Include="CatanGui\CatanLauncher\CatanLauncher.cpp" />
     <ClCompile Include="CatanNetworking\CatanNetworking.cpp" />
     <ClCompile Include="CatanNetworking\NetworkHandlers\NetworkClient.cpp" />
     <ClCompile Include="CatanNetworking\NetworkHandlers\NetworkServer.cpp" />
@@ -403,9 +405,7 @@
     <ClCompile Include="FSM\EventQueue.cpp" />
     <ClCompile Include="FSM\GenericEvent.cpp" />
     <ClCompile Include="FSM\GenericFsm.cpp" />
-    <ClCompile Include="guitest.cpp" />
     <ClCompile Include="launcher.cpp" />
-    <ClCompile Include="socketTester.cpp" />
     <ClCompile Include="MVC\Observer.cpp" />
     <ClCompile Include="MVC\Subject.cpp" />
   </ItemGroup>

@@ -66,15 +66,6 @@ WindowUI(size_t width, size_t height, double fps) {
 	this->components.clear();
 	colors.clear();
 	images.clear();
-
-	/*
-	* Construyo todos los elementos basicos que hacen
-	* al funcionamiento de la interfaz grafica
-	*/
-	_init_display();
-	_init_queue();
-	_init_timer();
-	_init_sources();
 }
 
 WindowUI::
@@ -171,7 +162,18 @@ WindowUI::draw(void) {
 
 void
 WindowUI::start(void) {
+
+	/*
+	* Construyo todos los elementos basicos que hacen
+	* al funcionamiento de la interfaz grafica
+	*/
+	_init_display();
+	_init_queue();
+	_init_timer();
+	_init_sources();
+
 	al_start_timer(timer);
+	
 	started = true;
 	draw();
 }
