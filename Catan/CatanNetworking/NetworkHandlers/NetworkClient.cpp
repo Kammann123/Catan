@@ -7,7 +7,7 @@ using boost::lambda::var;
 using boost::lambda::_1;
 
 NetworkClient::
-NetworkClient(void) : NetworkSocket() {
+NetworkClient(void) : NetworkSocket() , deadline(*handler) {
 
 	if (good()) {
 
@@ -37,7 +37,7 @@ getType(void) {
 }
 
 void NetworkClient::
-connect(string ip, unsigned int port) {
+aconnect(string ip, unsigned int port) {
 
 	if (!isConnected()) {
 
@@ -46,29 +46,28 @@ connect(string ip, unsigned int port) {
 		* el async_connect de boost asio
 		*/
 		boost::asio::ip::tcp::resolver::iterator endpoint = resolver->resolve(boost::asio::ip::tcp::resolver::query(ip, to_string(port)));
-
-		boost::asio::deadline_timer deadline_(*handler);
-
-		boost::system::error_code error = boost::asio::error::would_block;
+		err = boost::asio::error::would_block;
 
 		/*
 		* Configuro el deadline y el async_connect
 		*/
-		deadline_.expires_from_now(boost::posix_time::milliseconds(10), error);
-		boost::asio::async_connect(*socket, endpoint, var(error) = _1);
+		deadline.expires_from_now(boost::posix_time::milliseconds(60));
+		boost::asio::async_connect(*socket, endpoint, var(err) = _1);
+		deadline.async_wait(bind(&NetworkClient::deadline_first, this));
+		handler->run_one();
 
-		/* Ejecuto el io service routine para poder ciclar el
-		* connect asincronico, hasta que detecte el timer que
-		* hubo un error */
-		do handler->run_one();	while (error == boost::asio::error::would_block);
+		/*
+		* Hago que boost espere a terminar el deadline ejecutando en el
+		* medio todos los connect posibles.
+		*/
 
 		/*
 		* Termino de ejecutarse porque hubo algun tipo de error
 		* o mismo porque se llego al timeout o deadline configurado
 		* entonces se revisa el error para definir
 		*/
-		if (!handleConnection(error)) {
-			if (!error) {
+		if (!handleConnection(err)) {
+			if (!err) {
 				toggleConnection();
 				nonBlocking();
 			}
@@ -76,21 +75,30 @@ connect(string ip, unsigned int port) {
 	}
 }
 
+
+void NetworkClient::
+connect(string ip, unsigned int port) {
+	aconnect(ip, port);
+}
+
 void NetworkClient::
 sconnect(string ip, unsigned int port) {
 
 	if (!isConnected()) {
-
-		boost::system::error_code error;
 		boost::asio::ip::tcp::endpoint endpoint = boost::asio::ip::tcp::endpoint(boost::asio::ip::address::from_string(ip), port);
-		
-		socket->connect(endpoint, error);
 
-		if (!handleConnection(error)) {
-			if (!error) {
+		socket->connect(endpoint, err);
+
+		if (!handleConnection(err)) {
+			if (!err) {
 				toggleConnection();
 				nonBlocking();
 			}
 		}
 	}
+}
+
+void 
+NetworkClient::deadline_first(void) {
+	err = boost::asio::error::timed_out;
 }
