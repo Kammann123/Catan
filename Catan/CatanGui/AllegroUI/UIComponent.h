@@ -4,20 +4,20 @@
 #include "UIController.h"
 #include "UIView.h"
 
-#include <list>
+#include <vector>
 
 using namespace std;
 
 /*
 * UIComponent
 * Modeliza un componente de la interfaz grafica que se compone de tres elementos
-* para la implementacion del modelo MVC.
+* para la imp	lementacion del modelo MVC.
 */
 class UIComponent{
 public:
 
 	/* Constructor / Destructor */
-	UIComponent(UIModel* model_, list<UIView*> view_, list<UIController*> controllers_);
+	UIComponent(UIModel* model_, vector<UIView*> view_, vector<UIController*> controllers_);
 	~UIComponent();
 
 	/*
@@ -33,8 +33,8 @@ public:
 	void draw(void);
 
 	/* Getters */
-	list<UIController*>& getController(void);
-	list<UIView*> getView(void);
+	vector<UIController*>& getController(void);
+	vector<UIView*> getView(void);
 	UIModel* getModel(void);
 	string getId(void);
 
@@ -50,7 +50,7 @@ public:
 	void clearController(void);
 
 private:
-	list<UIController*> controllers;
-	list<UIView*> views;
+	vector<UIController*> controllers;
+	vector<UIView*> views;
 	UIModel* model;
 };

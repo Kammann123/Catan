@@ -22,7 +22,7 @@
 #define WINDOW_MUSIC		"music"
 
 #define MODEL(_component, _cast)	((_cast)(_component->getModel()))
-#define VIEW(_component, _cast) ((_cast)(_component->getView())
+#define VIEW(_component, _index)	_component->getView()[_index]
 
 using namespace std;
 using namespace std::placeholders;

@@ -13,7 +13,6 @@ MouseController::parse(ALLEGRO_EVENT* event) {
 	* Obtengo el estado actual del MouseUI decorado
 	* y reviso si me es de interes para el mouse
 	*/
-
 	MouseUI* frame = (MouseUI*)model;
 
 	/*
@@ -72,10 +71,8 @@ MouseController::parse(ALLEGRO_EVENT* event) {
 
 		case MouseUI::Status::HOLDING:
 			if (event->type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
-				if (frame->isInside(event->mouse.x, event->mouse.y)) {
-					frame->setStatus(MouseUI::Status::FOCUSED);
-					frame->focus(event);
-				}
+				frame->setStatus(MouseUI::Status::FOCUSED);
+				frame->focus(event);
 			}
 			break;
 

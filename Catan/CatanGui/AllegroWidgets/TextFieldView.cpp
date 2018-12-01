@@ -39,3 +39,11 @@ draw(void)
 		);		
 	}
 }
+
+void 
+TextFieldView::updateModelValues(void) {
+	TextUI* text = (TextUI*)model;
+
+	text->setWidth(TF_PADDING_X * 2 + al_get_text_width(fonts[TF_FONT].font, text->getText().c_str()));
+	text->setHeight(TF_PADDING_Y * 2 + al_get_font_line_height(fonts[TF_FONT].font));
+}

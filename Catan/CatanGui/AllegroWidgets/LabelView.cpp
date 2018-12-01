@@ -8,10 +8,7 @@ LabelView(TextUI* model_) : UIView(model_)
 }
 
 LabelView::
-~LabelView()
-{
-
-}
+~LabelView() {}
 
 void LabelView::
 draw(void)
@@ -29,3 +26,6 @@ draw(void)
 					);
 	}
 }
+
+void LabelView::
+updateModelValues(void) {}

@@ -22,7 +22,7 @@ createSimpleButton(string id, const char* text, size_t height) {
 	SimpleButtonView* buttonView = new SimpleButtonView();
 
 	/* Construyo el model del button */
-	TextUI* buttonModel = new TextUI(id, 2 * PADDING_X + al_get_text_width(buttonView->setFonts()[SIMPLE_BUTTON_TEXTFONT].font, text), height, strlen(text));
+	TextUI* buttonModel = new TextUI(id, 2 * PADDING_X + al_get_text_width(buttonView->getFonts()[SIMPLE_BUTTON_TEXTFONT].font, text), height, strlen(text));
 	buttonModel->setText(text);
 
 	/* Construyo los controllers, y hago los attachs */
@@ -44,8 +44,8 @@ createButton(string id)
 
 		/* Creación del model */
 		MouseUI* model = new MouseUI(id, 
-									al_get_bitmap_width(view->setImages()[(unsigned int)MouseUI::Status::IDLE].bitmap), 
-									al_get_bitmap_height(view->setImages()[(unsigned int)MouseUI::Status::IDLE].bitmap)
+									al_get_bitmap_width(view->getImages()[(unsigned int)MouseUI::Status::IDLE].bitmap), 
+									al_get_bitmap_height(view->getImages()[(unsigned int)MouseUI::Status::IDLE].bitmap)
 									);
 
 		/* Attach model-view */
@@ -70,7 +70,7 @@ createTextField(string id, size_t size, TextUI::Mode mode) {
 	string test(size, 'A'); 
 
 	/*Cracion del modelo*/
-	TextUI * textFieldModel = new TextUI(id, TF_PADDING_X * 2 + al_get_text_width(textFieldView->setFonts()[TF_FONT].font,test.c_str()), TF_PADDING_Y * 2 + al_get_font_line_height(textFieldView->setFonts()[TF_FONT].font), size, mode);
+	TextUI * textFieldModel = new TextUI(id, TF_PADDING_X * 2 + al_get_text_width(textFieldView->getFonts()[TF_FONT].font,test.c_str()), TF_PADDING_Y * 2 + al_get_font_line_height(textFieldView->getFonts()[TF_FONT].font), size, mode);
 
 	/*Attach modelo-vista*/
 	textFieldModel->attach(textFieldView);
@@ -92,11 +92,10 @@ createTextBox(string id, size_t size, TextUI::Mode mode)
 	/*Cracion de la View*/
 	TextBoxView * textBoxView = new TextBoxView();
 
-
 	/*Cracion del modelo*/
 	TextUI * textBoxModel = new TextUI(id,
-		al_get_bitmap_width(textBoxView->setImages()[MouseUI::Status::IDLE].bitmap),
-		al_get_bitmap_height(textBoxView->setImages()[MouseUI::Status::IDLE].bitmap),
+		al_get_bitmap_width(textBoxView->getImages()[MouseUI::Status::IDLE].bitmap),
+		al_get_bitmap_height(textBoxView->getImages()[MouseUI::Status::IDLE].bitmap),
 		size, mode);
 
 
@@ -123,7 +122,7 @@ createLabel(string id, size_t size)
 	string test(size, 'A');
 
 	/* Creación del modelo */
-	TextUI* labelModel = new TextUI(id, TF_PADDING_X * 2 + al_get_text_width(labelView->setFonts()[TF_FONT].font, test.c_str()), TF_PADDING_Y * 2 + al_get_font_line_height(labelView->setFonts()[TF_FONT].font), size, TextUI::EVERYTHING);
+	TextUI* labelModel = new TextUI(id, TF_PADDING_X * 2 + al_get_text_width(labelView->getFonts()[TF_FONT].font, test.c_str()), TF_PADDING_Y * 2 + al_get_font_line_height(labelView->getFonts()[TF_FONT].font), size, TextUI::EVERYTHING);
 
 	/*Attach modelo-vista*/
 	labelModel->attach(labelView);

@@ -59,3 +59,10 @@ SimpleButtonView::draw(void) {
 		);
 	}
 }
+
+void 
+SimpleButtonView::updateModelValues(void) {
+	TextUI* text = (TextUI*)model;
+
+	text->setWidth(2 * PADDING_X + al_get_text_width(fonts[SIMPLE_BUTTON_TEXTFONT].font, text->getText().c_str()));
+}

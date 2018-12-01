@@ -11,6 +11,9 @@ class SoundStatusView : public UIView
 public:
 	SoundStatusView(MouseUI* model_ = nullptr);
 	void draw(void);
+	void updateModelValues(void);
 private:
 	MouseUI::Status prevStatus;
+	bool isPlaying;
+	ALLEGRO_SAMPLE_ID music;
 };

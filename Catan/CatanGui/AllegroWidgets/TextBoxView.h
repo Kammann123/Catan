@@ -20,7 +20,7 @@
 #define TB_FONT "font"
 #define TB_TEXT_COLOR "text_color"
 
-#define TB_DEFAULT_FONT_SIZE 80
+#define TB_DEFAULT_FONT_SIZE 30
 
 #define TB_PADDING_X	10
 #define TB_PADDING_Y	10
@@ -31,5 +31,5 @@ public:
 	TextBoxView(TextUI* model_ = nullptr);
 	~TextBoxView();
 	void draw(void);
-
+	void updateModelValues(void);
 };

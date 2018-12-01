@@ -39,7 +39,7 @@ WindowUI::InitAllegro(void) {
 		if (!al_init_acodec_addon()) {
 			return;
 		}
-		if (!al_reserve_samples(1)) {
+		if (!al_reserve_samples(5)) {
 			return;
 		}
 
@@ -143,21 +143,23 @@ WindowUI::_destroy_components(void) {
 void
 WindowUI::draw(void) {
 
-	/* Limpio la pantalla con su fondo */
-	if (colors.has(WINDOW_BACKGROUND)) {
-		al_clear_to_color(colors[WINDOW_BACKGROUND].color);
-	}
-	if (images.has(WINDOW_BACKGROUND)) {
-		al_draw_bitmap(images[WINDOW_BACKGROUND].bitmap, 0, 0, 0);
-	}
+	if (started) {
+		/* Limpio la pantalla con su fondo */
+		if (colors.has(WINDOW_BACKGROUND)) {
+			al_clear_to_color(colors[WINDOW_BACKGROUND].color);
+		}
+		if (images.has(WINDOW_BACKGROUND)) {
+			al_draw_bitmap(images[WINDOW_BACKGROUND].bitmap, 0, 0, 0);
+		}
 
-	/* Redibujo los componentes */
-	for (UIComponent* component : components) {
-		component->draw();
-	}
+		/* Redibujo los componentes */
+		for (UIComponent* component : components) {
+			component->draw();
+		}
 
-	/* Actualizo pantalla */
-	al_flip_display();
+		/* Actualizo pantalla */
+		al_flip_display();
+	}
 }
 
 void

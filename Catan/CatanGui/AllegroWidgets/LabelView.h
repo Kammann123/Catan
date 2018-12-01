@@ -15,4 +15,5 @@ public:
 	LabelView(TextUI* model_ = nullptr);
 	~LabelView();
 	void draw(void);
+	void updateModelValues();
 };

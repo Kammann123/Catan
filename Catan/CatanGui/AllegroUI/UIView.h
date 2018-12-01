@@ -53,10 +53,13 @@ public:
 	* Acceso a configuracion de colores, imagenes
 	* y demas
 	*/
-	ColorConfig& setColors(void);
-	TextConfig& setFonts(void);
-	ImageConfig& setImages(void);
-	SoundConfig& setSamples(void);
+	ColorConfig& getColors(void);
+	TextConfig& getFonts(void);
+	ImageConfig& getImages(void);
+	SoundConfig& getSamples(void);
+
+	/* Actualizacion del model */
+	virtual void updateModelValues(void) = 0;
 
 	/*
 	* Configuramos la relacion con una ventana

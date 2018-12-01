@@ -1,7 +1,7 @@
 #include "UIComponent.h"
 
 UIComponent::
-UIComponent(UIModel* model_, list<UIView*> view_, list<UIController*> controllers_)
+UIComponent(UIModel* model_, vector<UIView*> view_, vector<UIController*> controllers_)
 {
 	model = model_;
 	views = view_;
@@ -42,7 +42,7 @@ UIComponent::draw(void) {
 	}
 }
 
-list<UIController*>& UIComponent::
+vector<UIController*>& UIComponent::
 getController(void)
 {
 	return controllers;
@@ -54,7 +54,7 @@ getModel(void)
 	return model;
 }
 
-list<UIView *> UIComponent::getView(void)
+vector<UIView *> UIComponent::getView(void)
 {
 	return views;
 }
@@ -72,7 +72,7 @@ UIComponent::appendView(UIView* view) {
 
 void 
 UIComponent::removeView(UIView* view) {
-	views.remove(view);
+	this->views.erase(find(views.begin(), views.end(), view));
 }
 
 void 
@@ -94,7 +94,7 @@ appendController(UIController * newController)
 void UIComponent::
 removeController(UIController* thisController)
 {
-	this->controllers.remove(thisController);
+	this->controllers.erase( find(controllers.begin(), controllers.end(), thisController) );
 }
 
 void UIComponent::

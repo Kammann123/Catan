@@ -6,36 +6,34 @@ UIView::UIView(UIModel * model_)
 	model = model_;
 }
 
-UIView::UIView()
-{
-}
+UIView::UIView() {}
 
 UIView::
 ~UIView() {}
 
 void
 UIView::update(void) {
-	this->interface->draw();
+	if( interface )
+		this->interface->draw();
 }
 
 ColorConfig&
-UIView::setColors(void) {
+UIView::getColors(void) {
 	return colors;
 }
 
 TextConfig&
-UIView::setFonts(void) {
+UIView::getFonts(void) {
 	return fonts;
 }
 
 ImageConfig&
-UIView::setImages(void) {
+UIView::getImages(void) {
 	return images;
 }
 
-SoundConfig& 
-UIView::setSamples(void)
-{
+SoundConfig&
+UIView::getSamples(void) {
 	return samples;
 }
 

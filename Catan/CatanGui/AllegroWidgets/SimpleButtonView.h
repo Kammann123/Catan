@@ -21,4 +21,5 @@ public:
 	SimpleButtonView();
 	~SimpleButtonView();
 	virtual void draw(void);
+	virtual void updateModelValues(void);
 };

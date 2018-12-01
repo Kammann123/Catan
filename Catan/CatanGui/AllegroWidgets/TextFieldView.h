@@ -6,7 +6,6 @@
 #include "../AllegroUI/TextUI.h"
 #include "../AllegroUI/UIView.h"
 
-
 #define TF_PERC_MARGIN 0.1
 
 #define TF_DEFAULT_BACKGROUND_IDLE_COLOR 255, 255, 255
@@ -31,5 +30,5 @@ public:
 	TextFieldView (TextUI* model_ = nullptr);
 	~TextFieldView();
 	void draw(void);
-
+	void updateModelValues(void);
 };
