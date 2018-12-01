@@ -148,7 +148,7 @@ createImage(string id)
 	ImageView* imageView = new ImageView();
 
 	/* Creación del modelo */
-	FrameUI* imageModel = new FrameUI(id, al_get_bitmap_width(imageView->setImages()[IV_BITMAP].bitmap), al_get_bitmap_height(imageView->setImages()[IV_BITMAP].bitmap));
+	FrameUI* imageModel = new FrameUI(id, al_get_bitmap_width(imageView->getImages()[IV_BITMAP].bitmap), al_get_bitmap_height(imageView->getImages()[IV_BITMAP].bitmap));
 
 	/* Attach modelo-vista */
 	imageModel->attach(imageView);
