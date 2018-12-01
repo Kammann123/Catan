@@ -17,6 +17,12 @@ draw(void)
 	if (model->getVisible())
 	{
 		FrameUI* pointer = (FrameUI*)model;
-		al_draw_bitmap(images[IV_BITMAP].bitmap, pointer->getX(), pointer->getY(), IV_NO_FLAGS);
+		al_draw_bitmap(images[IV_BITMAP].bitmap, pointer->xPos(), pointer->yPos(), IV_NO_FLAGS);
 	}
+}
+
+void ImageView::
+updateModelValues() 
+{
+
 }

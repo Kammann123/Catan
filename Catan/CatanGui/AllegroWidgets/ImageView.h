@@ -12,4 +12,5 @@ public:
 	ImageView(FrameUI* model_ = nullptr);
 	~ImageView();
 	void draw(void);
+	void updateModelValues(void);
 };
