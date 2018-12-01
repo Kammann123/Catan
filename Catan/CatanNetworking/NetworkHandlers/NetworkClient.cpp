@@ -37,6 +37,11 @@ getType(void) {
 }
 
 void NetworkClient::
+connect(string ip, unsigned int port) {
+	aconnect(ip, port);
+}
+
+void NetworkClient::
 aconnect(string ip, unsigned int port) {
 
 	if (!isConnected()) {
@@ -51,10 +56,10 @@ aconnect(string ip, unsigned int port) {
 		/*
 		* Configuro el deadline y el async_connect
 		*/
-		deadline.expires_from_now(boost::posix_time::milliseconds(60));
+		deadline.expires_from_now(boost::posix_time::milliseconds(150));
 		boost::asio::async_connect(*socket, endpoint, var(err) = _1);
 		deadline.async_wait(bind(&NetworkClient::deadline_first, this));
-		handler->run_one();
+		handler->run();
 
 		/*
 		* Hago que boost espere a terminar el deadline ejecutando en el
@@ -73,12 +78,6 @@ aconnect(string ip, unsigned int port) {
 			}
 		}
 	}
-}
-
-
-void NetworkClient::
-connect(string ip, unsigned int port) {
-	aconnect(ip, port);
 }
 
 void NetworkClient::
