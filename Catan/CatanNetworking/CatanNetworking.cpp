@@ -60,9 +60,6 @@ CatanNetworking(CatanGame& _game) : Observer(), game(_game){
 		allocate(States::SYNC, Sync, *this),
 		allocate(States::NET_ERROR, NetError, *this)
 	};
-
-	/* Estado inicial */
-	changeState(States::DISCONNECTED);
 }
 
 CatanNetworking::
@@ -179,6 +176,13 @@ CatanNetworking::changeState(NetworkingState* state) {
 	currState = state;
 	currState->context();
 	currState->resetTime();
+}
+
+void
+CatanNetworking::start(void){
+
+	/* Estado inicial */
+	changeState(States::DISCONNECTED);
 }
 
 void

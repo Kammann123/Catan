@@ -66,6 +66,13 @@ public:
 	void update(void);
 
 	/*
+	* start
+	* Reinicia al estado disconnected y 
+	* corre el cambio de estado.
+	*/
+	void start(void);
+
+	/*
 	* Devuelve identificador del estado de networking
 	* ya segun su id, o un string representativo del estado
 	*/

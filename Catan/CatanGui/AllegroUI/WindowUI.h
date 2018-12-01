@@ -52,6 +52,14 @@ public:
 	~WindowUI(void);
 
 	/*
+	* process
+	* Permite correr procesos alternamente con
+	* la revision de los eventos de la interfaz grafica,
+	* para ello debe sobreescribirse virtualmente
+	*/
+	virtual void process(void);
+
+	/*
 	* draw
 	* Actualiza los elementos a dibujar en la pantalla
 	*/

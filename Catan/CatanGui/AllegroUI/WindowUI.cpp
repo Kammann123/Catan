@@ -141,6 +141,9 @@ WindowUI::_destroy_components(void) {
 }
 
 void
+WindowUI::process(void) {}
+
+void
 WindowUI::draw(void) {
 
 	if (started) {
@@ -223,6 +226,12 @@ WindowUI::run(void) {
 			}
 		}
 	}
+
+	/*
+	* Luego doy tiempo de ejecucion a los diferentes
+	* procesos configurables
+	*/
+	process();
 }
 
 void

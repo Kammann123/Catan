@@ -61,6 +61,8 @@ int main(int argc, char** argv) {
 	CatanNetworking::States netStatus = CatanNetworking::States::DISCONNECTED;
 	CatanGame::State gameStatus = CatanGame::State::GAME_SYNC;
 
+	net.start();
+
 	while (game.getState() != CatanGame::State::GAME_ERROR && game.getState() != CatanGame::State::GAME_END) {
 
 		/* Corremos la ui */
