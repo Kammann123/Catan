@@ -4,6 +4,7 @@
 #include "../AllegroWidgets/ButtonView.h"
 #include "../AllegroWidgets/TextFieldView.h"
 #include "../AllegroWidgets/TextBoxView.h"
+#include "../AllegroWidgets/LabelView.h"
 #include "../AllegroWidgets/SoundStatusView.h"
 
 #include "../AllegroUI/MouseUI.h"
@@ -91,7 +92,6 @@ createTextBox(string id, size_t size, TextUI::Mode mode)
 	/*Cracion de la View*/
 	TextBoxView * textBoxView = new TextBoxView();
 
-	string test(size, 'A');
 
 	/*Cracion del modelo*/
 	TextUI * textBoxModel = new TextUI(id,
@@ -112,11 +112,4 @@ createTextBox(string id, size_t size, TextUI::Mode mode)
 	UIComponent* component = new UIComponent(textBoxModel, textBoxView, { textController, mouseController });
 
 	return component;
-}
-
-UIComponent * UIBuilder::attachSample(UIComponent ** component)
-{
-	SoundStatusView * soundView = new SoundStatusView((MouseUI *)(*component)->getModel());
-	(*component)->getModel()->attach(soundView);
-	return *component;
 }

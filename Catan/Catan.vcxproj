@@ -182,12 +182,12 @@
     <ClInclude Include="CatanGui\AllegroUI\UIView.h" />
     <ClInclude Include="CatanGui\AllegroUI\WindowUI.h" />
     <ClInclude Include="CatanGui\AllegroWidgets\ButtonView.h" />
+    <ClInclude Include="CatanGui\AllegroWidgets\LabelView.h" />
     <ClInclude Include="CatanGui\AllegroWidgets\SimpleButtonView.h" />
     <ClInclude Include="CatanGui\AllegroWidgets\TextBoxView.h" />
     <ClInclude Include="CatanGui\AllegroWidgets\SoundStatusView.h" />
     <ClInclude Include="CatanGui\AllegroWidgets\TextFieldView.h" />
     <ClInclude Include="CatanGui\AllegroWidgets\UIBuilder.h" />
-    <ClInclude Include="CatanGui\AllegroWidgets\Widgets.h" />
     <ClInclude Include="CatanNetworking\CatanNetworking.h" />
     <ClInclude Include="CatanNetworking\NetworkHandlers\NetworkClient.h" />
     <ClInclude Include="CatanNetworking\NetworkHandlers\NetworkServer.h" />
@@ -325,6 +325,7 @@
     <ClCompile Include="CatanGui\AllegroUI\UIView.cpp" />
     <ClCompile Include="CatanGui\AllegroUI\WindowUI.cpp" />
     <ClCompile Include="CatanGui\AllegroWidgets\ButtonView.cpp" />
+    <ClCompile Include="CatanGui\AllegroWidgets\LabelView.cpp" />
     <ClCompile Include="CatanGui\AllegroWidgets\SimpleButtonView.cpp" />
     <ClCompile Include="CatanGui\AllegroWidgets\SoundStatusView.cpp" />
     <ClCompile Include="CatanGui\AllegroWidgets\TextFieldView.cpp" />
