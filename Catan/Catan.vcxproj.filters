@@ -911,9 +911,6 @@
     <ClCompile Include="CatanGui\AllegroWidgets\TextBoxView.cpp">
       <Filter>CatanGui\AllegroWidgets</Filter>
     </ClCompile>
-    <ClCompile Include="launcher.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
     <ClCompile Include="CatanGui\CatanLauncher\CatanLauncher.cpp">
       <Filter>CatanGui\CatanLauncher</Filter>
     </ClCompile>
@@ -922,6 +919,9 @@
     </ClCompile>
     <ClCompile Include="CatanGui\AllegroWidgets\ImageView.cpp">
       <Filter>CatanGui\AllegroWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="networkingTester.cpp">
+      <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

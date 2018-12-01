@@ -18,8 +18,8 @@
 MainMenu::
 MainMenu(CatanLauncher& _launcher) : WindowUI(1080, 640), launcher(_launcher) {
 	/* Creo los componentes */
-	UIComponent* nameBox = UIBuilder::createTextBox("name", 25, TextUI::Mode::LETTER);
-	UIComponent* ipBox = UIBuilder::createTextBox("ip", 25, TextUI::Mode::EVERYTHING);
+	UIComponent* nameBox = UIBuilder::createTextBox("name", 26, TextUI::Mode::LETTER);
+	UIComponent* ipBox = UIBuilder::createTextBox("ip", 26, TextUI::Mode::EVERYTHING);
 	UIComponent* portBox = UIBuilder::createTextBox("port", 25, TextUI::Mode::NUMBER);
 	UIComponent* connectButton = UIBuilder::attachSample(UIBuilder::createButton("connect"));
 

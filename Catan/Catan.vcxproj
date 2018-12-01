@@ -408,9 +408,9 @@
     <ClCompile Include="FSM\EventQueue.cpp" />
     <ClCompile Include="FSM\GenericEvent.cpp" />
     <ClCompile Include="FSM\GenericFsm.cpp" />
-    <ClCompile Include="launcher.cpp" />
     <ClCompile Include="MVC\Observer.cpp" />
     <ClCompile Include="MVC\Subject.cpp" />
+    <ClCompile Include="networkingTester.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

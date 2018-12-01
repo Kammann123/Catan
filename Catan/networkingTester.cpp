@@ -52,7 +52,9 @@ int main(int argc, char** argv) {
 
 	CatanGame game = CatanGame(localName);
 	testUI testUi(game);
-	CatanNetworking net = CatanNetworking(ip, port, game);
+	CatanNetworking net = CatanNetworking(game);
+	net.setIp(ip);
+	net.setPort(port);
 	game.attach(&net);
 	game.attach(&testUi);
 	

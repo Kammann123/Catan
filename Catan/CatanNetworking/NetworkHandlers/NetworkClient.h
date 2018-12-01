@@ -30,6 +30,7 @@ public:
 	* El metodo no es bloqueante, realiza una prueba y luego finaliza.
 	*/
 	void connect(string ip, unsigned int port);
+	void connect(boost::asio::ip::tcp::resolver::iterator endpoint, boost::system::error_code* err);
 
 private:
 	boost::asio::ip::tcp::resolver* resolver;
