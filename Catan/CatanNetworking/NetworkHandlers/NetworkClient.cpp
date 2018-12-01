@@ -1,6 +1,7 @@
 #include "NetworkClient.h"
 
 #include "boost/lambda/lambda.hpp"
+#include "boost/chrono.hpp"
 
 using boost::lambda::var;
 using boost::lambda::_1;
@@ -53,13 +54,13 @@ connect(string ip, unsigned int port) {
 		/*
 		* Configuro el deadline y el async_connect
 		*/
-		deadline_.expires_from_now(boost::posix_time::milliseconds(50));
+		deadline_.expires_from_now(boost::posix_time::milliseconds(10), error);
 		boost::asio::async_connect(*socket, endpoint, var(error) = _1);
 
 		/* Ejecuto el io service routine para poder ciclar el
 		* connect asincronico, hasta que detecte el timer que
 		* hubo un error */
-		handler->run_one();
+		do handler->run_one();	while (error == boost::asio::error::would_block);
 
 		/*
 		* Termino de ejecutarse porque hubo algun tipo de error
