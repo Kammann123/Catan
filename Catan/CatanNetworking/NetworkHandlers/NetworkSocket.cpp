@@ -275,6 +275,8 @@ handleConnection(boost::system::error_code error) {
 			case boost::asio::error::not_found:
 			case boost::asio::error::would_block:
 			case boost::asio::error::timed_out:
+			case boost::asio::error::operation_aborted:
+			case boost::asio::error::access_denied:
 				return false;
 
 			/*

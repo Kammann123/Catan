@@ -81,6 +81,7 @@ int main(int argc, char** argv) {
 			if (netStatus != net.getNetworkingState()) {
 				netStatus = net.getNetworkingState();
 				CONSOLE("Networking cambio de estado: " + string((char*)net.getNetworkingString()));
+				CONSOLE(net.getError());
 			}
 		}
 		else {

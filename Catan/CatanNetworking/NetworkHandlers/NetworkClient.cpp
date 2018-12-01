@@ -38,39 +38,39 @@ getType(void) {
 void NetworkClient::
 connect(string ip, unsigned int port) {
 
-	/*
-	* Abro los elementos necesarios para poder correr
-	* el async_connect de boost asio
-	*/
-	boost::asio::ip::tcp::resolver::iterator endpoint = resolver->resolve(boost::asio::ip::tcp::resolver::query(ip, to_string(port)));
+	if (!isConnected()) {
 
-	boost::posix_time::time_duration timeout =
-		boost::posix_time::milliseconds(50);
+		/*
+		* Abro los elementos necesarios para poder correr
+		* el async_connect de boost asio
+		*/
+		boost::asio::ip::tcp::resolver::iterator endpoint = resolver->resolve(boost::asio::ip::tcp::resolver::query(ip, to_string(port)));
 
-	boost::asio::deadline_timer deadline_(*handler);
+		boost::asio::deadline_timer deadline_(*handler, boost::posix_time::milliseconds(50));
 
-	boost::system::error_code error = boost::asio::error::would_block;
+		boost::system::error_code error = boost::asio::error::would_block;
 
-	/*
-	* Configuro el deadline y el async_connect
-	*/
-	deadline_.expires_from_now(timeout);
-	boost::asio::async_connect(*socket, endpoint, var(error) = _1);
+		/*
+		* Configuro el deadline y el async_connect
+		*/
+		deadline_.expires_from_now();
+		boost::asio::async_connect(*socket, endpoint, var(error) = _1);
 
-	/* Ejecuto el io service routine para poder ciclar el
-	* connect asincronico, hasta que detecte el timer que
-	* hubo un error */
-	handler->poll_one();
+		/* Ejecuto el io service routine para poder ciclar el
+		* connect asincronico, hasta que detecte el timer que
+		* hubo un error */
+		handler->poll_one();
 
-	/*
-	* Termino de ejecutarse porque hubo algun tipo de error
-	* o mismo porque se llego al timeout o deadline configurado
-	* entonces se revisa el error para definir
-	*/
-	if (!handleConnection(error)) {
-		if ( !error ) {
-			toggleConnection();
-			nonBlocking();
+		/*
+		* Termino de ejecutarse porque hubo algun tipo de error
+		* o mismo porque se llego al timeout o deadline configurado
+		* entonces se revisa el error para definir
+		*/
+		if (!handleConnection(error)) {
+			if (!error) {
+				toggleConnection();
+				nonBlocking();
+			}
 		}
 	}
 }
