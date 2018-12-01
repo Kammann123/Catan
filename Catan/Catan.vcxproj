@@ -171,6 +171,7 @@
     <ClInclude Include="CatanGui\AllegroUI\FrameUI.h" />
     <ClInclude Include="CatanGui\AllegroUI\ImageConfig.h" />
     <ClInclude Include="CatanGui\AllegroUI\MouseController.h" />
+    <ClInclude Include="CatanGui\AllegroUI\SoundConfig.h" />
     <ClInclude Include="CatanGui\AllegroUI\TextConfig.h" />
     <ClInclude Include="CatanGui\AllegroUI\UIComponent.h" />
     <ClInclude Include="CatanGui\AllegroUI\MouseUI.h" />
@@ -182,6 +183,7 @@
     <ClInclude Include="CatanGui\AllegroUI\WindowUI.h" />
     <ClInclude Include="CatanGui\AllegroWidgets\ButtonView.h" />
     <ClInclude Include="CatanGui\AllegroWidgets\SimpleButtonView.h" />
+    <ClInclude Include="CatanGui\AllegroWidgets\SoundStatusView.h" />
     <ClInclude Include="CatanGui\AllegroWidgets\TextFieldView.h" />
     <ClInclude Include="CatanGui\AllegroWidgets\UIBuilder.h" />
     <ClInclude Include="CatanGui\AllegroWidgets\Widgets.h" />
@@ -312,6 +314,7 @@
     <ClCompile Include="CatanGui\AllegroUI\ImageConfig.cpp" />
     <ClCompile Include="CatanGui\AllegroUI\MouseController.cpp" />
     <ClCompile Include="CatanGui\AllegroUI\MouseUI.cpp" />
+    <ClCompile Include="CatanGui\AllegroUI\SoundConfig.cpp" />
     <ClCompile Include="CatanGui\AllegroUI\TextConfig.cpp" />
     <ClCompile Include="CatanGui\AllegroUI\TextController.cpp" />
     <ClCompile Include="CatanGui\AllegroUI\TextUI.cpp" />
@@ -322,6 +325,7 @@
     <ClCompile Include="CatanGui\AllegroUI\WindowUI.cpp" />
     <ClCompile Include="CatanGui\AllegroWidgets\ButtonView.cpp" />
     <ClCompile Include="CatanGui\AllegroWidgets\SimpleButtonView.cpp" />
+    <ClCompile Include="CatanGui\AllegroWidgets\SoundStatusView.cpp" />
     <ClCompile Include="CatanGui\AllegroWidgets\TextFieldView.cpp" />
     <ClCompile Include="CatanGui\AllegroWidgets\UIBuilder.cpp" />
     <ClCompile Include="CatanNetworking\CatanNetworking.cpp" />

@@ -24,7 +24,6 @@ draw(void)
 
 	if (pointer->getVisible()) {
 
-	
 			al_draw_filled_rectangle(
 				pointer->xPos(),
 				pointer->yPos(),
@@ -40,9 +39,5 @@ draw(void)
 				pointer->yPos() + pointer->getHeight() * TF_PERC_MARGIN / 2,
 				ALLEGRO_ALIGN_CENTRE,
 				pointer->getText().c_str());
-
-		
-
-		
 	}
 }
