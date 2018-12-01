@@ -35,7 +35,7 @@ Disconnected::run() {
 
 	/* Verifico errores del cliente */
 	if (client->good()) {
-		/* Verifico si esta conectado */
+		/* Verifico si esta conect	x|ado */
 		if (client->isConnected()) {
 			/* Cambio de estado, ya conecte como cliente */
 			networking.changeState(CatanNetworking::States::WAIT_SYNC);

@@ -183,6 +183,7 @@ public:
 	bool isRobberStatus(void);
 
 	void setRemoteName(string remoteName);
+	void setLocalName(string localName);
 
 	PlayerId getTurn(void);
 	string getLocalName(void);

@@ -47,7 +47,7 @@ public:
 	* Se construye el CatanNetworking con una referencia
 	* del juego para acceder a su informacion, ademas por ser observer.
 	*/
-	CatanNetworking(string ip, unsigned int port, CatanGame& _game);
+	CatanNetworking(CatanGame& _game);
 	~CatanNetworking();
 
 	/*
@@ -115,6 +115,9 @@ public:
 	NetworkSocket*& getSocket(void);
 	string getIp(void);
 	unsigned int getPort(void);
+
+	void setIp(string ip);
+	void setPort(unsigned int port);
 	void setSocket(NetworkSocket* socket);
 
 private:

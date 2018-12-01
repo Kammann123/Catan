@@ -30,7 +30,14 @@ public:
 	* El metodo no es bloqueante, realiza una prueba y luego finaliza.
 	*/
 	void connect(string ip, unsigned int port);
+	void sconnect(string ip, unsigned int port);
+	void aconnect(string ip, unsigned int port);
 
 private:
+
+	void deadline_first(void);
+
 	boost::asio::ip::tcp::resolver* resolver;
+	boost::system::error_code err;
+	boost::asio::deadline_timer deadline;
 };

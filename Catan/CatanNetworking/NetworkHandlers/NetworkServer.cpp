@@ -49,8 +49,10 @@ listen(void) {
 
 		/* Valido error */
 		if (!handleConnection(error)) {
-			toggleConnection();
-			nonBlocking();
+			if (!error) {
+				toggleConnection();
+				nonBlocking();
+			}
 		}
 	}
 }

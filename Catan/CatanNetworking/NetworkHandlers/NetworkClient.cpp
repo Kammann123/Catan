@@ -1,7 +1,13 @@
 #include "NetworkClient.h"
 
+#include "boost/lambda/lambda.hpp"
+#include "boost/chrono.hpp"
+
+using boost::lambda::var;
+using boost::lambda::_1;
+
 NetworkClient::
-NetworkClient(void) : NetworkSocket() {
+NetworkClient(void) : NetworkSocket() , deadline(*handler) {
 
 	if (good()) {
 
@@ -31,32 +37,68 @@ getType(void) {
 }
 
 void NetworkClient::
-connect(string ip, unsigned int port) {
+aconnect(string ip, unsigned int port) {
 
-	/* Verifico no conectado */
 	if (!isConnected()) {
 
-		/* Inicializo variables */
-		boost::asio::ip::tcp::resolver::iterator endpoint;
-		boost::system::error_code error;
+		/*
+		* Abro los elementos necesarios para poder correr
+		* el async_connect de boost asio
+		*/
+		boost::asio::ip::tcp::resolver::iterator endpoint = resolver->resolve(boost::asio::ip::tcp::resolver::query(ip, to_string(port)));
+		err = boost::asio::error::would_block;
 
-		/* Intento crear el resolver */
-		try {
-			endpoint = resolver->resolve(boost::asio::ip::tcp::resolver::query(ip, to_string(port)));
-		}
-		catch (...) {
-			this->status = false;
-			this->error = "NetworkClient - connect - No se pudo abrir una conexion con ese host. Invalido.";
-			return;
-		}
+		/*
+		* Configuro el deadline y el async_connect
+		*/
+		deadline.expires_from_now(boost::posix_time::milliseconds(60));
+		boost::asio::async_connect(*socket, endpoint, var(err) = _1);
+		deadline.async_wait(bind(&NetworkClient::deadline_first, this));
+		handler->run_one();
 
-		/* Intento realizar conexion */
-		boost::asio::connect(*socket, endpoint, error);
+		/*
+		* Hago que boost espere a terminar el deadline ejecutando en el
+		* medio todos los connect posibles.
+		*/
 
-		/* Verifico errores */
-		if (!handleConnection(error)) {
-			toggleConnection();
-			nonBlocking();
+		/*
+		* Termino de ejecutarse porque hubo algun tipo de error
+		* o mismo porque se llego al timeout o deadline configurado
+		* entonces se revisa el error para definir
+		*/
+		if (!handleConnection(err)) {
+			if (!err) {
+				toggleConnection();
+				nonBlocking();
+			}
 		}
 	}
+}
+
+
+void NetworkClient::
+connect(string ip, unsigned int port) {
+	aconnect(ip, port);
+}
+
+void NetworkClient::
+sconnect(string ip, unsigned int port) {
+
+	if (!isConnected()) {
+		boost::asio::ip::tcp::endpoint endpoint = boost::asio::ip::tcp::endpoint(boost::asio::ip::address::from_string(ip), port);
+
+		socket->connect(endpoint, err);
+
+		if (!handleConnection(err)) {
+			if (!err) {
+				toggleConnection();
+				nonBlocking();
+			}
+		}
+	}
+}
+
+void 
+NetworkClient::deadline_first(void) {
+	err = boost::asio::error::timed_out;
 }
