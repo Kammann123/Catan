@@ -30,6 +30,7 @@ public:
 	* El metodo no es bloqueante, realiza una prueba y luego finaliza.
 	*/
 	void connect(string ip, unsigned int port);
+	void sconnect(string ip, unsigned int port);
 
 private:
 	boost::asio::ip::tcp::resolver* resolver;
