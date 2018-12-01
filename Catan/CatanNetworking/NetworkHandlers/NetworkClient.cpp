@@ -1,8 +1,6 @@
 #include "NetworkClient.h"
-#include <boost/lambda/bind.hpp>
-#include <boost/lambda/lambda.hpp>
 
-#include <boost/asio/connect.hpp>
+#include "boost/lambda/lambda.hpp"
 
 using boost::lambda::var;
 using boost::lambda::_1;
@@ -40,47 +38,39 @@ getType(void) {
 void NetworkClient::
 connect(string ip, unsigned int port) {
 
-	/* Verifico no conectado */
-	if (!isConnected()) {
+	/*
+	* Abro los elementos necesarios para poder correr
+	* el async_connect de boost asio
+	*/
+	boost::asio::ip::tcp::resolver::iterator endpoint = resolver->resolve(boost::asio::ip::tcp::resolver::query(ip, to_string(port)));
 
-		/* Inicializo variables */
-		boost::asio::ip::tcp::resolver::iterator endpoint;
-		boost::system::error_code error;
+	boost::posix_time::time_duration timeout =
+		boost::posix_time::milliseconds(50);
 
-		/* Intento crear el resolver */
-		try {
-			endpoint = resolver->resolve(boost::asio::ip::tcp::resolver::query(ip, to_string(port)));
-		}
-		catch (...) {
-			this->status = false;
-			this->error = "NetworkClient - connect - No se pudo abrir una conexion con ese host. Invalido.";
-			return;
-		}
+	boost::asio::deadline_timer deadline_(*handler);
 
-		/* Intento realizar conexion */
-		connect(endpoint, &error);
+	boost::system::error_code error = boost::asio::error::would_block;
 
-		/* Verifico errores */
-		if (!handleConnection(error)) {
+	/*
+	* Configuro el deadline y el async_connect
+	*/
+	deadline_.expires_from_now(timeout);
+	boost::asio::async_connect(*socket, endpoint, var(error) = _1);
+
+	/* Ejecuto el io service routine para poder ciclar el
+	* connect asincronico, hasta que detecte el timer que
+	* hubo un error */
+	handler->poll_one();
+
+	/*
+	* Termino de ejecutarse porque hubo algun tipo de error
+	* o mismo porque se llego al timeout o deadline configurado
+	* entonces se revisa el error para definir
+	*/
+	if (!handleConnection(error)) {
+		if ( !error ) {
 			toggleConnection();
 			nonBlocking();
 		}
 	}
-}
-
-void NetworkClient::
-connect(boost::asio::ip::tcp::resolver::iterator endpoint, boost::system::error_code* err) {
-
-	/* Creo un timer para definir un plazo final 
-	* ademas inicializo un estado para error code */
-	boost::asio::deadline_timer deadline(*handler);
-	*err = boost::asio::error::would_block;
-
-	/* Configuro inicialmente el deadline */
-	boost::posix_time::time_duration timeout = boost::posix_time::milliseconds(50);
-	deadline.expires_from_now(timeout);
-
-	/* Configuro la conexion asyncronico */
-	boost::asio::async_connect(*socket, endpoint, var(*err) = _1);
-	do handler->run_one(); while (*err == boost::asio::error::would_block);
 }
