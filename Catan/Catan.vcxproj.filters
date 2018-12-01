@@ -483,9 +483,6 @@
     <ClInclude Include="CatanGui\AllegroWidgets\LabelView.h">
       <Filter>CatanGui\AllegroWidgets</Filter>
     </ClInclude>
-    <ClInclude Include="CatanGui\AllegroWidgets\Widgets.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="CatanGui\CatanLauncher\CatanContext.h">
       <Filter>CatanGui\CatanLauncher</Filter>
     </ClInclude>
@@ -494,6 +491,9 @@
     </ClInclude>
     <ClInclude Include="CatanGui\CatanLauncher\MainMenu.h">
       <Filter>CatanGui\CatanLauncher</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGui\AllegroWidgets\ImageView.h">
+      <Filter>CatanGui\AllegroWidgets</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -919,6 +919,9 @@
     </ClCompile>
     <ClCompile Include="CatanGui\CatanLauncher\MainMenu.cpp">
       <Filter>CatanGui\CatanLauncher</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGui\AllegroWidgets\ImageView.cpp">
+      <Filter>CatanGui\AllegroWidgets</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -31,7 +31,7 @@ MainMenu(CatanLauncher& _launcher) : WindowUI(1080, 640), launcher(_launcher) {
 	VIEW(connectButton, 0)->getImages().setConfig(MouseUI::Status::DRAGGED, MAINMENU_CONNECT_SELECTED);
 	VIEW(connectButton, 0)->updateModelValues();
 
-	VIEW(connectButton, 1)->getSamples().setConfig(MouseUI::Status::SELECTED, CONNECT_SELECT_SOUND);
+	VIEW(connectButton, 1)->getSamples().setConfig(MouseUI::Status::SELECTED, CONNECT_SELECT_SOUND);	
 	VIEW(connectButton, 1)->getSamples().setConfig(MouseUI::Status::FOCUSED, CONNECT_FOCUS_SOUND);
 
 	/* Configuro los textbox! */
