@@ -6,6 +6,7 @@
 #include "../AllegroWidgets/TextBoxView.h"
 #include "../AllegroWidgets/LabelView.h"
 #include "../AllegroWidgets/SoundStatusView.h"
+#include "../AllegroWidgets/ImageView.h"
 
 #include "../AllegroUI/MouseUI.h"
 #include "../AllegroUI/TextUI.h"
@@ -137,5 +138,22 @@ UIComponent * UIBuilder::attachSample(UIComponent * component)
 	SoundStatusView * soundView = new SoundStatusView((MouseUI *)(component)->getModel());
 	(component)->getModel()->attach(soundView);
 	component->appendView(soundView);
+	return component;
+}
+
+UIComponent* UIBuilder::
+createImage(string id)
+{
+	/* Creación de la view */
+	ImageView* imageView = new ImageView();
+
+	/* Creación del modelo */
+	FrameUI* imageModel = new FrameUI(id, al_get_bitmap_width(imageView->setImages()[IV_BITMAP].bitmap), al_get_bitmap_height(imageView->setImages()[IV_BITMAP].bitmap));
+
+	/* Attach modelo-vista */
+	imageModel->attach(imageView);
+	imageView->setModel(imageModel);
+
+	UIComponent* component = new UIComponent(imageModel, { imageView }, {});
 	return component;
 }
