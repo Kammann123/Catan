@@ -326,6 +326,7 @@
     <ClCompile Include="CatanGui\AllegroUI\WindowUI.cpp" />
     <ClCompile Include="CatanGui\AllegroWidgets\ButtonView.cpp" />
     <ClCompile Include="CatanGui\AllegroWidgets\SimpleButtonView.cpp" />
+    <ClCompile Include="CatanGui\AllegroWidgets\SoundStatusView.cpp" />
     <ClCompile Include="CatanGui\AllegroWidgets\TextFieldView.cpp" />
     <ClCompile Include="CatanGui\AllegroWidgets\UIBuilder.cpp" />
     <ClCompile Include="CatanNetworking\CatanNetworking.cpp" />
