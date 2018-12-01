@@ -8,7 +8,6 @@
 #include "WaitSync.h"
 
 #include <iostream>
-#include <random>
 
 Disconnected::
 Disconnected(CatanNetworking& networking) : NetworkingState(networking, NETWORKING_TIMEOUT, CatanNetworking::States::DISCONNECTED) {}
@@ -16,7 +15,7 @@ Disconnected(CatanNetworking& networking) : NetworkingState(networking, NETWORKI
 void
 Disconnected::context() {
 	/* Calculo cantidad aleatoria de milisegundos */
-	
+	unsigned int delay = rand() % (MAX_TIME - MIN_TIME) + MIN_TIME;
 	time = boost::chrono::milliseconds(delay);
 	start = boost::chrono::steady_clock::now();
 
