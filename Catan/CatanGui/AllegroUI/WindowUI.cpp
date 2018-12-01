@@ -53,6 +53,7 @@ WindowUI(size_t width, size_t height, double fps) {
 	this->fps = fps;
 	this->display = nullptr;
 	this->queue = nullptr;
+	this->started = false;
 	this->components.clear();
 	colors.clear();
 	images.clear();
@@ -162,18 +163,36 @@ WindowUI::draw(void) {
 void
 WindowUI::start(void) {
 	al_start_timer(timer);
+	started = true;
+	draw();
+}
+
+void
+WindowUI::stop(void) {
+	al_stop_timer(timer);
+	started = false;
 }
 
 void
 WindowUI::run(void) {
+
 	/*
 	* Busco en la cola de eventos si existen nuevos,
 	* en caso de haberlos, los reparto en la interfaz grafica...
 	* sus controllers
 	*/
 	if (al_get_next_event(queue, &event)) {
-		for (UIComponent* component : components) {
-			component->parse(&event);
+
+		/* Verifico el cierre de la ventana
+		*/
+		if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
+			this->stop();
+			this->close(&event);
+		}
+		else {
+			for (UIComponent* component : components) {
+				component->parse(&event);
+			}
 		}
 	}
 }
@@ -220,7 +239,7 @@ WindowUI::operator[](string id) {
 
 bool
 WindowUI::isOpen(void) {
-	return display != nullptr;
+	return display != nullptr && started;
 }
 
 size_t 
@@ -246,4 +265,29 @@ WindowUI::setBackground(unsigned char red, unsigned char green, unsigned char bl
 void
 WindowUI::setBackground(const char* image) {
 	images.setConfig(WINDOW_BACKGROUND, image);
+}
+
+void
+WindowUI::setCloseAction(Action close) {
+	onClose = close;
+}
+
+void
+WindowUI::close(void* data) {
+	if (onClose) onClose(data);
+}
+
+void
+WindowUI::shutdown(void) {
+
+	/*
+	* Destruyo el display, la cola de eventos
+	* y luego los componentes
+	*/
+	_destroy_display();
+	_destroy_queue();
+	_destroy_timer();
+	_destroy_components();
+
+	started = false;
 }

@@ -471,10 +471,7 @@
     <ClInclude Include="CatanGui\AllegroWidgets\SimpleButtonView.h">
       <Filter>CatanGui\AllegroWidgets</Filter>
     </ClInclude>
-    <ClInclude Include="CatanGui\AllegroUI\SoundConfig.h">
-      <Filter>CatanGui\AllegroUI</Filter>
-    </ClInclude>
-    <ClInclude Include="CatanGui\AllegroWidgets\SoundStatusView.h">
+    <ClInclude Include="CatanGui\AllegroWidgets\TextBoxView.h">
       <Filter>CatanGui\AllegroWidgets</Filter>
     </ClInclude>
   </ItemGroup>
@@ -882,12 +879,6 @@
       <Filter>CatanGui\AllegroWidgets</Filter>
     </ClCompile>
     <ClCompile Include="CatanGui\AllegroWidgets\SimpleButtonView.cpp">
-      <Filter>CatanGui\AllegroWidgets</Filter>
-    </ClCompile>
-    <ClCompile Include="CatanGui\AllegroUI\SoundConfig.cpp">
-      <Filter>CatanGui\AllegroUI</Filter>
-    </ClCompile>
-    <ClCompile Include="CatanGui\AllegroWidgets\SoundStatusView.cpp">
       <Filter>CatanGui\AllegroWidgets</Filter>
     </ClCompile>
   </ItemGroup>

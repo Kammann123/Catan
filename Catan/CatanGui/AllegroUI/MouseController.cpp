@@ -60,8 +60,22 @@ MouseController::parse(ALLEGRO_EVENT* event) {
 				}
 			}
 			else if (event->type == ALLEGRO_EVENT_MOUSE_BUTTON_UP) {
-				frame->setStatus(MouseUI::Status::FOCUSED);
-				frame->release(event);
+				if (frame->getEnableHold()) {
+					frame->setStatus(MouseUI::Status::HOLDING);
+				}
+				else {
+					frame->setStatus(MouseUI::Status::FOCUSED);
+					frame->release(event);
+				}
+			}
+			break;
+
+		case MouseUI::Status::HOLDING:
+			if (event->type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
+				if (frame->isInside(event->mouse.x, event->mouse.y)) {
+					frame->setStatus(MouseUI::Status::FOCUSED);
+					frame->focus(event);
+				}
 			}
 			break;
 

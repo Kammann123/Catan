@@ -3,6 +3,8 @@
 UIModel::
 UIModel(string id) {
 	this->id = id;
+	this->visible = true;
+	this->enable = true;
 }
 
 UIModel::

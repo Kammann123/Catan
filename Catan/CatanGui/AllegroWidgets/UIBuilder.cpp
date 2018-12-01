@@ -3,6 +3,7 @@
 #include "../AllegroWidgets/SimpleButtonView.h"
 #include "../AllegroWidgets/ButtonView.h"
 #include "../AllegroWidgets/TextFieldView.h"
+#include "../AllegroWidgets/TextBoxView.h"
 
 #include "../AllegroUI/MouseUI.h"
 #include "../AllegroUI/TextUI.h"
@@ -19,7 +20,8 @@ createSimpleButton(string id, const char* text, size_t height) {
 	SimpleButtonView* buttonView = new SimpleButtonView();
 
 	/* Construyo el model del button */
-	TextUI* buttonModel = new TextUI(id, al_get_text_width(buttonView->setColors()[SIMPLE_BUTTON_TEXTFONT].font, text), height, strlen(text));
+	TextUI* buttonModel = new TextUI(id, 2 * PADDING_X + al_get_text_width(buttonView->setFonts()[SIMPLE_BUTTON_TEXTFONT].font, text), height, strlen(text));
+	buttonModel->setText(text);
 
 	/* Construyo los controllers, y hago los attachs */
 	MouseController* buttonController = new MouseController(buttonModel);
@@ -55,12 +57,10 @@ createButton(string id)
 		UIComponent* component = new UIComponent(model, view, { controller });
 
 		return component;
-
-
 }
 
 UIComponent* UIBuilder::
-createTextField(size_t height, string id, size_t size, TextUI::Mode mode) {
+createTextField(string id, size_t size, TextUI::Mode mode) {
 
 	/*Cracion de la View*/
 	TextFieldView * textFieldView = new TextFieldView();
@@ -68,8 +68,7 @@ createTextField(size_t height, string id, size_t size, TextUI::Mode mode) {
 	string test(size, 'A'); 
 
 	/*Cracion del modelo*/
-	TextUI * textFieldModel = new TextUI(id, al_get_text_width(textFieldView->setFonts()[TF_FONT].font,test.c_str()), height, size, mode);
-
+	TextUI * textFieldModel = new TextUI(id, TF_PADDING_X * 2 + al_get_text_width(textFieldView->setFonts()[TF_FONT].font,test.c_str()), TF_PADDING_Y * 2 + al_get_font_line_height(textFieldView->setFonts()[TF_FONT].font), size, mode);
 
 	/*Attach modelo-vista*/
 	textFieldModel->attach(textFieldView);
@@ -81,6 +80,35 @@ createTextField(size_t height, string id, size_t size, TextUI::Mode mode) {
 
 	/* Creación del UIComponent */
 	UIComponent* component = new UIComponent(textFieldModel, textFieldView, {textController, mouseController});
+
+	return component;
+}
+
+UIComponent* UIBuilder::
+createTextBox(string id, size_t size, TextUI::Mode mode)
+{
+	/*Cracion de la View*/
+	TextBoxView * textBoxView = new TextBoxView();
+
+	string test(size, 'A');
+
+	/*Cracion del modelo*/
+	TextUI * textBoxModel = new TextUI(id,
+		al_get_bitmap_width(textBoxView->setImages()[MouseUI::Status::IDLE].bitmap),
+		al_get_bitmap_height(textBoxView->setImages()[MouseUI::Status::IDLE].bitmap),
+		size, mode);
+
+
+	/*Attach modelo-vista*/
+	textBoxModel->attach(textBoxView);
+	textBoxView->setModel(textBoxModel);
+
+	/*Cracion el controller*/
+	TextController * textController = new TextController(textBoxModel);
+	MouseController * mouseController = new MouseController(textBoxModel);
+
+	/* Creación del UIComponent */
+	UIComponent* component = new UIComponent(textBoxModel, textBoxView, { textController, mouseController });
 
 	return component;
 }

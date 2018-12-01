@@ -183,6 +183,7 @@
     <ClInclude Include="CatanGui\AllegroUI\WindowUI.h" />
     <ClInclude Include="CatanGui\AllegroWidgets\ButtonView.h" />
     <ClInclude Include="CatanGui\AllegroWidgets\SimpleButtonView.h" />
+    <ClInclude Include="CatanGui\AllegroWidgets\TextBoxView.h" />
     <ClInclude Include="CatanGui\AllegroWidgets\SoundStatusView.h" />
     <ClInclude Include="CatanGui\AllegroWidgets\TextFieldView.h" />
     <ClInclude Include="CatanGui\AllegroWidgets\UIBuilder.h" />
@@ -325,7 +326,6 @@
     <ClCompile Include="CatanGui\AllegroUI\WindowUI.cpp" />
     <ClCompile Include="CatanGui\AllegroWidgets\ButtonView.cpp" />
     <ClCompile Include="CatanGui\AllegroWidgets\SimpleButtonView.cpp" />
-    <ClCompile Include="CatanGui\AllegroWidgets\SoundStatusView.cpp" />
     <ClCompile Include="CatanGui\AllegroWidgets\TextFieldView.cpp" />
     <ClCompile Include="CatanGui\AllegroWidgets\UIBuilder.cpp" />
     <ClCompile Include="CatanNetworking\CatanNetworking.cpp" />
@@ -395,7 +395,7 @@
     <ClCompile Include="FSM\EventQueue.cpp" />
     <ClCompile Include="FSM\GenericEvent.cpp" />
     <ClCompile Include="FSM\GenericFsm.cpp" />
-    <ClCompile Include="networkingTester.cpp" />
+    <ClCompile Include="guitest.cpp" />
     <ClCompile Include="socketTester.cpp" />
     <ClCompile Include="MVC\Observer.cpp" />
     <ClCompile Include="MVC\Subject.cpp" />

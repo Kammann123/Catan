@@ -1,97 +1,70 @@
-#include "allegro5/allegro.h"
-#include "allegro5/allegro_primitives.h"
-#include "allegro5/allegro_color.h"
+#include "CatanGui/AllegroUI/WindowUI.h"
+#include "CatanGui/AllegroWidgets/UIBuilder.h"
 
-#include "CatanGui/AllegroUI/MouseDecorator.h"
-#include "CatanGui/AllegroUI/MouseController.h"
+#include "CatanGui/AllegroUI/MouseUI.h"
 
-class BoxView : public Observer {
+#include <iostream>
+
+using namespace std;
+
+class MenuGui : public WindowUI {
 public:
-	BoxView(UIModel* frame);
-
-	void draw(void);
-	virtual void update(void);
-private:
-	UIModel * frame;
+	MenuGui();
+	void onExit(void* data);
+	void onClick(void* data);
+	void onEnter(void* data);
 };
 
 int main(int argc, char** argv) {
 
-	al_init();
-	al_init_primitives_addon();
-	al_install_mouse();
+	WindowUI::InitAllegro();
 
-	ALLEGRO_DISPLAY* display = al_create_display(600, 600);
+	if (WindowUI::isAllegroInit()) {
 
-	al_clear_to_color(al_map_rgb(100, 100, 100));
-	al_flip_display();
+		MenuGui myMenu;
 
-	ALLEGRO_EVENT_QUEUE* queue = al_create_event_queue();
-	al_register_event_source(queue, al_get_display_event_source(display));
-	al_register_event_source(queue, al_get_mouse_event_source());
+		myMenu.start();
 
-	MouseDecorator myFrame = MouseDecorator(new FrameUI(100, 100, 50, 50), true);
-	MouseController myController = MouseController(&myFrame);
-	BoxView myView = BoxView(&myFrame);
-	myFrame.attach(&myView);
-	myView.draw();
+		while (myMenu.isOpen()) {
 
-	ALLEGRO_EVENT event;
-	while (true) {
-		if (al_get_next_event(queue, &event)) {
-			myController.parse(&event);
+			myMenu.run();
 		}
 	}
+	else {
 
-	al_destroy_display(display);
-}
-
-BoxView::
-BoxView(UIModel* frame) {
-	this->frame = frame;
-}
-
-void
-BoxView::update(void) {
-	this->draw();
-}
-
-void
-BoxView::draw(void) {
-
-	MouseDecorator* decorator = (MouseDecorator*)frame;
-	FrameUI* myFrame = (FrameUI*)decorator->getModel();
-
-	ALLEGRO_COLOR background = al_map_rgb(255, 255, 255);
-
-	switch (myFrame->getStatus()) {
-
-		case FrameUI::Status::IDLE:
-			background = al_map_rgb(255, 0, 0);
-			break;
-
-		case FrameUI::Status::FOCUSED:
-			background = al_map_rgb(255, 255, 0);
-			break;
-
-		case FrameUI::Status::SELECTED:
-			background = al_map_rgb(0, 255, 255);
-			break;
-
-		case FrameUI::Status::DRAGGED:
-			background = al_map_rgb(255, 0, 255);
-			break;
+		cout << "No pudo iniciar Allegro. Mal ahi." << endl;
 	}
+}
 
-	al_clear_to_color(al_map_rgb(0, 0, 0));
+MenuGui::MenuGui() : WindowUI(1000, 800) {
+	/* Creamos los componentes */
+	UIComponent* textBox = UIBuilder::createTextBox("boxOne", 50);
 
-	al_draw_filled_rectangle(
-		myFrame->xPos(),
-		myFrame->yPos(),
-		myFrame->xPos() + myFrame->getWidth(),
-		myFrame->yPos() + myFrame->getHeight(),
-		background
-	);
+	/* Attacheo los componentes */
+	this->attachComponent(textBox);
 
-	al_flip_display();
+	/* Configuro los componentes */
+	MODEL(textBox, TextUI*)->setPosition(200, 100);
+	MODEL(textBox, TextUI*)->setEnterAction(bind(&MenuGui::onEnter, this, _1));
+
+	/* Configuro el Window */
+	this->setBackground(0, 0, 0);
+	this->setCloseAction(bind(&MenuGui::onExit, this, _1));
+}
+
+void
+MenuGui::onEnter(void* data) {
+	string text = MODEL((*this)["boxOne"], TextUI*)->getText();
+	cout << text << endl;
+}
+
+void
+MenuGui::onExit(void* data) {
+	cout << "SALIENDO!!" << endl;
+	getchar();
+}
+
+void
+MenuGui::onClick(void* data) {
+	cout << "APRETO WAAA!!" << endl;
 }

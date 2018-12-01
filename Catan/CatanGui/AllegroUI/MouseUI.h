@@ -26,13 +26,13 @@ public:
 	* que un decorador pueda implementar, pues el estado no depende del decorador para
 	* existir, pero si para ser alterado.
 	*/
-	enum Status : unsigned int { IDLE, FOCUSED, SELECTED, DRAGGED };
+	enum Status : unsigned int { IDLE, FOCUSED, SELECTED, DRAGGED, HOLDING };
 
 	/*
 	* MouseUI
 	* Se construye a partir de FrameUI
 	*/
-	MouseUI(string id, size_t width, size_t height, bool dragMode = false);
+	MouseUI(string id, size_t width, size_t height, bool dragMode = false, bool holdMode = false);
 	~MouseUI(void);
 
 	/*
@@ -61,15 +61,19 @@ public:
 	void setEnableDrag(bool dragStatus);
 	bool getEnableDrag(void);
 
+	void setEnableHold(bool holdStatus);
+	bool getEnableHold(void);
+
 	void setStatus(Status status);
 	Status getStatus(void);
 
 protected:
 
 	/*
-	* Estado actual y modo dragging
+	* Estado actual y modos
 	*/
 	bool enableDragging;
+	bool enableHold;
 	Status status;
 
 	/*
