@@ -1,33 +1,32 @@
 #include "Coord.h"
 
-extern const string internalDots[22] = {
-	"ABE", "BCF", "CFG", "ADE", "BFE",
-	"DIH", "DEI", "EIJ", "EFJ", "FJK", "GKL",
-	"HIM", "IMN", "JNO", "IJN", "KOJ", "KPL",
-	"MNQ", "NOR", "NRQ", "ORS", "OPS"
+extern const string edges[72] = {
+	"0A5", "0AB", "0BA", "0BC", "0C", "1C0",
+	"5A", "AB", "BC", "1CG",
+	"5DA", "AD", "AE", "BE", "BF", "CF", "CG", "1GC",
+	"5DH", "DE", "EF", "FG", "1GL",
+	"5HD", "DH", "DI", "EI", "EJ", "FJ", "FK", "GK", "GL", "1L",
+	"5H4", "HI", "IJ", "JK", "KL", "2L1",
+	"H4", "HM", "IM", "IN", "JN", "JO", "KO", "KP", "LP", "2LP",
+	"4MH", "MN", "NO", "OP", "2PL",
+	"4MQ", "MQ", "NQ", "NR", "OR", "OS", "PS", "2PS",
+	"4QM", "QR", "RS", "2S",
+	"4Q3", "3Q", "3RQ", "3RS", "3SR", "3S2"
 };
 
-extern const string externalDots[30] = {
-	"A05","A0","AB0","B0","BC0","C01",
-	"C1", "CG1", "G1", "GL1", "L12", "L2",
-	"LP2", "P2", "PS2", "S23", "S3", "RS3",
-	"R3", "RQ3", "Q34", "Q4", "QM4", "M4", 
-	"MH4", "H45", "H5", "HD5", "D5", "DA5" 
-};
-
-extern const string internalEdges[40] = {
-	"AB", "BC", "AD", "AE", "BE", "BF", "CF", "CG",
-	"DE", "EF", "FG", "DH", "DI", "EI", "EJ", "FJ", "FK", "GK", "GL",
-	"HI", "IJ", "JK", "KL", "HM", "IM", "IN", "JN", "JO", "KO", "KP",
-	"LP", "MN", "NO", "OP", "MQ", "NQ", "NR", "OR", "OS", "PS"
-};
-
-extern const string externalEdges[30] = {
-	"A05", "A0B", "B0A", "B0C", "C0", "C10",
-	"C1G", "G1C", "G1L", "L1", "L21", "L2P",
-	"P2L", "P2S", "S2", "S32", "S3R", "R3S",
-	"R3Q", "Q3", "Q43", "Q4M", "M4Q", "M4H",
-	"H4", "H54", "H5D", "D5H", "D5A", "A5"
+extern const string dots[54] = {
+	"0A", "0B", "10C",
+	"05A", "0AB", "0BC", "1C",
+	"5AD", "ABE", "BCF", "1CG",
+	"5D", "ADE", "BEF", "CFG", "1G",
+	"5DH", "DEI", "EFJ", "FGK", "1GL",
+	"5H", "DHI", "EIJ", "FJK", "GKL", "12L",
+	"45H", "HIM", "IJN", "JKO", "KLP", "2L",
+	"4HM", "IMN", "JNO", "KOP", "2LP",
+	"4M", "NMQ", "NOR", "OPS", "2P",
+	"4MQ", "NQR", "ORS", "2PS",
+	"4Q", "3QR", "3RS", "23S",
+	"34Q", "3R", "3S"
 };
 
 Coord::
@@ -80,31 +79,24 @@ Coord(Coord c1, Coord c2) {
 		else {
 			_handle_repetition();
 		}
-		if (coords.size() == 2 || coords.size() == 3) {
-			this->type = DOT;
-			return;
-		}
+		type = Type::DOT;
+		_order_refactor();
 	}
 	else if (c1.isDot() && c2.isDot()) {
 		this->coords = c1.coords + c2.coords;
 		if (c1.nearCoast() && c2.nearCoast()) {
 			if (c1.coords.size() != c2.coords.size()) {
-				_handle_repetition_intersection();
+				_handle_repetition();
 			}
 		}
 		else {
 			_handle_repetition_intersection();
 		}
-		if (coords.size() == 2 || coords.size() == 3) {
-			this->type = EDGE;
-			return;
-		}
+		type = Type::EDGE;
+		_order_refactor();
 	}
-	else {
-		this->coords = c1.coords + c2.coords;
-		_handle_repetition();
-		this->type = DOT;
-	}
+
+	this->type = NONE;
 }
 
 Coord::
@@ -139,38 +131,12 @@ Coord::operator>=(const Coord& coord)  const {
 
 bool
 Coord::operator==(string coordsCmp) {
-	if (coords.size() == coordsCmp.size()) {
-		if (isDot()) {
-			for (unsigned char coord : coords) {
-				if (find(coordsCmp.begin(), coordsCmp.end(), coord) == coordsCmp.end()) {
-					return false;
-				}
-			}
-			return true;
-		}
-		else if (isEdge()) {
-			if (_has_numbers()) {
-				return coords == coordsCmp;
-			}
-			else {
-				for (unsigned char coord : coords) {
-					if (find(coordsCmp.begin(), coordsCmp.end(), coord) == coordsCmp.end()) {
-						return false;
-					}
-				}
-				return true;
-			}
-		}
-		else {
-			return this->coords == coordsCmp;
-		}
-	}
-	return false;
+	return coordsCmp == coords;
 }
 
 bool
 Coord::operator==(Coord copy) {
-	return (this->coords == copy.coords) && (this->type == copy.type);
+	return this->coords == copy.coords;
 }
 
 bool
@@ -237,6 +203,7 @@ Coord::setCoord(unsigned char coord) {
 	else {
 		this->type = Type::LAND;
 	}
+	_update_coord();
 	_verify_type();
 	_verify_value();
 }
@@ -245,6 +212,7 @@ void
 Coord::setCoord(string coords, Type type) {
 	this->coords = coords;
 	this->type = type;
+	_update_coord();
 	_verify_type();
 	_verify_value();
 }
@@ -347,8 +315,10 @@ Coord::nearCoast(unsigned char coord) {
 bool
 Coord::isVertexOf(Coord coord) {
 	if (coord.isLand()) {
-		if (_has(coord.coords[0])) {
-			return true;
+		if (isDot()) {
+			if (_has(coord.coords[0])) {
+				return true;
+			}
 		}
 	}
 	return false;
@@ -510,26 +480,6 @@ Coord::_handle_repetition_intersection(void) {
 void
 Coord::_verify_type(void) {
 	switch (type) {
-		case DOT:
-			if ( (coords.size() != 3 && coords.size() != 2) || (coords.size() == 2 && _count_numbers() != 1) ) {
-				throw exception("Coord - Construccion invalida de un DOT.");
-			}
-			break;
-		case EDGE:
-			if ((coords.size() != 3 && coords.size() != 2) || (coords.size() == 2 && _has_numbers()) || (coords.size() == 3 && _count_numbers() != 1)) {
-				throw exception("Coord - Construccion invalida de un EDGE.");
-			}
-			break;
-		case LAND:
-			if (coords.size() != 1 || (coords.size() == 1 && !_has_letters())) {
-				throw exception("Coord - Construccion invalida de un LAND.");
-			}
-			break;
-		case SEA:
-			if (coords.size() != 1 || (coords.size() == 1 && !_has_numbers())) {
-				throw exception("Coord - Construccion invalida de un LAND.");
-			}
-			break;
 	}
 }
 
@@ -537,19 +487,14 @@ void
 Coord::_verify_value(void) {
 	for (unsigned char c : coords) {
 		if ((c < MIN_SEA_COORD || c > MAX_SEA_COORD) && (c < MIN_LAND_COORD || c > MAX_LAND_COORD)) {
-			throw exception("Coord - Construccion invalidada por coordenadas incorrectas.");
+			type = Type::NONE;
 		}
 	}
 }
 
 bool
 Coord::_is_valid_dot(void) {
-	for (string coord : externalDots) {
-		if (coord == coords) {
-			return true;
-		}
-	}
-	for (string coord : internalDots) {
+	for (string coord : dots) {
 		if (coord == coords) {
 			return true;
 		}
@@ -559,12 +504,7 @@ Coord::_is_valid_dot(void) {
 
 bool
 Coord::_is_valid_edges(void) {
-	for (string coord : externalEdges) {
-		if (coord == coords) {
-			return true;
-		}
-	}
-	for (string coord : internalEdges) {
+	for (string coord : edges) {
 		if (coord == coords) {
 			return true;
 		}
@@ -600,29 +540,57 @@ Coord::_update_coord(void) {
 			return;
 		}
 	}
-	for (string coord : externalDots) {
+	for (string coord : dots) {
 		if (coord == coords) {
 			type = Type::DOT;
 			return;
 		}
 	}
-	for (string coord : internalDots) {
-		if (coord == coords) {
-			type = Type::DOT;
-			return;
-		}
-	}
-	for (string coord : internalEdges) {
+	for (string coord : edges) {
 		if (coord == coords) {
 			type = Type::EDGE;
 			return;
 		}
 	}
-	for (string coord : externalEdges) {
-		if (coord == coords) {
-			type = Type::EDGE;
-			return;
+	type = Type::NONE;
+}
+
+void
+Coord::_order_refactor(void) {
+	bool ok = true;
+
+	if (isEdge()) {
+		for (string coord : edges) {
+			if (coords.size() == coord.size()) {
+				for (unsigned char c : coord) {
+					if (find(coords.begin(), coords.end(), c) == coords.end()) {
+						ok = false;
+					}
+				}
+				if (ok) {
+					coords = coord;
+					return;
+				}
+				ok = true;
+			}
 		}
 	}
+	else if (isDot()) {
+		for (string coord : dots) {
+			if (coords.size() == coord.size()) {
+				for (unsigned char c : coord) {
+					if (find(coords.begin(), coords.end(), c) == coords.end()) {
+						ok = false;
+					}
+				}
+				if (ok) {
+					coords = coord;
+					return;
+				}
+				ok = true;
+			}
+		}
+	}
+
 	type = Type::NONE;
 }

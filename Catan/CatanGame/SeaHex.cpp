@@ -29,7 +29,7 @@ SeaHex::hasDock(Coord coords) {
 	if (coords.nearCoast(this->coord)) {
 		/* Busco la coordenada en el arreglo */
 		i = 0;
-		for (string coord : externalDots) {
+		for (string coord : dots) {
 			relativeCoord = i % 5;
 			if (coords == coord) {
 				/* Me fijo segun la cantidad de muelles si es valida */
@@ -53,7 +53,7 @@ SeaHex::dockType(Coord coords) {
 	if (coords.nearCoast(this->coord)) {
 		/* Busco la coordenada en el arreglo */
 		i = 0;
-		for (string coord : externalDots) {
+		for (string coord : dots) {
 			relativeCoord = i % 5;
 			if (coords == coord) {
 				/* Me fijo segun la cantidad de muelles si es valida */
