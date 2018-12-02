@@ -16,7 +16,7 @@ public:
 	/*
 	* States - Estados o etapas del launcher.
 	*/
-	enum States : unsigned int { MAIN_MENU, CONNECT_MENU, GAME_WINDOW, LAUNCHER_CLOSE };
+	enum States : unsigned int { MAIN_MENU, GAME_WINDOW, LAUNCHER_CLOSE };
 
 	/* Constructor */
 	CatanLauncher();

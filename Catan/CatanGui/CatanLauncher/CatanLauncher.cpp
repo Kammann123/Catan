@@ -22,9 +22,6 @@ CatanLauncher::run() {
 			}
 			break;
 
-		case CONNECT_MENU:
-			break;
-
 		case GAME_WINDOW:
 			break;
 
