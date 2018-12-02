@@ -480,7 +480,32 @@ Coord::_handle_repetition_intersection(void) {
 void
 Coord::_verify_type(void) {
 	switch (type) {
+		case DOT:
+			for (string coord : dots) {
+				if (coord == coords) {
+					return;
+				}
+			}
+			break;
+		case EDGE:
+			for (string coord : edges) {
+				if (coord == coords) {
+					return;
+				}
+			}
+			break;
+		case LAND:
+			if (coords.size() == 1 && _has_numbers()) {
+				return;
+			}
+			break;
+		case SEA:
+			if (coords.size() == 1 && !_has_numbers()) {
+				return;
+			}
+			break;
 	}
+	type = Type::NONE;
 }
 
 void
