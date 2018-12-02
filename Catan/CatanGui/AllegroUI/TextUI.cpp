@@ -22,6 +22,7 @@ TextUI::setText(string value) {
 	for (unsigned char v : value) {
 		this->append(v);
 	}
+	notifyObservers();
 }
 
 void

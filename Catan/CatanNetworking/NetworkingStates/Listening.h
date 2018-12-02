@@ -17,4 +17,5 @@ public:
 	void run(void);
 	void update(void);
 	void context(void);
+	void reset(void);
 };

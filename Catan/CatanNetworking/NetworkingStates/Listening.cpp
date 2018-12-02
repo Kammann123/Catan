@@ -14,6 +14,9 @@ Listening::context() {
 	unsigned int port = networking.getPort();
 	NetworkSocket* socket = new NetworkServer(port);
 	networking.setSocket(socket);
+
+	/* Mensaje informativo */
+	networking.setInfo("[Networking] - Listening -> Abriendo servidor. Esperando conexiones...");
 }
 
 void
@@ -31,17 +34,18 @@ Listening::run() {
 			/* Comunico a CatanGame evento de sincronizacion */
 			networking.getGame().handle(new CatanEvent(CatanEvent::Events::ASK_SYNC, CatanEvent::Sources::NETWORKING, PlayerId::PLAYER_TWO));
 			/* Cambio de estado a sincronizacion */
-			networking.changeState(CatanNetworking::States::SYNC);
+			networking.changeState(CatanNetworking::States::SYNC, "[Networking] - Listening -> Conexion establecida! Comenzando sincronizacion.");
 		}
 	}
 	else {
 		/* Cambio de estado a error */
+		networking.setError("[Networking] - Listening -> Hubo un error en la conexion TCP del servidor.");
 		networking.changeState(CatanNetworking::States::NET_ERROR);
 	}
 }
 
 void
 Listening::update() {
-	networking.setError("WaitSync - Hubo un error en el protocolo de sincronizacion!");
+	networking.setError("[Networking] - Listening -> Llamada inesperada de la rutina update.");
 	networking.changeState(CatanNetworking::States::NET_ERROR);
 }

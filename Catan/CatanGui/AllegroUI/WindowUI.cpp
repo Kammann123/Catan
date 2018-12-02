@@ -147,6 +147,10 @@ void
 WindowUI::draw(void) {
 
 	if (started) {
+
+		/* Defino el target del backbuffer */
+		al_set_target_backbuffer(display);
+
 		/* Limpio la pantalla con su fondo */
 		if (colors.has(WINDOW_BACKGROUND)) {
 			al_clear_to_color(colors[WINDOW_BACKGROUND].color);
@@ -325,6 +329,12 @@ WindowUI::close(void* data) {
 
 void
 WindowUI::shutdown(void) {
+
+	/*
+	* Detengo la ejecucion de todos
+	* los elementos de la interfaz
+	*/
+	stop();
 
 	/*
 	* Destruyo el display, la cola de eventos

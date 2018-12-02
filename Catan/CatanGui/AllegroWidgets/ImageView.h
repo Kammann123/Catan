@@ -3,7 +3,6 @@
 #include "../AllegroUI/UIView.h"
 
 #define IV_BITMAP "bitmap"
-#define IV_DEFAULT_BITMAP "IV_default_bitmap.png"
 #define IV_NO_FLAGS 0
 
 class ImageView : public UIView

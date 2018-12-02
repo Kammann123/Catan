@@ -48,7 +48,8 @@ CatanNetworking(CatanGame& _game) : Observer(), game(_game){
 	this->port = port;
 	this->socket = nullptr;
 	this->status = true;
-	this->error = "";
+	this->msg = "";
+	this->currState = nullptr;
 
 	/* Creo todos los estados */
 	states.clear();
@@ -60,6 +61,9 @@ CatanNetworking(CatanGame& _game) : Observer(), game(_game){
 		allocate(States::SYNC, Sync, *this),
 		allocate(States::NET_ERROR, NetError, *this)
 	};
+
+	/* Mensaje de inicio */
+	setInfo("[Networking] - Closed -> Esperando ordenes de conexion.");
 }
 
 CatanNetworking::
@@ -93,13 +97,23 @@ CatanNetworking::setIp(string ip) {
 }
 
 void
+CatanNetworking::setInfo(string _info) {
+	msg = _info;
+}
+
+void
 CatanNetworking::setPort(unsigned int port) {
 	this->port = port;
 }
 
 CatanNetworking::States 
 CatanNetworking::getNetworkingState(void) {
-	return (CatanNetworking::States )this->currState->getId();
+	if (currState == nullptr) {
+		return CatanNetworking::States::CLOSED;
+	}
+	else {
+		return (CatanNetworking::States)this->currState->getId();
+	}
 }
 
 const char*
@@ -138,8 +152,8 @@ CatanNetworking::getState(void) {
 }
 
 string
-CatanNetworking::getError(void) {
-	return error;
+CatanNetworking::info(void) {
+	return msg;
 }
 
 bool
@@ -150,13 +164,13 @@ CatanNetworking::good(void) {
 void
 CatanNetworking::setError(string msg) {
 	this->status = false;
-	this->error = msg;
+	this->msg = msg;
 }
 
 void
 CatanNetworking::setError(const char* msg) {
 	this->status = false;
-	this->error = msg;
+	this->msg = msg;
 }
 
 void
@@ -167,22 +181,47 @@ CatanNetworking::verifyStatus(void) const {
 }
 
 void 
-CatanNetworking::changeState(CatanNetworking::States state) {
-	changeState(states[state]);
+CatanNetworking::changeState(CatanNetworking::States state, string _info) {
+	if (state == States::CLOSED) {
+		currState = nullptr;
+		msg = _info;
+	}
+	else {
+		changeState(states[state], _info);
+	}
 }
 
 void
-CatanNetworking::changeState(NetworkingState* state) {
+CatanNetworking::changeState(NetworkingState* state, string _info) {
 	currState = state;
 	currState->context();
 	currState->resetTime();
+	msg = _info;
 }
 
 void
 CatanNetworking::start(void){
 
 	/* Estado inicial */
-	changeState(States::DISCONNECTED);
+	changeState(States::DISCONNECTED, "[Networking] - Disconnected -> Abriendo socket TCP, intentando establecer conexion...");
+}
+
+void
+CatanNetworking::reset(void) {
+
+	/* Estado cerrado */
+	changeState(States::CLOSED);
+
+	/* Mensaje informativo! */
+	setInfo("[Networking] - Closed -> Networking cerrado! A la espera de reconexion.");
+
+	/* Reinicio y reinicializo el estado de todas las variables
+	* y objetos contenidos por CatanNetworking.
+	*/
+	if (socket) {
+		delete socket;
+		socket = nullptr;
+	}
 }
 
 void
