@@ -18,61 +18,75 @@
 #define GAMEMENU_EXIT_ON "CatanGui\\GUIDesigns\\GameMenu\\exit_on.png"
 #define GAMEMENU_EXIT_OFF "CatanGui\\GUIDesigns\\GameMenu\\exit_off.png"
 
-#define CONNECT_FOCUS_SOUND "CatanGui\\Sounds\\button_focus.wav"
-#define CONNECT_SELECT_SOUND "CatanGui\\Sounds\\press.wav"
+#define FOCUS_SOUND "CatanGui\\Sounds\\button_focus.wav"
+#define SELECT_SOUND "CatanGui\\Sounds\\press.wav"
 
 GameMenu::
 GameMenu(CatanLauncher& _launcher) : WindowUI(1080, 640), launcher(_launcher) {
 	///* Creo los componentes */
-	//UIComponent* nameBox = UIBuilder::createTextBox("name", 26, TextUI::Mode::LETTER);
-	//UIComponent* ipBox = UIBuilder::createTextBox("ip", 26, TextUI::Mode::EVERYTHING);
-	//UIComponent* portBox = UIBuilder::createTextBox("port", 25, TextUI::Mode::NUMBER);
-	//UIComponent* connectButton = UIBuilder::attachSample(UIBuilder::createButton("connect"));
+	UIComponent* exitButton = UIBuilder::attachSample(UIBuilder::createButton("exit"));
+	UIComponent* discardButton = UIBuilder::attachSample(UIBuilder::createButton("discard"));
+	UIComponent* exchangeButton = UIBuilder::attachSample(UIBuilder::createButton("exchange"));
+	UIComponent* playAgainButton = UIBuilder::attachSample(UIBuilder::createButton("playAgain"));
 
 	///* Configuro los botones! */
-	//VIEW(connectButton, 0)->getImages().setConfig(MouseUI::Status::IDLE, GAMEMENU_CONNECT_IDLE);
-	//VIEW(connectButton, 0)->getImages().setConfig(MouseUI::Status::FOCUSED, GAMEMENU_CONNECT_FOCUS);
-	//VIEW(connectButton, 0)->getImages().setConfig(MouseUI::Status::SELECTED, GAMEMENU_CONNECT_SELECTED);
-	//VIEW(connectButton, 0)->getImages().setConfig(MouseUI::Status::HOLDING, GAMEMENU_CONNECT_SELECTED);
-	//VIEW(connectButton, 0)->getImages().setConfig(MouseUI::Status::DRAGGED, GAMEMENU_CONNECT_SELECTED);
-	//VIEW(connectButton, 0)->updateModelValues();
+	//Boton de salir
+	VIEW(exitButton, 0)->getImages().setConfig(MouseUI::Status::IDLE, GAMEMENU_EXIT_OFF);
+	VIEW(exitButton, 0)->getImages().setConfig(MouseUI::Status::FOCUSED, GAMEMENU_EXIT_ON);
+	VIEW(exitButton, 0)->getImages().setConfig(MouseUI::Status::SELECTED, GAMEMENU_EXIT_ON);
+	VIEW(exitButton, 0)->getImages().setConfig(MouseUI::Status::HOLDING, GAMEMENU_EXIT_OFF);
+	VIEW(exitButton, 0)->getImages().setConfig(MouseUI::Status::DRAGGED, GAMEMENU_EXIT_ON);
+	VIEW(exitButton, 0)->updateModelValues();
 
-	//VIEW(connectButton, 1)->getSamples().setConfig(MouseUI::Status::SELECTED, CONNECT_SELECT_SOUND);
-	//VIEW(connectButton, 1)->getSamples().setConfig(MouseUI::Status::FOCUSED, CONNECT_FOCUS_SOUND);
+	VIEW(exitButton, 1)->getSamples().setConfig(MouseUI::Status::SELECTED, SELECT_SOUND);
+	VIEW(exitButton, 1)->getSamples().setConfig(MouseUI::Status::FOCUSED, FOCUS_SOUND);
+
+	//Boton de descartar cartas
+	VIEW(discardButton, 0)->getImages().setConfig(MouseUI::Status::IDLE, GAMEMENU_DISCARD_OFF);	//HAY QUE PENSAR COMO HACER PARA HABILITARLO DEPENDIENDO DE LA PARTIDA.
+	VIEW(discardButton, 0)->getImages().setConfig(MouseUI::Status::FOCUSED, GAMEMENU_DISCARD_ON);
+	VIEW(discardButton, 0)->getImages().setConfig(MouseUI::Status::SELECTED, GAMEMENU_DISCARD_ON);
+	VIEW(discardButton, 0)->getImages().setConfig(MouseUI::Status::HOLDING, GAMEMENU_DISCARD_OFF);
+	VIEW(discardButton, 0)->getImages().setConfig(MouseUI::Status::DRAGGED, GAMEMENU_DISCARD_ON);
+	VIEW(discardButton, 0)->updateModelValues();
+
+	VIEW(discardButton, 1)->getSamples().setConfig(MouseUI::Status::SELECTED, SELECT_SOUND);
+	VIEW(discardButton, 1)->getSamples().setConfig(MouseUI::Status::FOCUSED, FOCUS_SOUND);
+
+	//Boton de intercambiar cartas
+	VIEW(exchangeButton, 0)->getImages().setConfig(MouseUI::Status::IDLE, GAMEMENU_EXCHANGE_OFF);	//HAY QUE PENSAR COMO HACER PARA HABILITARLO DEPENDIENDO DE LA PARTIDA.
+	VIEW(exchangeButton, 0)->getImages().setConfig(MouseUI::Status::FOCUSED, GAMEMENU_EXCHANGE_ON);
+	VIEW(exchangeButton, 0)->getImages().setConfig(MouseUI::Status::SELECTED, GAMEMENU_EXCHANGE_ON);
+	VIEW(exchangeButton, 0)->getImages().setConfig(MouseUI::Status::HOLDING, GAMEMENU_EXCHANGE_OFF);
+	VIEW(exchangeButton, 0)->getImages().setConfig(MouseUI::Status::DRAGGED, GAMEMENU_EXCHANGE_ON);
+	VIEW(exchangeButton, 0)->updateModelValues();
+
+	VIEW(exchangeButton, 1)->getSamples().setConfig(MouseUI::Status::SELECTED, SELECT_SOUND);
+	VIEW(exchangeButton, 1)->getSamples().setConfig(MouseUI::Status::FOCUSED, FOCUS_SOUND);
+
+	//Boton de jugar de nuevo
+	VIEW(playAgainButton, 0)->getImages().setConfig(MouseUI::Status::IDLE, GAMEMENU_PLAY_AGAIN_OFF);	//HAY QUE PENSAR COMO HACER PARA HABILITARLO DEPENDIENDO DE LA PARTIDA.
+	VIEW(playAgainButton, 0)->getImages().setConfig(MouseUI::Status::FOCUSED, GAMEMENU_PLAY_AGAIN_ON);
+	VIEW(playAgainButton, 0)->getImages().setConfig(MouseUI::Status::SELECTED, GAMEMENU_PLAY_AGAIN_ON);
+	VIEW(playAgainButton, 0)->getImages().setConfig(MouseUI::Status::HOLDING, GAMEMENU_PLAY_AGAIN_OFF);
+	VIEW(playAgainButton, 0)->getImages().setConfig(MouseUI::Status::DRAGGED, GAMEMENU_PLAY_AGAIN_ON);
+	VIEW(playAgainButton, 0)->updateModelValues();
+
+	VIEW(playAgainButton, 1)->getSamples().setConfig(MouseUI::Status::SELECTED, SELECT_SOUND);
+	VIEW(playAgainButton, 1)->getSamples().setConfig(MouseUI::Status::FOCUSED, FOCUS_SOUND);
 
 	///* Configuro los textbox! */
-	//VIEW(nameBox, 0)->getImages().setConfig(MouseUI::Status::IDLE, GAMEMENU_TEXTBOX_IDLE);
-	//VIEW(nameBox, 0)->getImages().setConfig(MouseUI::Status::FOCUSED, GAMEMENU_TEXTBOX_IDLE);
-	//VIEW(nameBox, 0)->getImages().setConfig(MouseUI::Status::SELECTED, GAMEMENU_TEXTBOX_SELECTED);
-	//VIEW(nameBox, 0)->getImages().setConfig(MouseUI::Status::HOLDING, GAMEMENU_TEXTBOX_SELECTED);
-	//VIEW(nameBox, 0)->getImages().setConfig(MouseUI::Status::DRAGGED, GAMEMENU_TEXTBOX_SELECTED);
-	//VIEW(nameBox, 0)->updateModelValues();
-
-	//VIEW(ipBox, 0)->getImages().setConfig(MouseUI::Status::IDLE, GAMEMENU_TEXTBOX_IDLE);
-	//VIEW(ipBox, 0)->getImages().setConfig(MouseUI::Status::FOCUSED, GAMEMENU_TEXTBOX_IDLE);
-	//VIEW(ipBox, 0)->getImages().setConfig(MouseUI::Status::SELECTED, GAMEMENU_TEXTBOX_SELECTED);
-	//VIEW(ipBox, 0)->getImages().setConfig(MouseUI::Status::HOLDING, GAMEMENU_TEXTBOX_SELECTED);
-	//VIEW(ipBox, 0)->getImages().setConfig(MouseUI::Status::DRAGGED, GAMEMENU_TEXTBOX_SELECTED);
-	//VIEW(ipBox, 0)->updateModelValues();
-
-	//VIEW(portBox, 0)->getImages().setConfig(MouseUI::Status::IDLE, GAMEMENU_TEXTBOX_IDLE);
-	//VIEW(portBox, 0)->getImages().setConfig(MouseUI::Status::FOCUSED, GAMEMENU_TEXTBOX_IDLE);
-	//VIEW(portBox, 0)->getImages().setConfig(MouseUI::Status::SELECTED, GAMEMENU_TEXTBOX_SELECTED);
-	//VIEW(portBox, 0)->getImages().setConfig(MouseUI::Status::HOLDING, GAMEMENU_TEXTBOX_SELECTED);
-	//VIEW(portBox, 0)->getImages().setConfig(MouseUI::Status::DRAGGED, GAMEMENU_TEXTBOX_SELECTED);
-	//VIEW(portBox, 0)->updateModelValues();
-
+	
 	///* Agrego componentes */
-	//this->attachComponent(nameBox);
-	//this->attachComponent(ipBox);
-	//this->attachComponent(portBox);
-	//this->attachComponent(connectButton);
+	this->attachComponent(exitButton);
+	this->attachComponent(discardButton);
+	this->attachComponent(exchangeButton);
+	this->attachComponent(playAgainButton);
 
 	///* Posicion de componentes */
-	//MODEL(nameBox, TextUI*)->setPosition(365, 230);
-	//MODEL(ipBox, TextUI*)->setPosition(365, 300);
-	//MODEL(portBox, TextUI*)->setPosition(365, 370);
-	//MODEL(connectButton, MouseUI*)->setPosition(400, 440);
+	MODEL(exitButton, MouseUI*)->setPosition(210, 584);
+	MODEL(discardButton, MouseUI*)->setPosition(10, 306);
+	MODEL(exchangeButton, MouseUI*)->setPosition(77, 306);
+	MODEL(playAgainButton, MouseUI*)->setPosition(142, 306);
 
 	/* Configuro el background */
 	this->setBackground(GAMEMENU_BACKGROUND);
