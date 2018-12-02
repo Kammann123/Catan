@@ -193,6 +193,7 @@
     <ClInclude Include="CatanGui\AllegroWidgets\UIBuilder.h" />
     <ClInclude Include="CatanGui\CatanLauncher\CatanContext.h" />
     <ClInclude Include="CatanGui\CatanLauncher\CatanLauncher.h" />
+    <ClInclude Include="CatanGui\CatanLauncher\GameMenu.h" />
     <ClInclude Include="CatanGui\CatanLauncher\MainMenu.h" />
     <ClInclude Include="CatanNetworking\CatanNetworking.h" />
     <ClInclude Include="CatanNetworking\NetworkHandlers\NetworkClient.h" />
@@ -340,6 +341,7 @@
     <ClCompile Include="CatanGui\AllegroWidgets\UIBuilder.cpp" />
     <ClCompile Include="CatanGui\CatanLauncher\CatanContext.cpp" />
     <ClCompile Include="CatanGui\CatanLauncher\CatanLauncher.cpp" />
+    <ClCompile Include="CatanGui\CatanLauncher\GameMenu.cpp" />
     <ClCompile Include="CatanGui\CatanLauncher\MainMenu.cpp" />
     <ClCompile Include="CatanNetworking\CatanNetworking.cpp" />
     <ClCompile Include="CatanNetworking\NetworkHandlers\NetworkClient.cpp" />
