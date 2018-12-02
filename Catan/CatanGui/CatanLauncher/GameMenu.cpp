@@ -74,7 +74,6 @@ GameMenu(CatanLauncher& _launcher) : WindowUI(1080, 640), launcher(_launcher) {
 	VIEW(playAgainButton, 1)->getSamples().setConfig(MouseUI::Status::SELECTED, SELECT_SOUND);
 	VIEW(playAgainButton, 1)->getSamples().setConfig(MouseUI::Status::FOCUSED, FOCUS_SOUND);
 
-	///* Configuro los textbox! */
 	
 	///* Agrego componentes */
 	this->attachComponent(exitButton);
