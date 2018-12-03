@@ -1,10 +1,11 @@
 #include "UIModel.h"
 
 UIModel::
-UIModel(string id) {
+UIModel(string id, bool UIDestroys = true) {
 	this->id = id;
 	this->visible = false;
 	this->enable = false;
+	this->UIDestroys = UIDestroys;
 }
 
 UIModel::
@@ -40,4 +41,9 @@ UIModel::setId(string id) {
 string
 UIModel::getId(void) {
 	return id;
+}
+
+bool
+UIModel::shouldUIDestroy(void) {
+	return UIDestroys;
 }

@@ -163,6 +163,7 @@
     <ClInclude Include="CatanGame\CatanStates\Turn.h" />
     <ClInclude Include="CatanGame\CatanStates\Winner.h" />
     <ClInclude Include="CatanGame\Coord.h" />
+    <ClInclude Include="CatanGame\LongestRoad.h" />
     <ClInclude Include="CatanGame\Player.h" />
     <ClInclude Include="CatanGame\ResourceCard.h" />
     <ClInclude Include="CatanGame\ResourceHex.h" />
@@ -312,6 +313,7 @@
     <ClCompile Include="CatanGame\CatanStates\Turn.cpp" />
     <ClCompile Include="CatanGame\CatanStates\Winner.cpp" />
     <ClCompile Include="CatanGame\Coord.cpp" />
+    <ClCompile Include="CatanGame\LongestRoad.cpp" />
     <ClCompile Include="CatanGame\Player.cpp" />
     <ClCompile Include="CatanGame\ResourceCard.cpp" />
     <ClCompile Include="CatanGame\ResourceHex.cpp" />

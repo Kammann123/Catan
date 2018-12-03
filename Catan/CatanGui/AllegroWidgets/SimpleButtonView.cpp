@@ -19,7 +19,7 @@ SimpleButtonView::draw(void) {
 	ALLEGRO_FONT* textFont;
 
 	/*
-	* Hago uso de los valores por defecto de las configs
+	* Hago uso de los valores por defecto colorde las configs
 	* de colores y fuentes de texto.
 	*/
 	TextUI* button = (TextUI*)model;
@@ -28,7 +28,7 @@ SimpleButtonView::draw(void) {
 
 		/* Busco el color del boton */
 		if (colors.has(button->getStatus())) {
-			bgColor = colors[button->getStatus()].color;
+			bgColor = colors[button->getStatus()].;
 		}
 		else {
 			bgColor = al_map_rgb(255, 255, 255);

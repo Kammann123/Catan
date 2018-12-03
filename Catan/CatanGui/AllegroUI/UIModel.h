@@ -18,7 +18,7 @@ public:
 	/* UIModel
 	* Se construye con un estado inicial no visible ni habilitado.
 	*/
-	UIModel(string id);
+	UIModel(string id, bool UIDestroys = true);
 	~UIModel(void);
 
 	/*
@@ -29,11 +29,13 @@ public:
 	void setEnable(bool enableStatus);
 	void setId(string id);
 
+	bool shouldUIDestroy(void);
 	bool getVisible(void);
 	bool getEnable(void);
 	string getId(void);
 
 protected:
+	bool UIDestroys;
 	bool enable;
 	bool visible;
 	string id;
