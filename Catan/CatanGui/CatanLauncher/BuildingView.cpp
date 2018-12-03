@@ -1,6 +1,11 @@
 #include "BuildingView.h"
 #include <allegro5/allegro.h>
 
+
+#define ROAD_IMAGE				"CatanGui\\GUIDesigns\\GameMenu\\buildings\\road.png"
+#define SETTLEMENT_IMAGE		"CatanGui\\GUIDesigns\\GameMenu\\buildings\\settlement.png"
+#define CITY_IMAGE				"CatanGui\\GUIDesigns\\GameMenu\\buildings\\city.png"
+
 BuildingView::BuildingView(Building * model_) : UIView(model_)
 {
 	images.clear();

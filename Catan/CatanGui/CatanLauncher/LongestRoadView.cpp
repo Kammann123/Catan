@@ -1,6 +1,10 @@
 #include "LongestRoadView.h"
 #include <allegro5/allegro.h>
 
+
+#define LONGEST_ROAD_IMG		"CatanGui\\GUIDesigns\\GameMenu\\longest_road.png"
+#define LONGEST_ROAD_ID			"longest_road"
+
 LongestRoadView::LongestRoadView(LongestRoad * model_) : UIView(model_)
 {
 	images.clear();
