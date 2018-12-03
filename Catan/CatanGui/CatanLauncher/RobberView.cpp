@@ -13,8 +13,6 @@ RobberView::RobberView(Robber * model_) : UIView(model_)
 	VIEW(robber, 0)->getImages().setConfig(MouseUI::Status::DRAGGED, ROBBER_DRAGGED_IMG);
 	VIEW(robber, 0)->updateModelValues();
 
-	///* Lo agrego */
-	this->attachComponent(robber);
 }
 
 RobberView::~RobberView()
