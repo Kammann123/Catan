@@ -37,7 +37,8 @@ public:
 	Player* getPlayer(void);
 
 private:
+
 	ResourceId resourceId;
-	Player* playerId;
+	Player* player;
 	CatanGame* game;
 };

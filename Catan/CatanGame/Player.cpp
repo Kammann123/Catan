@@ -1,32 +1,91 @@
 #include "Player.h"
+#include "../CatanGui/CatanLauncher/GameWindow/GameWindow.h"
 
-Player::Player(PlayerId player) {
+void 
+Player::_create_settlements(void) {	
+	for (unsigned int i = 0; i < SETTLEMENT_COUNT; i++) {
+		Building* building = new Building(this, BuildingType::SETTLEMENT);
+		settlements.push_back(building);
+	}
+}
 
-	/* Inicializacion */
+void
+Player::_create_roads(void) {
+	for (unsigned int i = 0; i < ROAD_COUNT; i++) {
+		Building* building = new Building(this, BuildingType::ROAD);
+		settlements.push_back(building);
+	}
+}
+
+void
+Player::_create_cities(void){
+	for (unsigned int i = 0; i < CITY_COUNT; i++) {
+		Building* building = new Building(this, BuildingType::CITY);
+		settlements.push_back(building);
+	}
+}
+
+void
+Player::_destroy_settlements(void) {
+	for (Building* building : settlements) {
+		if (building) {
+			delete building;
+		}
+	}
+}
+
+void
+Player::_destroy_roads(void) {
+	for (Building* building : roads) {
+		if (building) {
+			delete building;
+		}
+	}
+}
+
+void
+Player::_destroy_cities(void) {
+	for (Building* building : cities) {
+		if (building) {
+			delete building;
+		}
+	}
+}
+
+void
+Player::_destroy_cards(void) {
+	for (ResourceCard* card : resourceCards) {
+		if (card) {
+			delete card;
+		}
+	}
+}
+
+Player::
+Player(PlayerId player, CatanGame* game) : ContainerUI(player == PlayerId::PLAYER_ONE ? PLAYER_ONE_ID : PLAYER_TWO_ID, 0, 0) {
+	/* Inicializacion de parametros */
+	this->player = player;
+	this->game = game;
 	this->name = "";
-	this->player = player;
-	victoryPoints = 0;
-	resourceCards = { new ResourceCard(ResourceId::FIELD), new ResourceCard(ResourceId::FIELD), new ResourceCard(ResourceId::FIELD), new ResourceCard(ResourceId::FIELD) };
+	this->victoryPoints = 0;
+	this->resourceCards.clear();
+	this->settlements.clear();
+	this->cities.clear();
+	this->roads.clear();
 
-	/* Pido las construcciones */
-	_get_buildings(SETTLEMENT_COUNT, ROAD_COUNT, CITY_COUNT);
+	/* Creacion de fichas */
+	_create_settlements();
+	_create_cities();
+	_create_roads();
 }
 
-Player::Player(PlayerId player, string name, unsigned int settleCount, unsigned int citiesCount, unsigned int roadsCount)
-{
-	/* Inicializacion */
-	this->name = name;
-	this->player = player;
-	victoryPoints = 0;
-	resourceCards = {};
-
-	/* Pido las construcciones */
-	_get_buildings(settleCount, roadsCount, citiesCount);
-}
-
-Player::~Player() {
-	_free_buildings();
-	_free_resources();
+Player::
+~Player(void) {
+	/* Libero y destruyo elementos */
+	_destroy_settlements();
+	_destroy_cities();
+	_destroy_roads();
+	_destroy_cards();
 }
 
 void 
@@ -34,14 +93,16 @@ Player::setName(string name) {
 	this->name = name;
 }
 
-string Player::getName()
-{
-	return name;
-}
+unsigned int
+Player::getResourceCount(ResourceId resourceID) const {
+	unsigned int resourceCount = 0;
 
-unsigned int Player::getVictoryPoints()
-{
-	return victoryPoints;
+	for (ResourceCard* card : resourceCards) {
+		if (card->getResourceId() == resourceID) {
+			resourceCount++;
+		}
+	}
+	return resourceCount;
 }
 
 unsigned int
@@ -49,48 +110,29 @@ Player::getResourceCount(void) const {
 	return (unsigned int)this->resourceCards.size();
 }
 
-void Player::addPoints(unsigned int points)
-{
-	victoryPoints += points;
-}
-
-void Player::removePoints(unsigned int points)
-{
-	victoryPoints -= points;
-}
-
-void Player::addResourceCard(ResourceCard * card)
-{
-	resourceCards.push_back(card);
-}
-
-void Player::addResourceCard(list<ResourceCard*> cardsList)
-{
-	for (ResourceCard* card : cardsList)
-	{
-		this->addResourceCard(card);
-	}
-}
-
-void Player::removeResourceCard(ResourceCard * card)
-{
-	resourceCards.remove(card);
-}
-
-void Player::removeResourceCard(ResourceId id) {
-	ResourceCard* temp = nullptr;
-
-	for (ResourceCard* card : resourceCards) {
-		if (card->getResourceId() == id) {
-			temp = card;
+list<Building*>
+Player::buildings(BuildingType type) {
+	switch (type) {
+		case BuildingType::SETTLEMENT:
+			return settlements;
 			break;
-		}
+		case BuildingType::ROAD:
+			return roads;
+			break;
+		case BuildingType::CITY:
+			return cities;
+			break;
 	}
-	
-	if (temp) {
-		resourceCards.remove(temp);
-		delete temp;
-	}
+}
+
+unsigned int Player::getVictoryPoints()
+{
+	return victoryPoints;
+}
+
+list<ResourceCard*>
+Player::showCards(void) {
+	return resourceCards;
 }
 
 unsigned int Player::hasRoads(void)
@@ -108,72 +150,88 @@ unsigned int Player::hasCities(void)
 	return (unsigned int)cities.size();
 }
 
-unsigned int
-Player::getResourceCount(ResourceId resourceID) const {
-	unsigned int resourceCount = 0;
+PlayerId
+Player::getPlayerId(void) {
+	return player;
+}
 
-	for (ResourceCard* card : resourceCards) {
+string Player::getName()
+{
+	return name;
+}
 
-		if (card->getResourceId() == resourceID) {
-			resourceCount++;
-		}
+void Player::removePoints(unsigned int points)
+{
+	victoryPoints -= points;
+}
 
-	}
-
-	return resourceCount;
+void Player::addPoints(unsigned int points)
+{
+	victoryPoints += points;
 }
 
 void
-Player::removeResourceCard(ResourceId resourceId, unsigned int qty) {
-
-	list<ResourceCard*> bucket;
-
-	/* Verifico tener esa cantidad para removerlas */
-	if( qty == getResourceCount(resourceId) ){
-		/* Busco y guardo las cartas que tengo que tirar */
-		for (ResourceCard* card : resourceCards) {
-			if (card->getResourceId() == resourceId) {
-				bucket.push_back(card);
-				qty--;
-				if (qty == 0)	break;
-			}
-		}
-		/* Tiro las cartas */
-		for (ResourceCard* card : bucket) {
-			resourceCards.remove(card);
-			delete card;
-		}
-	}
+Player::resetVictoryPoints() {
+	this->victoryPoints = 0;
 }
 
 list<ResourceCard*>
-Player::giveResourceCard(ResourceId resourceId, unsigned int qty) {
-	list<ResourceCard*> bucket;
+Player::giveCards(ResourceId id, unsigned int qty) {
+	list<ResourceCard*> cards;
+	while (qty) {
+		ResourceCard* card = giveCard(id);
+		if (card) {
+			cards.push_back(card);
+		}
+		qty--;
+	}
+	return cards;
+}
 
-	/* Busco hasta esa cantidad */
+ResourceCard*
+Player::giveCard(ResourceId id) {
 	for (ResourceCard* card : resourceCards) {
-		if (card->getResourceId() == resourceId) {
-			bucket.push_back(card);
-			qty--;
-			if (qty == 0) break;
+		if (card->getResourceId() == id) {
+			card->assign();
+			notifyObservers();
+			return card;
 		}
 	}
-	/* Las quito de mi lista */
-	for (ResourceCard* card : bucket) {
-		resourceCards.remove(card);
-	}
-
-	return bucket;
+	return nullptr;
 }
 
 void
-Player::giveBackBuilding(BuildingType type, Building* building) {
+Player::removeCard(list<ResourceCard*> cards) {
+	for (ResourceCard* card : cards) {
+		removeCard(card);
+	}
+}
 
-	/* Si la construccion existe realmente */
+void
+Player::removeCard(ResourceCard* card) {
+	card->assign();
+	resourceCards.remove(card);
+	notifyObservers();
+}
+
+void
+Player::addCard(list<ResourceCard*> cards) {
+	for (ResourceCard* card : cards) {
+		addCard(card);
+	}
+}
+
+void
+Player::addCard(ResourceCard* card) {
+	card->assign(this);
+	resourceCards.push_back(card);
+	notifyObservers();
+}
+
+void
+Player::giveBackBuilding(Building* building) {
 	if (building) {
-
-		/* La vuelvo a meter a mis conjuntos */
-		switch (type) {
+		switch (building->getType()) {
 			case BuildingType::CITY:
 				cities.push_back(building);
 				break;
@@ -187,133 +245,33 @@ Player::giveBackBuilding(BuildingType type, Building* building) {
 	}
 }
 
-Building* Player:: popRoad(void)
+Building* Player::popRoad(void)
 {
-	Building* ret = nullptr;
-
-	if (hasRoads())
-	{
-		ret = roads.back(); // tomo ultimo elemento de la lista
-		roads.pop_back(); // elimino ultimo elemento de la lista
+	if (hasRoads()) {
+		Building* temp = roads.back();
+		roads.pop_back();
+		return temp;
 	}
-
-	return ret; // devuelvo puntero
+	return nullptr;
 }
 
 Building* Player::popSettlement(void)
 {
-	Building* ret = nullptr;
-
-	if (hasSettlements())
-	{
-		ret = settlements.back(); // tomo ultimo elemento de la lista
-		settlements.pop_back(); // elimino ultimo elemento de la lista
+	if (hasSettlements()) {
+		Building* temp = settlements.back();
+		settlements.pop_back();
+		return temp;
 	}
-
-	return ret; // devuelvo puntero
+	return nullptr;
 }
 
 
 Building* Player::popCity(void)
 {
-	Building* ret = nullptr;
-
-	if (hasCities())
-	{
-		ret = cities.back(); // tomo ultimo elemento de la lista
-		cities.pop_back(); // elimino ultimo elemento de la lista
+	if (hasCities()) {
+		Building* temp = cities.back();
+		cities.pop_back();
+		return temp;
 	}
-
-	return ret; // devuelvo puntero
-}
-
-void
-Player::resetVictoryPoints() {
-	this->victoryPoints = 0;
-}
-
-void
-Player::reset(void) {
-	
-	/* Puntaje a cero */
-	resetVictoryPoints();
-
-	/* Elimino cartas */
-	_free_buildings();
-	_free_resources();
-
-	/* Reinicio fichas */
-	_get_buildings(SETTLEMENT_COUNT, ROAD_COUNT, CITY_COUNT);
-}
-
-void
-Player::_get_buildings(unsigned int settleCount, unsigned int roadsCount, unsigned int citiesCount) {
-
-	/* Agrego settlements */
-	while (settleCount) {
-		/* Creo el settlement */
-		Building* settlement = new Building(player, BuildingType::SETTLEMENT);
-		this->settlements.push_back(settlement);
-		settleCount--;
-	}
-
-	/* Agrego roads */
-	while (roadsCount) {
-		/* Creo el road */
-		Building* road = new Building(player, BuildingType::ROAD);
-		this->roads.push_back(road);
-		roadsCount--;
-	}
-
-	/* Agrego cities */
-	while (citiesCount) {
-		/* Creo el city */
-		Building* city = new Building(player, BuildingType::CITY);
-		this->cities.push_back(city);
-		citiesCount--;
-	}
-}
-
-void
-Player::_free_buildings(void) {
-
-	/* Libero cada building */
-	for (Building* b : settlements) {
-		delete b;
-	}
-	for (Building* b : roads) {
-		delete b;
-	}
-	for (Building* b : cities) {
-		delete b;
-	}
-}
-
-void
-Player::_free_resources(void) {
-
-	/* Libero resource cards */
-	for (ResourceCard* resourceCard : resourceCards) {
-		delete resourceCard;
-	}
-}
-
-ResourceCard*
-Player::getResourceCard(ResourceId id) {
-	ResourceCard* temp = nullptr;
-	for (ResourceCard* card : resourceCards) {
-		if (card->getResourceId() == id) {
-			temp = card;
-			break;
-		}
-	}
-	if (temp) {
-		resourceCards.remove(temp);
-	}
-	return temp;
-}
-
-list<ResourceCard*>
-Player::showCards(void) {
-	return resourceCards;
+	return nullptr;
 }

@@ -1,52 +1,35 @@
 #include "ResourceHex.h"
 
 ResourceHex::
-ResourceHex() {}
+ResourceHex() : FrameUI("", 0, 0) {}
 
 ResourceHex::
-ResourceHex(ResourceId resource_, unsigned int token_, Coord coord_){
-	this->resource = resource_;
-	this->token = token_;
-	this->coord = coord_;
+ResourceHex(ResourceId resource) : FrameUI("", 0, 0) {
+	this->resource = resource;
 }
 
 ResourceHex::
-ResourceHex(ResourceId resource_, Coord coord_){
-	this->resource = resource_;
-	this->coord = coord_;
-}
-
-ResourceHex::
-ResourceHex(Coord coord_){
-	this->coord = coord_;
-}
-
-ResourceHex::
-ResourceHex(const ResourceHex& copy) {
+ResourceHex(const ResourceHex& copy) : FrameUI("", 0, 0) {
 	this->resource = copy.resource;
 	this->token = copy.token;
 	this->coord = copy.coord;
+}
+
+Coord
+ResourceHex::getCoord(void)
+{
+	return coord;
+}
+
+const char*
+ResourceHex::getLand(void) {
+	return landStrings[(unsigned int)resource];
 }
 
 unsigned int
 ResourceHex::getToken(void)
 {
 	return token;
-}
-
-void
-ResourceHex::setToken(unsigned int newToken)
-{
-	if (isValidToken(newToken))
-	{
-		token = newToken;
-	}
-
-}
-
-void
-ResourceHex::setCoord(Coord coord) {
-	this->coord = coord;
 }
 
 ResourceId
@@ -56,18 +39,15 @@ ResourceHex::getResource(void)
 }
 
 void
-ResourceHex::setResource(ResourceId newResource)
-{
-	resource = newResource;
+ResourceHex::place(Coord coord) {
+	this->coord = coord;
 }
 
-Coord
-ResourceHex::getCoord(void)
+void
+ResourceHex::setToken(unsigned int newToken)
 {
-	return coord;
-}
-
-const char* 
-ResourceHex::getLand(void) {
-	return landStrings[(unsigned int)resource];
+	if (isValidToken(newToken))
+	{
+		token = newToken;
+	}
 }

@@ -3,8 +3,8 @@
 #define IS(value, compareValue, cast) ((value) == (cast)(compareValue))
 
 extern const char* resourceStrings[6] = {
-	"Lumber", "Brick", "Ore", "Grain",
-	"Wool", "Nothing(Desert)"
+	"lumber", "brick", "ore", "grain",
+	"wool", "nothing"
 };
 
 extern const char* landStrings[6] = {

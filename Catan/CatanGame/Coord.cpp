@@ -14,19 +14,20 @@ extern const string edges[72] = {
 	"4Q3", "3Q", "3RQ", "3RS", "3SR", "3S2"
 };
 
-extern const string dots[54] = {
-	"0A", "0B", "10C",
-	"05A", "0AB", "0BC", "1C",
-	"5AD", "ABE", "BCF", "1CG",
-	"5D", "ADE", "BEF", "CFG", "1G",
-	"5DH", "DEI", "EFJ", "FGK", "1GL",
-	"5H", "DHI", "EIJ", "FJK", "GKL", "12L",
-	"45H", "HIM", "IJN", "JKO", "KLP", "2L",
-	"4HM", "IMN", "JNO", "KOP", "2LP",
-	"4M", "NMQ", "NOR", "OPS", "2P",
-	"4MQ", "NQR", "ORS", "2PS",
-	"4Q", "3QR", "3RS", "23S",
-	"34Q", "3R", "3S"
+extern const string externalDots[30] = {
+	"0A", "0AB", "0B", "0BC", "01C", "1C",
+	"1CG", "1G", "1GL", "12L", "2L", "2LP",
+	"2P", "2PS", "23S", "3S", "3SR", "3R",
+	"3RQ", "34Q", "4Q", "4MQ", "4M", "4HM",
+	"45H", "5H", "5DH", "5D", "5AD", "05A"
+};
+
+extern const string internalDots[24] = {
+	"ABE", "BCF", "ADE", "BEF", "CFG",
+	"DEI", "EFJ", "FGK", "DHI", "EIJ",
+	"FJK", "GKL", "HIM", "IJN", "JKO",
+	"KLP", "IMN", "JNO", "KOP", "NMQ",
+	"NOR", "OPS", "NQR", "ORS"
 };
 
 Coord::
@@ -479,9 +480,15 @@ Coord::_handle_repetition_intersection(void) {
 
 void
 Coord::_verify_type(void) {
+
 	switch (type) {
 		case DOT:
-			for (string coord : dots) {
+			for (string coord : internalDots) {
+				if (coord == coords) {
+					return;
+				}
+			}
+			for (string coord : externalDots) {
 				if (coord == coords) {
 					return;
 				}
@@ -519,9 +526,14 @@ Coord::_verify_value(void) {
 
 bool
 Coord::_is_valid_dot(void) {
-	for (string coord : dots) {
+	for (string coord : internalDots) {
 		if (coord == coords) {
-			return true;
+			return;
+		}
+	}
+	for (string coord : externalDots) {
+		if (coord == coords) {
+			return;
 		}
 	}
 	return false;
@@ -565,7 +577,13 @@ Coord::_update_coord(void) {
 			return;
 		}
 	}
-	for (string coord : dots) {
+	for (string coord : internalDots) {
+		if (coord == coords) {
+			type = Type::DOT;
+			return;
+		}
+	}
+	for (string coord : externalDots) {
 		if (coord == coords) {
 			type = Type::DOT;
 			return;
@@ -601,7 +619,21 @@ Coord::_order_refactor(void) {
 		}
 	}
 	else if (isDot()) {
-		for (string coord : dots) {
+		for (string coord : externalDots) {
+			if (coords.size() == coord.size()) {
+				for (unsigned char c : coord) {
+					if (find(coords.begin(), coords.end(), c) == coords.end()) {
+						ok = false;
+					}
+				}
+				if (ok) {
+					coords = coord;
+					return;
+				}
+				ok = true;
+			}
+		}
+		for (string coord : internalDots) {
 			if (coords.size() == coord.size()) {
 				for (unsigned char c : coord) {
 					if (find(coords.begin(), coords.end(), c) == coords.end()) {

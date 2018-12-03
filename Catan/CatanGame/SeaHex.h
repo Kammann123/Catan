@@ -52,5 +52,5 @@ public:
 
 private:
 	Coord coord;
-	SeaId id;
+	SeaId seaId;
 };	
