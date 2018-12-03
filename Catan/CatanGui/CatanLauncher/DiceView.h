@@ -2,7 +2,6 @@
 #include "../../CatanGame/Dice.h"
 
 
-#define DICE_0_IMG				"CatanGui\\GUIDesigns\\GameMenu\\dices\\dice_0.png"
 #define DICE_1_IMG				"CatanGui\\GUIDesigns\\GameMenu\\dices\\dice_1.png"
 #define DICE_2_IMG				"CatanGui\\GUIDesigns\\GameMenu\\dices\\dice_2.png"
 #define DICE_3_IMG				"CatanGui\\GUIDesigns\\GameMenu\\dices\\dice_3.png"

@@ -4,7 +4,6 @@
 DiceView::DiceView(Dice * model_) : UIView(model_)
 {
 	images.clear();
-	images.setConfig(0, DICE_0_IMG);
 	images.setConfig(1, DICE_1_IMG);
 	images.setConfig(2, DICE_2_IMG);
 	images.setConfig(3, DICE_3_IMG);

@@ -2,7 +2,7 @@
 #include "../AllegroUI/UIView.h"
 
 
-#define ROAD_IMAGE				"CatanGui\\GUIDesigns\\GameMenu\\buildings\\raod.png"
+#define ROAD_IMAGE				"CatanGui\\GUIDesigns\\GameMenu\\buildings\\road.png"
 #define SETTLEMENT_IMAGE		"CatanGui\\GUIDesigns\\GameMenu\\buildings\\settlement.png"
 #define CITY_IMAGE				"CatanGui\\GUIDesigns\\GameMenu\\buildings\\city.png"
 
