@@ -19,7 +19,7 @@ using namespace std;
 typedef struct {
 	double x;
 	double y;
-	unsigned int info;
+	double info;
 }container_t;
 
 /*
@@ -57,8 +57,8 @@ public:
 	* dentro del container, en caso de ya existir alguno
 	* con ese indice, se lo reemplaza por el nuevo.
 	*/
-	void set(unsigned int index, double x, double y, unsigned int info);
-	void set(string index, double x, double y, unsigned int info);
+	void set(unsigned int index, double x, double y, double info);
+	void set(string index, double x, double y, double info);
 
 	/*
 	* remove - Permite quitar un elmento ordenado dentro del container

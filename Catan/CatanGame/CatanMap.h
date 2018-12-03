@@ -16,6 +16,14 @@ using namespace std;
 
 class CatanGame;
 
+/* Map assignments */
+#define HILL_HEX_COUNT		3
+#define FOREST_HEX_COUNT	4
+#define	MOUNTAIN_HEX_COUNT	3
+#define FIELD_HEX_COUNT		4
+#define PASTURE_HEX_COUNT	4
+#define DESERT_HEX_COUNT	1
+
 /*
 * position_t - Posiciones vinculadas entre la GUI y las 
 * logicas del mapa.
@@ -23,7 +31,7 @@ class CatanGame;
 typedef struct {
 	double x;
 	double y;
-	unsigned int info;
+	double info;
 } position_t;
 
 /*
@@ -58,7 +66,7 @@ public:
 	* Loaders de informacion
 	*************************/
 	void loadMap(map<Coord, MapValue> gameMap);
-	void loadTokens(map<Coord, MapValue> tokens);
+	void loadTokens(map<Coord, unsigned char> tokens);
 
 	/*************************************
 	* Interfaz de construccion en el mapa
@@ -101,6 +109,12 @@ private:
 	void _destroy_land(void);
 	void _destroy_sea(void);
 	void _destroy_robber(void);
+
+	/***************************************************
+	* Configuracion hardcode de las ubicaciones en
+	* pantalla de las coordenadas logicas del juego
+	***************************************************/
+	void _init_coords(void);
 
 	map<Coord, position_t> screenCoords;
 	list<ResourceHex*> landMap;

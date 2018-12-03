@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "Building.h"
+#include "../CatanGui/CatanLauncher/GameWindow/GameWindow.h"
 
 Building::
 Building(Player* player, BuildingType type) : MouseUI("", 0, 0, true) {
@@ -32,17 +33,38 @@ getType(void)
 }
 
 void
-Building::build(Coord coord, double x, double y) {
+Building::build(Coord coord, double x, double y, double radian) {
+	/* Configuro los valores del building para construirlo */
 	this->built = true;
 	this->coord = coord;
 	this->setPosition(x, y);
+	this->setAngle(radian);
 }
 
 void
-Building::demolish(Coord coord, double x, double y) {
+Building::demolish(void) {
+	/* Configuro la remocion de la construccion */
 	this->build = false;
-	this->coord = coord;
-	this->setPosition(x, y);
+
+	/* Determino que tipo de construccion es, para buscar
+	* el id correspondiente dentro del container de player
+	* y lo busco, obteniendo la informacion de la nueva posicion
+	*/
+	string index;
+	switch (this->type) {
+		case BuildingType::SETTLEMENT:
+			index = POSITION_SETTLEMENT;
+			break;
+		case BuildingType::ROAD:
+			index = POSITION_ROAD;
+			break;
+		case BuildingType::CITY:
+			index = POSITION_CITY;
+			break;
+	}
+	container_t value = (*player)[index];
+	this->setPosition(value.x, value.y);
+	this->setAngle(value.info);
 }
 
 void

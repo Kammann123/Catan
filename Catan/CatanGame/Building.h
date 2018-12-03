@@ -39,8 +39,8 @@ public:
 	* del building, cambian la coordenada, posicion,
 	* y estado del building.
 	*/
-	void build(Coord coord, double x, double y);
-	void demolish(Coord coord, double x, double y);
+	void build(Coord coord, double x, double y, double radian);
+	void demolish(void);
 
 	/****************************************************
 	* Metodos para la modelizacion de un building como 
@@ -89,6 +89,6 @@ private:
 	Player* player;
 	Coord coord;
 
-	bool built;
 	bool visited;
+	bool built;
 };

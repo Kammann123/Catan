@@ -488,43 +488,7 @@ CatanGame::generateMap() {
 	for (unsigned char c = 'A'; c <= 'S'; c++)	coords.push_back(c);
 	random_shuffle(coords.begin(), coords.end());
 
-	/* Ubicamos aleatoriamente hill */
-	for (unsigned int ii = 0; ii < 5; ii++) {
-
-		unsigned int hexCount;
-		ResourceId hexId;
-
-		/* Elijo que tipo de recurso asignar  */
-		switch ( ii ) {
-			case 0:
-				hexCount = HILL_HEX_COUNT;
-				hexId = ResourceId::HILL;
-				break;
-			case 1:
-				hexCount = FOREST_HEX_COUNT;
-				hexId = ResourceId::FOREST;
-				break;
-			case 2:
-				hexCount = MOUNTAIN_HEX_COUNT;
-				hexId = ResourceId::MOUNTAIN;
-				break;
-			case 3:
-				hexCount = FIELD_HEX_COUNT;
-				hexId = ResourceId::FIELD;
-				break;
-			case 4:
-				hexCount = PASTURE_HEX_COUNT;
-				hexId = ResourceId::PASTURES;
-				break;
-		}
-
-		/* Ubicamos aleatoriamente */
-		for (unsigned int i = 0; i < hexCount; i++) {
-			ResourceHex hex = ResourceHex(hexId, coords.back());
-			coords.pop_back();
-			resourceMap.insert(pair<Coord, ResourceHex>(hex.getCoord(), hex));
-		}
-	}
+	
 
 	/* Ubicamos aleatoriamente desert */
 	resourceMap.insert(pair<Coord, ResourceHex>(coords.back(), ResourceHex(ResourceId::DESERT, coords.back())));
@@ -555,29 +519,6 @@ CatanGame::generateOcean() {
 
 void
 CatanGame::generateTokens() {
-	vector<unsigned char> tokens;
-	tokens.clear();
-
-	/* Genero los numeros aleatorios */
-	tokens.push_back(2), tokens.push_back(12);
-	for (unsigned char i = 3; i <= 11; i++) {
-		if (i != 7) {
-			tokens.push_back(i);
-			tokens.push_back(i);
-		}
-	}
-	random_shuffle(tokens.begin(), tokens.end());
-
-	/* Asigno los tokens */
-	for (auto& hex : resourceMap) {
-		ResourceHex& resourceHex = hex.second;
-		if (resourceHex.getResource() != ResourceId::DESERT) {
-			resourceHex.setToken( tokens.back() ), tokens.pop_back();
-		}
-		else {
-			resourceHex.setToken(0);
-		}
-	}
 }
 
 bool

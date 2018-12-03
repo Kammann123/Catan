@@ -33,12 +33,12 @@ ContainerUI::operator[](string index) {
 }
 
 void
-ContainerUI::set(unsigned int index, double x, double y, unsigned int info) {
+ContainerUI::set(unsigned int index, double x, double y, double info) {
 	iCont[index] = {x, y, info};
 }
 
 void
-ContainerUI::set(string index, double x, double y, unsigned int info) {
+ContainerUI::set(string index, double x, double y, double info) {
 	sCont[index] = {x, y, info};
 }
 

@@ -28,14 +28,6 @@
 #define STONE_COUNT		2
 #define WOOD_COUNT		2
 
-/* Map assignments */
-#define HILL_HEX_COUNT		3
-#define FOREST_HEX_COUNT	4
-#define	MOUNTAIN_HEX_COUNT	3
-#define FIELD_HEX_COUNT		4
-#define PASTURE_HEX_COUNT	4
-#define DESERT_HEX_COUNT	1
-
 /* Transaction definitions */
 #define BANK_TRANSACTION_CARDS_COUNT 4 
 
