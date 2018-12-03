@@ -507,6 +507,15 @@
     <ClInclude Include="CatanGui\CatanLauncher\BuildingView.h">
       <Filter>CatanGui\CatanLauncher</Filter>
     </ClInclude>
+    <ClInclude Include="CatanGui\AllegroUI\AnimationController.h">
+      <Filter>CatanGui\AllegroUI</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGui\AllegroUI\AnimationUI.h">
+      <Filter>CatanGui\AllegroUI</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGui\CatanLauncher\DiceView.h">
+      <Filter>CatanGui\AllegroUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FSM\EventQueue.cpp">
@@ -946,6 +955,15 @@
     </ClCompile>
     <ClCompile Include="CatanGui\CatanLauncher\BuildingView.cpp">
       <Filter>CatanGui\CatanLauncher</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGui\AllegroUI\AnimationController.cpp">
+      <Filter>CatanGui\AllegroUI</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGui\AllegroUI\AnimationUI.cpp">
+      <Filter>CatanGui\AllegroUI</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGui\CatanLauncher\DiceView.cpp">
+      <Filter>CatanGui\AllegroUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
