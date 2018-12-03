@@ -39,6 +39,7 @@ public:
 	unsigned int hasSettlements(void);
 	unsigned int hasCities(void);
 	unsigned int hasRoads(void);
+	PlayerId getPlayerId(void);
 	string getName(void);
 
 	/********************************

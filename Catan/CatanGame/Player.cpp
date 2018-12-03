@@ -150,6 +150,11 @@ unsigned int Player::hasCities(void)
 	return (unsigned int)cities.size();
 }
 
+PlayerId
+Player::getPlayerId(void) {
+	return player;
+}
+
 string Player::getName()
 {
 	return name;
