@@ -10,8 +10,11 @@ UIComponent(UIModel* model_, vector<UIView*> view_, vector<UIController*> contro
 
 UIComponent::
 ~UIComponent() {
-	if (model)
-		delete model;
+	if (model) {
+		if (model->shouldUIDestroy()) {
+			delete model;
+		}
+	}
 	
 	for (UIView* view : views) {
 		if (view)
