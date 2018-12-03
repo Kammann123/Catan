@@ -19,6 +19,9 @@
     <Filter Include="CatanGame">
       <UniqueIdentifier>{95fba3fa-92c0-4b73-8e04-73ab17b62b00}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CatanGui">
+      <UniqueIdentifier>{ec15f5ca-0991-4943-9f5b-0dd94ece952c}</UniqueIdentifier>
+    </Filter>
     <Filter Include="CatanNetworking\NetworkPackets">
       <UniqueIdentifier>{289f7498-621e-4472-981a-319af063af14}</UniqueIdentifier>
     </Filter>
@@ -48,9 +51,6 @@
     </Filter>
     <Filter Include="CatanData">
       <UniqueIdentifier>{3ea99685-f141-473c-90d5-eafe44ca6dcd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CatanGui">
-      <UniqueIdentifier>{ec15f5ca-0991-4943-9f5b-0dd94ece952c}</UniqueIdentifier>
     </Filter>
     <Filter Include="CatanGui\AllegroWidgets">
       <UniqueIdentifier>{21e3adf1-2c88-4226-b854-b449460fa780}</UniqueIdentifier>
@@ -498,8 +498,8 @@
     <ClInclude Include="CatanGui\CatanLauncher\GameMenu.h">
       <Filter>CatanGui\CatanLauncher</Filter>
     </ClInclude>
-    <ClInclude Include="CatanGame\LongestRoad.h">
-      <Filter>CatanGame</Filter>
+    <ClInclude Include="CatanGui\CatanLauncher\ResourceCardView.h">
+      <Filter>CatanGui\CatanLauncher</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -932,8 +932,8 @@
     <ClCompile Include="CatanGui\CatanLauncher\GameMenu.cpp">
       <Filter>CatanGui\CatanLauncher</Filter>
     </ClCompile>
-    <ClCompile Include="CatanGame\LongestRoad.cpp">
-      <Filter>CatanGame</Filter>
+    <ClCompile Include="CatanGui\CatanLauncher\ResourceCardView.cpp">
+      <Filter>CatanGui\CatanLauncher</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
