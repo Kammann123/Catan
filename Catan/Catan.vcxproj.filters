@@ -501,6 +501,12 @@
     <ClInclude Include="CatanGui\CatanLauncher\ResourceCardView.h">
       <Filter>CatanGui\CatanLauncher</Filter>
     </ClInclude>
+    <ClInclude Include="CatanGame\LongestRoad.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGui\AllegroUI\ContainerUI.h">
+      <Filter>CatanGui\AllegroUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FSM\EventQueue.cpp">
@@ -934,6 +940,12 @@
     </ClCompile>
     <ClCompile Include="CatanGui\CatanLauncher\ResourceCardView.cpp">
       <Filter>CatanGui\CatanLauncher</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGame\LongestRoad.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGui\AllegroUI\ContainerUI.cpp">
+      <Filter>CatanGui\AllegroUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
