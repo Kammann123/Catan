@@ -10,7 +10,7 @@ ResourceCardView::ResourceCardView(ResourceCard * model_): UIView(model_)
 	images.setConfig((int)ResourceId::FIELD, FIELD_CARD_IMAGE);
 	images.setConfig((int)ResourceId::PASTURES, PASTURES_CARD_IMAGE);
 	images.setConfig((int)ResourceId::DESERT, DESERT_CARD_IMAGE);
-	images.setConfig("cardBack", CARD_BACK_IMAGE);
+	images.setConfig(CARD_BACK_ID, CARD_BACK_IMAGE);
 }
 
 ResourceCardView::~ResourceCardView()
