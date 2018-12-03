@@ -1,21 +1,21 @@
 #include "Robber.h"
+#include "../CatanGui/CatanLauncher/GameWindow/GameWindow.h"
 
 Robber::
-Robber() {
-	this->coord = 'Z';
-}
+Robber() : MouseUI(ROBBER_ID, 0, 0, true) {}
 
 Robber::
-Robber(Coord coord) {
-	this->coord = coord;
-}
-
-void 
-Robber::setCoord(Coord coord) {
+Robber(Coord coord) : MouseUI(ROBBER_ID, 0, 0, true) {
 	this->coord = coord;
 }
 
 Coord
-Robber::getCoord(void) const {
+Robber::getCoord(void)  const {
 	return this->coord;
+}
+
+void
+Robber::move(Coord coord, double x, double y) {
+	this->coord = coord;
+	this->setPosition(x, y);
 }
