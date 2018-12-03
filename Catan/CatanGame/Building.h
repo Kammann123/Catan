@@ -87,7 +87,7 @@ private:
 	list<Building*> neighbours;
 	BuildingType type;
 	Player* player;
-	Coord place;
+	Coord coord;
 
 	bool built;
 	bool visited;

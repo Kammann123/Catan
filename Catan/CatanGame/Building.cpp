@@ -2,38 +2,26 @@
 #include "Building.h"
 
 Building::
-Building(Coord place, PlayerId player, BuildingType type) {
-	this->place = place;
+Building(Player* player, BuildingType type) : MouseUI("", 0, 0, true) {
 	this->player = player;
 	this->type = type;
+	this->neighbours.clear();
+	this->built = false;
 	this->visited = false;
 }
 
-Building::
-Building(PlayerId player, BuildingType type) {
-	this->place = BUILDING_NOT_PLACED;
-	this->player = player;
-	this->type = type;
-	this->visited = false;
+bool
+Building::isBuilt(void) {
+	return built;
 }
 
-Building::
-Building(BuildingType type) {
-	this->place = BUILDING_NOT_PLACED;
-	this->player = PlayerId::PLAYER_NONE;
-	this->type = type;
-	this->visited = false;
+Coord 
+Building::getPlace(void) {
+	return coord;
 }
 
-Coord Building::
-getPlace(void)
-{
-	return place;
-}
-
-PlayerId Building::
-getPlayer(void)
-{
+Player*
+Building::getPlayer(void) {
 	return player;
 }
 
@@ -43,15 +31,18 @@ getType(void)
 	return type;
 }
 
-void Building::
-setPlace(Coord place)
-{
-	this->place = place;
+void
+Building::build(Coord coord, double x, double y) {
+	this->built = true;
+	this->coord = coord;
+	this->setPosition(x, y);
 }
 
-void Building::
-setPlayer(PlayerId player) {
-	this->player = player;
+void
+Building::demolish(Coord coord, double x, double y) {
+	this->build = false;
+	this->coord = coord;
+	this->setPosition(x, y);
 }
 
 void
