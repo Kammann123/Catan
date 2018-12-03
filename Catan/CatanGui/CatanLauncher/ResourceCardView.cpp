@@ -21,7 +21,7 @@ void ResourceCardView::draw(void)
 	ResourceCard* resourceCard = (ResourceCard*)model;
 	ALLEGRO_BITMAP * btMap = nullptr;
 	if (model->getVisible()) {
-		/* Busco el la imagen de la carta */
+		/* Busco la imagen de la carta */
 		if (resourceCard->getPlayer() != nullptr)
 		{
 			if (images.has((int)resourceCard->getResourceId())) {
