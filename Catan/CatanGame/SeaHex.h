@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../CatanData/CatanData.h"
-
+#include "../CatanGui/AllegroUI/FrameUI.h"
 #include "Coord.h"
 
 #include <string>
@@ -14,22 +14,32 @@ using namespace std;
 * Porcion del mapa con mar, que representa un muelle con acceso a 
 * intermacion de algun tipo.
 */	
-class SeaHex {
+class SeaHex : public FrameUI {
 public:
 
 	/* Constructores */
-	SeaHex(Coord coord, SeaId id);
+	SeaHex(void);
+	SeaHex(SeaId id);
 	SeaHex(const SeaHex& copy);
 
 	/*
-	* getCoord
-	* Devuelve la coordenad actual del sea hex
+	* getters - Devuelven informacion y permiten leer informacion
+	* del SeaHex correspondiente. Como la coordenada y el tipo
+	* de docks.
 	*/
 	Coord getCoord(void) const;
+	SeaId getDocks(void);
+
+	/*
+	* place - Ubica el SeaHex en una posicion del tablero determinada
+	* se utiliza para modificarla al arbitrariamente asignar mapas
+	*/
+	void place(Coord coord);
 
 	/*
 	* hasDock
-	* Devuelve true si el mar tiene un muelle en esa coordenada
+	* Devuelve true si el mar tiene un muelle 
+	* en esa coordenada
 	*/
 	bool hasDock(Coord coords);
 
@@ -40,14 +50,7 @@ public:
 	*/
 	SeaId dockType(Coord coords);
 
-	/*
-	* getDocks
-	* Devuelve el SeaId de la pieza
-	*/
-	SeaId getDocks(void);
-
 private:
-
 	Coord coord;
 	SeaId id;
 };	

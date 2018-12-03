@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../CatanNetworking/NetworkPackets/NetworkPacket.h"
+#include "../CatanGui/AllegroUI/FrameUI.h"
 
 #include "Player.h"
 #include "Coord.h"
@@ -8,7 +9,7 @@
 #include <string>
 
 using namespace std;
-class ResourceHex {
+class ResourceHex : public FrameUI {
 
 public:
 
@@ -16,47 +17,28 @@ public:
 	* Constructor
 	*/
 	ResourceHex();
+	ResourceHex(ResourceId resource);
 	ResourceHex(const ResourceHex& copy);
-	ResourceHex(Coord coord_);
-	ResourceHex(ResourceId resource_, Coord coord_);
-	ResourceHex(ResourceId resource_, unsigned int token__, Coord coord_);
 
 	/*
-	* getCoord()
-	* Devuelve la coordenada del resourceHex
+	* getters - Permiten extraer y acceder a la informacion
 	*/
 	Coord getCoord(void);
-
-	/*
-	* setCoord()
-	* Define el valor de posicion del hex
-	*/
-	void setCoord(Coord coord);
-
-	/*
-	* getToken()
-	* Devuelve el token del resourceHex
-	*/
+	const char* getLand(void);
 	unsigned int getToken(void);
+	ResourceId getResource(void);
 
 	/*
-	* setToken()
+	* place - Ubica en la posicion correspondiente al
+	* resource hex
+	*/
+	void place(Coord coord);
+
+	/*
+	* setToken
 	* Define el token del resourceHex
 	*/
 	void setToken(unsigned int newToken);
-
-	/*
-	* getResource()
-	* Devuelve el resource del resourceHex
-	*/
-	ResourceId getResource(void);
-	const char* getLand(void);
-
-	/*
-	* setResource()
-	* Define el resource del resourceHex
-	*/
-	void setResource(ResourceId newResource);
 
 private:
 	unsigned int token;

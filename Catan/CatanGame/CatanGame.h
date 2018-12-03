@@ -98,7 +98,7 @@ using namespace std;
 * Consideraciones:
 *	+ Se define como PLAYER_ONE al jugador local y PLAYER_TWO al oponente.
 */
-class CatanGame : public Subject{
+class CatanGame : public Subject {
 public:
 	
 	/*
@@ -466,12 +466,13 @@ private:
 	
 	Player localPlayer;
 	Player remotePlayer;
-	list<Building*> builtMap;
 	map<Coord, ResourceHex> resourceMap;
-	map<Coord, SeaHex> seaMap;
-	PlayerId turn;
 	PlayerId longestRoad;
 	Robber robber;
+
+	map<Coord, SeaHex> seaMap;
+	list<Building*> builtMap;
+	PlayerId turn;
 
 	deque<CatanEvent*> eventQueue;
 

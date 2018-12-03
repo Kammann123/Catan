@@ -26,7 +26,7 @@ extern const string dots[54];
 *	+ En la costa, los puntos siguen siendo interseccion entre piezas, pero pueden ser 3 o 2.
 *	+ En la tierra, las lineas son de 2 coordenadas. Interseccion entre hexagonos.
 *	+ En la costa, las lineas son de 3 coordeandas, segun los terrenos que la linea toca.
-*
+* MouseUI
 */
 class Coord {
 public:

@@ -29,6 +29,7 @@ SeaHex::hasDock(Coord coords) {
 	if (coords.nearCoast(this->coord)) {
 		/* Busco la coordenada en el arreglo */
 		i = 0;
+		throw exception("CORREGIR ESTO!");
 		for (string coord : dots) {
 			relativeCoord = i % 5;
 			if (coords == coord) {

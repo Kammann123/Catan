@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../CatanGui/AllegroUI/MouseUI.h"
 #include "../CatanData/BuildingData.h"
 #include "Coord.h"
 
@@ -8,53 +9,44 @@
 
 using namespace std;
 
-#define BUILDING_NOT_PLACED	"FFF"
-
-enum class PlayerId;
+class Player;
 
 /*
 * Building
 * Clase de construccion del juego, con el tipo, posicion o ubicacion,
 * y usuario a quien pertenece.
 */
-class Building {
+class Building : public MouseUI {
 public:
-	/*
-	* Constructor
-	*/
-	Building(Coord place, PlayerId player, BuildingType type);
-	Building(PlayerId player, BuildingType type);
-	Building(BuildingType type);
 
 	/*
-	* getPlace()
-	* Devuelve las coordenadas de la construcción
+	* Building - Unicamente puede ser construido por un player
+	* indicando a quien pertenece y que tipo de building es.
 	*/
+	Building(Player* player, BuildingType type);
+
+	/*
+	* getters - Permiten leer o acceder a la informacion
+	* del building.
+	*/
+	bool isBuilt(void);
 	Coord getPlace(void);
-
-	/*
-	* getPlayer
-	* Devuelve el jugador al que pertence la construccion
-	*/
-	PlayerId getPlayer(void);
-
-	/*
-	* getType
-	* Devuelve el tipo de onstruccion
-	*/
+	Player* getPlayer(void);
 	BuildingType getType(void);
 
 	/*
-	* setPlace
-	* Define la posicion de la construccion
+	* Build y Demolish - Construccion y demolicion
+	* del building, cambian la coordenada, posicion,
+	* y estado del building.
 	*/
-	void setPlace(Coord place);
+	void build(Coord coord, double x, double y);
+	void demolish(Coord coord, double x, double y);
 
-	/*
-	* setPlayer
-	* Define a que jugador pertenece
-	*/
-	void setPlayer(PlayerId player);
+	/****************************************************
+	* Metodos para la modelizacion de un building como 
+	* un nodo o vertice de grafos, y su recorrido en el
+	* mismo para poder determinar longest road.
+	****************************************************/
 
 	/*
 	* addNeighbour/removeNeighbour
@@ -93,8 +85,10 @@ public:
 
 private:
 	list<Building*> neighbours;
-	bool visited;
-	Coord place;
 	BuildingType type;
-	PlayerId player;
+	Player* player;
+	Coord place;
+
+	bool built;
+	bool visited;
 };
