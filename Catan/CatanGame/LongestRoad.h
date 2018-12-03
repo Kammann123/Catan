@@ -1,6 +1,9 @@
 #pragma once
 
 #include "../CatanGui/AllegroUI/FrameUI.h"
+#include "Player.h"
+
+class CatanGame;
 
 /*
 * LongestRoad 
