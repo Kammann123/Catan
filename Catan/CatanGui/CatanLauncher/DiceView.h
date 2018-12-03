@@ -14,7 +14,7 @@
 class DiceView : public UIView
 {
 public:
-	DiceView(AnimationUI* model_ = nullptr);
+	DiceView(Dice* model_ = nullptr);
 	~DiceView();
 	void draw(void);
 	void updateModelValues(void);

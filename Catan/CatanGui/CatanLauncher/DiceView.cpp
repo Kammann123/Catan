@@ -1,9 +1,8 @@
 #include "DiceView.h"
 #include <allegro5/allegro.h>
 
-DiceView::DiceView(AnimationUI * model_) : UIView(model_)
+DiceView::DiceView(Dice * model_) : UIView(model_)
 {
-	frames = 0;
 	images.clear();
 	images.setConfig(0, DICE_0_IMG);
 	images.setConfig(1, DICE_1_IMG);
