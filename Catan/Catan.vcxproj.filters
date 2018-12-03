@@ -498,26 +498,11 @@
     <ClInclude Include="CatanGui\AllegroWidgets\ImageView.h">
       <Filter>CatanGui\AllegroWidgets</Filter>
     </ClInclude>
-    <ClInclude Include="CatanGui\AllegroUI\ContainerUI.h">
-      <Filter>CatanGui\AllegroUI</Filter>
-    </ClInclude>
-    <ClInclude Include="CatanGame\CatanMap.h">
-      <Filter>CatanGame</Filter>
-    </ClInclude>
     <ClInclude Include="CatanGui\CatanLauncher\ResourceCardView.h">
       <Filter>CatanGui\CatanLauncher\GameWindow</Filter>
     </ClInclude>
     <ClInclude Include="CatanGui\CatanLauncher\MainMenu.h">
       <Filter>CatanGui\CatanLauncher\MainMenu</Filter>
-    </ClInclude>
-    <ClInclude Include="CatanGui\CatanLauncher\GameWindow\GameMenu.h">
-      <Filter>CatanGui\CatanLauncher\GameWindow</Filter>
-    </ClInclude>
-    <ClInclude Include="CatanGui\CatanLauncher\GameWindow\GameWindow.h">
-      <Filter>CatanGui\CatanLauncher\GameWindow</Filter>
-    </ClInclude>
-    <ClInclude Include="CatanGui\CatanLauncher\GameWindow\ResourceCardView.h">
-      <Filter>CatanGui\CatanLauncher\GameWindow</Filter>
     </ClInclude>
     <ClInclude Include="CatanGame\LongestRoad.h">
       <Filter>CatanGame</Filter>
@@ -536,6 +521,12 @@
     </ClInclude>
     <ClInclude Include="CatanGui\CatanLauncher\DiceView.h">
       <Filter>CatanGui\AllegroUI</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGui\CatanLauncher\GameMenu.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGame\CatanMap.h">
+      <Filter>CatanGame</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -962,26 +953,11 @@
     <ClCompile Include="launcher.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="CatanGui\AllegroUI\ContainerUI.cpp">
-      <Filter>CatanGui\AllegroUI</Filter>
-    </ClCompile>
-    <ClCompile Include="CatanGame\CatanMap.cpp">
-      <Filter>CatanGame</Filter>
-    </ClCompile>
     <ClCompile Include="CatanGui\CatanLauncher\ResourceCardView.cpp">
       <Filter>CatanGui\CatanLauncher\GameWindow</Filter>
     </ClCompile>
     <ClCompile Include="CatanGui\CatanLauncher\MainMenu.cpp">
       <Filter>CatanGui\CatanLauncher\MainMenu</Filter>
-    </ClCompile>
-    <ClCompile Include="CatanGui\CatanLauncher\GameWindow\GameMenu.cpp">
-      <Filter>CatanGui\CatanLauncher\GameWindow</Filter>
-    </ClCompile>
-    <ClCompile Include="CatanGui\CatanLauncher\GameWindow\GameWindow.cpp">
-      <Filter>CatanGui\CatanLauncher\GameWindow</Filter>
-    </ClCompile>
-    <ClCompile Include="CatanGui\CatanLauncher\GameWindow\ResourceCardView.cpp">
-      <Filter>CatanGui\CatanLauncher\GameWindow</Filter>
     </ClCompile>
     <ClCompile Include="CatanGame\LongestRoad.cpp">
       <Filter>CatanGame</Filter>
@@ -1000,6 +976,12 @@
     </ClCompile>
     <ClCompile Include="CatanGui\CatanLauncher\DiceView.cpp">
       <Filter>CatanGui\AllegroUI</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGui\CatanLauncher\GameMenu.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGame\CatanMap.cpp">
+      <Filter>CatanGame</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

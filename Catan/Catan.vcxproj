@@ -151,6 +151,7 @@
     <ClInclude Include="CatanEvents\YOPEvent.h" />
     <ClInclude Include="CatanGame\Building.h" />
     <ClInclude Include="CatanGame\CatanGame.h" />
+    <ClInclude Include="CatanGame\CatanMap.h" />
     <ClInclude Include="CatanGame\CatanStates\CatanState.h" />
     <ClInclude Include="CatanGame\CatanStates\FirstBuilds.h" />
     <ClInclude Include="CatanGame\CatanStates\GameEnd.h" />
@@ -306,6 +307,7 @@
     <ClCompile Include="CatanEvents\YOPEvent.cpp" />
     <ClCompile Include="CatanGame\Building.cpp" />
     <ClCompile Include="CatanGame\CatanGame.cpp" />
+    <ClCompile Include="CatanGame\CatanMap.cpp" />
     <ClCompile Include="CatanGame\CatanStates\FirstBuilds.cpp" />
     <ClCompile Include="CatanGame\CatanStates\GameEnd.cpp" />
     <ClCompile Include="CatanGame\CatanStates\GameError.cpp" />
