@@ -498,6 +498,9 @@
     <ClInclude Include="CatanGui\CatanLauncher\GameMenu.h">
       <Filter>CatanGui\CatanLauncher</Filter>
     </ClInclude>
+    <ClInclude Include="CatanGame\LongestRoad.h">
+      <Filter>CatanGame</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FSM\EventQueue.cpp">
@@ -928,6 +931,9 @@
     </ClCompile>
     <ClCompile Include="CatanGui\CatanLauncher\GameMenu.cpp">
       <Filter>CatanGui\CatanLauncher</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGame\LongestRoad.cpp">
+      <Filter>CatanGame</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
