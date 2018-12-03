@@ -15,7 +15,9 @@ using namespace std;
 #define MAX_LAND_COORD	'S'
 
 extern const string edges[72];
-extern const string dots[54];
+
+extern const string externalDots[30];
+extern const string internalDots[24];
 
 /*
 * Coord

@@ -4,7 +4,7 @@
 
 ResourceCard::
 ResourceCard(ResourceId resourceId, CatanGame* game) : FrameUI("", 0, 0) {
-	this->id = resourceId;
+	this->resourceId = resourceId;
 	this->player = nullptr;
 	this->game = game;
 }
@@ -29,12 +29,12 @@ ResourceCard::assign(Player* player) {
 
 ResourceId
 ResourceCard::getResourceId(void) {
-	return id;
+	return resourceId;
 }
 
 const char* 
 ResourceCard::getResource(void) {
-	return resourceStrings[(unsigned int)id];
+	return resourceStrings[(unsigned int)resourceId];
 }
 
 Player*

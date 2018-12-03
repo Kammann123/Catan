@@ -2,22 +2,32 @@
 #include "Coord.h"
 
 SeaHex::
-SeaHex(Coord coord, SeaId id)
-{
-	/* Inicializacion */
-	this->coord = coord;
-	this->id = id;
+SeaHex(void) : FrameUI("", 0, 0) {}
+
+SeaHex::
+SeaHex(SeaId id) : FrameUI("", 0, 0) {
+	this->seaId = id;
 }
 
 SeaHex::
-SeaHex(const SeaHex& copy) {
+SeaHex(const SeaHex& copy) : FrameUI("", 0, 0) {
 	this->coord = copy.coord;
-	this->id = copy.id;
+	this->seaId = copy.seaId;
 }
 
 Coord
 SeaHex::getCoord(void) const {
 	return this->coord;
+}
+
+SeaId
+SeaHex::getDocks(void) {
+	return seaId;
+}
+
+void
+SeaHex::place(Coord coord) {
+	this->coord = coord;
 }
 
 bool
@@ -29,14 +39,13 @@ SeaHex::hasDock(Coord coords) {
 	if (coords.nearCoast(this->coord)) {
 		/* Busco la coordenada en el arreglo */
 		i = 0;
-		throw exception("CORREGIR ESTO!");
-		for (string coord : dots) {
+		for (string coord : externalDots) {
 			relativeCoord = i % 5;
 			if (coords == coord) {
 				/* Me fijo segun la cantidad de muelles si es valida */
-				if (id == SeaId::NORMAL || id == SeaId::STONE || id == SeaId::WOOD )
+				if (seaId == SeaId::NORMAL || seaId == SeaId::STONE || seaId == SeaId::WOOD )
 					return (relativeCoord == 2 || relativeCoord == 3);
-				else if ( id == SeaId::SHEEP || id == SeaId::BRICK || id == SeaId::WHEAT )
+				else if (seaId == SeaId::SHEEP || seaId == SeaId::BRICK || seaId == SeaId::WHEAT )
 					return (relativeCoord == 1 || relativeCoord == 0 || relativeCoord == 3 || relativeCoord == 4);
 			}
 			i++;
@@ -54,11 +63,11 @@ SeaHex::dockType(Coord coords) {
 	if (coords.nearCoast(this->coord)) {
 		/* Busco la coordenada en el arreglo */
 		i = 0;
-		for (string coord : dots) {
+		for (string coord : externalDots) {
 			relativeCoord = i % 5;
 			if (coords == coord) {
 				/* Me fijo segun la cantidad de muelles si es valida */
-				switch (id) {
+				switch (seaId) {
 					case SeaId::NORMAL:
 						return SeaId::NORMAL;
 						break;
@@ -99,9 +108,4 @@ SeaHex::dockType(Coord coords) {
 	}
 
 	throw exception("SeaHex - dockType se ejecuto con una coordenada invalida");
-}
-
-SeaId
-SeaHex::getDocks(void) {
-	return id;
 }

@@ -38,7 +38,7 @@ public:
 
 private:
 
-	ResourceId id;
+	ResourceId resourceId;
 	Player* player;
 	CatanGame* game;
 };
