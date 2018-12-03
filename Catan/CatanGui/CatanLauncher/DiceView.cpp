@@ -22,7 +22,7 @@ void DiceView::draw(void)
 	//Hacer modelo del dado que herede de la animacion
 	Dice* dice = (Dice*)model;
 	ALLEGRO_BITMAP * btMap;
-	if (images.has(dice->getFrames()) {
+	if (images.has(dice->getFrames())) {
 		btMap = images[dice->getFrames()].bitmap;
 	}
 }
