@@ -1,4 +1,5 @@
 #include "../AllegroUI/UIView.h"
+#include "../../CatanGame/Dice.h"
 
 
 #define DICE_0_IMG				"CatanGui\\GUIDesigns\\GameMenu\\dices\\dice_0.png"
@@ -9,7 +10,6 @@
 #define DICE_5_IMG				"CatanGui\\GUIDesigns\\GameMenu\\dices\\dice_5.png"
 #define DICE_6_IMG				"CatanGui\\GUIDesigns\\GameMenu\\dices\\dice_6.png"
 
-#define	N_FRAMES	7
 
 class DiceView : public UIView
 {

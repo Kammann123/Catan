@@ -13,8 +13,8 @@ public:
 	/*
 	* AnimationUI
 	*/
-	AnimationUI(Mode mode_, int timesToLoop = 0);
-	AnimationUI(int64_t maxTimerCount, Mode mode_, int timesToLoop = 0);
+	AnimationUI(Mode mode_, int timesToLoop, string id, size_t width, size_t height, bool dragMode = false, bool holdMode = false);
+	AnimationUI(int64_t maxTimerCount, Mode mode_, string id, size_t width, size_t height, bool dragMode = false, bool holdMode = false, int timesToLoop = 0);
 	~AnimationUI();
 
 	/*Incremento del count*/
@@ -30,15 +30,18 @@ public:
 	Mode getMode(void);
 
 	/* Configuracion de callbacks*/
-	void setOnTimerAction(Action timerAction_);
+	void setFrameAction(Action frameAction_);
+	void setAnimationEndAction(Action animationEndAction_);
 	/* Ejecucion de callbacks */
-	void execute_action(void* data);
+	void executeFrameAction(void* data);
+	void executeAnimationEndAction(void* data);
 
 private:
 	unsigned int frameCounter;
 	unsigned int timesToLoop;
-	/* Callback de ejecucion */
-	Action timerAction;
+	/* Callbacks de ejecucion */
+	Action frameAction;
+	Action animationEndAction;
 	/* Count del timer*/
 	int64_t timerCount;
 	int64_t maxTimerCount;
