@@ -6,17 +6,17 @@
 #define GAMEMENU_BACKGROUND	"CatanGui\\GUIDesigns\\GameMenu\\background.png"
 
 
-#define GAMEMENU_DISCARD_ON "CatanGui\\GUIDesigns\\GameMenu\\discard_on.png"
-#define GAMEMENU_DISCARD_OFF "CatanGui\\GUIDesigns\\GameMenu\\discard_off.png"
+#define GAMEMENU_DISCARD_ON "CatanGui\\GUIDesigns\\GameMenu\\buttons\\discard_on.png"
+#define GAMEMENU_DISCARD_OFF "CatanGui\\GUIDesigns\\GameMenu\\buttons\\discard_off.png"
 
-#define GAMEMENU_EXCHANGE_ON "CatanGui\\GUIDesigns\\GameMenu\\exchange_on.png"
-#define GAMEMENU_EXCHANGE_OFF "CatanGui\\GUIDesigns\\GameMenu\\exchange_off.png"
+#define GAMEMENU_EXCHANGE_ON "CatanGui\\GUIDesigns\\GameMenu\\buttons\\exchange_on.png"
+#define GAMEMENU_EXCHANGE_OFF "CatanGui\\GUIDesigns\\GameMenu\\buttons\\exchange_off.png"
 
-#define GAMEMENU_PLAY_AGAIN_ON "CatanGui\\GUIDesigns\\GameMenu\\play_again_on.png"
-#define GAMEMENU_PLAY_AGAIN_OFF "CatanGui\\GUIDesigns\\GameMenu\\play_again_off.png"
+#define GAMEMENU_PLAY_AGAIN_ON "CatanGui\\GUIDesigns\\GameMenu\\buttons\\play_again_on.png"
+#define GAMEMENU_PLAY_AGAIN_OFF "CatanGui\\GUIDesigns\\GameMenu\\buttons\\play_again_off.png"
 
-#define GAMEMENU_EXIT_ON "CatanGui\\GUIDesigns\\GameMenu\\exit_on.png"
-#define GAMEMENU_EXIT_OFF "CatanGui\\GUIDesigns\\GameMenu\\exit_off.png"
+#define GAMEMENU_EXIT_ON "CatanGui\\GUIDesigns\\GameMenu\\buttons\\exit_on.png"
+#define GAMEMENU_EXIT_OFF "CatanGui\\GUIDesigns\\GameMenu\\buttons\\exit_off.png"
 
 #define FOCUS_SOUND "CatanGui\\Sounds\\button_focus.wav"
 #define SELECT_SOUND "CatanGui\\Sounds\\press.wav"
