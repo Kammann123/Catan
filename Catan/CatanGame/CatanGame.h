@@ -11,6 +11,7 @@
 #include "CatanStates/CatanState.h"
 
 #include "../MVC/Subject.h"
+#include "../CatanGui/AllegroUI/ContainerUI.h"
 #include "../CatanEvents/CatanEvent.h"
 #include "../CatanNetworking/NetworkPackets/NetworkPacket.h"
 
@@ -68,7 +69,6 @@
 
 #define OPONENT_ID(id)	(id == PlayerId::PLAYER_ONE ? PlayerId::PLAYER_TWO : PlayerId::PLAYER_ONE)
 
-
 using namespace std;
 
 /*
@@ -98,7 +98,7 @@ using namespace std;
 * Consideraciones:
 *	+ Se define como PLAYER_ONE al jugador local y PLAYER_TWO al oponente.
 */
-class CatanGame : public Subject {
+class CatanGame : public ContainerUI {
 public:
 	
 	/*
