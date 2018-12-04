@@ -534,6 +534,9 @@
     <ClInclude Include="CatanGui\CatanLauncher\GameWindow\BuildingView.h">
       <Filter>CatanGui\CatanLauncher\GameWindow</Filter>
     </ClInclude>
+    <ClInclude Include="CatanGui\AllegroUI\Mouse.h">
+      <Filter>CatanGui\AllegroUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FSM\EventQueue.cpp">
@@ -994,6 +997,9 @@
     </ClCompile>
     <ClCompile Include="CatanGui\CatanLauncher\GameWindow\BuildingView.cpp">
       <Filter>CatanGui\CatanLauncher\GameWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGui\AllegroUI\Mouse.cpp">
+      <Filter>CatanGui\AllegroUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

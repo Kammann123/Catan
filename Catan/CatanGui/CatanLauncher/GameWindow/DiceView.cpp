@@ -30,8 +30,6 @@ DiceView::DiceView(Dice * model_) : UIView(model_)
 	images.setConfig("5_focused", DICE_5_FOCUSED_IMG);
 	images.setConfig(6, DICE_6_IMG);
 	images.setConfig("6_focused", DICE_6_FOCUSED_IMG);
-
-	updateModelValues();
 }
 
 void DiceView::draw(void)

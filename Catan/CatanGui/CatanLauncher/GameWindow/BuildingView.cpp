@@ -14,8 +14,6 @@ BuildingView::BuildingView(Building * model_) : UIView(model_)
 	images.setConfig((int)BuildingType::ROAD, ROAD_IMAGE);
 	images.setConfig((int)BuildingType::SETTLEMENT, SETTLEMENT_IMAGE);
 	images.setConfig((int)BuildingType::CITY, CITY_IMAGE);
-
-	updateModelValues();
 }
 
 void BuildingView::draw(void)
