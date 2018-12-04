@@ -116,6 +116,7 @@ public:
 	* a los diferentes componentes segun su id.
 	*/
 	UIComponent* operator[](string id);
+	list<UIComponent*> operator()(string id);
 
 	size_t getHeight(void);
 	size_t getWidth(void);

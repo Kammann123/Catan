@@ -22,6 +22,13 @@ public:
 	~UIModel(void);
 
 	/*
+	* refactor - Metodo para definir la refactorizacion de los modelos
+	* si fuere que dependen de otros elementos o componentes, para garantizar
+	* una forma de correccion de la informacion que los contienen.
+	*/
+	virtual void refactor(void);
+
+	/*
 	* Configuracion y lectura de los estados actuales del modelo
 	* en cuestion.
 	*/

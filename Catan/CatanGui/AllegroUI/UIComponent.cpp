@@ -28,6 +28,14 @@ UIComponent::
 }
 
 void
+UIComponent::refactor(void) {
+	model->refactor();
+	for (UIView* view : views) {
+		view->refactor();
+	}
+}
+
+void
 UIComponent::parse(ALLEGRO_EVENT* event) {
 	if (this->model->getEnable()) {
 		for (UIController* controller : controllers) {

@@ -3,7 +3,7 @@
 #include "../CatanGui/CatanLauncher/GameWindow/GameWindow.h"
 
 Building::
-Building(Player* player, BuildingType type) : MouseUI("", 0, 0, true) {
+Building(Player* player, BuildingType type) : MouseUI(BUILDING_ID, 0, 0, true) {
 	this->player = player;
 	this->type = type;
 	this->neighbours.clear();
@@ -63,7 +63,7 @@ Building::demolish(void) {
 			break;
 	}
 	container_t value = (*player)[index];
-	this->setPosition(value.x, value.y);
+	this->setPosition(value.x + player->xPos(), value.y + player->yPos());
 	this->setAngle(value.info);
 }
 

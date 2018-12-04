@@ -67,6 +67,7 @@ public:
 	* Interfaz de manejo de construcciones
 	***************************************/
 	void giveBackBuilding(Building* building);
+	list<Building*> buildings(void);
 	Building* popSettlement(void);
 	Building* popRoad(void);
 	Building* popCity(void);

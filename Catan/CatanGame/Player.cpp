@@ -13,7 +13,7 @@ void
 Player::_create_roads(void) {
 	for (unsigned int i = 0; i < ROAD_COUNT; i++) {
 		Building* building = new Building(this, BuildingType::ROAD);
-		settlements.push_back(building);
+		roads.push_back(building);
 	}
 }
 
@@ -21,7 +21,7 @@ void
 Player::_create_cities(void){
 	for (unsigned int i = 0; i < CITY_COUNT; i++) {
 		Building* building = new Building(this, BuildingType::CITY);
-		settlements.push_back(building);
+		cities.push_back(building);
 	}
 }
 
@@ -103,6 +103,23 @@ Player::getResourceCount(ResourceId resourceID) const {
 		}
 	}
 	return resourceCount;
+}
+
+list<Building*>
+Player::buildings(void) {
+	list<Building*> buildings;
+
+	for (Building* building : settlements) {
+		buildings.push_back(building);
+	}
+	for (Building* building : roads) {
+		buildings.push_back(building);
+	}
+	for (Building* building : cities) {
+		buildings.push_back(building);
+	}
+
+	return buildings;
 }
 
 unsigned int

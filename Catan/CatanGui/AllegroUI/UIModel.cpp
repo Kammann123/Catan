@@ -11,6 +11,9 @@ UIModel(string id, bool UIDestroys) {
 UIModel::
 ~UIModel() {}
 
+void
+UIModel::refactor(void) {}
+
 void 
 UIModel::setVisible(bool visibleStatus) {
 	this->visible = visibleStatus;

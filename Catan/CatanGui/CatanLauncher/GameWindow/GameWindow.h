@@ -2,6 +2,7 @@
 
 #include "../../AllegroUI/WindowUI.h"
 #include "../../../CatanGame/Player.h"
+#include "../../../CatanGame/Building.h"
 
 /*
 * Definicion de posiciones ordenadas dentro de los containers
@@ -46,6 +47,7 @@
 #define ROBBER_ID		"robber"
 #define MAP_ID			"map"
 #define GAME_ID			"game"
+#define BUILDING_ID		"building"
 
 class CatanLauncher;
 
@@ -79,6 +81,7 @@ private:
 	public:
 		static UIComponent* createDice(string id);
 		static UIComponent* createPlayer(Player* player);
+		static UIComponent* createBuilding(Building* building);
 	};
 
 	CatanLauncher& launcher;

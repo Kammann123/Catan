@@ -76,12 +76,16 @@ void PlayerView::draw(void)
 
 	/* Dibujo las cantidades de los buildings */
 	fontCounter = fonts[COUNTER_FONT_ID].font;
-	double counterOffset = 20;
-	al_draw_text(fontCounter, color, (*player)[PLAYER_SETTLEMENTS].x + player->xPos(), (*player)[PLAYER_SETTLEMENTS].y - counterOffset + player->yPos(), 0, to_string(player->hasSettlements()).c_str());
-	al_draw_text(fontCounter, color, (*player)[PLAYER_ROADS].x + player->xPos(), (*player)[PLAYER_ROADS].y - counterOffset + player->yPos(), 0, to_string(player->hasRoads()).c_str());
-	al_draw_text(fontCounter, color, (*player)[PLAYER_CITY].x + player->xPos(), (*player)[PLAYER_CITY].y - counterOffset + player->yPos(), 0, to_string(player->hasCities()).c_str());
+	double counterOffset = 40;
+	string settlementCount = to_string(player->hasSettlements());
+	string roadsCount = to_string(player->hasRoads());
+	string cityCount = to_string(player->hasCities());
+	al_draw_text(fontCounter, color, (*player)[PLAYER_SETTLEMENTS].x + player->xPos(), (*player)[PLAYER_SETTLEMENTS].y - counterOffset + player->yPos(), 0, settlementCount.c_str());
+	al_draw_text(fontCounter, color, (*player)[PLAYER_ROADS].x + player->xPos(), (*player)[PLAYER_ROADS].y - counterOffset + player->yPos(), 0, roadsCount.c_str());
+	al_draw_text(fontCounter, color, (*player)[PLAYER_CITY].x + player->xPos(), (*player)[PLAYER_CITY].y - counterOffset + player->yPos(), 0, cityCount.c_str());
 
 	/* Dibujo las cantidades de las cartas */
+	counterOffset = 20;
 	al_draw_text(fontCounter, color, (*player)[PLAYER_ORE].x + player->xPos(), (*player)[PLAYER_ORE].y - counterOffset + player->yPos(), 0, to_string(player->getResourceCount(ResourceId::MOUNTAIN)).c_str());
 	al_draw_text(fontCounter, color, (*player)[PLAYER_BRICK].x + player->xPos(), (*player)[PLAYER_BRICK].y - counterOffset + player->yPos(), 0, to_string(player->getResourceCount(ResourceId::HILL)).c_str());
 	al_draw_text(fontCounter, color, (*player)[PLAYER_WOOL].x + player->xPos(), (*player)[PLAYER_WOOL].y - counterOffset + player->yPos(), 0, to_string(player->getResourceCount(ResourceId::FIELD)).c_str());

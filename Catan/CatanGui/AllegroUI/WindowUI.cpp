@@ -181,6 +181,13 @@ WindowUI::start(void) {
 	_init_timer();
 	_init_sources();
 
+	/*
+	* Se hace refactorizacion de todos los componentes
+	*/
+	for (UIComponent* component : components) {
+		component->refactor();
+	}
+
 	/* Inicio el timer */
 	al_start_timer(timer);
 	
@@ -280,6 +287,17 @@ WindowUI::operator[](string id) {
 		}
 	}
 	return nullptr;
+}
+
+list<UIComponent*>
+WindowUI::operator()(string id) {
+	list<UIComponent*> seek;
+	for (UIComponent* component : components) {
+		if (component->getId() == id) {
+			seek.push_back(component);
+		}
+	}
+	return seek;
 }
 
 bool

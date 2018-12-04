@@ -21,6 +21,12 @@ public:
 	~UIComponent();
 
 	/*
+	* refactor
+	* Refactorizacion del componente grafica.
+	*/
+	void refactor(void);
+
+	/*
 	* parse
 	* Parsea los eventos en los controllers
 	*/

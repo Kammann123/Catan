@@ -7,6 +7,7 @@
 #include "../CatanLauncher.h"
 #include "PlayerView.h"
 #include "DiceView.h"
+#include "BuildingView.h"
 
 #define GAMEWINDOW_BACKGROUND "CatanGui\\GUIDesigns\\GameMenu\\background.png"
 
@@ -31,20 +32,29 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI(1080, 640) 
 	UIComponent* secondDice = GameBuilder::createDice("dice_two");
 	UIComponent* localPlayer = GameBuilder::createPlayer(launcher.getContext().getGame().getLocalPlayer());
 
+	/***********************************
+	* Creacion de componentes Building *
+	***********************************/
+	list<UIComponent*> localBuildings;
+	for (Building* building : launcher.getContext().getGame().getLocalPlayer()->buildings()) {
+		UIComponent* buildingComponent = GameBuilder::createBuilding(building);
+		localBuildings.push_back(buildingComponent);
+	}
+
 	/******************************
 	* Configuracion de player one *
 	******************************/
-	MODEL(localPlayer, Player*)->setPosition(10, 450);
+	MODEL(localPlayer, Player*)->setPosition(10, 400);
 	MODEL(localPlayer, Player*)->set(PLAYER_NAME, 0, 0, 0);
-	MODEL(localPlayer, Player*)->set(PLAYER_VICTORY_POINTS, 160, 0, 0);
-	MODEL(localPlayer, Player*)->set(PLAYER_ORE, 0, 90, 0);
-	MODEL(localPlayer, Player*)->set(PLAYER_LUMBER, 60, 90, 0);
-	MODEL(localPlayer, Player*)->set(PLAYER_BRICK, 120, 90, 0);
-	MODEL(localPlayer, Player*)->set(PLAYER_WOOL, 180, 90, 0);
-	MODEL(localPlayer, Player*)->set(PLAYER_GRAIN, 240, 90, 0);
-	MODEL(localPlayer, Player*)->set(PLAYER_SETTLEMENTS, 0, 0, 0);
-	MODEL(localPlayer, Player*)->set(PLAYER_ROADS, 0, 0, 0);
-	MODEL(localPlayer, Player*)->set(PLAYER_CITY, 0, 0, 0);
+	MODEL(localPlayer, Player*)->set(PLAYER_VICTORY_POINTS, 190, 0, 0);
+	MODEL(localPlayer, Player*)->set(PLAYER_ORE, 0, 150, 0);
+	MODEL(localPlayer, Player*)->set(PLAYER_LUMBER, 60, 150, 0);
+	MODEL(localPlayer, Player*)->set(PLAYER_BRICK, 120, 150, 0);
+	MODEL(localPlayer, Player*)->set(PLAYER_WOOL, 180, 150, 0);
+	MODEL(localPlayer, Player*)->set(PLAYER_GRAIN, 240, 150, 0);
+	MODEL(localPlayer, Player*)->set(PLAYER_SETTLEMENTS, 30, 90, 0);
+	MODEL(localPlayer, Player*)->set(PLAYER_ROADS, 90, 90, 0);
+	MODEL(localPlayer, Player*)->set(PLAYER_CITY, 150, 90, 0);
 	MODEL(localPlayer, Player*)->set(PLAYER_LONGEST_ROAD, 0, 0, 0);
 
 	/****************************/
@@ -77,6 +87,14 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI(1080, 640) 
 	this->attachComponent(firstDice);
 	this->attachComponent(secondDice);
 	this->attachComponent(localPlayer);
+
+	/********************************************
+	* Agrego componentes Building a la interfaz *
+	********************************************/
+	for (UIComponent* component : localBuildings) {
+		this->attachComponent(component);
+		MODEL(component, Building*)->demolish();
+	}
 
 	/*********************************
 	* Configuro acciones y callbacks *
@@ -122,6 +140,14 @@ GameWindow::onDicesThrown(void* data) {
 
 void
 GameWindow::normal_layout(void) {
+
+	/*******************************************
+	* Configuro los buildings del local player *
+	*******************************************/
+	for (UIComponent* buildings : (*this)(BUILDING_ID)) {
+		buildings->getModel()->setVisible(true);
+		buildings->getModel()->setEnable(true); 
+	}
 
 	/************************
 	* Configuro los players *
@@ -182,4 +208,20 @@ GameWindow::GameBuilder::createPlayer(Player* player) {
 
 	UIComponent* playerComponent = new UIComponent(player, { playerView }, {});
 	return playerComponent;
+}
+
+UIComponent*
+GameWindow::GameBuilder::createBuilding(Building* building) {
+
+	/* Creo el view */
+	UIView* buildingView = new BuildingView(building);
+
+	/* Creo los controllers */
+	UIController* mouseController = new MouseController(building);
+
+	/* Attacheo y creo/devuelvo el componente */
+	building->attach(buildingView);
+
+	UIComponent* buildingComponent = new UIComponent(building, { buildingView }, { mouseController });
+	return buildingComponent;
 }
