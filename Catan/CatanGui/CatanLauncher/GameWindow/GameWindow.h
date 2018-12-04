@@ -1,8 +1,10 @@
 #pragma once
 
 #include "../../AllegroUI/WindowUI.h"
+#include "../../../CatanGame/Robber.h"
 #include "../../../CatanGame/Player.h"
 #include "../../../CatanGame/Building.h"
+#include "../../../CatanGame/LongestRoad.h"
 
 /*
 * Definicion de posiciones ordenadas dentro de los containers
@@ -13,9 +15,6 @@
 #define POSITION_BRICK	"brick"
 #define POSITION_WOOL	"wool"
 #define POSITION_GRAIN	"grain"
-
-#define POSITION_PLAYER_ONE	"player_one"
-#define POSITION_PLAYER_TWO	"player_two"
 
 #define POSITION_SETTLEMENT	"settlement"
 #define POSITION_ROAD	"road"
@@ -41,13 +40,13 @@
 /*******************************************
 * Identificadores de los modelos del juego *
 *******************************************/
+#define LONGEST_ROAD_ID "longest_road_id"
 #define PLAYER_ONE_ID	"player_one"
 #define PLAYER_TWO_ID	"player_two"
-#define LONGEST_ROAD_ID "longest_road_id"
+#define BUILDING_ID		"building"
 #define ROBBER_ID		"robber"
 #define MAP_ID			"map"
 #define GAME_ID			"game"
-#define BUILDING_ID		"building"
 
 class CatanLauncher;
 
@@ -81,7 +80,11 @@ private:
 	public:
 		static UIComponent* createDice(string id);
 		static UIComponent* createPlayer(Player* player);
+		static UIComponent* createRobber(Robber* robber);
+		static UIComponent* createCatanGame(CatanGame* game);
 		static UIComponent* createBuilding(Building* building);
+		static UIComponent* createRemoteBuilding(Building* building);
+		static UIComponent* createLongestRoad(LongestRoad* longestRoad);
 	};
 
 	CatanLauncher& launcher;

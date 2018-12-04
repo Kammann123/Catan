@@ -2,7 +2,9 @@
 #include "../CatanGui/CatanLauncher/GameWindow/GameWindow.h"
 
 Robber::
-Robber() : MouseUI(ROBBER_ID, 0, 0, true) {}
+Robber() : MouseUI(ROBBER_ID, 0, 0, true) {
+	this->setPosition(800, 300);
+}
 
 Robber::
 Robber(Coord coord) : MouseUI(ROBBER_ID, 0, 0, true) {

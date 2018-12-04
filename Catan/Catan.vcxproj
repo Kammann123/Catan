@@ -203,7 +203,9 @@
     <ClInclude Include="CatanGui\CatanLauncher\GameWindow\BuildingView.h" />
     <ClInclude Include="CatanGui\CatanLauncher\GameWindow\DiceView.h" />
     <ClInclude Include="CatanGui\CatanLauncher\GameWindow\GameWindow.h" />
+    <ClInclude Include="CatanGui\CatanLauncher\GameWindow\LongestRoadView.h" />
     <ClInclude Include="CatanGui\CatanLauncher\GameWindow\PlayerView.h" />
+    <ClInclude Include="CatanGui\CatanLauncher\GameWindow\RobberView.h" />
     <ClInclude Include="CatanGui\CatanLauncher\MainMenu\MainMenu.h" />
     <ClInclude Include="CatanNetworking\CatanNetworking.h" />
     <ClInclude Include="CatanNetworking\NetworkHandlers\NetworkClient.h" />
@@ -361,7 +363,9 @@
     <ClCompile Include="CatanGui\CatanLauncher\GameWindow\BuildingView.cpp" />
     <ClCompile Include="CatanGui\CatanLauncher\GameWindow\DiceView.cpp" />
     <ClCompile Include="CatanGui\CatanLauncher\GameWindow\GameWindow.cpp" />
+    <ClCompile Include="CatanGui\CatanLauncher\GameWindow\LongestRoadView.cpp" />
     <ClCompile Include="CatanGui\CatanLauncher\GameWindow\PlayerView.cpp" />
+    <ClCompile Include="CatanGui\CatanLauncher\GameWindow\RobberView.cpp" />
     <ClCompile Include="CatanGui\CatanLauncher\MainMenu\MainMenu.cpp" />
     <ClCompile Include="CatanNetworking\CatanNetworking.cpp" />
     <ClCompile Include="CatanNetworking\NetworkHandlers\NetworkClient.cpp" />

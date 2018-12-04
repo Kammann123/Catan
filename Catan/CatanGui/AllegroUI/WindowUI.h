@@ -8,6 +8,7 @@
 #include "allegro5/allegro_primitives.h"
 #include "allegro5/allegro_ttf.h"
 
+#include "Mouse.h"
 #include "ColorConfig.h"
 #include "ImageConfig.h"
 #include "SoundConfig.h"
@@ -128,6 +129,14 @@ public:
 	*/
 	void setBackground(unsigned char red, unsigned char green, unsigned char blue);
 	void setBackground(const char* image);
+
+	/*
+	* setCursor
+	* Permite configurar el cursor de la ventana
+	*/
+	void setCursor(const char* image);
+	void setClickCursor(const char* image);
+	void setGrabCursor(const char* image);
 	
 	/*
 	* setMusic
@@ -175,6 +184,8 @@ private:
 	SoundConfig sounds;
 
 	Action onClose;
+
+	Mouse mouse;
 
 	list<UIComponent*> components;
 };

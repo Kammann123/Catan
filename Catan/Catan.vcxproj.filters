@@ -537,6 +537,12 @@
     <ClInclude Include="CatanGui\AllegroUI\Mouse.h">
       <Filter>CatanGui\AllegroUI</Filter>
     </ClInclude>
+    <ClInclude Include="CatanGui\CatanLauncher\GameWindow\RobberView.h">
+      <Filter>CatanGui\CatanLauncher\GameWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGui\CatanLauncher\GameWindow\LongestRoadView.h">
+      <Filter>CatanGui\CatanLauncher\GameWindow</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FSM\EventQueue.cpp">
@@ -1000,6 +1006,12 @@
     </ClCompile>
     <ClCompile Include="CatanGui\AllegroUI\Mouse.cpp">
       <Filter>CatanGui\AllegroUI</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGui\CatanLauncher\GameWindow\RobberView.cpp">
+      <Filter>CatanGui\CatanLauncher\GameWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGui\CatanLauncher\GameWindow\LongestRoadView.cpp">
+      <Filter>CatanGui\CatanLauncher\GameWindow</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

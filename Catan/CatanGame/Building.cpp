@@ -37,7 +37,7 @@ Building::build(Coord coord, double x, double y, double radian) {
 	/* Configuro los valores del building para construirlo */
 	this->built = true;
 	this->coord = coord;
-	this->setPosition(x, y);
+	this->setPosition(x - width / 2, y - height / 2);
 	this->setAngle(radian);
 }
 

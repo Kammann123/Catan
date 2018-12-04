@@ -6,7 +6,16 @@ Mouse(ALLEGRO_DISPLAY* display) {
 	this->clicked = nullptr;
 	this->images.clear();
 	this->state = States::NORMAL;
-	this->cursor = nullptr;
+	this->cursors.clear();
+}
+
+Mouse::
+~Mouse(void) {
+	for (auto cursor : cursors) {
+		if (cursor.second) {
+			al_destroy_mouse_cursor(cursor.second);
+		}
+	}
 }
 
 void
@@ -102,9 +111,10 @@ Mouse::update(void) {
 			/* Primero valido la existencia previa de un cursor,
 			* y en caso de haberla, se elimina el mismo y se habre nuevo 
 			*/
-			al_destroy_mouse_cursor(cursor);
-			this->cursor = al_create_mouse_cursor(images[state].bitmap, 0, 0);
-			al_set_mouse_cursor(display, cursor);
+			if (cursors.find(state) == cursors.end()) {
+				this->cursors.insert(pair<States, ALLEGRO_MOUSE_CURSOR*>(state, al_create_mouse_cursor(images[state].bitmap, 0, 0)));
+			}
+			al_set_mouse_cursor(display, cursors[state]);
 		}
 	}
 }
@@ -113,5 +123,21 @@ void
 Mouse::privilege(ALLEGRO_EVENT* event) {
 	if (clicked) {
 		clicked->parse(event);
+
+		if (((MouseUI*)clicked->getModel())->getStatus() != MouseUI::Status::DRAGGED) {
+			drop();
+		}
 	}
+}
+
+bool
+Mouse::isMouse(ALLEGRO_EVENT* event){
+	return (
+		event->type == ALLEGRO_EVENT_MOUSE_AXES ||
+		event->type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN ||
+		event->type == ALLEGRO_EVENT_MOUSE_BUTTON_UP ||
+		event->type == ALLEGRO_EVENT_MOUSE_ENTER_DISPLAY ||
+		event->type == ALLEGRO_EVENT_MOUSE_LEAVE_DISPLAY ||
+		event->type == ALLEGRO_EVENT_MOUSE_WARPED
+	);
 }

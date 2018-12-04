@@ -7,6 +7,10 @@
 
 using namespace std;
 
+#define MAINMENU_CURSOR		"CatanGui\\Cursor\\cursor_normal.png"
+#define MAINMENU_CLICK_CURSOR		"CatanGui\\Cursor\\cursor_clicking.png"
+#define MAINMENU_GRAB_CURSOR		"CatanGui\\Cursor\\cursor_grabbing.png"
+
 #define MAINMENU_MUSIC		"CatanGui\\Sounds\\catan.ogg"
 #define MAINMENU_BACKGROUND	"CatanGui\\GUIDesigns\\MainMenu\\background.png"
 
@@ -115,6 +119,9 @@ MainMenu(CatanLauncher& _launcher) : WindowUI(1080, 640), launcher(_launcher) {
 	this->setBackground(MAINMENU_BACKGROUND);
 	this->setMusic(MAINMENU_MUSIC);
 	this->setCloseAction(bind(&MainMenu::onExit, this, _1));
+	this->setCursor(MAINMENU_CURSOR);
+	this->setClickCursor(MAINMENU_CLICK_CURSOR);
+	this->setGrabCursor(MAINMENU_GRAB_CURSOR);
 
 	/* Primer layout */
 	_data_layout();

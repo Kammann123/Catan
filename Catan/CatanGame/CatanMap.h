@@ -82,6 +82,7 @@ public:
 	************************************/
 	void moveRobber(Coord coord);
 	Coord robberPosition(void);
+	Robber* getRobber(void);
 
 	/************************************
 	* Interfaz de informacion del mapa

@@ -36,21 +36,23 @@ void DiceView::draw(void)
 {
 	Dice* dice = (Dice*) model;
 	ALLEGRO_BITMAP * btMap = nullptr;
-	if (dice->getStatus() == MouseUI::Status::FOCUSED) {
-		string img = to_string(dice->getValue()) + "_focused";
-		if (images.has(img)) {
-			btMap = images[img].bitmap;
+	if (dice->getVisible()) {
+		if (dice->getStatus() == MouseUI::Status::FOCUSED) {
+			string img = to_string(dice->getValue()) + "_focused";
+			if (images.has(img)) {
+				btMap = images[img].bitmap;
+			}
 		}
-	}
-	else {
-		if (images.has(dice->getValue())) {
-			btMap = images[dice->getValue()].bitmap;
+		else {
+			if (images.has(dice->getValue())) {
+				btMap = images[dice->getValue()].bitmap;
+			}
 		}
-	}
 
-	/*Dibujo la imagen*/
-	if (btMap != nullptr)
-		al_draw_bitmap(btMap, dice->xPos(), dice->yPos(), 0);
+		if (btMap != nullptr) {
+			al_draw_bitmap(btMap, dice->xPos(), dice->yPos(), 0);
+		}
+	}
 }
 
 void DiceView::refactor(void) {

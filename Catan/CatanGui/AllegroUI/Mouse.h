@@ -19,6 +19,7 @@ public:
 	* configurado posteriormente.
 	*/
 	Mouse(ALLEGRO_DISPLAY* display = nullptr);
+	~Mouse(void);
 
 	/*
 	* parse - Parse permite parsear los eventos de allegro
@@ -67,8 +68,13 @@ public:
 	*/
 	void privilege(ALLEGRO_EVENT* event);
 
+	/*
+	* isMouse - Devuelve si el evento fue de mouse
+	*/
+	bool isMouse(ALLEGRO_EVENT* event);
+
 private:
-	ALLEGRO_MOUSE_CURSOR * cursor;
+	map<States, ALLEGRO_MOUSE_CURSOR*> cursors;
 	ALLEGRO_DISPLAY * display;
 	MouseController * clicked;
 	ImageConfig images;

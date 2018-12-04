@@ -6,8 +6,14 @@
 #include "../../../CatanGame/Dice.h"
 #include "../CatanLauncher.h"
 #include "PlayerView.h"
+#include "RobberView.h"
 #include "DiceView.h"
 #include "BuildingView.h"
+#include "LongestRoadView.h"
+
+#define GAMEWINDOW_CURSOR		"CatanGui\\Cursor\\cursor_normal.png"
+#define GAMEWINDOW_CLICK_CURSOR		"CatanGui\\Cursor\\cursor_clicking.png"
+#define GAMEWINDOW_GRAB_CURSOR		"CatanGui\\Cursor\\cursor_grabbing.png"
 
 #define GAMEWINDOW_BACKGROUND "CatanGui\\GUIDesigns\\GameMenu\\background.png"
 
@@ -31,6 +37,10 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI(1080, 640) 
 	UIComponent* firstDice = GameBuilder::createDice("dice_one");
 	UIComponent* secondDice = GameBuilder::createDice("dice_two");
 	UIComponent* localPlayer = GameBuilder::createPlayer(launcher.getContext().getGame().getLocalPlayer());
+	UIComponent* remotePlayer = GameBuilder::createPlayer(launcher.getContext().getGame().getRemotePlayer());
+	UIComponent* robber = GameBuilder::createRobber(launcher.getContext().getGame().getCatanMap()->getRobber());
+	UIComponent* game = GameBuilder::createCatanGame(&launcher.getContext().getGame());
+	UIComponent* longestRoad = GameBuilder::createLongestRoad(launcher.getContext().getGame().getLongestRoad());
 
 	/***********************************
 	* Creacion de componentes Building *
@@ -40,6 +50,16 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI(1080, 640) 
 		UIComponent* buildingComponent = GameBuilder::createBuilding(building);
 		localBuildings.push_back(buildingComponent);
 	}
+	list<UIComponent*> remoteBuildings;
+	for (Building* building : launcher.getContext().getGame().getRemotePlayer()->buildings()) {
+		UIComponent* buildingComponent = GameBuilder::createRemoteBuilding(building);
+		remoteBuildings.push_back(buildingComponent);
+	}
+
+	/****************************
+	* Configuracion del tablero *
+	****************************/
+	MODEL(game, CatanGame*)->set(POSITION_LONGEST_ROAD, 910, 80, 0);
 
 	/******************************
 	* Configuracion de player one *
@@ -52,10 +72,26 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI(1080, 640) 
 	MODEL(localPlayer, Player*)->set(PLAYER_BRICK, 120, 150, 0);
 	MODEL(localPlayer, Player*)->set(PLAYER_WOOL, 180, 150, 0);
 	MODEL(localPlayer, Player*)->set(PLAYER_GRAIN, 240, 150, 0);
-	MODEL(localPlayer, Player*)->set(PLAYER_SETTLEMENTS, 30, 90, 0);
-	MODEL(localPlayer, Player*)->set(PLAYER_ROADS, 90, 90, 0);
-	MODEL(localPlayer, Player*)->set(PLAYER_CITY, 150, 90, 0);
+	MODEL(localPlayer, Player*)->set(PLAYER_SETTLEMENTS, 55, 60, 0);
+	MODEL(localPlayer, Player*)->set(PLAYER_ROADS, 0, 70, 0);
+	MODEL(localPlayer, Player*)->set(PLAYER_CITY, 130, 70, 0);
 	MODEL(localPlayer, Player*)->set(PLAYER_LONGEST_ROAD, 0, 0, 0);
+
+	/******************************
+	* Configuracion de player two *
+	******************************/
+	MODEL(remotePlayer, Player*)->setPosition(775, 400);
+	MODEL(remotePlayer, Player*)->set(PLAYER_NAME, 0, 0, 0);
+	MODEL(remotePlayer, Player*)->set(PLAYER_VICTORY_POINTS, 190, 0, 0);
+	MODEL(remotePlayer, Player*)->set(PLAYER_ORE, 0, 150, 0);
+	MODEL(remotePlayer, Player*)->set(PLAYER_LUMBER, 60, 150, 0);
+	MODEL(remotePlayer, Player*)->set(PLAYER_BRICK, 120, 150, 0);
+	MODEL(remotePlayer, Player*)->set(PLAYER_WOOL, 180, 150, 0);
+	MODEL(remotePlayer, Player*)->set(PLAYER_GRAIN, 240, 150, 0);
+	MODEL(remotePlayer, Player*)->set(PLAYER_SETTLEMENTS, 55, 60, 0);
+	MODEL(remotePlayer, Player*)->set(PLAYER_ROADS, 0, 70, 0);
+	MODEL(remotePlayer, Player*)->set(PLAYER_CITY, 130, 70, 0);
+	MODEL(remotePlayer, Player*)->set(PLAYER_LONGEST_ROAD, 0, 0, 0);
 
 	/****************************/
 	/* Configuracion de botones */
@@ -84,11 +120,19 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI(1080, 640) 
 	this->attachComponent(firstDice);
 	this->attachComponent(secondDice);
 	this->attachComponent(localPlayer);
+	this->attachComponent(remotePlayer);
+	this->attachComponent(robber);
+	this->attachComponent(game);
+	this->attachComponent(longestRoad);
 
 	/********************************************
 	* Agrego componentes Building a la interfaz *
 	********************************************/
 	for (UIComponent* component : localBuildings) {
+		this->attachComponent(component);
+		MODEL(component, Building*)->demolish();
+	}
+	for (UIComponent* component : remoteBuildings) {
 		this->attachComponent(component);
 		MODEL(component, Building*)->demolish();
 	}
@@ -107,13 +151,16 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI(1080, 640) 
 	MODEL(exitButton, MouseUI*)->setPosition(63, 240);
 	MODEL(discardButton, MouseUI*)->setPosition(63, 190);
 	MODEL(tradeButton, MouseUI*)->setPosition(63, 140);
-	MODEL(firstDice, Dice*)->setPosition(800, 200);
-	MODEL(secondDice, Dice*)->setPosition(850, 200);
+	MODEL(firstDice, Dice*)->setPosition(900, 20);
+	MODEL(secondDice, Dice*)->setPosition(950, 20);
 
 	/***********************************
 	* Configuro general de la interfaz *
 	***********************************/
 	this->setBackground(GAMEWINDOW_BACKGROUND);
+	this->setCursor(GAMEWINDOW_CURSOR);
+	this->setClickCursor(GAMEWINDOW_CLICK_CURSOR);
+	this->setGrabCursor(GAMEWINDOW_GRAB_CURSOR);
 
 	/**************************
 	* Activo el layout actual *
@@ -138,34 +185,43 @@ GameWindow::onDicesThrown(void* data) {
 void
 GameWindow::normal_layout(void) {
 
-	/*******************************************
-	* Configuro los buildings del local player *
-	*******************************************/
+	/****************************
+	* Configuro el longest road *
+	****************************/
+	(*this)[LONGEST_ROAD_ID]->getModel()->setEnable(true);
+	(*this)[LONGEST_ROAD_ID]->getModel()->setVisible(true);
+
+	/**********************
+	* Configuro el robber *
+	**********************/
+	(*this)[ROBBER_ID]->getModel()->setEnable(true);
+	(*this)[ROBBER_ID]->getModel()->setVisible(true);
+
+	/**************************
+	* Configuro los buildings *
+	**************************/
 	for (UIComponent* buildings : (*this)(BUILDING_ID)) {
 		buildings->getModel()->setVisible(true);
-		buildings->getModel()->setEnable(true); 
+		buildings->getModel()->setEnable(true);
 	}
 
 	/************************
 	* Configuro los players *
 	************************/
 	(*this)[PLAYER_ONE_ID]->getModel()->setVisible(true);
+	(*this)[PLAYER_TWO_ID]->getModel()->setVisible(true);
 
 	/************************
 	* Configuro los botones *
 	************************/
 	(*this)["exit"]->getModel()->setEnable(true);
 	(*this)["exit"]->getModel()->setVisible(true);
-
 	(*this)["discard"]->getModel()->setEnable(true);
 	(*this)["discard"]->getModel()->setVisible(true);
-
 	(*this)["trade"]->getModel()->setEnable(true);
 	(*this)["trade"]->getModel()->setVisible(true);
-
 	(*this)["dice_one"]->getModel()->setEnable(true);
 	(*this)["dice_one"]->getModel()->setVisible(true);
-
 	(*this)["dice_two"]->getModel()->setEnable(true);
 	(*this)["dice_two"]->getModel()->setVisible(true);
 }
@@ -221,4 +277,51 @@ GameWindow::GameBuilder::createBuilding(Building* building) {
 
 	UIComponent* buildingComponent = new UIComponent(building, { buildingView }, { mouseController });
 	return buildingComponent;
+}
+
+UIComponent*
+GameWindow::GameBuilder::createRemoteBuilding(Building* building) {
+
+	/* Creo el view */
+	UIView* buildingView = new BuildingView(building);;
+
+	/* Attacheo y creo/devuelvo el componente */
+	building->attach(buildingView);
+
+	UIComponent* buildingComponent = new UIComponent(building, { buildingView }, { });
+	return buildingComponent;
+}
+
+UIComponent* 
+GameWindow::GameBuilder::createRobber(Robber* robber) {
+
+	/* Creo el view */
+	UIView* robberView = new RobberView(robber);
+
+	/* Creo el controller */
+	UIController* robberController = new MouseController(robber);
+
+	/* Attach y creacion del component */
+	robber->attach(robberView);
+
+	UIComponent* robberComponent = new UIComponent(robber, { robberView }, { robberController });
+	return robberComponent;
+}
+
+UIComponent* 
+GameWindow::GameBuilder::createLongestRoad(LongestRoad* longestRoad) {
+
+	/* Creo el view */
+	UIView* longestView = new LongestRoadView(longestRoad);
+
+	/* Attacheo y doy component*/
+	longestRoad->attach(longestView);
+
+	UIComponent* longestRoadComponent = new UIComponent(longestRoad, { longestView }, {});
+	return longestRoadComponent;
+}
+
+UIComponent* 
+GameWindow::GameBuilder::createCatanGame(CatanGame* game) {
+	return new UIComponent(game, {}, {});
 }

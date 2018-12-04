@@ -442,6 +442,11 @@ CatanMap::robberPosition(void) {
 	return robber->getCoord();
 }
 
+Robber*
+CatanMap::getRobber(void) {
+	return robber;
+}
+
 map<Coord, MapValue> 
 CatanMap::getMap(void) {
 	map<Coord, MapValue> catanMap;
