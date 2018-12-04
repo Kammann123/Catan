@@ -47,17 +47,20 @@ public:
 	void setLoopTimes(unsigned int timesToLoop);
 	void setScaleTimer(unsigned int scaleTimer);
 	void setFrameQty(unsigned int frameQty);
+	void setMode(Mode mode);
 
 	/*****************************************
 	* Interfaz de configuracion de CALLBACKS
 	*****************************************/
 	void setAnimationEndAction(Action animationEndAction_);
+	void setLoopEndAction(Action loopEndAction_);
 	void setFrameAction(Action frameAction_);
 
 	/*************************************
 	* Interfaz de ejecucion de CALLBACKS
 	*************************************/
 	void executeAnimationEndAction(void* data);
+	void executeLoopEndAction(void* data);
 	void executeFrameAction(void* data);
 
 private:
@@ -72,6 +75,7 @@ private:
 	/* Callbacks de ejecucion */
 	Action frameAction;
 	Action animationEndAction;
+	Action loopEndAction;
 
 	/* Flags */
 	bool activated;

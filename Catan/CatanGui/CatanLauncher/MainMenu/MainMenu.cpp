@@ -47,57 +47,57 @@ MainMenu(CatanLauncher& _launcher) : WindowUI(1080, 640), launcher(_launcher) {
 
 	/* Configuro los labels */
 	MODEL(message, TextUI*)->setText("[CatanGame]: Test!");
-	VIEW(message, 0)->updateModelValues();
+	(*message)[0]->updateModelValues();
 
 	/* Configuro las imagenes */
-	VIEW(status, 0)->getImages().setConfig(IV_BITMAP, MAINMENU_STATUS_CLOSED);
+	(*status)[0]->getImages().setConfig(IV_BITMAP, MAINMENU_STATUS_CLOSED);
 
 	/* Configuro los botones! */
-	VIEW(connectButton, 0)->getImages().setConfig(MouseUI::Status::IDLE, MAINMENU_CONNECT_IDLE);
-	VIEW(connectButton, 0)->getImages().setConfig(MouseUI::Status::FOCUSED, MAINMENU_CONNECT_FOCUS);
-	VIEW(connectButton, 0)->getImages().setConfig(MouseUI::Status::SELECTED, MAINMENU_CONNECT_SELECTED);
-	VIEW(connectButton, 0)->getImages().setConfig(MouseUI::Status::HOLDING, MAINMENU_CONNECT_SELECTED);
-	VIEW(connectButton, 0)->getImages().setConfig(MouseUI::Status::DRAGGED, MAINMENU_CONNECT_SELECTED);
-	VIEW(connectButton, 0)->updateModelValues();
+	(*connectButton)[0]->getImages().setConfig(MouseUI::Status::IDLE, MAINMENU_CONNECT_IDLE);
+	(*connectButton)[0]->getImages().setConfig(MouseUI::Status::FOCUSED, MAINMENU_CONNECT_FOCUS);
+	(*connectButton)[0]->getImages().setConfig(MouseUI::Status::SELECTED, MAINMENU_CONNECT_SELECTED);
+	(*connectButton)[0]->getImages().setConfig(MouseUI::Status::HOLDING, MAINMENU_CONNECT_SELECTED);
+	(*connectButton)[0]->getImages().setConfig(MouseUI::Status::DRAGGED, MAINMENU_CONNECT_SELECTED);
+	(*connectButton)[0]->updateModelValues();
 
-	VIEW(connectButton, 1)->getSamples().setConfig(MouseUI::Status::SELECTED, CONNECT_SELECT_SOUND);
-	VIEW(connectButton, 1)->getSamples().setConfig(MouseUI::Status::FOCUSED, CONNECT_FOCUS_SOUND);
+	(*connectButton)[1]->getSamples().setConfig(MouseUI::Status::SELECTED, CONNECT_SELECT_SOUND);
+	(*connectButton)[1]->getSamples().setConfig(MouseUI::Status::FOCUSED, CONNECT_FOCUS_SOUND);
 
 	MODEL(connectButton, MouseUI*)->setClickAction(bind(&MainMenu::onConnect, this, _1));
 
-	VIEW(cancelButton, 0)->getImages().setConfig(MouseUI::Status::IDLE, MAINMENU_CANCEL_IDLE);
-	VIEW(cancelButton, 0)->getImages().setConfig(MouseUI::Status::FOCUSED, MAINMENU_CANCEL_FOCUS);
-	VIEW(cancelButton, 0)->getImages().setConfig(MouseUI::Status::SELECTED, MAINMENU_CANCEL_SELECTED);
-	VIEW(cancelButton, 0)->getImages().setConfig(MouseUI::Status::HOLDING, MAINMENU_CANCEL_SELECTED);
-	VIEW(cancelButton, 0)->getImages().setConfig(MouseUI::Status::DRAGGED, MAINMENU_CANCEL_SELECTED);
-	VIEW(cancelButton, 0)->updateModelValues();
+	(*cancelButton)[0]->getImages().setConfig(MouseUI::Status::IDLE, MAINMENU_CANCEL_IDLE);
+	(*cancelButton)[0]->getImages().setConfig(MouseUI::Status::FOCUSED, MAINMENU_CANCEL_FOCUS);
+	(*cancelButton)[0]->getImages().setConfig(MouseUI::Status::SELECTED, MAINMENU_CANCEL_SELECTED);
+	(*cancelButton)[0]->getImages().setConfig(MouseUI::Status::HOLDING, MAINMENU_CANCEL_SELECTED);
+	(*cancelButton)[0]->getImages().setConfig(MouseUI::Status::DRAGGED, MAINMENU_CANCEL_SELECTED);
+	(*cancelButton)[0]->updateModelValues();
 
-	VIEW(cancelButton, 1)->getSamples().setConfig(MouseUI::Status::SELECTED, CANCEL_SELECT_SOUND);
-	VIEW(cancelButton, 1)->getSamples().setConfig(MouseUI::Status::FOCUSED, CANCEL_FOCUS_SOUND);
+	(*cancelButton)[1]->getSamples().setConfig(MouseUI::Status::SELECTED, CANCEL_SELECT_SOUND);
+	(*cancelButton)[1]->getSamples().setConfig(MouseUI::Status::FOCUSED, CANCEL_FOCUS_SOUND);
 
 	MODEL(cancelButton, MouseUI*)->setClickAction(bind(&MainMenu::onCancel, this, _1));
 
 	/* Configuro los textbox! */
-	VIEW(nameBox, 0)->getImages().setConfig(MouseUI::Status::IDLE, MAINMENU_TEXTBOX_IDLE);
-	VIEW(nameBox, 0)->getImages().setConfig(MouseUI::Status::FOCUSED, MAINMENU_TEXTBOX_IDLE);
-	VIEW(nameBox, 0)->getImages().setConfig(MouseUI::Status::SELECTED, MAINMENU_TEXTBOX_SELECTED);
-	VIEW(nameBox, 0)->getImages().setConfig(MouseUI::Status::HOLDING, MAINMENU_TEXTBOX_SELECTED);
-	VIEW(nameBox, 0)->getImages().setConfig(MouseUI::Status::DRAGGED, MAINMENU_TEXTBOX_SELECTED);
-	VIEW(nameBox, 0)->updateModelValues();
+	(*nameBox)[0]->getImages().setConfig(MouseUI::Status::IDLE, MAINMENU_TEXTBOX_IDLE);
+	(*nameBox)[0]->getImages().setConfig(MouseUI::Status::FOCUSED, MAINMENU_TEXTBOX_IDLE);
+	(*nameBox)[0]->getImages().setConfig(MouseUI::Status::SELECTED, MAINMENU_TEXTBOX_SELECTED);
+	(*nameBox)[0]->getImages().setConfig(MouseUI::Status::HOLDING, MAINMENU_TEXTBOX_SELECTED);
+	(*nameBox)[0]->getImages().setConfig(MouseUI::Status::DRAGGED, MAINMENU_TEXTBOX_SELECTED);
+	(*nameBox)[0]->updateModelValues();
 
-	VIEW(ipBox, 0)->getImages().setConfig(MouseUI::Status::IDLE, MAINMENU_TEXTBOX_IDLE);
-	VIEW(ipBox, 0)->getImages().setConfig(MouseUI::Status::FOCUSED, MAINMENU_TEXTBOX_IDLE);
-	VIEW(ipBox, 0)->getImages().setConfig(MouseUI::Status::SELECTED, MAINMENU_TEXTBOX_SELECTED);
-	VIEW(ipBox, 0)->getImages().setConfig(MouseUI::Status::HOLDING, MAINMENU_TEXTBOX_SELECTED);
-	VIEW(ipBox, 0)->getImages().setConfig(MouseUI::Status::DRAGGED, MAINMENU_TEXTBOX_SELECTED);
-	VIEW(ipBox, 0)->updateModelValues();
+	(*ipBox)[0]->getImages().setConfig(MouseUI::Status::IDLE, MAINMENU_TEXTBOX_IDLE);
+	(*ipBox)[0]->getImages().setConfig(MouseUI::Status::FOCUSED, MAINMENU_TEXTBOX_IDLE);
+	(*ipBox)[0]->getImages().setConfig(MouseUI::Status::SELECTED, MAINMENU_TEXTBOX_SELECTED);
+	(*ipBox)[0]->getImages().setConfig(MouseUI::Status::HOLDING, MAINMENU_TEXTBOX_SELECTED);
+	(*ipBox)[0]->getImages().setConfig(MouseUI::Status::DRAGGED, MAINMENU_TEXTBOX_SELECTED);
+	(*ipBox)[0]->updateModelValues();
 
-	VIEW(portBox, 0)->getImages().setConfig(MouseUI::Status::IDLE, MAINMENU_TEXTBOX_IDLE);
-	VIEW(portBox, 0)->getImages().setConfig(MouseUI::Status::FOCUSED, MAINMENU_TEXTBOX_IDLE);
-	VIEW(portBox, 0)->getImages().setConfig(MouseUI::Status::SELECTED, MAINMENU_TEXTBOX_SELECTED);
-	VIEW(portBox, 0)->getImages().setConfig(MouseUI::Status::HOLDING, MAINMENU_TEXTBOX_SELECTED);
-	VIEW(portBox, 0)->getImages().setConfig(MouseUI::Status::DRAGGED, MAINMENU_TEXTBOX_SELECTED);
-	VIEW(portBox, 0)->updateModelValues();
+	(*portBox)[0]->getImages().setConfig(MouseUI::Status::IDLE, MAINMENU_TEXTBOX_IDLE);
+	(*portBox)[0]->getImages().setConfig(MouseUI::Status::FOCUSED, MAINMENU_TEXTBOX_IDLE);
+	(*portBox)[0]->getImages().setConfig(MouseUI::Status::SELECTED, MAINMENU_TEXTBOX_SELECTED);
+	(*portBox)[0]->getImages().setConfig(MouseUI::Status::HOLDING, MAINMENU_TEXTBOX_SELECTED);
+	(*portBox)[0]->getImages().setConfig(MouseUI::Status::DRAGGED, MAINMENU_TEXTBOX_SELECTED);
+	(*portBox)[0]->updateModelValues();
 
 	/* Agrego componentes */
 	this->attachComponent(nameBox);
@@ -179,8 +179,8 @@ MainMenu::onCancel(void* data) {
 	/*
 	* Reinicio el estado de la imagen
 	*/
-	VIEW((*this)["status"], 0)->getImages().setConfig(IV_BITMAP, MAINMENU_STATUS_CLOSED);
-	VIEW((*this)["status"], 0)->update();
+	(*(*this)["status"])[0]->getImages().setConfig(IV_BITMAP, MAINMENU_STATUS_CLOSED);
+	(*(*this)["status"])[0]->update();
 
 	/*
 	* Muestro el nuevo layout, volviendo a tomar datos
@@ -202,22 +202,22 @@ MainMenu::process(void) {
 		prevState = state;
 		switch (state) {
 			case CatanNetworking::States::CLOSED:
-				VIEW((*this)["status"], 0)->getImages().setConfig(IV_BITMAP, MAINMENU_STATUS_CLOSED);
-				VIEW((*this)["status"], 0)->update();
+				(*(*this)["status"])[0]->getImages().setConfig(IV_BITMAP, MAINMENU_STATUS_CLOSED);
+				(*(*this)["status"])[0]->update();
 				break;
 			case CatanNetworking::States::LISTENING:
 			case CatanNetworking::States::DISCONNECTED:
-				VIEW((*this)["status"], 0)->getImages().setConfig(IV_BITMAP, MAINMENU_STATUS_OFFLINE);
-				VIEW((*this)["status"], 0)->update();
+				(*(*this)["status"])[0]->getImages().setConfig(IV_BITMAP, MAINMENU_STATUS_OFFLINE);
+				(*(*this)["status"])[0]->update();
 				break;
 			case CatanNetworking::States::SYNC:
 			case CatanNetworking::States::WAIT_SYNC:
-				VIEW((*this)["status"], 0)->getImages().setConfig(IV_BITMAP, MAINMENU_STATUS_ONLINE);
-				VIEW((*this)["status"], 0)->update();
+				(*(*this)["status"])[0]->getImages().setConfig(IV_BITMAP, MAINMENU_STATUS_ONLINE);
+				(*(*this)["status"])[0]->update();
 				break;
 			case CatanNetworking::States::NET_ERROR:
-				VIEW((*this)["status"], 0)->getImages().setConfig(IV_BITMAP, MAINMENU_STATUS_ERROR);
-				VIEW((*this)["status"], 0)->update();
+				(*(*this)["status"])[0]->getImages().setConfig(IV_BITMAP, MAINMENU_STATUS_ERROR);
+				(*(*this)["status"])[0]->update();
 				break;
 			case CatanNetworking::States::IDLE:
 				launcher.change(CatanLauncher::States::GAME_WINDOW);

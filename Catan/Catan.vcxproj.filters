@@ -528,6 +528,9 @@
     <ClInclude Include="CatanGui\CatanLauncher\GameWindow\DiceView.h">
       <Filter>CatanGui\CatanLauncher\GameWindow</Filter>
     </ClInclude>
+    <ClInclude Include="CatanGui\CatanLauncher\GameWindow\PlayerView.h">
+      <Filter>CatanGui\CatanLauncher\GameWindow</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FSM\EventQueue.cpp">
@@ -981,6 +984,9 @@
       <Filter>CatanGame</Filter>
     </ClCompile>
     <ClCompile Include="CatanGui\CatanLauncher\GameWindow\DiceView.cpp">
+      <Filter>CatanGui\CatanLauncher\GameWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGui\CatanLauncher\GameWindow\PlayerView.cpp">
       <Filter>CatanGui\CatanLauncher\GameWindow</Filter>
     </ClCompile>
   </ItemGroup>

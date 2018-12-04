@@ -1,7 +1,7 @@
 #include "MouseController.h"
 
 MouseController::
-MouseController(MouseUI* frame) : UIController(frame) {}
+MouseController(MouseUI* frame) : UIController(frame, UIController::Id::MOUSE) {}
 
 MouseController::
 ~MouseController() {}
@@ -18,7 +18,7 @@ MouseController::parse(ALLEGRO_EVENT* event) {
 	/*
 	* Verifico que este habilitado el controller y su modelo
 	*/
-	if (frame->getEnable()) {
+	if (getEnable() && frame->getEnable()) {
 
 		switch (frame->getStatus()) {
 

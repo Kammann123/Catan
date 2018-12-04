@@ -66,7 +66,7 @@ Player(PlayerId player, CatanGame* game) : ContainerUI(player == PlayerId::PLAYE
 	/* Inicializacion de parametros */
 	this->player = player;
 	this->game = game;
-	this->name = "";
+	this->name = player == PlayerId::PLAYER_ONE ? "PlayerOne" : "PlayerTwo";
 	this->victoryPoints = 0;
 	this->resourceCards.clear();
 	this->settlements.clear();

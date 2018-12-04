@@ -201,6 +201,7 @@
     <ClInclude Include="CatanGui\CatanLauncher\CatanLauncher.h" />
     <ClInclude Include="CatanGui\CatanLauncher\GameWindow\DiceView.h" />
     <ClInclude Include="CatanGui\CatanLauncher\GameWindow\GameWindow.h" />
+    <ClInclude Include="CatanGui\CatanLauncher\GameWindow\PlayerView.h" />
     <ClInclude Include="CatanGui\CatanLauncher\MainMenu\MainMenu.h" />
     <ClInclude Include="CatanNetworking\CatanNetworking.h" />
     <ClInclude Include="CatanNetworking\NetworkHandlers\NetworkClient.h" />
@@ -356,6 +357,7 @@
     <ClCompile Include="CatanGui\CatanLauncher\CatanLauncher.cpp" />
     <ClCompile Include="CatanGui\CatanLauncher\GameWindow\DiceView.cpp" />
     <ClCompile Include="CatanGui\CatanLauncher\GameWindow\GameWindow.cpp" />
+    <ClCompile Include="CatanGui\CatanLauncher\GameWindow\PlayerView.cpp" />
     <ClCompile Include="CatanGui\CatanLauncher\MainMenu\MainMenu.cpp" />
     <ClCompile Include="CatanNetworking\CatanNetworking.cpp" />
     <ClCompile Include="CatanNetworking\NetworkHandlers\NetworkClient.cpp" />

@@ -107,6 +107,11 @@ AnimationUI::getMode(void) const {
 }
 
 void
+AnimationUI::setMode(Mode mode) {
+	this->mode = mode;
+}
+
+void
 AnimationUI::setLoopTimes(unsigned int timesToLoop) {
 	this->timesToLoop = timesToLoop;
 }
@@ -127,6 +132,11 @@ AnimationUI::setFrameAction(Action frameAction_)
 	frameAction = frameAction_;
 }
 
+void
+AnimationUI::setLoopEndAction(Action loopEndAction_) {
+	loopEndAction = loopEndAction_;
+}
+
 void 
 AnimationUI::setAnimationEndAction(Action animationEndAction_)
 {
@@ -138,6 +148,12 @@ AnimationUI::executeFrameAction(void * data)
 {
 	if (frameAction)
 		frameAction(data);
+}
+
+void
+AnimationUI::executeLoopEndAction(void* data) {
+	if (loopEndAction)
+		loopEndAction(data);
 }
 
 void 

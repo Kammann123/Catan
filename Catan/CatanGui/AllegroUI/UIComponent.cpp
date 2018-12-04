@@ -45,8 +45,26 @@ UIComponent::draw(void) {
 	}
 }
 
+UIController*
+UIComponent::operator[](UIController::Id id) {
+	for (UIController* controller : controllers) {
+		if (controller->getId() == id) {
+			return controller;
+		}
+	}
+	return nullptr;
+}
+
+UIView*
+UIComponent::operator[](unsigned int index) {
+	if (index < views.size()) {
+		return views[index];
+	}
+	return nullptr;
+}
+
 vector<UIController*>& UIComponent::
-getController(void)
+getControllers(void)
 {
 	return controllers;
 }

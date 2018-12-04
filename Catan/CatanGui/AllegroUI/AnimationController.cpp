@@ -1,7 +1,7 @@
 #include "AnimationController.h"
 
 AnimationController::
-AnimationController(AnimationUI* animationUI) : UIController(animationUI) {}
+AnimationController(AnimationUI* animationUI) : UIController(animationUI, UIController::Id::ANIMATION) {}
 
 AnimationController::
 ~AnimationController(void) {}
@@ -15,7 +15,7 @@ AnimationController::parse(ALLEGRO_EVENT* event) {
 	*/
 	AnimationUI* animation = (AnimationUI*)model;
 
-	if (animation->getEnable() && animation->isActivated()) {
+	if (getEnable() && animation->getEnable() && animation->isActivated()) {
 		/* Verifico que el tipo de eventos recibidos sean los de interes
 		* para el modelo correspondiente, de animacion, por ende, eventos de timer
 		*/
@@ -23,6 +23,12 @@ AnimationController::parse(ALLEGRO_EVENT* event) {
 			if (animation->tick()) {
 				if (animation->getFrameCounter() == 0) {
 					animation->executeAnimationEndAction(event);
+
+					if (animation->getMode() == AnimationUI::Mode::X_TIMES) {
+						if (!animation->isActivated()) {
+							animation->executeLoopEndAction(event);
+						}
+					}
 				}
 				else {
 					animation->executeFrameAction(event);

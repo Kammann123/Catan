@@ -1,7 +1,7 @@
 #include "TextController.h"
 
 TextController::
-TextController(TextUI* textUI) : UIController(textUI) {}
+TextController(TextUI* textUI) : UIController(textUI, UIController::Id::TEXT) {}
 
 TextController::
 ~TextController(void) {}
@@ -15,7 +15,7 @@ TextController::parse(ALLEGRO_EVENT* event) {
 	*/
 	TextUI* text = (TextUI*)model;
 
-	if (text->getEnable()) {
+	if (getEnable() && text->getEnable()) {
 		if (event->type == ALLEGRO_EVENT_KEY_CHAR) {
 			if (!event->keyboard.repeat) {
 				if (text->getStatus() == MouseUI::SELECTED || text->getStatus() == MouseUI::HOLDING) {
