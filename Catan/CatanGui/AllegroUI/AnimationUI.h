@@ -8,45 +8,72 @@
 class AnimationUI : public MouseUI {
 public:
 
-	/*Mode - Modos de funcionamiento del AnimationUI*/
+	/* Mode - Modos de funcionamiento del AnimationUI */
 	enum Mode : unsigned int { LOOP, DO_ONCE, X_TIMES };
 
 	/*
-	* AnimationUI
+	* AnimationUI - Se construye por defecto con un identificador del componente grafico, 
+	* y la informacion de la animacion, no obstante, por defecto se encuentra en modo DO_ONE, 
+	* mientras que para configurar de otra forma, debe usarse los metodos.
 	*/
-	AnimationUI(Mode mode_, int timesToLoop, string id, size_t width, size_t height, bool dragMode = false, bool holdMode = false);
-	AnimationUI(int64_t maxTimerCount, Mode mode_, string id, size_t width, size_t height, bool dragMode = false, bool holdMode = false, int timesToLoop = 0);
-	~AnimationUI();
+	AnimationUI(string id, unsigned int frameQty);
 
-	/*Incremento del count*/
-	void incCount(void * data);
+	/**************************************
+	* Interfaz de control de la animacion
+	**************************************/
+	bool isActivated(void) const;
+	void restart(void);
+	void start(void);
+	void stop(void);
+	bool tick(void);
 
-	/* Getters y setters*/
-	unsigned int getFrameCount(void);
-	int64_t getTimerCount(void);
-	int64_t getMaxTimerCount(void);
-	void setMaxTimerCount(int64_t maxTimerCount);
-	bool getActivated(void);
-	void setActivated(bool activated);
-	Mode getMode(void);
+	/********************************************
+	* Interfaz de acceso a la informacion actual
+	* de la animacion, metodos GETTER 
+	********************************************/
+	unsigned int getFrameCounter(void) const;
+	unsigned int getTimeCounter(void) const;
+	unsigned int getLoopCounter(void) const;
+	unsigned int getScaleTimer(void) const;
+	unsigned int getLoopTimes(void) const;
+	unsigned int getFrameQty(void) const;
+	Mode getMode(void) const;
 
-	/* Configuracion de callbacks*/
-	void setFrameAction(Action frameAction_);
+	/********************************************
+	* Interfaz de configuracion de la animacion
+	* definiendo los parametros de la misma,
+	* metodos SETTER
+	********************************************/
+	void setLoopTimes(unsigned int timesToLoop);
+	void setScaleTimer(unsigned int scaleTimer);
+	void setFrameQty(unsigned int frameQty);
+
+	/*****************************************
+	* Interfaz de configuracion de CALLBACKS
+	*****************************************/
 	void setAnimationEndAction(Action animationEndAction_);
-	/* Ejecucion de callbacks */
-	void executeFrameAction(void* data);
+	void setFrameAction(Action frameAction_);
+
+	/*************************************
+	* Interfaz de ejecucion de CALLBACKS
+	*************************************/
 	void executeAnimationEndAction(void* data);
+	void executeFrameAction(void* data);
 
 private:
+	/* Valores de animacion */
+	unsigned int frameQty;
 	unsigned int frameCounter;
 	unsigned int timesToLoop;
+	unsigned int loopCounter;
+	unsigned int scaleTimer;
+	unsigned int timeCounter;
+
 	/* Callbacks de ejecucion */
 	Action frameAction;
 	Action animationEndAction;
-	/* Count del timer*/
-	int64_t timerCount;
-	int64_t maxTimerCount;
-	/*Flags*/
+
+	/* Flags */
 	bool activated;
 	Mode mode;
 };

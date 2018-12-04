@@ -15,9 +15,19 @@ AnimationController::parse(ALLEGRO_EVENT* event) {
 	*/
 	AnimationUI* animation = (AnimationUI*)model;
 
-	if (animation->getEnable()) {
+	if (animation->getEnable() && animation->isActivated()) {
+		/* Verifico que el tipo de eventos recibidos sean los de interes
+		* para el modelo correspondiente, de animacion, por ende, eventos de timer
+		*/
 		if (event->type == ALLEGRO_EVENT_TIMER) {
-			animation->incCount(event);
+			if (animation->tick()) {
+				if (animation->getFrameCounter() == 0) {
+					animation->executeAnimationEndAction(event);
+				}
+				else {
+					animation->executeFrameAction(event);
+				}
+			}
 		}
 	}
 }

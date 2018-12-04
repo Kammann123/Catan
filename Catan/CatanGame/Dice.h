@@ -4,18 +4,19 @@
 
 class Dice : public AnimationUI {
 public:
-
-	/*
-	* Dice - Se construye inicialmente
-	* sin mas informacion que una referencia al juego
+	
+	/* Modelo de dados para crear una animacion de los mismos
+	* y en funcion de ello obtener los valores random para el juego
 	*/
-	Dice(int64_t maxTimerCount, Mode mode_, string id, size_t width, size_t height, bool dragMode = false, bool holdMode = false, int timesToLoop = 0);
+	Dice(string id);
 
-	//setter
-	void setValue(unsigned int value);
-
-	//getter
+	/**********************************************************
+	* Interfaz de acceso, lectura y escritura, de los valores
+	* del dado, SETTERS y GETTERS
+	**********************************************************/
 	unsigned int getValue(void);
+	void random(void* data);
+
 private:
 	unsigned int value;
 };

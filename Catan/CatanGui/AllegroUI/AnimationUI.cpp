@@ -1,100 +1,147 @@
 #include "AnimationUI.h"
 
-AnimationUI::AnimationUI(Mode mode_, int timesToLoop, string id, size_t width, size_t height, bool dragMode, bool holdMode): MouseUI(id, width, height, dragMode, holdMode)
-{
-	timerCount = 0;
-	maxTimerCount = 0;
-	activated = false;
-	mode = mode_;
-	this->timesToLoop = timesToLoop;
+AnimationUI::
+AnimationUI(string id, unsigned int frameQty) : MouseUI(id, 0, 0) {
+	this->frameQty = frameQty;
+	this->frameCounter = 0;
+	this->timesToLoop = 1;
+	this->loopCounter = 0;
+	this->scaleTimer = 1;
+	this->timeCounter = 0;
+	this->activated = false;
+	this->mode = Mode::DO_ONCE;
 }
 
-AnimationUI::AnimationUI(int64_t maxTimerCount, Mode mode_, string id, size_t width, size_t height, bool dragMode, bool holdMode, int timesToLoop): MouseUI(id, width, height, dragMode, holdMode)
-{
-	timerCount = 0;
-	this->maxTimerCount = maxTimerCount;
-	activated = false;
-	mode = mode_;
-	this->timesToLoop = timesToLoop;
-}
+bool
+AnimationUI::tick(void) {
 
-AnimationUI::~AnimationUI()
-{
-}
-
-
-void AnimationUI::incCount(void * data)
-{
-	timerCount++;
-	if (timerCount == maxTimerCount)
-	{
-		timerCount = 0;
+	/* Aumenta el contador de timer para la escala del mismo
+	* segun la base generada por la ventana a la que pertenece el modelo
+	* y luego se determina si movio un frame
+	*/
+	timeCounter++;
+	if (timeCounter >= scaleTimer) {
+		timeCounter = 0;
 		frameCounter++;
-		executeFrameAction(data);
-		if ((mode == X_TIMES) && (frameCounter = timesToLoop))
-		{
-			activated = false;
-			executeAnimationEndAction(data);
+		if (frameCounter >= frameQty) {
 			frameCounter = 0;
+			if (mode == Mode::DO_ONCE) {
+				stop();
+			}
+			else if (mode == Mode::X_TIMES) {
+				loopCounter++;
+				if (loopCounter >= timesToLoop) {
+					loopCounter = 0;
+					stop();
+				}
+			}
 		}
 		notifyObservers();
+		return true;
+	}
+
+	/* No hubo cambio alguno de frame */
+	return false;
+}
+
+void
+AnimationUI::restart(void) {
+	this->frameCounter = 0;
+	this->loopCounter = 0;
+	this->timeCounter = 0;
+}
+
+void
+AnimationUI::start(void) {
+	if (getEnable()) {
+		this->activated = true;
+		this->frameCounter = 0;
+		this->loopCounter = 0;
+		this->timeCounter = 0;
 	}
 }
 
-unsigned int AnimationUI::getFrameCount(void)
-{
+void
+AnimationUI::stop(void) {
+	this->activated = false;
+}
+
+unsigned int
+AnimationUI::getFrameCounter(void) const {
 	return frameCounter;
 }
 
-int64_t AnimationUI::getTimerCount(void)
-{
-	return timerCount;
+unsigned int
+AnimationUI::getTimeCounter(void) const {
+	return timeCounter;
 }
 
-int64_t AnimationUI::getMaxTimerCount(void)
-{
-	return maxTimerCount;
+unsigned int
+AnimationUI::getLoopCounter(void) const {
+	return loopCounter;
 }
 
-void AnimationUI::setMaxTimerCount(int64_t maxTimerCount)
-{
-	this->maxTimerCount = maxTimerCount;
+unsigned int
+AnimationUI::getScaleTimer(void) const {
+	return scaleTimer;
 }
 
-bool AnimationUI::getActivated(void)
-{
+unsigned int
+AnimationUI::getLoopTimes(void) const {
+	return timesToLoop;
+}
+
+unsigned int
+AnimationUI::getFrameQty(void) const {
+	return frameQty;
+}
+
+bool
+AnimationUI::isActivated(void) const {
 	return activated;
 }
 
-void AnimationUI::setActivated(bool activated)
-{
-	this->activated = activated;
-}
-
 AnimationUI::Mode
-AnimationUI::getMode(void)
-{
+AnimationUI::getMode(void) const {
 	return mode;
 }
 
+void
+AnimationUI::setLoopTimes(unsigned int timesToLoop) {
+	this->timesToLoop = timesToLoop;
+}
 
-void AnimationUI::setFrameAction(Action frameAction_)
+void
+AnimationUI::setScaleTimer(unsigned int scaleTimer) {
+	this->scaleTimer = scaleTimer;
+}
+
+void
+AnimationUI::setFrameQty(unsigned int frameQty) {
+	this->frameQty = frameQty;
+}
+
+void 
+AnimationUI::setFrameAction(Action frameAction_)
 {
 	frameAction = frameAction_;
 }
 
-void AnimationUI::setAnimationEndAction(Action animationEndAction_)
+void 
+AnimationUI::setAnimationEndAction(Action animationEndAction_)
 {
 	animationEndAction = animationEndAction_;
 }
 
-void AnimationUI::executeFrameAction(void * data)
+void 
+AnimationUI::executeFrameAction(void * data)
 {
 	if (frameAction)
 		frameAction(data);
 }
 
-void AnimationUI::executeAnimationEndAction(void * data)
+void 
+AnimationUI::executeAnimationEndAction(void * data)
 {
 	if (animationEndAction)
 		animationEndAction(data);

@@ -40,5 +40,11 @@ public:
 	GameWindow(CatanLauncher& _launcher);
 
 private:
+
+	/*******************
+	* Layouts de la UI *
+	*******************/
+	void normal_layout(void);
+
 	CatanLauncher& launcher;
 };

@@ -516,6 +516,15 @@
     <ClInclude Include="CatanGui\AllegroUI\ContainerUI.h">
       <Filter>CatanGui\AllegroUI</Filter>
     </ClInclude>
+    <ClInclude Include="CatanGui\AllegroUI\AnimationController.h">
+      <Filter>CatanGui\AllegroUI</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGui\AllegroUI\AnimationUI.h">
+      <Filter>CatanGui\AllegroUI</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGame\Dice.h">
+      <Filter>CatanGame</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FSM\EventQueue.cpp">
@@ -958,6 +967,15 @@
     </ClCompile>
     <ClCompile Include="CatanGui\AllegroUI\ContainerUI.cpp">
       <Filter>CatanGui\AllegroUI</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGui\AllegroUI\AnimationController.cpp">
+      <Filter>CatanGui\AllegroUI</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGui\AllegroUI\AnimationUI.cpp">
+      <Filter>CatanGui\AllegroUI</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGame\Dice.cpp">
+      <Filter>CatanGame</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

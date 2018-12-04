@@ -1,12 +1,19 @@
 #include "Dice.h"
+#include "CatanGame.h"
 
-Dice::Dice(int64_t maxTimerCount, Mode mode_, string id, size_t width, size_t height, bool dragMode, bool holdMode, int timesToLoop): AnimationUI (maxTimerCount, mode_, timesToLoop,id, width, height, dragMode, holdMode)
-{}
+#define DICES_SCALE_TIMER	10
+
+using namespace std::placeholders;
+
+Dice::
+Dice(string id) : AnimationUI(id, 6) {
+	this->setScaleTimer(DICES_SCALE_TIMER);
+	this->setFrameAction(bind(&Dice::random, this, _1));
+}
 
 void 
-Dice::setValue(unsigned int value)
-{
-	this->value = value;
+Dice::random(void* data) {
+	this->value = RANDOM_DICE;
 }
 
 unsigned int
