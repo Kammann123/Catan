@@ -1,7 +1,8 @@
 #pragma once
 
 #include "CatanContext.h"
-#include "MainMenu.h"
+#include "MainMenu/MainMenu.h"
+#include "GameWindow/GameWindow.h"
 
 /*
 * CatanLauncher
@@ -46,4 +47,5 @@ private:
 	States state;
 	CatanContext context;
 	MainMenu mainmenu;
+	GameWindow gamewindow;
 };

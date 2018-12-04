@@ -26,22 +26,22 @@ Sync(CatanNetworking& net) : HandshakingState(net, CatanNetworking::States::SYNC
 
 void
 Sync::setRemoteName(NetworkPacket* packet) { 
-	networking.getGame().setRemoteName(((NamePacket*)packet)->getName()); 
+	networking.getGame().getRemotePlayer()->setName(((NamePacket*)packet)->getName()); 
 }
 
 NetworkPacket*
 Sync::getLocalName(void) { 
-	return new NamePacket(networking.getGame().getLocalName()); 
+	return new NamePacket(networking.getGame().getLocalPlayer()->getName()); 
 }
 
 NetworkPacket*
 Sync::getMap(void) { 
-	return new MapPacket(networking.getGame().getMap()); 
+	return new MapPacket(networking.getGame().getCatanMap()->getMap()); 
 }
 
 NetworkPacket*
 Sync::getTokens(void) { 
-	return new TokenPacket(networking.getGame().getTokens()); 
+	return new TokenPacket(networking.getGame().getCatanMap()->getTokens()); 
 }
 
 bool

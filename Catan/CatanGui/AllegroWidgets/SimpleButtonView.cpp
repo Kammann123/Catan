@@ -28,7 +28,7 @@ SimpleButtonView::draw(void) {
 
 		/* Busco el color del boton */
 		if (colors.has(button->getStatus())) {
-			bgColor = colors[button->getStatus()].;
+			bgColor = colors[button->getStatus()].color;
 		}
 		else {
 			bgColor = al_map_rgb(255, 255, 255);

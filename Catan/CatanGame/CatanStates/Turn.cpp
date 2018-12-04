@@ -15,7 +15,6 @@ Turn::handle(CatanEvent* event) {
 	Building* neighbour;
 	OfferEvent* offer;
 	BankEvent* bank;
-	bool valid;
 
 	/*
 	* En este estado se aceptan diferentes acciones que el jugador
@@ -137,23 +136,9 @@ Turn::handle(CatanEvent* event) {
 				* y en caso de cumplir, lo ejecuto
 				*/
 				if (bank->isBankTrade()) {
-					valid = false;
-
-					if (bank->hasLocal()) {
-						valid = game.isValidBankExchange(bank->getGivenCards(), bank->getPlayer());
-					}
-					else {
-						valid = game.isValidBankExchange(bank->getGiven(), bank->getPlayer());
-					}
-
-					if (valid) {
+					if (game.isValidBankExchange(bank->getGiven(), bank->getPlayer())) {
 						/* Ejecuto la accion de intercambio */
-						if (bank->hasLocal()) {
-							game.Exchange( bank->getGivenCards(), bank->getRecv().front(), bank->getPlayer() );
-						}
-						else {
-							game.Exchange( bank->getGiven(), bank->getRecv().front(), bank->getPlayer() );
-						}
+						game.Exchange(bank->getGiven(), bank->getRecv().front(), bank->getPlayer());
 
 						/* Notifico accion */
 						game.setInfo("Turn - Intercambio con el banco realizado correctamente!");
@@ -162,23 +147,9 @@ Turn::handle(CatanEvent* event) {
 					}
 				}
 				else if (bank->isDockTrade()) {
-					valid = false;
-
-					if (bank->hasLocal()) {
-						valid = game.isValidDockExchange(bank->getGivenCards(), bank->getPlayer());
-					}
-					else {
-						valid = game.isValidDockExchange(bank->getGiven(), bank->getPlayer());
-					}
-
-					if (valid) {
+					if (game.isValidDockExchange(bank->getGiven(), bank->getPlayer())) {
 						/* Ejecuto la accion de intercambio */
-						if (bank->hasLocal()) {
-							game.Exchange(bank->getGivenCards(), bank->getRecv().front(), bank->getPlayer());
-						}
-						else {
-							game.Exchange(bank->getGiven(), bank->getRecv().front(), bank->getPlayer());
-						}
+						game.Exchange(bank->getGiven(), bank->getRecv().front(), bank->getPlayer());
 
 						/* Notifico accion */
 						game.setInfo("Turn - Intercambio con puerto realizado correctamente!");
@@ -195,15 +166,7 @@ Turn::handle(CatanEvent* event) {
 				* Verifico que la oferta sea valida y posteriormente
 				* cambio de estado en caso de serla, a la espera de una respuesta
 				*/
-
-				if (offer->hasLocal()) {
-					valid = game.isValidPlayerExchange(offer->getGivenCards(), offer->getRecv(), offer->getPlayer());
-				}
-				else {
-					valid = game.isValidPlayerExchange(offer->getGiven(), offer->getRecv(), offer->getPlayer());
-				}
-
-				if (valid) {
+				if (game.isValidPlayerExchange(offer->getGiven(), offer->getRecv(), offer->getPlayer())) {
 					/* Cambio de estado a esperar la respuesta del otro jugador */
 					game.changeState(new OfferAnswer(game, *offer), "Turn - Oferta de intercambio ok! Esperando respuesta...");
 

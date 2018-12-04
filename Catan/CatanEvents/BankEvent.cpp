@@ -7,7 +7,4 @@ BankEvent::
 BankEvent(list<ResourceId> given, list<ResourceId> recv, PlayerId player) : CatanEvent(Events::BANK_TRADE, Sources::GUI, player), BankData(given, recv) {}
 
 BankEvent::
-BankEvent(list<ResourceCard*> given, list<ResourceId> recv, PlayerId player) : CatanEvent(Events::BANK_TRADE, Sources::GUI, player), BankData(given, recv) {}
-
-BankEvent::
 ~BankEvent() {}

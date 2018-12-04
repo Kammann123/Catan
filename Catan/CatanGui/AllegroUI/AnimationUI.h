@@ -2,14 +2,15 @@
 
 #include "MouseUI.h"
 
-/*Mode - Modos de funcionamiento del AnimationUI*/
-enum Mode : unsigned int { LOOP, DO_ONCE, X_TIMES };
 /*
-
 * AnimationUI
 */
 class AnimationUI : public MouseUI {
 public:
+
+	/*Mode - Modos de funcionamiento del AnimationUI*/
+	enum Mode : unsigned int { LOOP, DO_ONCE, X_TIMES };
+
 	/*
 	* AnimationUI
 	*/

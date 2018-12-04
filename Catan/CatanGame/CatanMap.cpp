@@ -442,6 +442,31 @@ CatanMap::robberPosition(void) {
 	return robber->getCoord();
 }
 
+map<Coord, MapValue> 
+CatanMap::getMap(void) {
+	map<Coord, MapValue> catanMap;
+
+	for (ResourceHex* land : landMap) {
+		catanMap.insert(pair<Coord, MapValue>(land->getCoord(), (MapValue)land->getResource()));
+	}
+	for (SeaHex* sea : seaMap) {
+		catanMap.insert(pair<Coord, MapValue>(sea->getCoord(), (MapValue)sea->getDocks()));
+	}
+
+	return catanMap;
+}
+
+map<Coord, unsigned char>
+CatanMap::getTokens(void) {
+	map<Coord, unsigned char> tokens;
+
+	for (ResourceHex* land : landMap) {
+		tokens.insert(pair<Coord, unsigned char>(land->getCoord(), land->getToken()));
+	}
+
+	return tokens;
+}
+
 list<ResourceHex*>
 CatanMap::lands(void) {
 	return landMap;
@@ -456,6 +481,7 @@ CatanMap::land(Coord coord) {
 			}
 		}
 	}
+	return nullptr;
 }
 
 list<SeaHex*>
@@ -472,6 +498,7 @@ CatanMap::sea(Coord coord) {
 			}
 		}
 	}
+	return nullptr;
 }
 
 map<string, position_t>

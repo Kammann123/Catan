@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../../AllegroUI/WindowUI.h"
+
 /*
 * Definicion de posiciones ordenadas dentro de los containers
 * de los jugadores y el juego o tablero
@@ -25,3 +27,18 @@
 #define ROBBER_ID		"robber"
 #define MAP_ID		"map"
 #define GAME_ID		"game"
+
+class CatanLauncher;
+
+/*
+* GameWindow
+* Interfaz grafica del juego Catan.
+*/
+class GameWindow : public WindowUI {
+public:
+	/* Constructor */
+	GameWindow(CatanLauncher& _launcher);
+
+private:
+	CatanLauncher& launcher;
+};

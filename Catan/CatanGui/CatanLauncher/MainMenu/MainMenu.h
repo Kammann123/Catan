@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../AllegroUI/WindowUI.h"
-#include "../../CatanNetworking/CatanNetworking.h"
+#include "../../AllegroUI/WindowUI.h"
+#include "../../../CatanNetworking/CatanNetworking.h"
 
 class CatanLauncher;
 

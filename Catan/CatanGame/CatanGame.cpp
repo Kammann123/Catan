@@ -482,11 +482,6 @@ CatanGame::getCatanMap(void) {
 	return catanMap;
 }
 
-PlayerId
-CatanGame::getTurn(void) {
-	return turn;
-}
-
 list<ResourceCard*>
 CatanGame::takeCards(ResourceId id, unsigned int qty) {
 	list<ResourceCard*> taken;

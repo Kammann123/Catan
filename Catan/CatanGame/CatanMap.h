@@ -6,6 +6,8 @@
 #include "Player.h"
 #include "Robber.h"
 
+#include "../CatanData/MapData.h"
+
 #include "../CatanGui/AllegroUI/FrameUI.h"
 
 #include <string>
@@ -84,6 +86,8 @@ public:
 	/************************************
 	* Interfaz de informacion del mapa
 	************************************/
+	map<Coord, MapValue> getMap(void);
+	map<Coord, unsigned char> getTokens(void);
 	list<ResourceHex*> lands(void);
 	ResourceHex* land(Coord coord);
 	list<SeaHex*> seas(void);

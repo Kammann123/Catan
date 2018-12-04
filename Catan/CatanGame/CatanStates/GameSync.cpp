@@ -14,9 +14,9 @@ GameSync::handle(CatanEvent* event) {
 	if (event->getEvent() == CatanEvent::Events::ASK_SYNC) {
 
 		/* Ejecuto rutinas de generacion del entorno de juego */
-		game.generateMap();
-		game.generateOcean();
-		game.generateTokens();
+		game.getCatanMap()->generateLand();
+		game.getCatanMap()->generateSea();
+		game.getCatanMap()->generateTokens();
 		game.generateTurn();
 
 		/* Paso a nuevo estado de primeras construcciones */
@@ -37,13 +37,14 @@ GameSync::handle(CatanEvent* event) {
 		*/
 		if (turn == PlayerId::PLAYER_ONE || turn == PlayerId::PLAYER_TWO) {
 
-			if (game.verifyMap(map.getMap()) && game.verifyTokens(tokens.getTokens())) {
+			if (game.getCatanMap()->verifyMap(map.getMap()) && game.getCatanMap()->verifyTokens(tokens.getTokens())) {
 
 				/* Ejecuto las rutinas de configuracion del entorno
 				* a partir de los paquetes recibidos como evento
 				*/
-				game.setRemoteName(remoteName.getName());
-				game.setGlobalMap(map.getMap(), tokens.getTokens());
+				game.getRemotePlayer()->setName(remoteName.getName());
+				game.getCatanMap()->loadMap(map.getMap());
+				game.getCatanMap()->loadTokens(tokens.getTokens());
 				game.setTurn(turn);
 
 				/* Paso a nuevo estado de primeras construcciones */

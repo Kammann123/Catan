@@ -3,7 +3,7 @@
 #include "CatanGame.h"
 
 ResourceCard::
-ResourceCard(ResourceId resourceId, CatanGame* game) : FrameUI("", 0, 0) {
+ResourceCard(ResourceId resourceId, CatanGame* game) {
 	this->resourceId = resourceId;
 	this->player = nullptr;
 	this->game = game;

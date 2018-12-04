@@ -27,6 +27,7 @@ public:
 	*/
 	void setVisible(bool visibleStatus);
 	void setEnable(bool enableStatus);
+	void setUIDestroy(bool destroys);
 	void setId(string id);
 
 	bool shouldUIDestroy(void);

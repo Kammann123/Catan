@@ -13,5 +13,4 @@ public:
 	/* Constructores y destructores */
 	RobberCardEvent(RobberCardPacket* packet);
 	RobberCardEvent(list<ResourceId> res, PlayerId player);
-	RobberCardEvent(list<ResourceCard*> res, PlayerId player);
 };

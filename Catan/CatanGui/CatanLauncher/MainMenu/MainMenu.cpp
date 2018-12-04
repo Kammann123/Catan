@@ -1,7 +1,7 @@
 #include "MainMenu.h"
-#include "CatanLauncher.h"
-#include "../AllegroWidgets/UIBuilder.h"
-#include "../AllegroWidgets/ImageView.h"
+#include "../CatanLauncher.h"
+#include "../../AllegroWidgets/UIBuilder.h"
+#include "../../AllegroWidgets/ImageView.h"
 
 #include <string>
 
@@ -157,7 +157,7 @@ MainMenu::onConnect(void* data) {
 	* lugares, como el nombre dentro del context en el launcher, y luego las ip y el port
 	* en el networking.
 	*/
-	launcher.getContext().getGame().setLocalName(name);
+	launcher.getContext().getGame().getLocalPlayer()->setName(name);
 	launcher.getContext().getNetworking().setIp(ip);
 	launcher.getContext().getNetworking().setPort(port);
 

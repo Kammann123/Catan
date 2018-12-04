@@ -123,6 +123,8 @@ Player::buildings(BuildingType type) {
 			return cities;
 			break;
 	}
+
+	return {};
 }
 
 unsigned int Player::getVictoryPoints()

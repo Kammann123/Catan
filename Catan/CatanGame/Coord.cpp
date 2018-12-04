@@ -528,12 +528,12 @@ bool
 Coord::_is_valid_dot(void) {
 	for (string coord : internalDots) {
 		if (coord == coords) {
-			return;
+			return true;
 		}
 	}
 	for (string coord : externalDots) {
 		if (coord == coords) {
-			return;
+			return true;
 		}
 	}
 	return false;

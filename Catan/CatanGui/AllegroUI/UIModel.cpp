@@ -1,7 +1,7 @@
 #include "UIModel.h"
 
 UIModel::
-UIModel(string id, bool UIDestroys = true) {
+UIModel(string id, bool UIDestroys) {
 	this->id = id;
 	this->visible = false;
 	this->enable = false;
@@ -21,6 +21,11 @@ void
 UIModel::setEnable(bool enableStatus) {
 	this->enable = enableStatus;
 	notifyObservers();
+}
+
+void 
+UIModel::setUIDestroy(bool destroys) {
+	this->UIDestroys = destroys;
 }
 
 bool 

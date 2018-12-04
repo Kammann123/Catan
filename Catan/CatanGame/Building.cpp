@@ -44,7 +44,7 @@ Building::build(Coord coord, double x, double y, double radian) {
 void
 Building::demolish(void) {
 	/* Configuro la remocion de la construccion */
-	this->build = false;
+	this->built = false;
 
 	/* Determino que tipo de construccion es, para buscar
 	* el id correspondiente dentro del container de player

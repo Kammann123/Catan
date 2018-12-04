@@ -17,8 +17,3 @@ list<ResourceId>&
 RobberCardData::getResources(void) {
 	return this->resources;
 }
-
-bool
-RobberCardData::hasRemote(void) {
-	return (this->resources.size() > 0);
-}

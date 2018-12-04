@@ -1,16 +1,12 @@
 #include "CatanLauncher.h"
 
 CatanLauncher::
-CatanLauncher() : mainmenu(*this) {
+CatanLauncher() : mainmenu(*this), gamewindow(*this) {
 	this->state = States::MAIN_MENU;
 }
 
 void
 CatanLauncher::run() {
-
-	/*
-	* Se ejecuta segun el estado
-	*/
 	switch ( state ) {
 
 		case MAIN_MENU:
@@ -23,8 +19,13 @@ CatanLauncher::run() {
 			break;
 
 		case GAME_WINDOW:
+			if (!gamewindow.isOpen()) {
+				gamewindow.start();
+			}
+			else {
+				gamewindow.run();
+			}
 			break;
-
 	}
 }
 

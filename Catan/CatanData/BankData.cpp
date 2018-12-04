@@ -7,12 +7,6 @@ BankData(list<ResourceId> given, list<ResourceId> recv) : CatanData(CatanData::T
 }
 
 BankData::
-BankData(list<ResourceCard*> given, list<ResourceId> recv) : CatanData(CatanData::Type::BANK) {
-	this->givenCard = given;
-	this->recv = recv;
-}
-
-BankData::
 BankData(void) : CatanData(CatanData::Type::BANK) {}
 
 void 

@@ -71,7 +71,8 @@ void AnimationUI::setActivated(bool activated)
 	this->activated = activated;
 }
 
-Mode AnimationUI::getMode(void)
+AnimationUI::Mode
+AnimationUI::getMode(void)
 {
 	return mode;
 }
