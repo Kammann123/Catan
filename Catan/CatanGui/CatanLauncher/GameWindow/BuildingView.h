@@ -5,5 +5,5 @@ class BuildingView : public UIView{
 public:
 	BuildingView(Building* model_ = nullptr);
 	void draw(void);
-	void updateModelValues(void);
+	void refactor(void);
 };

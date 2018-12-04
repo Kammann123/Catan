@@ -30,5 +30,5 @@ public:
 	TextFieldView (TextUI* model_ = nullptr);
 	~TextFieldView();
 	void draw(void);
-	void updateModelValues(void);
+	void refactor(void);
 };

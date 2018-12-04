@@ -22,7 +22,7 @@ draw(void)
 }
 
 void ImageView::
-updateModelValues() 
+refactor()
 {
 	FrameUI* pointer = (FrameUI*)model;
 	if (images.has(IV_BITMAP)) {

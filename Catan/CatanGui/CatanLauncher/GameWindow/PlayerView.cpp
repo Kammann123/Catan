@@ -104,5 +104,3 @@ void PlayerView::draw(void)
 	btMap = images[(unsigned int)ResourceId::FOREST].bitmap;
 	al_draw_bitmap(btMap, (*player)[PLAYER_LUMBER].x + player->xPos(), (*player)[PLAYER_LUMBER].y + player->yPos(), 0);
 }
-
-void PlayerView::updateModelValues(void) {}

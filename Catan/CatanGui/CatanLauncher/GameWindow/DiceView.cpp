@@ -55,7 +55,7 @@ void DiceView::draw(void)
 		al_draw_bitmap(btMap, dice->xPos(), dice->yPos(), 0);
 }
 
-void DiceView::updateModelValues(void) {
+void DiceView::refactor(void) {
 	AnimationUI* animation = (AnimationUI*)model;
 
 	animation->setWidth( al_get_bitmap_width(images[1].bitmap) );

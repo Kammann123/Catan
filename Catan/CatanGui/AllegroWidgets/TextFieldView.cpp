@@ -41,7 +41,7 @@ draw(void)
 }
 
 void 
-TextFieldView::updateModelValues(void) {
+TextFieldView::refactor(void) {
 	TextUI* text = (TextUI*)model;
 
 	text->setWidth(TF_PADDING_X * 2 + al_get_text_width(fonts[TF_FONT].font, text->getText().c_str()));

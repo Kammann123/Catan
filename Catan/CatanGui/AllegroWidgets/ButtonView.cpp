@@ -25,7 +25,7 @@ ButtonView(MouseUI* model_) : UIView(model_)
 }
 
 void ButtonView::
-updateModelValues(void) {
+refactor(void) {
 	MouseUI* button = (MouseUI*)model;
 	button->setHeight( al_get_bitmap_height(images[MouseUI::Status::IDLE].bitmap) );
 	button->setWidth( al_get_bitmap_width(images[MouseUI::Status::IDLE].bitmap) );

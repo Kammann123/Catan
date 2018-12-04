@@ -35,7 +35,7 @@ draw(void)
 }
 
 void TextBoxView::
-updateModelValues(void) {
+refactor(void) {
 	MouseUI* button = (MouseUI*)model;
 
 	button->setHeight(al_get_bitmap_height(images[MouseUI::Status::IDLE].bitmap));

@@ -17,6 +17,6 @@ class ButtonView : public UIView
 {
 public:
 	ButtonView(MouseUI* model_ = nullptr);
-	void updateModelValues(void);
+	void refactor(void);
 	void draw(void);
 };

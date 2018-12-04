@@ -5,5 +5,5 @@ class DiceView : public UIView{
 public:
 	DiceView(Dice* model_ = nullptr);
 	void draw(void);
-	void updateModelValues(void);
+	void refactor(void);
 };

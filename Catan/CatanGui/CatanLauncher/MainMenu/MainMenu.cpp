@@ -47,7 +47,6 @@ MainMenu(CatanLauncher& _launcher) : WindowUI(1080, 640), launcher(_launcher) {
 
 	/* Configuro los labels */
 	MODEL(message, TextUI*)->setText("[CatanGame]: Test!");
-	(*message)[0]->updateModelValues();
 
 	/* Configuro las imagenes */
 	(*status)[0]->getImages().setConfig(IV_BITMAP, MAINMENU_STATUS_CLOSED);
@@ -58,7 +57,6 @@ MainMenu(CatanLauncher& _launcher) : WindowUI(1080, 640), launcher(_launcher) {
 	(*connectButton)[0]->getImages().setConfig(MouseUI::Status::SELECTED, MAINMENU_CONNECT_SELECTED);
 	(*connectButton)[0]->getImages().setConfig(MouseUI::Status::HOLDING, MAINMENU_CONNECT_SELECTED);
 	(*connectButton)[0]->getImages().setConfig(MouseUI::Status::DRAGGED, MAINMENU_CONNECT_SELECTED);
-	(*connectButton)[0]->updateModelValues();
 
 	(*connectButton)[1]->getSamples().setConfig(MouseUI::Status::SELECTED, CONNECT_SELECT_SOUND);
 	(*connectButton)[1]->getSamples().setConfig(MouseUI::Status::FOCUSED, CONNECT_FOCUS_SOUND);
@@ -70,7 +68,6 @@ MainMenu(CatanLauncher& _launcher) : WindowUI(1080, 640), launcher(_launcher) {
 	(*cancelButton)[0]->getImages().setConfig(MouseUI::Status::SELECTED, MAINMENU_CANCEL_SELECTED);
 	(*cancelButton)[0]->getImages().setConfig(MouseUI::Status::HOLDING, MAINMENU_CANCEL_SELECTED);
 	(*cancelButton)[0]->getImages().setConfig(MouseUI::Status::DRAGGED, MAINMENU_CANCEL_SELECTED);
-	(*cancelButton)[0]->updateModelValues();
 
 	(*cancelButton)[1]->getSamples().setConfig(MouseUI::Status::SELECTED, CANCEL_SELECT_SOUND);
 	(*cancelButton)[1]->getSamples().setConfig(MouseUI::Status::FOCUSED, CANCEL_FOCUS_SOUND);
@@ -83,21 +80,18 @@ MainMenu(CatanLauncher& _launcher) : WindowUI(1080, 640), launcher(_launcher) {
 	(*nameBox)[0]->getImages().setConfig(MouseUI::Status::SELECTED, MAINMENU_TEXTBOX_SELECTED);
 	(*nameBox)[0]->getImages().setConfig(MouseUI::Status::HOLDING, MAINMENU_TEXTBOX_SELECTED);
 	(*nameBox)[0]->getImages().setConfig(MouseUI::Status::DRAGGED, MAINMENU_TEXTBOX_SELECTED);
-	(*nameBox)[0]->updateModelValues();
 
 	(*ipBox)[0]->getImages().setConfig(MouseUI::Status::IDLE, MAINMENU_TEXTBOX_IDLE);
 	(*ipBox)[0]->getImages().setConfig(MouseUI::Status::FOCUSED, MAINMENU_TEXTBOX_IDLE);
 	(*ipBox)[0]->getImages().setConfig(MouseUI::Status::SELECTED, MAINMENU_TEXTBOX_SELECTED);
 	(*ipBox)[0]->getImages().setConfig(MouseUI::Status::HOLDING, MAINMENU_TEXTBOX_SELECTED);
 	(*ipBox)[0]->getImages().setConfig(MouseUI::Status::DRAGGED, MAINMENU_TEXTBOX_SELECTED);
-	(*ipBox)[0]->updateModelValues();
 
 	(*portBox)[0]->getImages().setConfig(MouseUI::Status::IDLE, MAINMENU_TEXTBOX_IDLE);
 	(*portBox)[0]->getImages().setConfig(MouseUI::Status::FOCUSED, MAINMENU_TEXTBOX_IDLE);
 	(*portBox)[0]->getImages().setConfig(MouseUI::Status::SELECTED, MAINMENU_TEXTBOX_SELECTED);
 	(*portBox)[0]->getImages().setConfig(MouseUI::Status::HOLDING, MAINMENU_TEXTBOX_SELECTED);
 	(*portBox)[0]->getImages().setConfig(MouseUI::Status::DRAGGED, MAINMENU_TEXTBOX_SELECTED);
-	(*portBox)[0]->updateModelValues();
 
 	/* Agrego componentes */
 	this->attachComponent(nameBox);

@@ -5,5 +5,5 @@ class PlayerView : public UIView{
 public:
 	PlayerView(Player* model_ = nullptr);
 	void draw(void);
-	void updateModelValues(void);
+	void refactor(void);
 };

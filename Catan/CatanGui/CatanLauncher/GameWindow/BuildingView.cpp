@@ -34,7 +34,7 @@ void BuildingView::draw(void)
 	}
 }
 
-void BuildingView::updateModelValues(void) {
+void BuildingView::refactor(void) {
 	Building* building = (Building*)model;
 
 	building->setHeight( al_get_bitmap_height(images[(unsigned int)building->getType()].bitmap) );
