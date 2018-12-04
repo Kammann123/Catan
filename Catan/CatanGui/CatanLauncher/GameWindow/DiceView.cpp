@@ -1,7 +1,6 @@
 #include "DiceView.h"
 #include <allegro5/allegro.h>
 
-
 #define DICE_1_IMG				"CatanGui\\GUIDesigns\\GameMenu\\dices\\dice_1.png"
 #define DICE_2_IMG				"CatanGui\\GUIDesigns\\GameMenu\\dices\\dice_2.png"
 #define DICE_3_IMG				"CatanGui\\GUIDesigns\\GameMenu\\dices\\dice_3.png"
@@ -11,6 +10,7 @@
 
 DiceView::DiceView(Dice * model_) : UIView(model_)
 {
+	/* Configuro las imagenes que usara la View */
 	images.clear();
 	images.setConfig(1, DICE_1_IMG);
 	images.setConfig(2, DICE_2_IMG);
@@ -18,15 +18,12 @@ DiceView::DiceView(Dice * model_) : UIView(model_)
 	images.setConfig(4, DICE_4_IMG);
 	images.setConfig(5, DICE_5_IMG);
 	images.setConfig(6, DICE_6_IMG);
-}
 
-DiceView::~DiceView()
-{
+	updateModelValues();
 }
 
 void DiceView::draw(void)
 {
-	//Hacer modelo del dado que herede de la animacion
 	Dice* dice = (Dice*) model;
 	ALLEGRO_BITMAP * btMap;
 	if (images.has(dice->getValue())) {
@@ -38,6 +35,9 @@ void DiceView::draw(void)
 		al_draw_bitmap(btMap, dice->xPos(), dice->yPos(), 0);
 }
 
-void DiceView::updateModelValues(void)
-{
+void DiceView::updateModelValues(void) {
+	AnimationUI* animation = (AnimationUI*)model;
+
+	animation->setWidth( al_get_bitmap_width(images[1].bitmap) );
+	animation->setHeight( al_get_bitmap_height(images[1].bitmap) );
 }
