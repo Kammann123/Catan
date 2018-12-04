@@ -15,12 +15,11 @@ void LongestRoadView::draw(void)
 	LongestRoad* longestRoad = (LongestRoad*)model;
 	ALLEGRO_BITMAP * btMap = nullptr;
 	if (model->getVisible()) {
-		/* Busco la imagen del LongestRoad */
-
+		/* Se busca la imagen del LongestRoad */
 		if (images.has(LONGEST_ROAD_ID)) {
 			btMap = images[LONGEST_ROAD_ID].bitmap;
 		}
-		/*Dibujo la imagen*/
+		/*Se dibuja la imagen*/
 		if (btMap != nullptr)
 			al_draw_bitmap(btMap, longestRoad->xPos(), longestRoad->yPos(),0);
 	}
