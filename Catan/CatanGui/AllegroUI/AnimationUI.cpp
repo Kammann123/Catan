@@ -1,6 +1,6 @@
 #include "AnimationUI.h"
 
-AnimationUI::AnimationUI(Mode mode_, int timesToLoop)
+AnimationUI::AnimationUI(Mode mode_, int timesToLoop, string id, size_t width, size_t height, bool dragMode, bool holdMode): MouseUI(id, width, height, dragMode, holdMode)
 {
 	timerCount = 0;
 	maxTimerCount = 0;
@@ -9,7 +9,7 @@ AnimationUI::AnimationUI(Mode mode_, int timesToLoop)
 	this->timesToLoop = timesToLoop;
 }
 
-AnimationUI::AnimationUI(int64_t maxTimerCount, Mode mode_, int timesToLoop)
+AnimationUI::AnimationUI(int64_t maxTimerCount, Mode mode_, string id, size_t width, size_t height, bool dragMode, bool holdMode, int timesToLoop): MouseUI(id, width, height, dragMode, holdMode)
 {
 	timerCount = 0;
 	this->maxTimerCount = maxTimerCount;
@@ -30,12 +30,13 @@ void AnimationUI::incCount(void * data)
 	{
 		timerCount = 0;
 		frameCounter++;
+		executeFrameAction(data);
 		if ((mode == X_TIMES) && (frameCounter = timesToLoop))
 		{
 			activated = false;
-			execute_action(data);
+			executeAnimationEndAction(data);
+			frameCounter = 0;
 		}
-		
 		notifyObservers();
 	}
 }
@@ -76,13 +77,24 @@ Mode AnimationUI::getMode(void)
 }
 
 
-void AnimationUI::setOnTimerAction(Action timerAction_)
+void AnimationUI::setFrameAction(Action frameAction_)
 {
-	timerAction = timerAction_;
+	frameAction = frameAction_;
 }
 
-void AnimationUI::execute_action(void * data)
+void AnimationUI::setAnimationEndAction(Action animationEndAction_)
 {
-	if (timerAction)
-		timerAction(data);
+	animationEndAction = animationEndAction_;
+}
+
+void AnimationUI::executeFrameAction(void * data)
+{
+	if (frameAction)
+		frameAction(data);
+}
+
+void AnimationUI::executeAnimationEndAction(void * data)
+{
+	if (animationEndAction)
+		animationEndAction(data);
 }
