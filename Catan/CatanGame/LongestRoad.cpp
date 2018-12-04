@@ -25,18 +25,11 @@ LongestRoad::assign(Player* player) {
 	*/
 	if (player) {
 		this->player = player;
-		this->setPosition(
-			(*player)[POSITION_LONGEST_ROAD].x,
-			(*player)[POSITION_LONGEST_ROAD].y
-		);
 	}
 	else {
 		this->player = nullptr;
-		this->setPosition(
-			(*game)[POSITION_LONGEST_ROAD].x,
-			(*game)[POSITION_LONGEST_ROAD].y
-		);
 	}
+	refactor();
 }
 
 PlayerId
@@ -46,5 +39,22 @@ LongestRoad::who(void) const {
 	}
 	else {
 		return PlayerId::PLAYER_NONE;
+	}
+}
+
+void
+LongestRoad::refactor(void) {
+	if (player) {
+		this->setPosition(
+			(*player)[POSITION_LONGEST_ROAD].x,
+			(*player)[POSITION_LONGEST_ROAD].y
+		);
+	}
+	else {
+
+		this->setPosition(
+			(*game)[POSITION_LONGEST_ROAD].x,
+			(*game)[POSITION_LONGEST_ROAD].y
+		);
 	}
 }

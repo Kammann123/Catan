@@ -9,7 +9,7 @@
 #include <string>
 
 using namespace std;
-class ResourceHex : public FrameUI {
+class ResourceHex {
 
 public:
 

@@ -45,26 +45,33 @@ void
 Building::demolish(void) {
 	/* Configuro la remocion de la construccion */
 	this->built = false;
+	refactor();
+}
 
-	/* Determino que tipo de construccion es, para buscar
-	* el id correspondiente dentro del container de player
-	* y lo busco, obteniendo la informacion de la nueva posicion
-	*/
-	string index;
-	switch (this->type) {
-		case BuildingType::SETTLEMENT:
-			index = POSITION_SETTLEMENT;
-			break;
-		case BuildingType::ROAD:
-			index = POSITION_ROAD;
-			break;
-		case BuildingType::CITY:
-			index = POSITION_CITY;
-			break;
+void
+Building::refactor(void) {
+	if (!built){
+
+		/* Determino que tipo de construccion es, para buscar
+		* el id correspondiente dentro del container de player
+		* y lo busco, obteniendo la informacion de la nueva posicion
+		*/
+		string index;
+		switch (this->type) {
+			case BuildingType::SETTLEMENT:
+				index = POSITION_SETTLEMENT;
+				break;
+			case BuildingType::ROAD:
+				index = POSITION_ROAD;
+				break;
+			case BuildingType::CITY:
+				index = POSITION_CITY;
+				break;
+		}
+		container_t value = (*player)[index];
+		this->setPosition(value.x + player->xPos(), value.y + player->yPos());
+		this->setAngle(value.info);
 	}
-	container_t value = (*player)[index];
-	this->setPosition(value.x + player->xPos(), value.y + player->yPos());
-	this->setAngle(value.info);
 }
 
 void

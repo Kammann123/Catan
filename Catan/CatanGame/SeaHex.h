@@ -14,7 +14,7 @@ using namespace std;
 * Porcion del mapa con mar, que representa un muelle con acceso a 
 * intermacion de algun tipo.
 */	
-class SeaHex : public FrameUI {
+class SeaHex {
 public:
 
 	/* Constructores */

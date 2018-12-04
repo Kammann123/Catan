@@ -36,6 +36,9 @@ public:
 	*/
 	PlayerId who(void) const;
 
+	/* Definicion del refactor para el modelo */
+	void refactor(void);
+
 private:
 	Player * player;
 	CatanGame* game;

@@ -25,6 +25,9 @@ public:
 	*/
 	Building(Player* player, BuildingType type);
 
+	/* Definicion del metodo refactor */
+	void refactor(void);
+
 	/*
 	* getters - Permiten leer o acceder a la informacion
 	* del building.

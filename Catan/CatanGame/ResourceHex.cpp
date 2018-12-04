@@ -1,15 +1,15 @@
 #include "ResourceHex.h"
 
 ResourceHex::
-ResourceHex() : FrameUI("", 0, 0) {}
+ResourceHex() {}
 
 ResourceHex::
-ResourceHex(ResourceId resource) : FrameUI("", 0, 0) {
+ResourceHex(ResourceId resource) {
 	this->resource = resource;
 }
 
 ResourceHex::
-ResourceHex(const ResourceHex& copy) : FrameUI("", 0, 0) {
+ResourceHex(const ResourceHex& copy) {
 	this->resource = copy.resource;
 	this->token = copy.token;
 	this->coord = copy.coord;

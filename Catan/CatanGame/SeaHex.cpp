@@ -2,15 +2,15 @@
 #include "Coord.h"
 
 SeaHex::
-SeaHex(void) : FrameUI("", 0, 0) {}
+SeaHex(void) {}
 
 SeaHex::
-SeaHex(SeaId id) : FrameUI("", 0, 0) {
+SeaHex(SeaId id) {
 	this->seaId = id;
 }
 
 SeaHex::
-SeaHex(const SeaHex& copy) : FrameUI("", 0, 0) {
+SeaHex(const SeaHex& copy) {
 	this->coord = copy.coord;
 	this->seaId = copy.seaId;
 }
