@@ -176,6 +176,22 @@ Player::resetVictoryPoints() {
 }
 
 list<ResourceCard*>
+Player::giveAllCards(void) {
+	list<ResourceCard*> temp = resourceCards;
+	removeCard(temp);
+	return temp;
+}
+
+list<ResourceCard*> 
+Player::giveCards(list<ResourceId> ids) {
+	list<ResourceCard*> cards;
+	for (ResourceId id : ids) {
+		cards.push_back(giveCard(id));
+	}
+	return cards;
+}
+
+list<ResourceCard*>
 Player::giveCards(ResourceId id, unsigned int qty) {
 	list<ResourceCard*> cards;
 	while (qty) {

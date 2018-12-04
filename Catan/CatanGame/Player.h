@@ -53,6 +53,8 @@ public:
 	* Interfaz de manejo de cartas
 	******************************/
 	list<ResourceCard*> giveCards(ResourceId id, unsigned int qty);
+	list<ResourceCard*> giveCards(list<ResourceId> ids);
+	list<ResourceCard*> giveAllCards(void);
 	ResourceCard* giveCard(ResourceId id);
 
 	void removeCard(list<ResourceCard*> cards);

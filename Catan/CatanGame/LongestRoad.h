@@ -5,6 +5,8 @@
 
 class CatanGame;
 
+#define LONGEST_ROAD_POINTS	2
+
 /*
 * LongestRoad 
 * Clase modelo con la informacion de quien

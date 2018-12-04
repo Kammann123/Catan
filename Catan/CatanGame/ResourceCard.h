@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../CatanData/CatanData.h"
-#include "../CatanGui/AllegroUI/FrameUI.h"
 
 class Player;
 class CatanGame;
@@ -10,7 +9,7 @@ class CatanGame;
 * ResourceCard
 * Clase modelo con informacion de las cartas de recursos
 */
-class ResourceCard : public FrameUI {
+class ResourceCard {
 public:
 
 	/*
@@ -39,6 +38,6 @@ public:
 private:
 
 	ResourceId resourceId;
-	Player* player;
 	CatanGame* game;
+	Player* player;
 };

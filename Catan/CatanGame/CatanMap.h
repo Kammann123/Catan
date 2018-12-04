@@ -93,7 +93,7 @@ public:
 	* Conexion entre las coordenadas del mapa logicamente
 	* y las coordenadas graficamente.
 	*****************************************************/
-	map<Coord, position_t> screen(void);
+	map<string, position_t> screen(void);
 
 private:
 
@@ -116,7 +116,7 @@ private:
 	***************************************************/
 	void _init_coords(void);
 
-	map<Coord, position_t> screenCoords;
+	map<string, position_t> screenCoords;
 	list<ResourceHex*> landMap;
 	list<Building*> builtMap;
 	list<SeaHex*> seaMap;

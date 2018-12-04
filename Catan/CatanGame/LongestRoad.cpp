@@ -10,6 +10,19 @@ LongestRoad(CatanGame* game) : FrameUI(LONGEST_ROAD_ID, 0, 0) {
 
 void
 LongestRoad::assign(Player* player) {
+	 
+	/* Actualizo los puntajes correspondientes
+	*/
+	if (player) {
+		player->addPoints(LONGEST_ROAD_POINTS);
+	}
+	if (this->player) {
+		this->player->removePoints(LONGEST_ROAD_POINTS);
+	}
+
+	/* Actualizo los valores de mi modelo del LongestRoad
+	* en cuanto al jugador que lo posee y su ubicacion en el mapa
+	*/
 	if (player) {
 		this->player = player;
 		this->setPosition(

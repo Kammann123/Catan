@@ -13,17 +13,9 @@ void
 ResourceCard::assign(Player* player) {
 	if (player) {
 		this->player = player;
-		this->setPosition(
-			(*player)[getResource()].x,
-			(*player)[getResource()].y
-		);
 	}
 	else {
 		this->player = nullptr;
-		this->setPosition(
-			(*game)[getResource()].x,
-			(*game)[getResource()].y
-		);
 	}
 }
 

@@ -24,3 +24,4 @@
 #define LONGEST_ROAD_ID "longest_road_id"
 #define ROBBER_ID		"robber"
 #define MAP_ID		"map"
+#define GAME_ID		"game"

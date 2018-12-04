@@ -16,6 +16,8 @@
 #include "CatanStates/GameEnd.h"
 #include "CatanStates/GameError.h"
 
+#include "../CatanGui/CatanLauncher/GameWindow/GameWindow.h"
+
 #include <algorithm>
 #include <vector>
 #include <time.h>
@@ -26,73 +28,114 @@ const char* CatanGame::StateString[10] = {
 	"OFFER_ANSWER", "WINNER", "GAME_END", "GAME_ERROR"
 };
 
-void
-CatanGame::_init_game(void) {
-
-	/* Inicializacion de variables */
-	this->prevState = nullptr;
-	this->state = new GameSync(*this);
-	this->longestRoad = PlayerId::PLAYER_NONE;
-	this->winner = PlayerId::PLAYER_NONE;
-	this->turn = PlayerId::PLAYER_NONE;
-	this->confirmationPlayer = PlayerId::PLAYER_NONE;
-	this->description = "";
-
-	/* Limpio los diccionarios */
-	builtMap.clear();
-	resourceMap.clear();
-	seaMap.clear();
-	playerLongestRoad.clear();
-	playerDocks.clear();
-
-	/* Semilla para numeros aleatorios */
-	srand( (unsigned int)time(NULL) );
-
-	/* Los estados de longest road */
-	playerLongestRoad.insert(pair<PlayerId, unsigned int>(PlayerId::PLAYER_ONE, 0));
-	playerLongestRoad.insert(pair<PlayerId, unsigned int>(PlayerId::PLAYER_TWO, 0));
-	playerDocks.insert(pair<PlayerId, list<SeaId>>(PlayerId::PLAYER_ONE, {}));
-	playerDocks.insert(pair<PlayerId, list<SeaId>>(PlayerId::PLAYER_TWO, {}));
+void 
+CatanGame::_create_remote_player(void) {
+	remotePlayer = new Player(PlayerId::PLAYER_TWO, this);
 }
 
 void
-CatanGame::_free_buildings(void) {
+CatanGame::_create_local_player(void) {
+	localPlayer = new Player(PlayerId::PLAYER_ONE, this);
+}
 
-	/* Me fijo si destruyo buildings */
-	for (Building* b : builtMap) {
-		delete b;
+void
+CatanGame::_create_longest_road(void) {
+	longestRoad = new LongestRoad(this);
+}
+
+void
+CatanGame::_create_cards(void) {
+	for (unsigned int ii = 0; ii < 5; ii++) {
+		ResourceId hexId;
+
+		switch (ii) {
+		case 0:
+			hexId = ResourceId::HILL;
+			break;
+		case 1:
+			hexId = ResourceId::FOREST;
+			break;
+		case 2:
+			hexId = ResourceId::MOUNTAIN;
+			break;
+		case 3:
+			hexId = ResourceId::FIELD;
+			break;
+		case 4:
+			hexId = ResourceId::PASTURES;
+			break;
+		}
+
+		for (unsigned int i = 0; i < AMOUT_OF_CARDS; i++) {
+			ResourceCard* hex = new ResourceCard(hexId, this);
+			cards.push_back(hex);
+		}
 	}
 }
 
 void
-CatanGame::_free_events(void) {
+CatanGame::_create_map(void) {
+	catanMap = new CatanMap(this);
+}
 
-	/* Destruyo eventos */
-	for (CatanEvent* ev : eventQueue) {
-		delete ev;
+void
+CatanGame::_destroy_remote_player(void) {
+	if (remotePlayer) {
+		delete remotePlayer;
 	}
 }
 
 void
-CatanGame::_free_states(void) {
-
-	/* Destruyo estados */
-	if (state) {
-		delete state;
+CatanGame::_destroy_longest_road(void) {
+	if (longestRoad) {
+		delete longestRoad;
 	}
+}
+
+void
+CatanGame::_destroy_local_player(void) {
+	if (localPlayer) {
+		delete localPlayer;
+	}
+}
+
+void
+CatanGame::_destroy_states(void) {
 	if (prevState) {
 		delete prevState;
 	}
+	if (state) {
+		delete state;
+	}
 }
 
 void
-CatanGame::_clear_resource_map(void) {
-	resourceMap.clear();
+CatanGame::_destroy_events(void){
+	for (CatanEvent* event : eventQueue) {
+		if (event) {
+			delete event;
+		}
+	}
 }
 
 void
-CatanGame::_notify_change(void) {
+CatanGame::_destroy_cards(void) {
+	for (ResourceCard* card : cards) {
+		if (card) {
+			delete card;
+		}
+	}
+}
 
+void
+CatanGame::_destroy_map(void) {
+	if (catanMap) {
+		delete catanMap;
+	}
+}
+
+void
+CatanGame::notifyChange(void) {
 	/* Notifico a los observers */
 	notifyObservers();
 
@@ -104,46 +147,51 @@ CatanGame::_notify_change(void) {
 	}
 }
 
-void
-CatanGame::setInfo(string info) {
-	this->description = info;
-}
-
-void
-CatanGame::_clear_sea_map(void) {
-	seaMap.clear();
-}
-
 CatanGame::
-CatanGame(string localPlayerName) : localPlayer(PlayerId::PLAYER_ONE), remotePlayer(PlayerId::PLAYER_TWO) {
+CatanGame(void) : ContainerUI(GAME_ID, 0, 0) {
+	/* Inicializo parametros del juego */
+	this->confirmationPlayer = PlayerId::PLAYER_NONE;
+	this->winner = PlayerId::PLAYER_NONE;
+	this->turn = PlayerId::PLAYER_NONE;
+	this->state = new GameSync(*this);
+	this->prevState = nullptr;
+	this->description = "";
 
-	/* Inicializacion */
-	_init_game();
+	playerLongestRoad.clear();
+	playerDocks.clear();
+	playerLongestRoad.insert(pair<PlayerId, unsigned int>(PlayerId::PLAYER_ONE, 0));
+	playerLongestRoad.insert(pair<PlayerId, unsigned int>(PlayerId::PLAYER_TWO, 0));
+	playerDocks.insert(pair<PlayerId, list<SeaId>>(PlayerId::PLAYER_ONE, {}));
+	playerDocks.insert(pair<PlayerId, list<SeaId>>(PlayerId::PLAYER_TWO, {}));
 
-	/* El nombre del jugador local */
-	this->localPlayer.setName(localPlayerName);
-}
+	this->eventQueue.clear();
 
-CatanGame::
-CatanGame() : localPlayer(PlayerId::PLAYER_ONE), remotePlayer(PlayerId::PLAYER_TWO) {
-
-	/* Inicializacion */
-	_init_game();
+	/* Creo los componentes del juego */
+	_create_remote_player();
+	_create_local_player();
+	_create_longest_road();
+	_create_map();
 }
 
 CatanGame::
 ~CatanGame() {
-	_free_buildings();
-	_free_events();
-	_free_states();
+
+	/* Destruyo todos los componentes del juego */
+	_destroy_remote_player();
+	_destroy_local_player();
+	_destroy_longest_road();
+	_destroy_states();
+	_destroy_events();
+	_destroy_cards();
+	_destroy_map();
 }
 
 void
 CatanGame::syncHandle(NetworkPacket* packet) {
-
 	CatanEvent* newEvent = this->getPacketEvent(packet);
-	if(newEvent)
+	if (newEvent) {
 		syncHandle(newEvent);
+	}
 }
 
 void
@@ -166,13 +214,25 @@ CatanGame::syncHandle(CatanEvent* event) {
 				}
 
 				/* Notifico el cambio de estado a los observers */
-				_notify_change();
+				notifyChange();
 			}
 		}
 	}
 	else {
 		this->changeState(new GameError(*this), "CatanGame - Se intento realizar una accion de juego sin la confirmacion de la accion previa!");
 		delete event;
+	}
+}
+
+void
+CatanGame::waitConfirmation(PlayerId player) {
+	confirmationPlayer = player;
+}
+
+void
+CatanGame::confirm(PlayerId player) {
+	if (player == confirmationPlayer) {
+		confirmationPlayer = PlayerId::PLAYER_NONE;
 	}
 }
 
@@ -187,20 +247,7 @@ CatanGame::wasConfirmed(void) {
 }
 
 void
-CatanGame::waitConfirmation(PlayerId player) {
-	confirmationPlayer = player;
-}
-
-void 
-CatanGame::confirm(PlayerId player) {
-	if (player == confirmationPlayer) {
-		confirmationPlayer = PlayerId::PLAYER_NONE;
-	}
-}
-
-void
 CatanGame::handle(NetworkPacket* packet) {
-
 	CatanEvent* newEvent = this->getPacketEvent(packet);
 	this->handle(newEvent);
 }
@@ -226,8 +273,13 @@ CatanGame::handle(CatanEvent* event) {
 		}
 
 		/* Notifico el cambio de estado a los observers */
-		_notify_change();
+		notifyChange();
 	}
+}
+
+const char*
+CatanGame::getStateString(void) {
+	return StateString[this->state->getId()];
 }
 
 CatanGame::State
@@ -235,19 +287,14 @@ CatanGame::getState(void) {
 	return (State)this->state->getId();
 }
 
-const char* 
-CatanGame::getStateString(void) {
-	return StateString[this->state->getId()];
+void
+CatanGame::setInfo(string info) {
+	this->description = info;
 }
 
 string
 CatanGame::info(void) {
 	return description;
-}
-
-bool
-CatanGame::hasEvents(void) const {
-	return !(this->eventQueue.empty());
 }
 
 CatanEvent*
@@ -259,6 +306,11 @@ CatanGame::getNextEvent(void) {
 	else {
 		return nullptr;
 	}
+}
+
+bool
+CatanGame::hasEvents(void) const {
+	return !(this->eventQueue.empty());
 }
 
 void
@@ -293,7 +345,7 @@ CatanGame::changeState(CatanState* newState) {
 	state = newState;
 
 	/* Notifico el cambio de estado a los observers */
-	_notify_change();
+	notifyChange();
 }
 
 CatanEvent*
@@ -405,57 +457,72 @@ CatanGame::getPrevState(void)
 	return prevState;
 }
 
+list<ResourceCard*>
+CatanGame::getCards(void) {
+	return cards;
+}
+
+LongestRoad*
+CatanGame::getLongestRoad(void) {
+	return longestRoad;
+}
+
+Player*
+CatanGame::getRemotePlayer(void) {
+	return remotePlayer;
+}
+
+Player*
+CatanGame::getLocalPlayer(void) {
+	return localPlayer;
+}
+
+CatanMap*
+CatanGame::getCatanMap(void) {
+	return catanMap;
+}
+
+PlayerId
+CatanGame::getTurn(void) {
+	return turn;
+}
+
+list<ResourceCard*>
+CatanGame::takeCards(ResourceId id, unsigned int qty) {
+	list<ResourceCard*> taken;
+	for (ResourceCard* card : cards) {
+		if (card) {
+			if (card->getResourceId() == id) {
+				taken.push_back(card), qty--;
+				if (qty == 0) {
+					break;
+				}
+			}
+		}
+	}
+	return taken;
+}
+
+void
+CatanGame::returnCards(list<ResourceCard*> cards) {
+	for (ResourceCard* card : cards) {
+		if (card) {
+			returnCards(card);
+		}
+	}
+}
+
+void
+CatanGame::returnCards(ResourceCard* card) {
+	cards.push_back(card);
+}
+
 bool
 CatanGame::isRobberStatus() {
 	return state->getId() == State::ROBBER_CARD || state->getId() == State::ROBBER_MOVE;
 }
 
-void
-CatanGame::setRemoteName(string remoteName) {
-	this->remotePlayer.setName(remoteName);
-}
-
-void
-CatanGame::setLocalName(string localName) {
-	this->localPlayer.setName(localName);
-}
-
-string
-CatanGame::getLocalName() {
-	return this->localPlayer.getName();
-}
-
-map<Coord, MapValue>
-CatanGame::getMap() {
-	map<Coord, MapValue> gameMap;
-
-	/* En el mapa del juego busco los hexagonos */
-	for (auto hex : resourceMap) {
-		/* Agrego al gameMap, los recursos id nomas */
-		gameMap[hex.first] = (MapValue)hex.second.getResource();
-	}
-	for (auto hex : seaMap) {
-		/* Agrego al gameMap, los recursos id nomas */
-		gameMap[hex.first] = (MapValue)hex.second.getDocks();
-	}
-
-	return gameMap;
-}
-
-map<Coord, unsigned char>
-CatanGame::getTokens() {
-	map<Coord, unsigned char> tokenMap;
-
-	/* En el mapa del juego busco los hexagonos */
-	for (auto hex : resourceMap) {
-		/* Agrego al gameMap, los recursos id nomas */
-		tokenMap[hex.first] = hex.second.getToken();
-	}
-
-	return tokenMap;
-}
-
-Player&
+Player*
 CatanGame::getPlayer(PlayerId playerId) {
 	return playerId == PlayerId::PLAYER_ONE ? localPlayer : remotePlayer;
 }
@@ -463,201 +530,41 @@ CatanGame::getPlayer(PlayerId playerId) {
 void
 CatanGame::resetGame() {
 
-	/* Reinicio los estados de los jugadores */
-	localPlayer.reset();
-	remotePlayer.reset();
+	/* Reincio el puntaje de los jugadores */
+	localPlayer->resetVictoryPoints();
+	remotePlayer->resetVictoryPoints();
 
-	/* Limpio los estados, construcciones y eventos */
-	_free_buildings();
-	_free_events();
-	_free_states();
+	/* Pido que devuelvan las cartas */
+	returnCards(localPlayer->giveAllCards());
+	returnCards(remotePlayer->giveAllCards());
 
-	/* Elimino los recursos y el agua como se despliegan */
-	_clear_resource_map();
-	_clear_sea_map();
+	/* Devuelvo las construcciones */
+	for (Building* building : catanMap->buildings()) {
+		if (building) {
+			building->getPlayer()->giveBackBuilding(building);
+			catanMap->demolish(building);
+			building->removeNeighbour();
+		}
+	}
 
-	/* Inicializo el juego */
-	_init_game();
-}
+	/* Reinicio parametros de la partida */
+	this->confirmationPlayer = PlayerId::PLAYER_NONE;
+	this->turn = PlayerId::PLAYER_NONE;
+	this->winner = PlayerId::PLAYER_NONE;
+	this->prevState = nullptr;
+	this->state = new GameSync(*this);
+	playerLongestRoad.clear();
+	playerDocks.clear();
+	playerLongestRoad.insert(pair<PlayerId, unsigned int>(PlayerId::PLAYER_ONE, 0));
+	playerLongestRoad.insert(pair<PlayerId, unsigned int>(PlayerId::PLAYER_TWO, 0));
+	playerDocks.insert(pair<PlayerId, list<SeaId>>(PlayerId::PLAYER_ONE, {}));
+	playerDocks.insert(pair<PlayerId, list<SeaId>>(PlayerId::PLAYER_TWO, {}));
 
-void 
-CatanGame::generateMap() {
-
-	/* Creacion aleatoria de posiciones */
-	vector<unsigned char> coords;
-	for (unsigned char c = 'A'; c <= 'S'; c++)	coords.push_back(c);
-	random_shuffle(coords.begin(), coords.end());
-
-	
-
-	/* Ubicamos aleatoriamente desert */
-	resourceMap.insert(pair<Coord, ResourceHex>(coords.back(), ResourceHex(ResourceId::DESERT, coords.back())));
-	moveRobber(coords.back());
 }
 
 void
 CatanGame::generateTurn() {
 	turn = rand() % 2 ? PlayerId::PLAYER_ONE : PlayerId::PLAYER_TWO;
-}
-
-void
-CatanGame::generateOcean() {
-
-	/* Coordenadas disponibles */
-	vector<unsigned char> coords;
-	for (unsigned char i = '0'; i <= '5'; i++) coords.push_back(i);
-	random_shuffle(coords.begin(), coords.end());
-
-	/* Creo los elementos de mar */
-	seaMap.insert(pair<unsigned char, SeaHex>(coords.back(), SeaHex(coords.back(), SeaId::SHEEP))), coords.pop_back();
-	seaMap.insert(pair<unsigned char, SeaHex>(coords.back(), SeaHex(coords.back(), SeaId::NORMAL))), coords.pop_back();
-	seaMap.insert(pair<unsigned char, SeaHex>(coords.back(), SeaHex(coords.back(), SeaId::BRICK))), coords.pop_back();
-	seaMap.insert(pair<unsigned char, SeaHex>(coords.back(), SeaHex(coords.back(), SeaId::WOOD))), coords.pop_back();
-	seaMap.insert(pair<unsigned char, SeaHex>(coords.back(), SeaHex(coords.back(), SeaId::WHEAT))), coords.pop_back();
-	seaMap.insert(pair<unsigned char, SeaHex>(coords.back(), SeaHex(coords.back(), SeaId::STONE))), coords.pop_back();
-}
-
-void
-CatanGame::generateTokens() {
-}
-
-bool
-CatanGame::verifyMap(map<Coord, MapValue> gameMap) {
-	bool verify;
-
-	/*
-	* Primero verifico que existan en la definicion, todos los puntos
-	* del mapa, tanto de tierra como de mar, para lo cual
-	* reviso que existan los elementos en el diccionario 
-	*/
-	map<MapValue, unsigned int> counter;
-
-	for (unsigned char i = MIN_SEA_COORD; i <= MAX_SEA_COORD; i++) {
-		if (gameMap.find(i) == gameMap.end()) {
-			return false;
-		}
-
-		if (counter.find(gameMap[i]) == counter.end()) {
-			counter.insert(pair<MapValue, unsigned int>(gameMap[i], 1));
-		}
-		else {
-			return false;
-		}
-	}
-	/*
-	* Luego compruebo que los valores mantengan una relacion 
-	* correcta de cantidades, segun lo establecido por las reglas
-	* del juego Catan
-	*/
-	verify = (
-		counter[(MapValue)SeaId::BRICK] == 1 &&
-		counter[(MapValue)SeaId::WOOD] == 1 &&
-		counter[(MapValue)SeaId::WHEAT] == 1 &&
-		counter[(MapValue)SeaId::SHEEP] == 1 &&
-		counter[(MapValue)SeaId::STONE] == 1 &&
-		counter[(MapValue)SeaId::NORMAL] == 1
-	);
-
-	if (!verify)	return false;
-
-	counter.clear();
-	for (unsigned char i = MIN_LAND_COORD; i <= MAX_LAND_COORD; i++) {
-		if (gameMap.find(i) == gameMap.end()) {
-			return false;
-		}
-
-		if (counter.find(gameMap[i]) == counter.end()) {
-			counter.insert(pair<MapValue, unsigned int>(gameMap[i], 1));
-		}
-		else {
-			counter[gameMap[i]] += 1;
-		}
-	}
-	verify = (
-		counter[(MapValue)ResourceId::DESERT] == DESERT_HEX_COUNT &&
-		counter[(MapValue)ResourceId::HILL] == HILL_HEX_COUNT &&
-		counter[(MapValue)ResourceId::FOREST] == FOREST_HEX_COUNT &&
-		counter[(MapValue)ResourceId::MOUNTAIN] == MOUNTAIN_HEX_COUNT &&
-		counter[(MapValue)ResourceId::FIELD] == FIELD_HEX_COUNT &&
-		counter[(MapValue)ResourceId::PASTURES] == PASTURE_HEX_COUNT
-	);
-
-	return verify;
-}
-
-bool
-CatanGame::verifyTokens(map<Coord, unsigned char> tokens) {
-
-	/*
-	* Verifico que esten los tokens de todas las posiciones 
-	* y luego valido que los numeros esten en el rango que se 
-	* admite segun las reglas de Catan
-	*/
-	map<unsigned char, unsigned int> tokenCounter;
-
-	for (unsigned char i = 3; i <= 11; i++) {
-		if (i != 7) {
-			tokenCounter.insert(pair<unsigned char, unsigned int>(i, 2));
-		}
-	}
-	tokenCounter.insert(pair<unsigned char, unsigned int>(2, 1));
-	tokenCounter.insert(pair<unsigned char, unsigned int>(12, 1));
-	tokenCounter.insert(pair<unsigned char, unsigned int>(0, 1));
-
-	for (unsigned char i = MIN_LAND_COORD; i <= MAX_LAND_COORD; i++) {
-		
-		if (tokens.find(i) == tokens.end()) {
-			return false;
-		}
-		else {
-			if (tokenCounter.find(tokens[i]) == tokenCounter.end()) {
-				return false;
-			}
-			else if (tokenCounter[tokens[i]] > 0) {
-				tokenCounter[tokens[i]] -= 1;
-			}
-			else if (tokenCounter[tokens[i]] == 0) {
-				return false;
-			}
-		}
-	}
-
-	return true;
-}
-
-void
-CatanGame::setGlobalMap(map<Coord, MapValue> gameMap, map<Coord, unsigned char> tokens) {
-
-	/*
-	* Limpio los mapas actuales 
-	*/
-	resourceMap.clear();
-	seaMap.clear();
-
-	/*
-	* Construyo todos los ResourceHex recibidos con sus tokens
-	* y luego los agrego al mapa de tierras
-	*/
-	for (unsigned char i = MIN_LAND_COORD; i <= MAX_LAND_COORD; i++) {
-		
-		ResourceHex hex = ResourceHex((ResourceId)gameMap[i], (unsigned int)tokens[i], i);
-		resourceMap.insert( pair<Coord, ResourceHex>(i, hex) );
-
-		/* Ubicamos el robber */
-		if (hex.getResource() == ResourceId::DESERT) {
-			moveRobber(hex.getCoord());
-		}
-	}
-
-	/*
-	* Luego realizo la misma accion pero con las piezas de mar, agregando las que 
-	* corresponden al mapa
-	*/
-	for (unsigned int i = MIN_SEA_COORD; i <= MAX_SEA_COORD; i++) {
-
-		SeaHex hex = SeaHex(i, (SeaId)gameMap[i]);
-		seaMap.insert( pair<Coord, SeaHex>(i, hex) );
-	}
 }
 
 void
@@ -685,12 +592,11 @@ CatanGame::assignResources(unsigned int dices) {
 
 	/* Identifico las coordenadas en las cuales el token coincide
 	* con el valor dado de dices, para entregar ese recurso */
-	list<ResourceHex> hits;
-	for (auto hex : resourceMap) {
-		ResourceHex resourceHex = hex.second;
-		if (resourceHex.getToken() == dices) {
-			if ( !(resourceHex.getCoord() == robber.getCoord()) ) {
-				hits.push_back(resourceHex);
+	list<ResourceHex*> hits;
+	for (ResourceHex* hex : catanMap->lands()) {
+		if (hex->getToken() == dices) {
+			if (!(hex->getCoord() == catanMap->robberPosition())) {
+				hits.push_back(hex);
 			}
 		}
 	}
@@ -699,12 +605,12 @@ CatanGame::assignResources(unsigned int dices) {
 	* que estan jugando, y las que sean settlement o city, verifico
 	* si esta alrededor del hexagono donde cayo el token y por cada
 	* aparicio reparto recursos */
-	for (Building* building : builtMap) {
+	for (Building* building : catanMap->buildings()) {
 		if (building->getType() == BuildingType::ROAD)	continue;
 
-		for (ResourceHex hex : hits) {
-			if (building->getPlace().isVertexOf(hex.getCoord())) {
-				assignResources(building->getPlayer(), hex.getResource(), building->getType() == BuildingType::CITY ? 2 : 1);
+		for (ResourceHex* hex : hits) {
+			if (building->getPlace().isVertexOf(hex->getCoord())) {
+				assignResources(building->getPlayer()->getPlayerId(), hex->getResource(), building->getType() == BuildingType::CITY ? 2 : 1);
 			}
 		}
 	}
@@ -722,8 +628,8 @@ CatanGame::assignResources(BuildingType type, Coord coords, PlayerId playerId) {
 		list<Coord> landCoords = coords.getLandCoords();
 		
 		for (Coord coord : landCoords) {
-			ResourceHex resourceHex = resourceMap[coord];
-			assignResources(playerId, resourceHex.getResource(), type == BuildingType::CITY ? 2 : 1);
+			ResourceHex* resourceHex = catanMap->land(coord);
+			assignResources(playerId, resourceHex->getResource(), type == BuildingType::CITY ? 2 : 1);
 		}
 	}
 }
@@ -734,12 +640,8 @@ CatanGame::assignResources(PlayerId player, ResourceId resource, unsigned int qt
 	* Busco al jugador y luego creo la cantidad de cartas necesaria
 	* y le entrego una por una todas las que piden que le asigne
 	*/
-	Player& playerObject = getPlayer(player);
-
-	while (qty) {
-		playerObject.addResourceCard(new ResourceCard(player, resource));
-		qty--;
-	}
+	Player* playerObject = getPlayer(player);
+	playerObject->addCard(takeCards(resource, qty));
 }
 
 void
@@ -756,49 +658,43 @@ CatanGame::updateLongestRoad(void) {
 	* en cada caso si ya fue visitado, directamente el algoritmo saldra
 	* habiendo tenido una longitud nula. Quedan despues guardados los caminos.
 	*/
-	for (Building* building : builtMap) {
-		getLongestRoad(building);
+	for (Building* building : catanMap->buildings()) {
+		seekLongestRoad(building);
 	}
 
 	/*
 	* Limpio las marcas realizadas en todos los buildings y reviso si los
 	* resultados de los recorridos superaron el valor actual 
 	*/
-	for (Building* building : builtMap) building->visit(false);
+	for (Building* building : catanMap->buildings()) building->visit(false);
 
 	/*
 	* Verifico si con los nuevos resultados cambia el estado del longest road y luego
 	* hago el intercambio de los puntajes nuevamente
 	*/
 	if (playerLongestRoad[PlayerId::PLAYER_ONE] >= MIN_LONGEST_ROAD && playerLongestRoad[PlayerId::PLAYER_TWO] >= MIN_LONGEST_ROAD) {
-		if (longestRoad == PlayerId::PLAYER_ONE && (playerLongestRoad[PlayerId::PLAYER_TWO] > playerLongestRoad[PlayerId::PLAYER_ONE])) {
-			longestRoad = PlayerId::PLAYER_TWO;
-			getPlayer(PlayerId::PLAYER_TWO).addPoints(LONGEST_ROAD_POINTS);
-			getPlayer(PlayerId::PLAYER_ONE).removePoints(LONGEST_ROAD_POINTS);
+		if (longestRoad->who() == PlayerId::PLAYER_ONE && (playerLongestRoad[PlayerId::PLAYER_TWO] > playerLongestRoad[PlayerId::PLAYER_ONE])) {
+			longestRoad->assign(getPlayer(PlayerId::PLAYER_TWO));
 		}
-		else if (longestRoad == PlayerId::PLAYER_TWO && (playerLongestRoad[PlayerId::PLAYER_ONE] > playerLongestRoad[PlayerId::PLAYER_TWO])) {
-			longestRoad = PlayerId::PLAYER_ONE;
-			getPlayer(PlayerId::PLAYER_ONE).addPoints(LONGEST_ROAD_POINTS);
-			getPlayer(PlayerId::PLAYER_TWO).removePoints(LONGEST_ROAD_POINTS);
+		else if (longestRoad->who() == PlayerId::PLAYER_TWO && (playerLongestRoad[PlayerId::PLAYER_ONE] > playerLongestRoad[PlayerId::PLAYER_TWO])) {
+			longestRoad->assign(getPlayer(PlayerId::PLAYER_ONE));
 		}
 	}
 	else if (playerLongestRoad[PlayerId::PLAYER_ONE] >= MIN_LONGEST_ROAD) {
-		getPlayer(PlayerId::PLAYER_ONE).addPoints(LONGEST_ROAD_POINTS);
-		longestRoad = PlayerId::PLAYER_ONE;
+		longestRoad->assign(getPlayer(PlayerId::PLAYER_ONE));
 	}
 	else if (playerLongestRoad[PlayerId::PLAYER_TWO] >= MIN_LONGEST_ROAD) {
-		getPlayer(PlayerId::PLAYER_TWO).addPoints(LONGEST_ROAD_POINTS);
-		longestRoad = PlayerId::PLAYER_TWO;
+		longestRoad->assign(getPlayer(PlayerId::PLAYER_TWO));
 	}
 }
 
 bool
 CatanGame::isLongestRoad(PlayerId player) {
-	return longestRoad == player;
+	return longestRoad->who() == player;
 }
 
 void
-CatanGame::getLongestRoad(Building* building, unsigned int length) {
+CatanGame::seekLongestRoad(Building* building, unsigned int length) {
 	/*
 	* Recorro todos los caminos que se bifurcan de building por sus vecinos
 	* y en cada uno de ellos llevo la cuenta del largo del camino, cuando termino
@@ -811,8 +707,8 @@ CatanGame::getLongestRoad(Building* building, unsigned int length) {
 		* Ya fue visitado, entonces termino el camino aca, debo actualizar
 		* si se dan las condiciones...
 		*/
-		if (length > playerLongestRoad[building->getPlayer()]) {
-			playerLongestRoad[building->getPlayer()] = length;
+		if (length > playerLongestRoad[building->getPlayer()->getPlayerId()]) {
+			playerLongestRoad[building->getPlayer()->getPlayerId()] = length;
 		}
 	}
 	else {
@@ -833,12 +729,12 @@ CatanGame::getLongestRoad(Building* building, unsigned int length) {
 			* con un recorrido de tipo DFS, en profunidad
 			*/
 			for (Building* neighbour : building->getNeighbours()) {
-				getLongestRoad(neighbour, length);
+				seekLongestRoad(neighbour, length);
 			}
 		}
 		else {
-			if (length > playerLongestRoad[building->getPlayer()]) {
-				playerLongestRoad[building->getPlayer()] = length;
+			if (length > playerLongestRoad[building->getPlayer()->getPlayerId()]) {
+				playerLongestRoad[building->getPlayer()->getPlayerId()] = length;
 			}
 		}
 	}
@@ -851,22 +747,7 @@ CatanGame::isRobberDices(unsigned int dices) {
 
 bool
 CatanGame::hasRobberCards(PlayerId playerID) {
-	return (getPlayer(playerID).getResourceCount() > ROBBER_CARDS_COUNT);
-}
-
-bool
-CatanGame::validateRobberCards(list<ResourceCard*>& cards, PlayerId playerID) {
-
-	/*
-	* Calculo la cantidad de cartas que debiera entregar el jugador
-	* correspondiente, y lo almaceno temporalmente
-	*/
-	unsigned int shouldGive = getPlayer(playerID).getResourceCount() / 2;
-
-	/* 
-	* Valido la cantidad de cartas entregadas
-	*/
-	return cards.size() == shouldGive;
+	return (getPlayer(playerID)->getResourceCount() > ROBBER_CARDS_COUNT);
 }
 
 bool
@@ -876,7 +757,7 @@ CatanGame::validateRobberCards(list<ResourceId>& cards, PlayerId playerID) {
 	* Calculo la cantidad de cartas que debiera entregar el jugador
 	* correspondiente, y lo almaceno temporalmente
 	*/
-	unsigned int shouldGive = getPlayer(playerID).getResourceCount() / 2;
+	unsigned int shouldGive = getPlayer(playerID)->getResourceCount() / 2;
 
 	/*
 	* Valido la cantidad de cartas entregadas
@@ -885,24 +766,9 @@ CatanGame::validateRobberCards(list<ResourceId>& cards, PlayerId playerID) {
 }
 
 void
-CatanGame::robberCards(list<ResourceCard*>& cards, PlayerId playerID) 
-{
-	Player& player = getPlayer(playerID);
-
-	for (ResourceCard* card : cards)
-	{
-		player.removeResourceCard(card);
-		delete card;
-	}
-}
-
-void
 CatanGame::robberCards(list<ResourceId>& cards, PlayerId playerID) {
-	Player& player = getPlayer(playerID);
-
-	for (ResourceId card : cards) {
-		player.removeResourceCard(card);
-	}
+	Player* player = getPlayer(playerID);
+	returnCards(player->giveCards(cards));
 }
 
 bool
@@ -913,7 +779,7 @@ CatanGame::validRobberMovement(Coord coord) {
 	* en tierra y luego me fijo que este cambiando de posicion
 	*/
 	if (coord.isLand()) {
-		if (!(coord == robber.getCoord())) {
+		if (!(coord == catanMap->robberPosition())) {
 			return true;
 		}
 	}
@@ -922,7 +788,7 @@ CatanGame::validRobberMovement(Coord coord) {
 
 void
 CatanGame::moveRobber(Coord newCoords) {
-	robber.setCoord(newCoords);
+	catanMap->moveRobber(newCoords);
 }
 
 void
@@ -938,12 +804,9 @@ CatanGame::updateDocks(Coord coord, PlayerId playerId) {
 		* obtengo el tipo de muelle y, antes de agregarlo a la lista,
 		* verifico que no este ya añadido.
 		*/
-		for (auto waterHex : seaMap) {
-			SeaHex seaHex = waterHex.second;
-
-			if (seaHex.hasDock(coord)) {
-
-				SeaId seaId = seaHex.dockType(coord);
+		for (SeaHex* hex : catanMap->seas()) {
+			if (hex->hasDock(coord)) {
+				SeaId seaId = hex->dockType(coord);
 				list<SeaId>& dockList = playerDocks[playerId];
 				if (find(dockList.begin(), dockList.end(), seaId) == dockList.end()) {
 					dockList.push_back(seaId);
@@ -963,7 +826,7 @@ CatanGame::isValidRoad(Coord coords, PlayerId playerID) {
 	*/
 	if (coords.isEdge()) {
 
-		for (Building* building : builtMap) {
+		for (Building* building : catanMap->buildings()) {
 			if (building->getPlace() == coords) {
 				return nullptr;
 			}
@@ -974,10 +837,10 @@ CatanGame::isValidRoad(Coord coords, PlayerId playerID) {
 		* que exista algun punto o linea a la cual adherir el camino,
 		* para continuar el camino, en caso encontrarlo se devuelve el puntero
 		*/
-		for (Building* building : builtMap) {
+		for (Building* building : catanMap->buildings()) {
 
 			/* En las construcciones del jugador */
-			if (building->getPlayer() == playerID) {
+			if (building->getPlayer()->getPlayerId() == playerID) {
 
 				/* Aquellas que son ROADS */
 				if (building->getType() == BuildingType::ROAD) {
@@ -987,8 +850,8 @@ CatanGame::isValidRoad(Coord coords, PlayerId playerID) {
 						Coord checkCoord(coords, building->getPlace());
 
 						/* Verifico que no tengan en medio un settlement enemigo :( */
-						for (Building* otherBuilding : builtMap) {
-							if (otherBuilding->getPlayer() == OPONENT_ID(playerID)) {
+						for (Building* otherBuilding : catanMap->buildings()) {
+							if (otherBuilding->getPlayer()->getPlayerId() == OPONENT_ID(playerID)) {
 								if (otherBuilding->getPlace() == checkCoord) {
 									return nullptr;
 								}
@@ -1020,9 +883,9 @@ CatanGame::isValidCity(Coord coords, PlayerId playerID) {
 	*/
 	if (coords.isDot()) {
 
-		for (Building* building : builtMap) {
+		for (Building* building : catanMap->buildings()) {
 
-			if (building->getPlayer() == playerID) {
+			if (building->getPlayer()->getPlayerId() == playerID) {
 
 				if (building->getPlace() == coords) {
 
@@ -1048,7 +911,7 @@ CatanGame::isValidSettlement(Coord coords, PlayerId playerID) {
 	* por otro asentamiento o ciudad
 	*/
 	if (coords.isDot()) {
-		for (Building* building : builtMap) {
+		for (Building* building : catanMap->buildings()) {
 			if (building->getPlace() == coords) {
 				return nullptr;
 			}
@@ -1059,16 +922,16 @@ CatanGame::isValidSettlement(Coord coords, PlayerId playerID) {
 		* se conecta con el punto de interes, y luego verifico que ningun otro
 		* establecimiento sea adyacente
 		*/
-		for (Building* building : builtMap) {
+		for (Building* building : catanMap->buildings()) {
 			/* Busco caminos del jugador en cuestion */
-			if (building->getPlayer() == playerID) {
+			if (building->getPlayer()->getPlayerId() == playerID) {
 				if (building->getType() == BuildingType::ROAD) {
 
 					/* Encuentro un camino que conecte a ese settlement */
 					if (coords.isEdgeOf(building->getPlace())) {
 
 						/* Verifico la regla de la distancia */
-						for (Building* building : builtMap) {
+						for (Building* building : catanMap->buildings()) {
 
 							if (building->getType() != BuildingType::ROAD) {
 
@@ -1096,7 +959,7 @@ CatanGame::validFirstSettlement(Coord coords, PlayerId playerId) {
 	* y luego verifico que no existe ninguna construccion en ese punto
 	*/
 	if (coords.isDot()) {
-		for (Building* building : builtMap) {
+		for (Building* building : catanMap->buildings()) {
 			if (building->getPlace() == coords) {
 				return false;
 			}
@@ -1108,33 +971,33 @@ CatanGame::validFirstSettlement(Coord coords, PlayerId playerId) {
 
 bool
 CatanGame::hasCityResources(PlayerId playerID) {
-	Player& player = getPlayer(playerID);
+	Player* player = getPlayer(playerID);
 
 	return (
-		player.getResourceCount(ResourceId::MOUNTAIN) >= CITY_ORE_NEEDED &&
-		player.getResourceCount(ResourceId::FIELD) >= CITY_GRAIN_NEEDED
+		player->getResourceCount(ResourceId::MOUNTAIN) >= CITY_ORE_NEEDED &&
+		player->getResourceCount(ResourceId::FIELD) >= CITY_GRAIN_NEEDED
 		);
 }
 
 bool 
 CatanGame::hasSettlementResources(PlayerId playerID) {
-	Player& player = getPlayer(playerID);
+	Player* player = getPlayer(playerID);
 
 	return(
-		player.getResourceCount(ResourceId::HILL) >= SETTLEMENT_BRICK_NEEDED &&
-		player.getResourceCount(ResourceId::FIELD) >= SETTLEMENT_GRAIN_NEEDED &&
-		player.getResourceCount(ResourceId::FOREST) >= SETTLEMENT_LUMBER_NEEDED &&
-		player.getResourceCount(ResourceId::PASTURES) >= SETTLEMENT_WOOL_NEEDED
+		player->getResourceCount(ResourceId::HILL) >= SETTLEMENT_BRICK_NEEDED &&
+		player->getResourceCount(ResourceId::FIELD) >= SETTLEMENT_GRAIN_NEEDED &&
+		player->getResourceCount(ResourceId::FOREST) >= SETTLEMENT_LUMBER_NEEDED &&
+		player->getResourceCount(ResourceId::PASTURES) >= SETTLEMENT_WOOL_NEEDED
 		);
 }
 
 bool
 CatanGame::hasRoadResources(PlayerId playerID) {
-	Player& player = getPlayer(playerID);
+	Player* player = getPlayer(playerID);
 
 	return (
-		player.getResourceCount(ResourceId::HILL) >= ROAD_BRICK_NEEDED &&
-		player.getResourceCount(ResourceId::FOREST) >= ROAD_LUMBER_NEEDED
+		player->getResourceCount(ResourceId::HILL) >= ROAD_BRICK_NEEDED &&
+		player->getResourceCount(ResourceId::FOREST) >= ROAD_LUMBER_NEEDED
 		);
 }
 
@@ -1147,8 +1010,7 @@ CatanGame::buildRoad(Building* building, Coord coords, PlayerId playerID)
 	* lo configuro para conectarrlo al building dado, en ambos
 	* sentidos
 	*/
-	Building* newRoad = getPlayer(playerID).popRoad();
-	newRoad->setPlace(coords);
+	Building* newRoad = getPlayer(playerID)->popRoad();
 	newRoad->addNeighbour(building);
 	building->addNeighbour(newRoad);
 	
@@ -1156,8 +1018,8 @@ CatanGame::buildRoad(Building* building, Coord coords, PlayerId playerID)
 	* Agrego la ficha al tablero del mapa de construcciones realizadas
 	* y configuro los puntos del jugador 
 	*/
-	builtMap.push_back(newRoad);
-	getPlayer(playerID).addPoints(ROAD_BUILT_POINTS);
+	catanMap->build(newRoad, coords);
+	getPlayer(playerID)->addPoints(ROAD_BUILT_POINTS);
 
 	/* Actualizo camino mas largo */
 	updateLongestRoad();
@@ -1174,8 +1036,7 @@ CatanGame::buildCity(Building* building, Coord coords, PlayerId playerID)
 	* Extraigo una ciudad de entre las fichas del jugador y luego
 	* le configuro las conexiones correspondientes
 	*/
-	Building* newCity = getPlayer(playerID).popCity();
-	newCity->setPlace(coords);
+	Building* newCity = getPlayer(playerID)->popCity();
 	newCity->addNeighbour( building->getNeighbours() );
 	building->removeNeighbour();
 	for (Building* neighbours : newCity->getNeighbours()) {
@@ -1188,11 +1049,11 @@ CatanGame::buildCity(Building* building, Coord coords, PlayerId playerID)
 	* y modifico las puntaciones correspondientes, ademas, devuelvo
 	* la ficha al player
 	*/
-	builtMap.remove(building);
-	builtMap.push_back(newCity);
-	getPlayer(playerID).giveBackBuilding(BuildingType::SETTLEMENT, building);
-	getPlayer(playerID).removePoints(SETTLEMENT_BUILT_POINTS);
-	getPlayer(playerID).addPoints(CITY_BUILT_POINTS);
+	catanMap->demolish(building);
+	catanMap->build(newCity, coords);
+	getPlayer(playerID)->giveBackBuilding(building);
+	getPlayer(playerID)->removePoints(SETTLEMENT_BUILT_POINTS);
+	getPlayer(playerID)->addPoints(CITY_BUILT_POINTS);
 
 	/* Actualizo los puntos y veo ganador */
 	updateWinner();
@@ -1204,8 +1065,7 @@ CatanGame::buildSettlement(Building* building, Coord coords, PlayerId playerID)
 	/* Extraigo un asentamiento entre las fichas del jugador para luego
 	* agregar las conexiones entre el anterior y este, ademas de su ubicacion
 	*/
-	Building* newSettlement = getPlayer(playerID).popSettlement();
-	newSettlement->setPlace(coords);
+	Building* newSettlement = getPlayer(playerID)->popSettlement();
 	if (building) {
 		newSettlement->addNeighbour(building);
 		building->addNeighbour(newSettlement);
@@ -1214,8 +1074,8 @@ CatanGame::buildSettlement(Building* building, Coord coords, PlayerId playerID)
 	/*
 	* Agrego la nueva construccion al tablero y le asigno el puntaje
 	*/
-	builtMap.push_back(newSettlement);
-	getPlayer(playerID).addPoints(SETTLEMENT_BUILT_POINTS);
+	catanMap->build(newSettlement, coords);
+	getPlayer(playerID)->addPoints(SETTLEMENT_BUILT_POINTS);
 
 	/* Actualizo los docks disponibles del usuario/jugador */
 	updateDocks(coords, playerID);
@@ -1226,28 +1086,25 @@ CatanGame::buildSettlement(Building* building, Coord coords, PlayerId playerID)
 
 void
 CatanGame::payRoad(PlayerId playerID) {
-	Player& player = getPlayer(playerID);
-
-	player.removeResourceCard(ResourceId::FOREST, ROAD_LUMBER_NEEDED);
-	player.removeResourceCard(ResourceId::HILL, ROAD_BRICK_NEEDED);
+	Player* player = getPlayer(playerID);
+	returnCards(player->giveCards(ResourceId::HILL, ROAD_BRICK_NEEDED));
+	returnCards(player->giveCards(ResourceId::FOREST, ROAD_LUMBER_NEEDED));
 }
 
 void
 CatanGame::payCity(PlayerId playerID) {
-	Player& player = getPlayer(playerID);
-
-	player.removeResourceCard(ResourceId::MOUNTAIN, CITY_ORE_NEEDED);
-	player.removeResourceCard(ResourceId::FIELD, CITY_GRAIN_NEEDED);
+	Player* player = getPlayer(playerID);
+	returnCards(player->giveCards(ResourceId::MOUNTAIN, CITY_ORE_NEEDED));
+	returnCards(player->giveCards(ResourceId::FIELD, CITY_GRAIN_NEEDED));
 }
 
 void
 CatanGame::paySettlement(PlayerId playerID) {
-	Player& player = getPlayer(playerID);
-
-	player.removeResourceCard(ResourceId::HILL, SETTLEMENT_BRICK_NEEDED);
-	player.removeResourceCard(ResourceId::FOREST, SETTLEMENT_LUMBER_NEEDED);
-	player.removeResourceCard(ResourceId::PASTURES, SETTLEMENT_WOOL_NEEDED);
-	player.removeResourceCard(ResourceId::FIELD, SETTLEMENT_GRAIN_NEEDED);
+	Player* player = getPlayer(playerID);
+	returnCards(player->giveCards(ResourceId::HILL, SETTLEMENT_BRICK_NEEDED));
+	returnCards(player->giveCards(ResourceId::FOREST, SETTLEMENT_LUMBER_NEEDED));
+	returnCards(player->giveCards(ResourceId::PASTURES, SETTLEMENT_WOOL_NEEDED));
+	returnCards(player->giveCards(ResourceId::FIELD, SETTLEMENT_GRAIN_NEEDED));
 }
 
 bool
@@ -1282,89 +1139,6 @@ CatanGame::accepts(list<ResourceId>& cards, unsigned int qty) {
 			}
 		}
 		return true;
-	}
-	return false;
-}
-
-bool
-CatanGame::accepts(list<ResourceCard*>& cards, unsigned int qty, ResourceId id) {
-
-	/* Verifico que la cantidad de cartas sea la pedida,
-	* y luego guardo y verifico que sean todas del mismo tipo
-	*/
-	ResourceId resourceId = id;
-	if (cards.size() == qty) {
-		for (ResourceCard* card : cards) {
-			if (card->getResourceId() != resourceId) {
-				return false;
-			}
-		}
-		return true;
-	}
-	return false;
-}
-
-bool 
-CatanGame::accepts(list<ResourceCard*>& cards, unsigned int qty) {
-	
-	/* Verifico que la cantidad de cartas sea la pedida,
-	* y luego guardo y verifico que sean todas del mismo tipo
-	*/
-	ResourceId resourceId = cards.front()->getResourceId();
-	if (cards.size() == qty) {
-		for (ResourceCard* card : cards) {
-			if (card->getResourceId() != resourceId) {
-				return false;
-			}
-		}
-		return true;
-	}
-	return false;
-}
-
-bool 
-CatanGame::isValidDockExchange(list<ResourceCard*>& offeredCards, PlayerId playerId) {
-
-	/*
-	* Primero verifico que tenga docks disponibles, luego reviso en cada uno de ellos
-	* segun su tipo, si la accion del usuario es valida
-	*/
-	list<SeaId>& docks = playerDocks[playerId];
-	if (docks.size()) {
-		for (SeaId seaId : docks) {
-			switch (seaId) {
-			case SeaId::NORMAL:
-				if (accepts(offeredCards, NORMAL_COUNT)) {
-					return true;
-				}
-				break;
-			case SeaId::WHEAT:
-				if (accepts(offeredCards, WHEAT_COUNT, ResourceId::FIELD)) {
-					return true;
-				}
-				break;
-			case SeaId::BRICK:
-				if (accepts(offeredCards, BRICK_COUNT, ResourceId::HILL)) {
-					return true;
-				}
-				break;
-			case SeaId::SHEEP:
-				if (accepts(offeredCards, SHEEP_COUNT, ResourceId::PASTURES)) {
-					return true;
-				}
-				break;
-			case SeaId::STONE:
-				if (accepts(offeredCards, STONE_COUNT, ResourceId::MOUNTAIN)) {
-					return true;
-				}
-				break;
-			case SeaId::WOOD:
-				if (accepts(offeredCards, WOOD_COUNT, ResourceId::FOREST)) {
-					return true;
-				}
-				break;
-			}
-		}
 	}
 	return false;
 }
@@ -1417,24 +1191,6 @@ CatanGame::isValidDockExchange(list<ResourceId>& offeredCards, PlayerId playerId
 }
 
 bool
-CatanGame::isValidPlayerExchange(list<ResourceCard*>& offeredCards, list<ResourceId>& requestedCards, PlayerId srcPlayerID) {
-
-	/*
-	* Verifico que ambos jugadores tengan las cartas disponibles
-	* para poder realizar el intercambio
-	*/
-	if (offeredCards.size() > 9 || requestedCards.size() > 9) {
-		return false;
-	}
-
-	return	(
-		canPlayerAccept(offeredCards, srcPlayerID) &&
-		canPlayerAccept(requestedCards, (OPONENT_ID(srcPlayerID)))
-	);
-
-}
-
-bool
 CatanGame::isValidPlayerExchange(list<ResourceId>& offeredCards, list<ResourceId>& requestedCards, PlayerId srcPlayerID) {
 
 	/*
@@ -1453,12 +1209,6 @@ CatanGame::isValidPlayerExchange(list<ResourceId>& offeredCards, list<ResourceId
 }
 
 bool
-CatanGame::isValidBankExchange(list<ResourceCard*>& offeredCards, PlayerId playerID) {
-
-	return accepts(offeredCards, BANK_TRANSACTION_CARDS_COUNT) && canPlayerAccept(offeredCards, playerID);
-}
-
-bool
 CatanGame::isValidBankExchange(list<ResourceId>& offeredCards, PlayerId playerID) {
 
 	return accepts(offeredCards, BANK_TRANSACTION_CARDS_COUNT) && canPlayerAccept(offeredCards, playerID);
@@ -1472,48 +1222,12 @@ CatanGame::canPlayerAccept(list<ResourceId>& requestedCards, PlayerId destPlayer
 	* sea superior o equivalente a la cantidad en la lista de cartas que se piden
 	*/
 	return	(
-			(getPlayer(destPlayerID).getResourceCount(ResourceId::FOREST) >= (unsigned int)std::count(requestedCards.begin(), requestedCards.end(), ResourceId::FOREST)) &&
-			(getPlayer(destPlayerID).getResourceCount(ResourceId::HILL) >= (unsigned int)std::count(requestedCards.begin(), requestedCards.end(), ResourceId::HILL)) &&
-			(getPlayer(destPlayerID).getResourceCount(ResourceId::MOUNTAIN) >= (unsigned int)std::count(requestedCards.begin(), requestedCards.end(), ResourceId::MOUNTAIN)) &&
-			(getPlayer(destPlayerID).getResourceCount(ResourceId::FIELD) >= (unsigned int)std::count(requestedCards.begin(), requestedCards.end(), ResourceId::FIELD)) &&
-			(getPlayer(destPlayerID).getResourceCount(ResourceId::PASTURES) >= (unsigned int)std::count(requestedCards.begin(), requestedCards.end(), ResourceId::PASTURES))
+			(getPlayer(destPlayerID)->getResourceCount(ResourceId::FOREST) >= (unsigned int)std::count(requestedCards.begin(), requestedCards.end(), ResourceId::FOREST)) &&
+			(getPlayer(destPlayerID)->getResourceCount(ResourceId::HILL) >= (unsigned int)std::count(requestedCards.begin(), requestedCards.end(), ResourceId::HILL)) &&
+			(getPlayer(destPlayerID)->getResourceCount(ResourceId::MOUNTAIN) >= (unsigned int)std::count(requestedCards.begin(), requestedCards.end(), ResourceId::MOUNTAIN)) &&
+			(getPlayer(destPlayerID)->getResourceCount(ResourceId::FIELD) >= (unsigned int)std::count(requestedCards.begin(), requestedCards.end(), ResourceId::FIELD)) &&
+			(getPlayer(destPlayerID)->getResourceCount(ResourceId::PASTURES) >= (unsigned int)std::count(requestedCards.begin(), requestedCards.end(), ResourceId::PASTURES))
 			);
-}
-
-bool
-CatanGame::canPlayerAccept(list<ResourceCard*> requestedCards, PlayerId destPlayerID)
-{
-	/*
-	* Verifico que la cantidad de recursos de cada tipo que el jugador tiene
-	* sea superior o equivalente a la cantidad en la lista de cartas que se piden
-	*/
-	list<ResourceId> cards;
-
-	for (ResourceCard* card : requestedCards) {
-		cards.push_back(card->getResourceId());
-	}
-
-	return canPlayerAccept(cards, destPlayerID);
-}
-
-void
-CatanGame::Exchange(list<ResourceCard*>& offered, ResourceId wanted, PlayerId playerID)
-{
-	/*
-	* Para realizar un intercambio de este tipo, primero se remueven todas las cartas
-	* dadas por el jugador de su pilon, y luego se agrega la carta pedida, creandola
-	* previamente
-	*/
-	for (ResourceCard* cardOffered : offered)
-	{
-		getPlayer(playerID).removeResourceCard(cardOffered);
-	}
-
-	/*
-	* Creo la carta pedida y se la entrego al jugador en cuestion
-	*/
-	ResourceCard* newCard = new ResourceCard(playerID, wanted);
-	getPlayer(playerID).addResourceCard(newCard);
 }
 
 void
@@ -1524,70 +1238,29 @@ CatanGame::Exchange(list<ResourceId>& offered, ResourceId wanted, PlayerId playe
 	* dadas por el jugador de su pilon, y luego se agrega la carta pedida, creandola
 	* previamente
 	*/
-	for (ResourceId cardOffered : offered)
-	{
-		getPlayer(playerID).removeResourceCard(cardOffered);
-	}
+	returnCards(getPlayer(playerID)->giveCards(offered));
 
 	/*
 	* Creo la carta pedida y se la entrego al jugador en cuestion
 	*/
-	ResourceCard* newCard = new ResourceCard(playerID, wanted);
-	getPlayer(playerID).addResourceCard(newCard);
-}
-
-void
-CatanGame::playerExchange(list<ResourceCard*>& offered, list<ResourceId>& wanted, PlayerId srcPlayerID)
-{
-	PlayerId oponent = OPONENT_ID(srcPlayerID);
-
-	/*
-	* Primero busco todas las cartas ofrecidas por el jugador y tomo cada una de ellas,
-	* luego la modifico y la entrego al otro jugador, verificando el contenido de la misma
-	*/
-	for (ResourceCard* cardOffered : offered)
-	{
-		cardOffered->setPlayerId(oponent);
-		getPlayer(oponent).addResourceCard(cardOffered);
-		getPlayer(srcPlayerID).removeResourceCard(cardOffered);
-	}
-
-	/*
-	* Busco las cartas del segundo jugador, las cuales primero modifico, y luego quito y entrego
-	* al que las recibe
-	*/
-	for (ResourceId card : wanted) {
-		ResourceCard* cardWanted = getPlayer(oponent).getResourceCard(card);
-		cardWanted->setPlayerId(srcPlayerID);
-		getPlayer(srcPlayerID).addResourceCard(cardWanted);
-	}
+	getPlayer(playerID)->addCard(takeCards(wanted, 1));
 }
 
 void
 CatanGame::playerExchange(list<ResourceId>& offered, list<ResourceId>& wanted, PlayerId srcPlayerID)
 {
 	PlayerId oponent = OPONENT_ID(srcPlayerID);
-
 	/*
 	* Primero busco todas las cartas ofrecidas por el jugador y tomo cada una de ellas,
 	* luego la modifico y la entrego al otro jugador, verificando el contenido de la misma
 	*/
-	for (ResourceId card : offered)
-	{
-		ResourceCard* cardOffered = getPlayer(srcPlayerID).getResourceCard(card);
-		cardOffered->setPlayerId(oponent);
-		getPlayer(oponent).addResourceCard(cardOffered);
-	}
+	getPlayer(oponent)->addCard(getPlayer(srcPlayerID)->giveCards(offered));
 
 	/*
 	* Busco las cartas del segundo jugador, las cuales primero modifico, y luego quito y entrego
 	* al que las recibe
 	*/
-	for (ResourceId card : wanted) {
-		ResourceCard* cardWanted = getPlayer(oponent).getResourceCard(card);
-		cardWanted->setPlayerId(srcPlayerID);
-		getPlayer(srcPlayerID).addResourceCard(cardWanted);
-	}
+	getPlayer(srcPlayerID)->addCard(getPlayer(oponent)->giveCards(wanted));
 }
 
 void
@@ -1607,10 +1280,10 @@ CatanGame::getWinner(void) {
 
 void
 CatanGame::updateWinner(void) {
-	if (localPlayer.getVictoryPoints() == WINNER_POINTS) {
+	if (localPlayer->getVictoryPoints() == WINNER_POINTS) {
 		winner = PlayerId::PLAYER_ONE;
 	}
-	else if (remotePlayer.getVictoryPoints() == WINNER_POINTS) {
+	else if (remotePlayer->getVictoryPoints() == WINNER_POINTS) {
 		winner = PlayerId::PLAYER_TWO;
 	}
 }

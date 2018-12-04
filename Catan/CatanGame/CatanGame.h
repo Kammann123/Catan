@@ -1,24 +1,21 @@
 #pragma once
 
-#include "Robber.h"
+#include "LongestRoad.h"
+#include "CatanMap.h"
 #include "Player.h"
-#include "Building.h"
-#include "ResourceHex.h"
-#include "ResourceCard.h"
-#include "SeaHex.h"
-#include "Coord.h"
 
-#include "CatanStates/CatanState.h"
-
-#include "../MVC/Subject.h"
+#include "../CatanNetworking/NetworkPackets/NetworkPacket.h"
 #include "../CatanGui/AllegroUI/ContainerUI.h"
 #include "../CatanEvents/CatanEvent.h"
-#include "../CatanNetworking/NetworkPackets/NetworkPacket.h"
+#include "CatanStates/CatanState.h"
 
 #include <list>
 #include <map>
 #include <deque>
 #include <iterator>
+
+/* Initial amout of cards */
+#define AMOUT_OF_CARDS	30
 
 /* Docks requierements */
 #define NORMAL_COUNT	3
@@ -48,7 +45,6 @@
 
 /* Longest road definitions */
 #define MIN_LONGEST_ROAD	5
-#define LONGEST_ROAD_POINTS	2
 
 /* Victory Points reference */
 #define ROAD_BUILT_POINTS			0
@@ -105,7 +101,6 @@ public:
 		GAME_END, GAME_ERROR};
 
 	/* Constructor y destructor */
-	CatanGame(string localPlayerName);
 	CatanGame();
 	~CatanGame();
 
@@ -119,10 +114,10 @@ public:
 	void syncHandle(NetworkPacket* packet);
 	void syncHandle(CatanEvent* event);
 
-	PlayerId whoConfirms(void);
-	bool wasConfirmed(void);
 	void waitConfirmation(PlayerId player);
 	void confirm(PlayerId player);
+	PlayerId whoConfirms(void);
+	bool wasConfirmed(void);
 
 	/*
 	* Metodos principales que definen el comportamiento de CatanGame,
@@ -130,9 +125,9 @@ public:
 	* la riguen los estados actuales del mismo
 	*/
 	void handle(NetworkPacket* packet);
+	const char* getStateString(void);
 	void handle(CatanEvent* event);
 	State getState(void);
-	const char* getStateString(void);
 
 	/*
 	* info
@@ -140,8 +135,8 @@ public:
 	* sobre alguna posible accion erronea pasada, utilizar para verificar
 	* el caracter de una jugada equivocada
 	*/
-	string info(void);
 	void setInfo(string info);
+	string info(void);
 
 	/*
 	* getNextEvent
@@ -154,6 +149,18 @@ public:
 	* Devuelve si hay eventos en la cola
 	*/
 	bool hasEvents(void) const;
+	/*
+	* addNewEvent
+	* Agrega un nuevo evento a la cola
+	*/
+	void addNewEvent(NetworkPacket* packet);
+	void addNewEvent(CatanEvent* event);
+
+	/*
+	* getPacketEvent
+	* Devuelve evento a partir de un network packet
+	*/
+	CatanEvent* getPacketEvent(NetworkPacket* packet);
 
 	/*
 	* changeState
@@ -165,7 +172,24 @@ public:
 	CatanState* getCurrentState(void);
 	CatanState* getPrevState(void);
 
-public:
+	/*************************************************************
+	* Interfaz para acceder a los datos miembros de CatanGame
+	* y acceder a la informacion del juego y los modelos que lo
+	* componen.
+	*************************************************************/
+	list<ResourceCard*> getCards(void);
+	LongestRoad* getLongestRoad(void);
+	Player* getRemotePlayer(void);
+	Player* getLocalPlayer(void);
+	CatanMap* getCatanMap(void);
+	PlayerId getTurn(void);
+
+	/******************************************************************
+	* Interfaz para el manejo de los mazos de cartas dentro del juego
+	******************************************************************/
+	list<ResourceCard*> takeCards(ResourceId id, unsigned int qty);
+	void returnCards(list<ResourceCard*> cards);
+	void returnCards(ResourceCard* card);
 
 	/* 
 	* Metodos para la interfaz con el CatanNetworking, para garantizar
@@ -174,28 +198,14 @@ public:
 	*/
 	bool isRobberStatus(void);
 
-	void setRemoteName(string remoteName);
-	void setLocalName(string localName);
-
-	PlayerId getTurn(void);
-	string getLocalName(void);
-	map<Coord, MapValue> getMap(void);
-	map<Coord, unsigned char> getTokens(void);
-
 	/*
 	* getPlayer
 	* Permite obtener el objeto Player en funcion del id con el cual
 	* se determina el turno actual del juego o bien una accion realizada.
 	*/
-	Player& getPlayer(PlayerId playerId);
+	Player* getPlayer(PlayerId playerId);
 
 public:
-
-	/*
-	* Aclaracion importante, a continuacion se declaran los metodos empleados
-	* para validar acciones y ejecutar acciones del juego, sin control logico
-	* de flujo. Se las coloca ordenadas y clasificadas segun partes del juego.
-	*/
 
 	/*
 	* resetGame
@@ -210,29 +220,14 @@ public:
 
 	/* 
 	* Metodos de generacion inicial del juego bajo las reglas
-	* definidas en Catan. Se puede generar el mapa seteando los
-	* recursos en un orden determinado. Se puede generar el oceano
-	* en un orden de muelles determinado. Y se puede generar los valores
-	* aleatorios de tokens asignados para cada Token.
+	* definidas en Catan. Se genera el turno al azar.
 	*/
-	void generateMap(void);
-	void generateTurn(void); 
-	void generateOcean(void);
-	void generateTokens(void);
-
-	/*
-	* Metodos para la validacion de los elementos de juego, como
-	* seran los mapas, tanto de tierra como mar y los valores de
-	* tokens asignados a ellos.
-	*/
-	bool verifyMap(map<Coord, MapValue> gameMap);
-	bool verifyTokens(map<Coord, unsigned char> tokens);
+	void generateTurn(void);
 
 	/*
 	* Definicion de los valores del juego del mapa, tanto de 
 	* tierra como mar, asi como los tokens. Tambien del turno.
 	*/
-	void setGlobalMap(map<Coord, MapValue> gameMap, map<Coord, unsigned char> tokens);
 	void setTurn(PlayerId playerId);
 	void toggleTurn(void);
 
@@ -244,8 +239,8 @@ public:
 	* CatanGame, para la definicion logica de las reglas del juego.
 	* Si mañana CatanGame no tuviera dados de 6 caras, se cambiaria facilmente.
 	*/
-	bool validDices(unsigned int dices);
 	bool validDices(unsigned int fDice, unsigned int sDice);
+	bool validDices(unsigned int dices);
 
 	/*
 	* assignResources
@@ -253,17 +248,17 @@ public:
 	* correspondientemente a cada jugar los recursos que reciben
 	* segun el numero y los settlements como debe ser.
 	*/
-	void assignResources(unsigned int dices);
-	void assignResources(BuildingType type, Coord coords, PlayerId playerId);
 	void assignResources(PlayerId player, ResourceId resource, unsigned int qty);
+	void assignResources(BuildingType type, Coord coords, PlayerId playerId);
+	void assignResources(unsigned int dices);
 
 	/*
 	* updateLongestRoad
 	* Actualiza el estado actual del longest road.
 	*/
-	void updateLongestRoad(void);
-	void getLongestRoad(Building* building, unsigned int length = 0);
+	void seekLongestRoad(Building* building, unsigned int length = 0);
 	bool isLongestRoad(PlayerId player);
+	void updateLongestRoad(void);
 
 	/*
 	* isRobberDices
@@ -288,7 +283,6 @@ public:
 	* descartar las mismas ante la presencia del robber, se debe eliminar
 	* la mitad de las que se tienen en mano
 	*/
-	bool validateRobberCards(list<ResourceCard*>& cards, PlayerId playerID);
 	bool validateRobberCards(list<ResourceId>& cards, PlayerId playerID);
 	
 	/*
@@ -297,7 +291,6 @@ public:
 	* para tomar y descartar esas cartas del mismo jugador.
 	* Aclaracion, la seleccion es por tipo de recurso.
 	*/
-	void robberCards(list<ResourceCard*>& cards, PlayerId playerID);
 	void robberCards(list<ResourceId>& cards, PlayerId playerID);
 
 	/*
@@ -335,10 +328,10 @@ public:
 	* donde en caso de Road y Settlement seran contiguos o bien en caso de City, el settlement
 	* a sustituir.
 	*/
+	Building* isValidSettlement(Coord coords, PlayerId playerID);
 	bool validFirstSettlement(Coord coords, PlayerId playerId);
 	Building* isValidRoad(Coord coords, PlayerId playerID);
 	Building* isValidCity(Coord coords, PlayerId playerID);
-	Building* isValidSettlement(Coord coords, PlayerId playerID);
 
 	/*
 	* hasCityResources, hasSettlementResources, hasRoadResources
@@ -346,8 +339,8 @@ public:
 	* algunas de esas construcciones, esto quiere decir, si cumple los requisitos
 	* economicos para realizar tal construccion.
 	*/
-	bool hasCityResources(PlayerId playerID);
 	bool hasSettlementResources(PlayerId playerID);
+	bool hasCityResources(PlayerId playerID);
 	bool hasRoadResources(PlayerId playerID);
 	
 	/*
@@ -359,18 +352,18 @@ public:
 	* El requisito de un puntero a Building es para la conexion de las construcciones
 	* en caso de City, el reemplazo del settlement.
 	*/
+	void buildSettlement(Building* building, Coord coords, PlayerId playerID);
 	void buildRoad(Building* building, Coord coords, PlayerId playerID);
 	void buildCity(Building* building, Coord coords, PlayerId playerID);
-	void buildSettlement(Building* building, Coord coords, PlayerId playerID);
 
 	/*
 	* payRoad, payCity, paySettlement
 	* Realiza el pago de estas construcciones, tomando los recursos
 	* necesitados del usuario en cuestion.
 	*/
+	void paySettlement(PlayerId playerID);
 	void payRoad(PlayerId playerID);
 	void payCity(PlayerId playerID);
-	void paySettlement(PlayerId playerID);
 
 	/*
 	* accepts
@@ -379,8 +372,6 @@ public:
 	*/
 	bool accepts(list<ResourceId>& cards, unsigned int qty, ResourceId id);
 	bool accepts(list<ResourceId>& cards, unsigned int qty);
-	bool accepts(list<ResourceCard*>& cards, unsigned int qty, ResourceId id);
-	bool accepts(list<ResourceCard*>& cards, unsigned int qty);
 
 	/*
 	* isValidDockExchange, isValidPlayerExchange, isValidBankExchange
@@ -389,10 +380,7 @@ public:
 	* , que tenga los recursos para hacerla, y que tenga disponible las opciones de hacerla, por los muelles por ejemplo.
 	*/
 	bool isValidDockExchange(list<ResourceId>& offeredCards, PlayerId playerId);
-	bool isValidDockExchange(list<ResourceCard*>& offeredCards, PlayerId playerId);
-	bool isValidPlayerExchange(list<ResourceCard*>& offeredCards, list<ResourceId>& requestedCards, PlayerId srcPlayerID);
 	bool isValidPlayerExchange(list<ResourceId>& offeredCards, list<ResourceId>& requestedCards, PlayerId srcPlayerID);
-	bool isValidBankExchange(list<ResourceCard*>& offeredCards, PlayerId playerID);
 	bool isValidBankExchange(list<ResourceId>& offeredCards, PlayerId playerID);
 
 	/*
@@ -401,17 +389,14 @@ public:
 	* con lo garantiza si se da o no la opcion de aceptarla. Verifica que disponga las cartas...
 	*/
 	bool canPlayerAccept(list<ResourceId>& requestedCards, PlayerId destPlayerID);
-	bool canPlayerAccept(list<ResourceCard*> requestedCards, PlayerId destPlayerID);
 
 	/*
 	* bankExchange, playerExchange, dockExchange
 	* Realizan los intercambios de cartas entre un jugador y, ya sea otro jugador o bien
 	* el banco o un muelle, donde se asume validacion y unicamente se distribuyen recursos.
 	*/
-	void Exchange(list<ResourceCard*>& offered, ResourceId wanted, PlayerId playerID);
-	void Exchange(list<ResourceId>& offered, ResourceId wanted, PlayerId playerID);
-	void playerExchange(list<ResourceCard*>& offered, list<ResourceId>& wanted, PlayerId srcPlayerID);
 	void playerExchange(list<ResourceId>& offered, list<ResourceId>& wanted, PlayerId srcPlayerID);
+	void Exchange(list<ResourceId>& offered, ResourceId wanted, PlayerId playerID);
 
 	/*
 	* pass
@@ -423,59 +408,53 @@ public:
 	* Metodos de control del final de juego
 	* por victoria de uno de los jugadores de la partida
 	*/
-	bool hasWinner(void);
 	PlayerId getWinner(void);
 	void updateWinner(void);
-
-	/*
-	* addNewEvent
-	* Agrega un nuevo evento a la cola
-	*/
-	void addNewEvent(NetworkPacket* packet);
-	void addNewEvent(CatanEvent* event);
-
-	/*
-	* getPacketEvent
-	* Devuelve evento a partir de un network packet
-	*/
-	CatanEvent* getPacketEvent(NetworkPacket* packet);
+	bool hasWinner(void);
 
 private:
-	
-	/* Rutinas bajo nivel de inicializacion o restablecimiento */
-	void _init_game(void);
 
-	void _free_buildings(void);
-	void _free_events(void);
-	void _free_states(void);
+	/************************************************
+	* Constructores, destructores e inicializadores
+	* de los objetos internos a CatanGame
+	************************************************/
+	void _create_remote_player(void);
+	void _create_local_player(void);
+	void _create_longest_road(void);
+	void _create_cards(void);
+	void _create_map(void);
 
-	void _clear_resource_map(void);
-	void _clear_sea_map(void);
+	void _destroy_remote_player(void);
+	void _destroy_longest_road(void);
+	void _destroy_local_player(void);
+	void _destroy_states(void);
+	void _destroy_events(void);
+	void _destroy_cards(void);
+	void _destroy_map(void);
 
-	void _notify_change(void);
+	/*
+	* Notificacion de cambios a los observers
+	* eliminando los eventos que ya fueron 
+	* revisados
+	*/
+	void notifyChange(void);
 
 private:
-	
-	Player localPlayer;
-	Player remotePlayer;
-	map<Coord, ResourceHex> resourceMap;
-	PlayerId longestRoad;
-	Robber robber;
-
-	map<Coord, SeaHex> seaMap;
-	list<Building*> builtMap;
+	list<ResourceCard*> cards;
+	LongestRoad * longestRoad;
+	Player * remotePlayer;
+	Player * localPlayer;
+	CatanMap * catanMap;
+	PlayerId winner;
 	PlayerId turn;
 
 	deque<CatanEvent*> eventQueue;
-
-	CatanState* state;
-	CatanState* prevState;
-
-	PlayerId winner;
-
 	string description;
+
+	CatanState* prevState;
+	CatanState* state;
+
 	map<PlayerId, unsigned int> playerLongestRoad;
 	map<PlayerId, list<SeaId>> playerDocks;
-
 	PlayerId confirmationPlayer;
 };
