@@ -196,6 +196,16 @@ MainMenu::process(void) {
 	*/
 	CatanNetworking::States state = launcher.getNetworking().getNetworkingState();
 
+	/* Busco el label que contiene el mensaje informativo al usuario, con el cual
+	* determino, por comparacion, si el mensaje interno se modifico, en cuyo caso,
+	* lo informo mismo en el label
+	*/
+	string message = MODEL((*this)["message"], TextUI*)->getText();
+	string newMessage = launcher.getNetworking().info();
+	if (message != newMessage) {
+		MODEL((*this)["message"], TextUI*)->setText(newMessage);
+	}
+
 	/* Si hubo un cambio de estado en el networking
 	* con respecto al anterior, reviso...
 	*/
@@ -222,20 +232,8 @@ MainMenu::process(void) {
 				break;
 			case CatanNetworking::States::IDLE:
 				launcher.change(CatanLauncher::States::GAME_WINDOW);
-				this->shutdown();
-				return;
 				break;
 		}
-	}
-
-	/* Busco el label que contiene el mensaje informativo al usuario, con el cual
-	* determino, por comparacion, si el mensaje interno se modifico, en cuyo caso,
-	* lo informo mismo en el label
-	*/
-	string message = MODEL((*this)["message"], TextUI*)->getText();
-	string newMessage = launcher.getNetworking().info();
-	if (message != newMessage) {
-		MODEL((*this)["message"], TextUI*)->setText(newMessage);
 	}
 }
 

@@ -64,21 +64,11 @@ CatanLauncher::run() {
 	*/
 	switch ( state ) {
 		case MAIN_MENU:
-			if (!mainmenu.isOpen()) {
-				mainmenu.start();
-			}
-			else {
-				mainmenu.run();
-			}
+			mainmenu.run();
 			break;
 
 		case GAME_WINDOW:
-			if (!gamewindow.isOpen()) {
-				gamewindow.start();
-			}
-			else {
-				gamewindow.run();
-			}
+			gamewindow.run();
 			break;
 	}
 
@@ -106,4 +96,21 @@ CatanLauncher::alive(void) {
 void
 CatanLauncher::change(States newState) {
 	this->state = newState;
+
+	/* Al cambiar de estado dentro del Launcher
+	* se reconoce en cual estado me encontraba,
+	* cierro las ventanas graficas de dicho estado
+	* y posteriormente corro las siguientes 
+	*/
+	switch (state) {
+	case MAIN_MENU:
+		gamewindow.shutdown();
+		mainmenu.start();
+		break;
+
+	case GAME_WINDOW:
+		mainmenu.shutdown();
+		gamewindow.start();
+		break;
+	}
 }
