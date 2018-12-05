@@ -229,7 +229,7 @@ GameWindow::update(void) {
 	/* Siempre, por las dudas, confirmo recibida la accion
 	* del otro jugador
 	*/
-	launcher.getGame().confirm(PlayerId::PLAYER_TWO);
+	launcher.getGame().confirm(PlayerId::PLAYER_ONE);
 }
 
 void
@@ -251,7 +251,7 @@ GameWindow::onDicesThrown(void* data) {
 
 	CatanGame& game = launcher.getGame();
 	if (game.validDices(fDice, sDice)) {
-		game.syncHandle(new DicesEvent(fDice, sDice, PlayerId::PLAYER_TWO));
+		game.syncHandle(new DicesEvent(fDice, sDice, PlayerId::PLAYER_ONE));
 	}
 
 	/* Mensaje informativo! */
@@ -271,7 +271,7 @@ GameWindow::onExit(void* data) {
 	if (answer) {
 
 		/* Evento al handler del game */
-		launcher.getGame().syncHandle(new CatanEvent(CatanEvent::Events::QUIT, CatanEvent::Sources::GUI, PlayerId::PLAYER_TWO));
+		launcher.getGame().syncHandle(new CatanEvent(CatanEvent::Events::QUIT, CatanEvent::Sources::GUI, PlayerId::PLAYER_ONE));
 
 		/* Luego finalmente, lo que hago es cambiar de estado */
 		launcher.change(CatanLauncher::States::MAIN_MENU);
@@ -307,8 +307,11 @@ GameWindow::onBuildingDrop(void* data) {
 			*/
 			CatanGame& game = launcher.getGame();
 
-			if (game.buildingOk(building->getType(), pixel.first, PlayerId::PLAYER_TWO)) {
-				game.syncHandle(new BuildingEvent(pixel.first, building->getType(), PlayerId::PLAYER_TWO));
+			if (game.buildingOk(building->getType(), pixel.first, PlayerId::PLAYER_ONE)) {
+				game.syncHandle(new BuildingEvent(pixel.first, building->getType(), PlayerId::PLAYER_ONE));
+
+				((MouseUI*)controller->getModel())->setStatus(MouseUI::Status::IDLE);
+				controller->getModel()->setEnable(false);
 				return;
 			}
 		}
@@ -344,7 +347,7 @@ GameWindow::onRobberDrop(void* data) {
 			CatanGame& game = launcher.getGame();
 
 			if (game.validRobberMovement(pixel.first)) {
-				game.syncHandle(new RobberMoveEvent(pixel.first, PlayerId::PLAYER_TWO));
+				game.syncHandle(new RobberMoveEvent(pixel.first, PlayerId::PLAYER_ONE));
 			}
 		}
 	}
