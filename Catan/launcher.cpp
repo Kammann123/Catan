@@ -9,7 +9,8 @@ int main(int argc, char** argv) {
 
 	if (WindowUI::isAllegroInit()) {
 
-		CatanLauncher launcher;	
+		CatanLauncher launcher;
+
 		/*
 		* Verifico que no haya terminado y,
 		* cerrado... y bueno, eso es todo!
