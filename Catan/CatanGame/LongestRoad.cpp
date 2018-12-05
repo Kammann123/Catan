@@ -4,6 +4,7 @@
 
 LongestRoad::
 LongestRoad(CatanGame* game) : FrameUI(LONGEST_ROAD_ID, 0, 0) {
+	this->setUIDestroy(false);
 	this->game = game;
 	this->player = nullptr;
 }

@@ -2,13 +2,15 @@
 
 CatanLauncher::
 CatanLauncher() : mainmenu(*this), gamewindow(*this) {
-	this->state = States::GAME_WINDOW;
+	this->state = States::MAIN_MENU;
 }
 
 void
 CatanLauncher::run() {
-	switch ( state ) {
 
+	/* Se corren los estados del launcher
+	*/
+	switch ( state ) {
 		case MAIN_MENU:
 			if (!mainmenu.isOpen()) {
 				mainmenu.start();
@@ -26,6 +28,22 @@ CatanLauncher::run() {
 				gamewindow.run();
 			}
 			break;
+	}
+
+	/* Me fijo si el modo o estado actual del networking esta
+	* en funcionamiento, para correr sus procesos... y luego verificar su estado!
+	*/
+	if (state != CatanNetworking::States::CLOSED &&
+		state != CatanNetworking::States::IDLE &&
+		state != CatanNetworking::States::NET_ERROR) {
+		CatanNetworking& net = getContext().getNetworking();
+
+		/* Verifico en que estado se encuentra el networking, y en caso de
+		* fallar, deberia indicar el error, volver al estado closed!
+		*/
+		if (net.good()) {
+			net.run();
+		}
 	}
 }
 

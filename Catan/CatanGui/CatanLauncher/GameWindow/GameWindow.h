@@ -5,6 +5,7 @@
 #include "../../../CatanGame/Player.h"
 #include "../../../CatanGame/Building.h"
 #include "../../../CatanGame/LongestRoad.h"
+#include "../../../CatanGame/CatanMap.h"
 
 /*
 * Definicion de posiciones ordenadas dentro de los containers
@@ -79,6 +80,7 @@ private:
 	class GameBuilder {
 	public:
 		static UIComponent* createDice(string id);
+		static UIComponent* createMap(CatanMap* map);
 		static UIComponent* createPlayer(Player* player);
 		static UIComponent* createRobber(Robber* robber);
 		static UIComponent* createCatanGame(CatanGame* game);

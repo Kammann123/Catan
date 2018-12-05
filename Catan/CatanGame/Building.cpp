@@ -4,6 +4,7 @@
 
 Building::
 Building(Player* player, BuildingType type) : MouseUI(BUILDING_ID, 0, 0, true) {
+	this->setUIDestroy(false);
 	this->player = player;
 	this->type = type;
 	this->neighbours.clear();

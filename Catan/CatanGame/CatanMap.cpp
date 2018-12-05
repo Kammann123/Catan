@@ -55,6 +55,10 @@ CatanMap::_create_land(void) {
 			landMap.push_back(hex);
 		}
 	}
+
+	/* Agrego el terreno desierto */
+	ResourceHex* hex = new ResourceHex(ResourceId::DESERT);
+	landMap.push_back(hex);
 }
 
 void
@@ -148,6 +152,7 @@ CatanMap::_init_coords(void) {
 
 CatanMap::
 CatanMap(CatanGame* game) : FrameUI(MAP_ID, 0, 0) {
+	this->setUIDestroy(false);
 
 	/* Creo todos los objetos y elemetos */
 	_create_land();
@@ -185,6 +190,10 @@ CatanMap::generateLand(void) {
 	for (ResourceHex* hex : landMap) {
 		if (hex) {
 			hex->place(coords.back()), coords.pop_back();
+
+			if (hex->getResource() == ResourceId::DESERT) {
+				moveRobber(hex->getCoord());
+			}
 		}
 	}
 }
@@ -434,7 +443,7 @@ CatanMap::moveRobber(Coord coord) {
 	* la configuracion misma.
 	*/
 	position_t pos = screenCoords[coord.getCoords()];
-	robber->move(coord, pos.x, pos.y);
+	robber->move(coord, pos.x + x, pos.y + y);
 }
 
 Coord

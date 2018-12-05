@@ -543,6 +543,9 @@
     <ClInclude Include="CatanGui\CatanLauncher\GameWindow\LongestRoadView.h">
       <Filter>CatanGui\CatanLauncher\GameWindow</Filter>
     </ClInclude>
+    <ClInclude Include="CatanGui\CatanLauncher\GameWindow\CatanMapView.h">
+      <Filter>CatanGui\CatanLauncher\GameWindow</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FSM\EventQueue.cpp">
@@ -1011,6 +1014,9 @@
       <Filter>CatanGui\CatanLauncher\GameWindow</Filter>
     </ClCompile>
     <ClCompile Include="CatanGui\CatanLauncher\GameWindow\LongestRoadView.cpp">
+      <Filter>CatanGui\CatanLauncher\GameWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGui\CatanLauncher\GameWindow\CatanMapView.cpp">
       <Filter>CatanGui\CatanLauncher\GameWindow</Filter>
     </ClCompile>
   </ItemGroup>

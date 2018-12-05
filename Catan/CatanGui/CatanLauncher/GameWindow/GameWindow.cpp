@@ -10,6 +10,7 @@
 #include "DiceView.h"
 #include "BuildingView.h"
 #include "LongestRoadView.h"
+#include "CatanMapView.h"
 
 #define GAMEWINDOW_CURSOR		"CatanGui\\Cursor\\cursor_normal.png"
 #define GAMEWINDOW_CLICK_CURSOR		"CatanGui\\Cursor\\cursor_clicking.png"
@@ -31,6 +32,7 @@
 
 GameWindow::
 GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI(1080, 640) {
+
 	UIComponent* exitButton = UIBuilder::createButton("exit");
 	UIComponent* discardButton = UIBuilder::createButton("discard");
 	UIComponent* tradeButton = UIBuilder::createButton("trade");
@@ -41,6 +43,7 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI(1080, 640) 
 	UIComponent* robber = GameBuilder::createRobber(launcher.getContext().getGame().getCatanMap()->getRobber());
 	UIComponent* game = GameBuilder::createCatanGame(&launcher.getContext().getGame());
 	UIComponent* longestRoad = GameBuilder::createLongestRoad(launcher.getContext().getGame().getLongestRoad());
+	UIComponent* map = GameBuilder::createMap(launcher.getContext().getGame().getCatanMap());
 
 	/***********************************
 	* Creacion de componentes Building *
@@ -60,6 +63,7 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI(1080, 640) 
 	* Configuracion del tablero *
 	****************************/
 	MODEL(game, CatanGame*)->set(POSITION_LONGEST_ROAD, 910, 80, 0);
+	MODEL(map, CatanMap*)->setPosition(180, 0);
 
 	/******************************
 	* Configuracion de player one *
@@ -121,9 +125,10 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI(1080, 640) 
 	this->attachComponent(secondDice);
 	this->attachComponent(localPlayer);
 	this->attachComponent(remotePlayer);
-	this->attachComponent(robber);
-	this->attachComponent(game);
 	this->attachComponent(longestRoad);
+	this->attachComponent(game);
+	this->attachComponent(map);
+	this->attachComponent(robber);
 
 	/********************************************
 	* Agrego componentes Building a la interfaz *
@@ -184,6 +189,12 @@ GameWindow::onDicesThrown(void* data) {
 
 void
 GameWindow::normal_layout(void) {
+
+	/********************
+	* Configuro el mapa *
+	********************/
+	(*this)[MAP_ID]->getModel()->setEnable(true);
+	(*this)[MAP_ID]->getModel()->setVisible(true);
 
 	/****************************
 	* Configuro el longest road *
@@ -324,4 +335,17 @@ GameWindow::GameBuilder::createLongestRoad(LongestRoad* longestRoad) {
 UIComponent* 
 GameWindow::GameBuilder::createCatanGame(CatanGame* game) {
 	return new UIComponent(game, {}, {});
+}
+
+UIComponent* 
+GameWindow::GameBuilder::createMap(CatanMap* map) {
+
+	/* Creo el view */
+	UIView * mapView = new CatanMapView(map);
+
+	/* Attach y creo componentes */
+	map->attach(mapView);
+
+	UIComponent* mapComponent = new UIComponent(map, { mapView }, {});
+	return mapComponent;
 }

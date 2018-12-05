@@ -227,22 +227,6 @@ MainMenu::process(void) {
 		}
 	}
 
-	/* Me fijo si el modo o estado actual del networking esta
-	* en funcionamiento, para correr sus procesos... y luego verificar su estado!
-	*/
-	if (state != CatanNetworking::States::CLOSED && 
-			state != CatanNetworking::States::IDLE &&
-				state != CatanNetworking::States::NET_ERROR ) {
-		CatanNetworking& net = launcher.getContext().getNetworking();
-
-		/* Verifico en que estado se encuentra el networking, y en caso de
-		* fallar, deberia indicar el error, volver al estado closed!
-		*/
-		if (net.good()) {
-			net.run();
-		}
-	}
-
 	/* Busco el label que contiene el mensaje informativo al usuario, con el cual
 	* determino, por comparacion, si el mensaje interno se modifico, en cuyo caso,
 	* lo informo mismo en el label

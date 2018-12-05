@@ -201,6 +201,7 @@
     <ClInclude Include="CatanGui\CatanLauncher\CatanContext.h" />
     <ClInclude Include="CatanGui\CatanLauncher\CatanLauncher.h" />
     <ClInclude Include="CatanGui\CatanLauncher\GameWindow\BuildingView.h" />
+    <ClInclude Include="CatanGui\CatanLauncher\GameWindow\CatanMapView.h" />
     <ClInclude Include="CatanGui\CatanLauncher\GameWindow\DiceView.h" />
     <ClInclude Include="CatanGui\CatanLauncher\GameWindow\GameWindow.h" />
     <ClInclude Include="CatanGui\CatanLauncher\GameWindow\LongestRoadView.h" />
@@ -361,6 +362,7 @@
     <ClCompile Include="CatanGui\CatanLauncher\CatanContext.cpp" />
     <ClCompile Include="CatanGui\CatanLauncher\CatanLauncher.cpp" />
     <ClCompile Include="CatanGui\CatanLauncher\GameWindow\BuildingView.cpp" />
+    <ClCompile Include="CatanGui\CatanLauncher\GameWindow\CatanMapView.cpp" />
     <ClCompile Include="CatanGui\CatanLauncher\GameWindow\DiceView.cpp" />
     <ClCompile Include="CatanGui\CatanLauncher\GameWindow\GameWindow.cpp" />
     <ClCompile Include="CatanGui\CatanLauncher\GameWindow\LongestRoadView.cpp" />

@@ -63,6 +63,8 @@ Player::_destroy_cards(void) {
 
 Player::
 Player(PlayerId player, CatanGame* game) : ContainerUI(player == PlayerId::PLAYER_ONE ? PLAYER_ONE_ID : PLAYER_TWO_ID, 0, 0) {
+	this->setUIDestroy(false);
+
 	/* Inicializacion de parametros */
 	this->player = player;
 	this->game = game;

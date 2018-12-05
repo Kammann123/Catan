@@ -149,6 +149,8 @@ CatanGame::notifyChange(void) {
 
 CatanGame::
 CatanGame(void) : ContainerUI(GAME_ID, 0, 0) {
+	this->setUIDestroy(false);
+
 	/* Inicializo parametros del juego */
 	this->confirmationPlayer = PlayerId::PLAYER_NONE;
 	this->winner = PlayerId::PLAYER_NONE;
@@ -171,6 +173,8 @@ CatanGame(void) : ContainerUI(GAME_ID, 0, 0) {
 	_create_local_player();
 	_create_longest_road();
 	_create_map();
+
+	srand(time(NULL));
 }
 
 CatanGame::

@@ -3,7 +3,7 @@
 
 Robber::
 Robber() : MouseUI(ROBBER_ID, 0, 0, true) {
-	this->setPosition(800, 300);
+	this->setUIDestroy(false);
 }
 
 Robber::
@@ -19,5 +19,5 @@ Robber::getCoord(void)  const {
 void
 Robber::move(Coord coord, double x, double y) {
 	this->coord = coord;
-	this->setPosition(x, y);
+	this->setPosition(x - width / 2, y - height / 2);
 }
