@@ -502,12 +502,12 @@ Coord::_verify_type(void) {
 			}
 			break;
 		case LAND:
-			if (coords.size() == 1 && _has_numbers()) {
+			if (coords.size() == 1 && !_has_numbers()) {
 				return;
 			}
 			break;
 		case SEA:
-			if (coords.size() == 1 && !_has_numbers()) {
+			if (coords.size() == 1 && _has_numbers()) {
 				return;
 			}
 			break;

@@ -458,7 +458,7 @@ CatanMap::getRobber(void) {
 
 map<Coord, MapValue> 
 CatanMap::getMap(void) {
-	map<Coord, MapValue> catanMap;
+	map<Coord, MapValue> catanMap;	
 
 	for (ResourceHex* land : landMap) {
 		catanMap.insert(pair<Coord, MapValue>(land->getCoord(), (MapValue)land->getResource()));
