@@ -49,12 +49,12 @@ TellEnd::playAgain(NetworkPacket* packet) {
 
 NetworkPacket*
 TellEnd::getMap(void) { 
-	return new MapPacket(networking.getGame().getMap()); 
+	return new MapPacket(networking.getGame().getCatanMap()->getMap()); 
 }
 
 NetworkPacket*
 TellEnd::getTokens(void) { 
-	return new TokenPacket(networking.getGame().getTokens()); 
+	return new TokenPacket(networking.getGame().getCatanMap()->getTokens());
 }
 
 bool

@@ -12,6 +12,9 @@ UIView::
 ~UIView() {}
 
 void
+UIView::refactor(void) {}
+
+void
 UIView::update(void) {
 	if( interface )
 		this->interface->draw();

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "CatanContext.h"
-#include "MainMenu.h"
+#include "MainMenu/MainMenu.h"
+#include "GameWindow/GameWindow.h"
 
 /*
 * CatanLauncher
@@ -16,7 +16,7 @@ public:
 	/*
 	* States - Estados o etapas del launcher.
 	*/
-	enum States : unsigned int { MAIN_MENU, CONNECT_MENU, GAME_WINDOW, LAUNCHER_CLOSE };
+	enum States : unsigned int { MAIN_MENU, GAME_WINDOW, LAUNCHER_CLOSE };
 
 	/* Constructor */
 	CatanLauncher();
@@ -37,13 +37,30 @@ public:
 	*/
 	void change(States newState);
 
-	/*
-	* Acceso a la informacion del contexto
-	*/
-	CatanContext& getContext(void);
+	/*****************************************
+	* Interfaz a la informacion del contexto *
+	*****************************************/
+	void setUsername(string name);
+	void setIp(string ip);
+	void setPort(unsigned int port);
+
+	string getUsername(void);
+	string getIp(void);
+	unsigned int getPort(void);
+
+	CatanGame& getGame(void);
+	CatanNetworking& getNetworking(void);
 
 private:
 	States state;
-	CatanContext context;
+
+	GameWindow gamewindow;
 	MainMenu mainmenu;
+
+	CatanNetworking networking;
+	CatanGame game;
+
+	unsigned int port;
+	string username;
+	string ip;
 };

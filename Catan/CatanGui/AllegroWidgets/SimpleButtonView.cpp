@@ -19,7 +19,7 @@ SimpleButtonView::draw(void) {
 	ALLEGRO_FONT* textFont;
 
 	/*
-	* Hago uso de los valores por defecto de las configs
+	* Hago uso de los valores por defecto colorde las configs
 	* de colores y fuentes de texto.
 	*/
 	TextUI* button = (TextUI*)model;
@@ -61,7 +61,7 @@ SimpleButtonView::draw(void) {
 }
 
 void 
-SimpleButtonView::updateModelValues(void) {
+SimpleButtonView::refactor(void) {
 	TextUI* text = (TextUI*)model;
 
 	text->setWidth(2 * PADDING_X + al_get_text_width(fonts[SIMPLE_BUTTON_TEXTFONT].font, text->getText().c_str()));

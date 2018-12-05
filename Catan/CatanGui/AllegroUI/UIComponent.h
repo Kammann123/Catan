@@ -21,6 +21,12 @@ public:
 	~UIComponent();
 
 	/*
+	* refactor
+	* Refactorizacion del componente grafica.
+	*/
+	void refactor(void);
+
+	/*
 	* parse
 	* Parsea los eventos en los controllers
 	*/
@@ -32,8 +38,15 @@ public:
 	*/
 	void draw(void);
 
+	/*
+	* operator[]
+	* Permite encontrar un controller especifico
+	*/ 
+	UIController* operator[](UIController::Id id);
+	UIView* operator[](unsigned int index);
+
 	/* Getters */
-	vector<UIController*>& getController(void);
+	vector<UIController*>& getControllers(void);
 	vector<UIView*> getView(void);
 	UIModel* getModel(void);
 	string getId(void);

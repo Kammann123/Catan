@@ -1,12 +1,13 @@
 #pragma once
 
 #include "Coord.h"
+#include "../CatanGui/AllegroUI/MouseUI.h"
 
 /*
 * Robber
 * La mejor clase del mundo para el Robber del juego.
 */
-class Robber {
+class Robber : public MouseUI {
 public:
 	/* Constructor */
 	Robber(Coord coord);
@@ -19,10 +20,9 @@ public:
 	Coord getCoord(void) const;
 
 	/*
-	* setCoord
-	* Mueve el robber de posicion
+	* move - Mueve el robber hacia la posicion indicada
 	*/
-	void setCoord(Coord coord);
+	void move(Coord coord, double x, double y);
 
 private:
 	Coord coord;

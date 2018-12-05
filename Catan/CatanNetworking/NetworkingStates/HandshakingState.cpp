@@ -27,7 +27,11 @@ HandshakingState::getProtocol(void) {
 
 void
 HandshakingState::context() { 
-	handshakingProtocol->start(); 
+	/* Inicio el protocolo */
+	handshakingProtocol->start();
+
+	/* Mensaje */
+	networking.setInfo("[Networking] - HandshakingState -> Iniciando protocolo de comunicacion.");
 }
 
 bool
@@ -62,14 +66,14 @@ HandshakingState::run() {
 		switch (handshakingProtocol->getStatus()) {
 			case ProtocolStatus::DONE:
 				this->handshakingProtocol->reset();
-				networking.changeState(CatanNetworking::States::IDLE);
+				networking.changeState(CatanNetworking::States::IDLE, "[Networking] - HandshakingState -> Protocolo terminado. Estado de comunicacion OK!");
 				break;
 			case ProtocolStatus::PROTOCOL_ERROR:
-				networking.setError("HandshakingState - Hubo error en el protocolo.");
+				networking.setError("[Networking] - HandshakingState -> Hubo un error en el protocolo de comunicacion.");
 				networking.changeState(CatanNetworking::States::NET_ERROR);
 				break;
 			case ProtocolStatus::TIMEOUT:
-				networking.setError("HandshakingState - Hubo error de timeout en el protocolo.");
+				networking.setError("[Networking] - HandshakingState -> Tiempo de espera agotado!");
 				networking.changeState(CatanNetworking::States::NET_ERROR);
 				break;
 		}
@@ -78,7 +82,7 @@ HandshakingState::run() {
 
 		/* Verifico el timeout del protocolo */
 		if (handshakingProtocol->getStatus() == ProtocolStatus::TIMEOUT) {
-			networking.setError("HandshakingState - Hubo error de timeout en el protocolo.");
+			networking.setError("[Networking] - HandshakingState -> Tiempo de espera agotado!");
 			networking.changeState(CatanNetworking::States::NET_ERROR);
 		}
 	}
@@ -101,14 +105,14 @@ HandshakingState::update() {
 		switch (handshakingProtocol->getStatus()) {
 			case ProtocolStatus::DONE:
 				this->handshakingProtocol->reset();
-				networking.changeState(CatanNetworking::States::IDLE);
+				networking.changeState(CatanNetworking::States::IDLE, "[Networking] - HandshakingState -> Protocolo terminado. Estado de comunicacion OK!");
 				break;
 			case ProtocolStatus::PROTOCOL_ERROR:
-				networking.setError("HandshakingState - Hubo error en el protocolo.");
+				networking.setError("[Networking] - HandshakingState -> Hubo un error en el protocolo de comunicacion.");
 				networking.changeState(CatanNetworking::States::NET_ERROR);
 				break;
 			case ProtocolStatus::TIMEOUT:
-				networking.setError("HandshakingState - Hubo error de timeout en el protocolo.");
+				networking.setError("[Networking] - HandshakingState -> Tiempo de espera agotado!");
 				networking.changeState(CatanNetworking::States::NET_ERROR);
 				break;
 		}

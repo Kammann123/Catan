@@ -10,8 +10,11 @@ UIComponent(UIModel* model_, vector<UIView*> view_, vector<UIController*> contro
 
 UIComponent::
 ~UIComponent() {
-	if (model)
-		delete model;
+	if (model) {
+		if (model->shouldUIDestroy()) {
+			delete model;
+		}
+	}
 	
 	for (UIView* view : views) {
 		if (view)
@@ -21,6 +24,14 @@ UIComponent::
 	for (UIController* controller : controllers) {
 		if(controller)
 			delete controller;
+	}
+}
+
+void
+UIComponent::refactor(void) {
+	model->refactor();
+	for (UIView* view : views) {
+		view->refactor();
 	}
 }
 
@@ -42,8 +53,26 @@ UIComponent::draw(void) {
 	}
 }
 
+UIController*
+UIComponent::operator[](UIController::Id id) {
+	for (UIController* controller : controllers) {
+		if (controller->getId() == id) {
+			return controller;
+		}
+	}
+	return nullptr;
+}
+
+UIView*
+UIComponent::operator[](unsigned int index) {
+	if (index < views.size()) {
+		return views[index];
+	}
+	return nullptr;
+}
+
 vector<UIController*>& UIComponent::
-getController(void)
+getControllers(void)
 {
 	return controllers;
 }

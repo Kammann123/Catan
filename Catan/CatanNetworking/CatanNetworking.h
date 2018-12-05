@@ -40,7 +40,7 @@ public:
 
 	enum States : unsigned int {DISCONNECTED, LISTENING, WAIT_SYNC, SYNC, IDLE, NET_ERROR,
 		LISTEN_BANK, LISTEN_BUILDING, LISTEN_DICES, LISTEN_END, LISTEN_OFFER, LISTEN_QUIT,
-		TELL_BANK, TELL_BUILDING, TELL_DICES, TELL_END, TELL_OFFER, TELL_QUIT};
+		TELL_BANK, TELL_BUILDING, TELL_DICES, TELL_END, TELL_OFFER, TELL_QUIT, CLOSED};
 
 	/*
 	* CatanNetworking
@@ -66,6 +66,14 @@ public:
 	void update(void);
 
 	/*
+	* start
+	* Reinicia al estado disconnected y 
+	* corre el cambio de estado.
+	*/
+	void start(void);
+	void reset(void);
+
+	/*
 	* Devuelve identificador del estado de networking
 	* ya segun su id, o un string representativo del estado
 	*/
@@ -79,10 +87,11 @@ public:
 	NetworkingState* getState(void);
 
 	/*
-	* getError
-	* Devuelve el mensaje de error de Networking, si lo hubiera.
+	* info
+	* Devuelve el mensaje de Networking, si lo hubiera.
 	*/
-	string getError(void);
+	string info(void);
+	void setInfo(string _info);
 
 	/*
 	* good
@@ -94,8 +103,8 @@ public:
 	* changeState
 	* Cambia el estado del Networking
 	*/
-	void changeState(NetworkingState* state);
-	void changeState(CatanNetworking::States state);
+	void changeState(NetworkingState* state, string _info = "");
+	void changeState(CatanNetworking::States state, string _info = "");
 
 	/*
 	* setError
@@ -135,7 +144,7 @@ private:
 	unsigned int port;
 	NetworkingState* currState;
 	bool status;
-	string error;
+	string msg;
 	NetworkSocket * socket;
 	CatanGame& game;
 

@@ -30,7 +30,7 @@ WaitSync(CatanNetworking& net) : HandshakingState(net, CatanNetworking::States::
 
 NetworkPacket * 
 WaitSync::getLocalName(void) { 
-	return new NamePacket(networking.getGame().getLocalName()); 
+	return new NamePacket(networking.getGame().getLocalPlayer()->getName()); 
 }
 
 void

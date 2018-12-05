@@ -8,6 +8,7 @@
 #include "allegro5/allegro_primitives.h"
 #include "allegro5/allegro_ttf.h"
 
+#include "Mouse.h"
 #include "ColorConfig.h"
 #include "ImageConfig.h"
 #include "SoundConfig.h"
@@ -22,7 +23,6 @@
 #define WINDOW_MUSIC		"music"
 
 #define MODEL(_component, _cast)	((_cast)(_component->getModel()))
-#define VIEW(_component, _index)	_component->getView()[_index]
 
 using namespace std;
 using namespace std::placeholders;
@@ -50,6 +50,14 @@ public:
 	*/
 	WindowUI(size_t width, size_t height, double fps = DEFAULT_FPS);
 	~WindowUI(void);
+
+	/*
+	* process
+	* Permite correr procesos alternamente con
+	* la revision de los eventos de la interfaz grafica,
+	* para ello debe sobreescribirse virtualmente
+	*/
+	virtual void process(void);
 
 	/*
 	* draw
@@ -109,6 +117,7 @@ public:
 	* a los diferentes componentes segun su id.
 	*/
 	UIComponent* operator[](string id);
+	list<UIComponent*> operator()(string id);
 
 	size_t getHeight(void);
 	size_t getWidth(void);
@@ -120,6 +129,14 @@ public:
 	*/
 	void setBackground(unsigned char red, unsigned char green, unsigned char blue);
 	void setBackground(const char* image);
+
+	/*
+	* setCursor
+	* Permite configurar el cursor de la ventana
+	*/
+	void setCursor(const char* image);
+	void setClickCursor(const char* image);
+	void setGrabCursor(const char* image);
 	
 	/*
 	* setMusic
@@ -167,6 +184,8 @@ private:
 	SoundConfig sounds;
 
 	Action onClose;
+
+	Mouse mouse;
 
 	list<UIComponent*> components;
 };

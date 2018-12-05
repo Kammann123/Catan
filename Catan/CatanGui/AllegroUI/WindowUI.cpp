@@ -56,7 +56,7 @@ WindowUI::InitAllegro(void) {
 }
 
 WindowUI::
-WindowUI(size_t width, size_t height, double fps) {
+WindowUI(size_t width, size_t height, double fps ) {
 	this->width = width;
 	this->height = height;
 	this->fps = fps;
@@ -85,6 +85,7 @@ void
 WindowUI::_init_display(void) {
 	if (display == nullptr) {
 		this->display = al_create_display(this->width, this->height);
+		mouse.setDisplay(this->display);
 	}
 }
 
@@ -117,6 +118,7 @@ WindowUI::_destroy_display(void) {
 	if (display) {
 		al_destroy_display(display);
 	}
+	mouse.setDisplay(nullptr);
 }
 
 void
@@ -141,9 +143,16 @@ WindowUI::_destroy_components(void) {
 }
 
 void
+WindowUI::process(void) {}
+
+void
 WindowUI::draw(void) {
 
 	if (started) {
+
+		/* Defino el target del backbuffer */
+		al_set_target_backbuffer(display);
+
 		/* Limpio la pantalla con su fondo */
 		if (colors.has(WINDOW_BACKGROUND)) {
 			al_clear_to_color(colors[WINDOW_BACKGROUND].color);
@@ -174,8 +183,18 @@ WindowUI::start(void) {
 	_init_timer();
 	_init_sources();
 
+	/*
+	* Se hace refactorizacion de todos los componentes
+	*/
+	for (UIComponent* component : components) {
+		component->refactor();
+	}
+
 	/* Inicio el timer */
 	al_start_timer(timer);
+
+	/* Actualizo cursor */
+	mouse.update();
 	
 	/* Inicio la musica */
 	if (sounds.has(WINDOW_MUSIC)) {
@@ -218,11 +237,39 @@ WindowUI::run(void) {
 			this->close(&event);
 		}
 		else {
-			for (UIComponent* component : components) {
-				component->parse(&event);
+			if (mouse.isMouse(&event)) {
+				mouse.parse(&event);
+
+				if (mouse.isGrabbing()) {
+					mouse.privilege(&event);
+				}
+				else {
+					for (UIComponent* component : components) {
+						component->parse(&event);
+
+						MouseController* controller = (MouseController*)(*component)[UIController::Id::MOUSE];
+						if (controller) {
+							if (MODEL(controller, MouseUI*)->getStatus() == MouseUI::Status::DRAGGED) {
+								mouse.grab(controller);
+								break;
+							}
+						}
+					}
+				}
+			}
+			else {
+				for (UIComponent* component : components) {
+					component->parse(&event);
+				}
 			}
 		}
 	}
+
+	/*
+	* Luego doy tiempo de ejecucion a los diferentes
+	* procesos configurables
+	*/
+	process();
 }
 
 void
@@ -267,6 +314,17 @@ WindowUI::operator[](string id) {
 		}
 	}
 	return nullptr;
+}
+
+list<UIComponent*>
+WindowUI::operator()(string id) {
+	list<UIComponent*> seek;
+	for (UIComponent* component : components) {
+		if (component->getId() == id) {
+			seek.push_back(component);
+		}
+	}
+	return seek;
 }
 
 bool
@@ -318,13 +376,33 @@ void
 WindowUI::shutdown(void) {
 
 	/*
+	* Detengo la ejecucion de todos
+	* los elementos de la interfaz
+	*/
+	stop();
+
+	/*
 	* Destruyo el display, la cola de eventos
 	* y luego los componentes
 	*/
 	_destroy_display();
 	_destroy_queue();
 	_destroy_timer();
-	_destroy_components();
 
 	started = false;
+}
+
+void 
+WindowUI::setCursor(const char* image) {
+	mouse.set(Mouse::States::NORMAL, image);
+}
+
+void
+WindowUI::setClickCursor(const char* image) {
+	mouse.set(Mouse::States::CLICKING, image);
+}
+
+void 
+WindowUI::setGrabCursor(const char* image) {
+	mouse.set(Mouse::States::GRABBING, image);
 }

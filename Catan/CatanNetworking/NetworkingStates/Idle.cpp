@@ -73,7 +73,7 @@ Idle::run(void) {
 			if (state->isHeader(packet->getHeader(), ProtocolState::ProtocolType::LISTENER) || state->isHeader(packet->getHeader(), ProtocolState::ProtocolType::BOTH)) {
 
 				/* Paso a ese estado! */
-				networking.changeState(state);
+				networking.changeState(state, "[Networking] - Idle -> Paquete de datos recibido, dispatching...");
 				networking.run();
 				return;
 				
@@ -81,7 +81,7 @@ Idle::run(void) {
 		}
 
 		/* No detecto nada! Error :'( */
-		networking.setError("Idle - Error de protocolo, no se reconoce la peticion.");
+		networking.setError("[Networking] - Idle -> Hubo un error en el protocolo, peticion no reconocida.");
 		networking.changeState(CatanNetworking::States::NET_ERROR);
 	}
 }
@@ -100,13 +100,13 @@ Idle::update(void) {
 		if (state->isHeader(packet->getHeader(), ProtocolState::ProtocolType::TELLER) || state->isHeader(packet->getHeader(), ProtocolState::ProtocolType::BOTH)) {
 
 			/* Paso a ese estado! */
-			networking.changeState(state);
+			networking.changeState(state, "[Networking] - Idle -> Evento recibido con la rutina update. Dispatching...");
 			networking.update();
 			return;
 		}
 	}
 
 	/* No detecto nada! Error :'( */
-	networking.setError("Idle - Error de protocolo, no se reconoce la peticion.");
+	networking.setError("[Networking] - Idle -> Hubo un error en el protocolo, peticion no reconocida.");
 	networking.changeState(CatanNetworking::States::NET_ERROR);
 }

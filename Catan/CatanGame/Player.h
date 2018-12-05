@@ -3,6 +3,8 @@
 #include "ResourceCard.h"
 #include "Building.h"
 
+#include "../CatanGui/AllegroUI/ContainerUI.h"
+
 #include <string>
 #include <list>
 
@@ -10,146 +12,90 @@
 #define CITY_COUNT			4
 #define ROAD_COUNT			15
 
-
 using namespace std;
 
 enum class PlayerId : int {PLAYER_ONE, PLAYER_TWO, PLAYER_NONE};
 
-class Player {
+class CatanGame;
+
+class Player : public ContainerUI {
 public:
 	/*
 	* Constructor
 	*/
-	Player(PlayerId player);
-	Player(PlayerId player, string name, unsigned int settleCount, unsigned int citiesCount, unsigned int roadsCount);
+	Player(PlayerId player, CatanGame* game);
 	~Player();
 
-	/*
-	* reset
-	* Reinicia el estado de juego del Player, vuelve a la normalidad
-	* sus valores de puntaje y fichas disponibles
-	*/
-	void reset(void);
-
-	/*
-	* getName()
-	* Devuelve el nombre del jugador
-	*/
-	string getName(void);
-
-	/*
-	* setName
-	* Establece el nombre
-	*/
 	void setName(string name);
 
 	/*
-	* getVictoryPoints()
-	* Devuelve los puntos de victoria del jugador
-	*/
-	unsigned int getVictoryPoints(void);
-	void resetVictoryPoints(void);
-
-	/*
-	* addPoints()
-	* Suma puntos de victoria al jugador
-	*/
-	void addPoints(unsigned int points = 0);
-
-	/*
-	* removePoints()
-	* Quita puntos de victoria al jugador
-	*/
-	void removePoints(unsigned int points = 0);
-
-	/*
-	* addResourceCard()
-	* Añade una resource card al jugador
-	*/
-	void addResourceCard(ResourceCard * card);
-	void addResourceCard(list<ResourceCard*> cardsList);
-
-	/*
-	* removeResourceCard() o giveResourceCard o getResourceCard
-	* Quita una resource card del jugador
-	*/
-	void removeResourceCard(ResourceCard * card);
-	void removeResourceCard(ResourceId id);
-	void removeResourceCard(ResourceId resourceId, unsigned int qty);
-	list<ResourceCard*> giveResourceCard(ResourceId resourceId, unsigned int qty);
-	ResourceCard* getResourceCard(ResourceId id);
-
-	/*
-	* showCards
-	* Devuelve una lista con las cartas del jugador
-	*/
-	list<ResourceCard*> showCards(void);
-
-	/*
-	* getResourceCount
-	* Devuelve la cantidad de recursos que tiene el jugador de este tipo
-	* dado.
+	* getters - Permite lectura de informacion del jugador
 	*/
 	unsigned int getResourceCount(ResourceId resourceID) const;
+	list<Building*> buildings(BuildingType type);
 	unsigned int getResourceCount(void) const;
-
-	/*
-	* hasRoads()
-	* Devuelve la cantidad de Roads disponibles
-	*/
-	unsigned int hasRoads(void);
-
-	/*
-	* hasSettlements()
-	* Devuelve la cantidad de Settlementts disponibles
-	*/
+	unsigned int getVictoryPoints(void);
+	list<ResourceCard*> showCards(void);
 	unsigned int hasSettlements(void);
-
-	/*
-	* hasCities()
-	* Devuelve la cantidad de Cities disponibles
-	*/
 	unsigned int hasCities(void);
+	unsigned int hasRoads(void);
+	PlayerId getPlayerId(void);
+	string getName(void);
 
-	/*
-	* popRoad()
-	* Devuelve un objeto Road pre-creado
-	*/
-	Building* popRoad(void);
+	/********************************
+	* Interfaz de manejo del puntaje
+	********************************/
+	void removePoints(unsigned int points = 0);
+	void addPoints(unsigned int points = 0);
+	void resetVictoryPoints(void);
 
-	/*
-	* popSettlement()
-	* Devuelve un objeto Settlement pre-creado
-	*/
+	/******************************
+	* Interfaz de manejo de cartas
+	******************************/
+	list<ResourceCard*> giveCards(ResourceId id, unsigned int qty);
+	list<ResourceCard*> giveCards(list<ResourceId> ids);
+	list<ResourceCard*> giveAllCards(void);
+	ResourceCard* giveCard(ResourceId id);
+
+	void removeCard(list<ResourceCard*> cards);
+	void removeCard(ResourceCard* card);
+
+	void addCard(list<ResourceCard*> cards);
+	void addCard(ResourceCard * card);
+
+	/***************************************
+	* Interfaz de manejo de construcciones
+	***************************************/
+	void giveBackBuilding(Building* building);
+	list<Building*> buildings(void);
 	Building* popSettlement(void);
-
-	/*
-	* popCity()
-	* Devuelve un objeto City pre-creado
-	*/
+	Building* popRoad(void);
 	Building* popCity(void);
-
-	/*
-	* giveBack
-	* Devuelve una construccion al Player
-	*/
-	void giveBackBuilding(BuildingType type, Building* building);
 
 private:
 
-	/*
-	* Metodos de inicializacion y restablecimiento
-	*/
-	void _free_buildings(void);
-	void _get_buildings(unsigned int settleCount, unsigned int roadsCount, unsigned int citiesCount);
-	void _free_resources(void);
+	/*******************************************
+	* Metodos de construccion, inicializacion y 
+	* destruccion de los miembros del Player
+	********************************************/
+	void _create_settlements(void);
+	void _create_roads(void);
+	void _create_cities(void);
+
+	void _destroy_settlements(void);
+	void _destroy_roads(void);
+	void _destroy_cities(void);
+	void _destroy_cards(void);
 
 private:
 	PlayerId player;
 	string name;
 	unsigned int victoryPoints;
+
 	list<ResourceCard*> resourceCards;
 	list<Building*> settlements;
 	list<Building*> cities;
 	list<Building*> roads;
+
+	CatanGame* game;
 };

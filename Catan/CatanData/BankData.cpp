@@ -7,12 +7,6 @@ BankData(list<ResourceId> given, list<ResourceId> recv) : CatanData(CatanData::T
 }
 
 BankData::
-BankData(list<ResourceCard*> given, list<ResourceId> recv) : CatanData(CatanData::Type::BANK) {
-	this->givenCard = given;
-	this->recv = recv;
-}
-
-BankData::
 BankData(void) : CatanData(CatanData::Type::BANK) {}
 
 void 
@@ -35,32 +29,12 @@ BankData::getRecv(void) {
 	return this->recv;
 }
 
-void
-BankData::addGiven(ResourceCard* res) {
-	givenCard.push_back(res);
-}
-
-list<ResourceCard*>&
-BankData::getGivenCards(void) {
-	return givenCard;
-}
-
 bool
 BankData::isBankTrade(void) {
-	return (givenCard.size() == 4 && recv.size() == 1) || (given.size() == 4 && recv.size() == 1);
+	return (given.size() == 4 && recv.size() == 1);
 }
 
 bool
 BankData::isDockTrade(void) {
-	return ((givenCard.size() == 3 || givenCard.size() == 2) && recv.size() == 1) || ((given.size() == 3 || given.size() == 2) && recv.size() == 1);
-}
-
-bool
-BankData::hasLocal(void) {
-	return givenCard.size() > 0 && recv.size() > 0;
-}
-
-bool
-BankData::hasRemote(void) {
-	return given.size() > 0 && recv.size() > 0;
+	return (given.size() == 3 || given.size() == 2) && recv.size() == 1;
 }

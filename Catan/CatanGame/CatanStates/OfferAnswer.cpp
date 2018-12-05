@@ -19,12 +19,7 @@ OfferAnswer::handle(CatanEvent* event) {
 			* entonces me solamente ejecuto el intercambio y vuelvo al estado de turno,
 			* esperando nuevas acciones
 			*/
-			if (offer.hasLocal()) {
-				game.playerExchange(offer.getGivenCards(), offer.getRecv(), offer.getPlayer());
-			}
-			else {
-				game.playerExchange(offer.getGiven(), offer.getRecv(), offer.getPlayer());
-			}
+			game.playerExchange(offer.getGiven(), offer.getRecv(), offer.getPlayer());
 
 			game.changeState(new Turn(game), "Turn - El jugador acepto la oferta.");
 			game.addNewEvent(event);

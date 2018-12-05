@@ -13,6 +13,5 @@ public:
 	/* Constructores y destructores */
 	BankEvent(BankPacket* packet);
 	BankEvent(list<ResourceId> given, list<ResourceId> recv, PlayerId player);
-	BankEvent(list<ResourceCard*> given, list<ResourceId> recv, PlayerId player);
 	~BankEvent();
 };

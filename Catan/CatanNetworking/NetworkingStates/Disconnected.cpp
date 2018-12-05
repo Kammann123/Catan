@@ -38,7 +38,7 @@ Disconnected::run() {
 		/* Verifico si esta conect	x|ado */
 		if (client->isConnected()) {
 			/* Cambio de estado, ya conecte como cliente */
-			networking.changeState(CatanNetworking::States::WAIT_SYNC);
+			networking.changeState(CatanNetworking::States::WAIT_SYNC, "[Networking] - Disconnected -> Conexion establecida! Comenzando sincronzacion.");
 		}
 		else {
 
@@ -46,18 +46,19 @@ Disconnected::run() {
 			if ((boost::chrono::steady_clock::now() - start) > time) {
 				/* Cambio de estado, dejo de intentar como cliente */
 				delete networking.getSocket();
-				networking.changeState(CatanNetworking::States::LISTENING);
+				networking.changeState(CatanNetworking::States::LISTENING, "[Networking] - Disconnected -> Tiempo agotado! Activando modo servidor.");
 			}
 		}
 	}
 	else {
 		/* Cambio a estado de error */
+		networking.setError("[Networking] - Disconnected -> Hubo un error con la conexion TCP en el cliente.");
 		networking.changeState(CatanNetworking::States::NET_ERROR);
 	}
 }
 
 void
 Disconnected::update() {
-	networking.setError("WaitSync - Hubo un error en el protocolo de sincronizacion!");
+	networking.setError("[Networking] - Disconnected -> Llamada inesperada de la rutina update.");
 	networking.changeState(CatanNetworking::States::NET_ERROR);
 }

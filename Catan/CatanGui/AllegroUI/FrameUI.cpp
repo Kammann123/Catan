@@ -1,9 +1,10 @@
 #include "FrameUI.h"
 
 FrameUI::
-FrameUI(string id, size_t width, size_t height, pos_t x, pos_t y) : UIModel(id) {
+FrameUI(string id, size_t width, size_t height, pos_t angle, pos_t x, pos_t y) : UIModel(id) {
 	this->width = width;
 	this->height = height;
+	this->radian = angle;
 	this->x = x;
 	this->y = y;
 }
@@ -37,6 +38,12 @@ FrameUI::setHeight(size_t height) {
 	notifyObservers();
 }
 
+void
+FrameUI::setAngle(pos_t radian) {
+	this->radian = radian;
+	notifyObservers();
+}
+
 size_t
 FrameUI::getWidth(void) {
 	return this->width;
@@ -45,6 +52,11 @@ FrameUI::getWidth(void) {
 size_t
 FrameUI::getHeight(void) {
 	return this->height;
+}
+
+pos_t
+FrameUI::getAngle(void) {
+	return this->radian;
 }
 
 pos_t

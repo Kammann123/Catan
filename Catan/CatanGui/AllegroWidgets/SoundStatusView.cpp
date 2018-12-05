@@ -35,5 +35,3 @@ void SoundStatusView::draw(void)
 		}
 	}
 }
-
-void SoundStatusView::updateModelValues(void) {}

@@ -19,24 +19,8 @@ RobberCards::handle(CatanEvent* event) {
 		RobberCardEvent* robberCards = (RobberCardEvent*)event;
 
 		if (robberCards->getPlayer() == player) {
-			bool cardOk = false;
-
-			if (robberCards->hasLocal()) {
-				cardOk = game.validateRobberCards(robberCards->getResourceCards(), player);
-			}
-			else {
-				cardOk = game.validateRobberCards(robberCards->getResources(), player);
-			}
-
-			if (cardOk) {
-
-				/* Ejecuto la accion de descartar las cartas */
-				if (robberCards->hasLocal()) {
-					game.robberCards(robberCards->getResourceCards(), player);
-				}
-				else {
-					game.robberCards(robberCards->getResources(), player);
-				}
+			if (game.validateRobberCards(robberCards->getResources(), player)) {
+				game.robberCards(robberCards->getResources(), player);
 
 				/* Cambio de estado a la siguiente espera */
 				if (player == game.getTurn()) {

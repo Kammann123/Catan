@@ -26,6 +26,3 @@ draw(void)
 					);
 	}
 }
-
-void LabelView::
-updateModelValues(void) {}

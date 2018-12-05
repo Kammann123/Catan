@@ -1,14 +1,18 @@
 #include "UIModel.h"
 
 UIModel::
-UIModel(string id) {
+UIModel(string id, bool UIDestroys) {
 	this->id = id;
-	this->visible = true;
-	this->enable = true;
+	this->visible = false;
+	this->enable = false;
+	this->UIDestroys = UIDestroys;
 }
 
 UIModel::
 ~UIModel() {}
+
+void
+UIModel::refactor(void) {}
 
 void 
 UIModel::setVisible(bool visibleStatus) {
@@ -20,6 +24,11 @@ void
 UIModel::setEnable(bool enableStatus) {
 	this->enable = enableStatus;
 	notifyObservers();
+}
+
+void 
+UIModel::setUIDestroy(bool destroys) {
+	this->UIDestroys = destroys;
 }
 
 bool 
@@ -40,4 +49,9 @@ UIModel::setId(string id) {
 string
 UIModel::getId(void) {
 	return id;
+}
+
+bool
+UIModel::shouldUIDestroy(void) {
+	return UIDestroys;
 }

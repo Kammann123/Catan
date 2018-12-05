@@ -37,6 +37,15 @@ public:
 	~UIView();
 
 	/*
+	* refactor
+	* Metodo que permite segun su implementacion particularizada
+	* a cada View, la refactorizacion del modelo y la view en funcion
+	* de componentes o elementos segun lo fuere el caso, para garantizar
+	* correcciones durante el transcurso
+	*/
+	virtual void refactor(void);
+
+	/*
 	* update()
 	* Implementacion especifica del update para
 	* redibujar la interfaz grafica
@@ -57,9 +66,6 @@ public:
 	TextConfig& getFonts(void);
 	ImageConfig& getImages(void);
 	SoundConfig& getSamples(void);
-
-	/* Actualizacion del model */
-	virtual void updateModelValues(void) = 0;
 
 	/*
 	* Configuramos la relacion con una ventana

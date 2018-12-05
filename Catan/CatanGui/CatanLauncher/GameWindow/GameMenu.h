@@ -4,9 +4,9 @@
 
 class CatanLauncher;
 
-class MainMenu : public WindowUI {
+class GameMenu : public WindowUI {
 public:
-	MainMenu(CatanLauncher& _launcher);
+	GameMenu(CatanLauncher& _launcher);
 private:
 	CatanLauncher & launcher;
 };

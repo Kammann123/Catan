@@ -16,18 +16,11 @@ class RobberCardData : public CatanData {
 public:
 	/* Constructores */
 	RobberCardData(list<ResourceId> resources);
-	RobberCardData(list<ResourceCard*> resources);
 	RobberCardData();
 
 	/* Setters y getters */
 	void setResource(ResourceId res);
-	void setResource(ResourceCard* res);
 	list<ResourceId>& getResources(void);
-	list<ResourceCard*>& getResourceCards(void);
-
-	/* Notificaciones */
-	bool hasLocal(void);
-	bool hasRemote(void);
 
 private:
 	/*
@@ -35,5 +28,4 @@ private:
 	* local o remota, entonces aquello que se guarda es distinto
 	*/
 	list<ResourceId> resources;
-	list<ResourceCard*> cards;
 };

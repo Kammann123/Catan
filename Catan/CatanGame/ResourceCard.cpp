@@ -1,37 +1,35 @@
 #include "ResourceCard.h"
 #include "Player.h"
+#include "CatanGame.h"
 
-ResourceCard::ResourceCard(ResourceId resourceId)
-{
+ResourceCard::
+ResourceCard(ResourceId resourceId, CatanGame* game) {
 	this->resourceId = resourceId;
+	this->player = nullptr;
+	this->game = game;
 }
 
-ResourceCard::ResourceCard(PlayerId player, ResourceId resourceId)
-{
-	this->playerId = player;
-	this->resourceId = resourceId;
+void
+ResourceCard::assign(Player* player) {
+	if (player) {
+		this->player = player;
+	}
+	else {
+		this->player = nullptr;
+	}
 }
 
-ResourceId ResourceCard::getResourceId()
-{
+ResourceId
+ResourceCard::getResourceId(void) {
 	return resourceId;
 }
 
-const char* ResourceCard::getResource(void) {
+const char* 
+ResourceCard::getResource(void) {
 	return resourceStrings[(unsigned int)resourceId];
 }
 
-PlayerId ResourceCard::getPlayerId()
-{
-	return playerId;
-}
-
-void ResourceCard::setResourceId(ResourceId resourceId)
-{
-	this->resourceId = resourceId;
-}
-
-void ResourceCard::setPlayerId(PlayerId playerId)
-{
-	this->playerId = playerId;
+Player*
+ResourceCard::getPlayer(void) {
+	return player;
 }

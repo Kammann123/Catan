@@ -31,5 +31,5 @@ public:
 	TextBoxView(TextUI* model_ = nullptr);
 	~TextBoxView();
 	void draw(void);
-	void updateModelValues(void);
+	void refactor(void);
 };

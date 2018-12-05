@@ -1,39 +1,29 @@
 #include "Player.h"
 #include "Building.h"
+#include "../CatanGui/CatanLauncher/GameWindow/GameWindow.h"
 
 Building::
-Building(Coord place, PlayerId player, BuildingType type) {
-	this->place = place;
+Building(Player* player, BuildingType type) : MouseUI(BUILDING_ID, 0, 0, true) {
+	this->setUIDestroy(false);
 	this->player = player;
 	this->type = type;
+	this->neighbours.clear();
+	this->built = false;
 	this->visited = false;
 }
 
-Building::
-Building(PlayerId player, BuildingType type) {
-	this->place = BUILDING_NOT_PLACED;
-	this->player = player;
-	this->type = type;
-	this->visited = false;
+bool
+Building::isBuilt(void) {
+	return built;
 }
 
-Building::
-Building(BuildingType type) {
-	this->place = BUILDING_NOT_PLACED;
-	this->player = PlayerId::PLAYER_NONE;
-	this->type = type;
-	this->visited = false;
+Coord 
+Building::getPlace(void) {
+	return coord;
 }
 
-Coord Building::
-getPlace(void)
-{
-	return place;
-}
-
-PlayerId Building::
-getPlayer(void)
-{
+Player*
+Building::getPlayer(void) {
 	return player;
 }
 
@@ -43,15 +33,46 @@ getType(void)
 	return type;
 }
 
-void Building::
-setPlace(Coord place)
-{
-	this->place = place;
+void
+Building::build(Coord coord, double x, double y, double radian) {
+	/* Configuro los valores del building para construirlo */
+	this->built = true;
+	this->coord = coord;
+	this->setPosition(x - width / 2, y - height / 2);
+	this->setAngle(radian);
 }
 
-void Building::
-setPlayer(PlayerId player) {
-	this->player = player;
+void
+Building::demolish(void) {
+	/* Configuro la remocion de la construccion */
+	this->built = false;
+	refactor();
+}
+
+void
+Building::refactor(void) {
+	if (!built){
+
+		/* Determino que tipo de construccion es, para buscar
+		* el id correspondiente dentro del container de player
+		* y lo busco, obteniendo la informacion de la nueva posicion
+		*/
+		string index;
+		switch (this->type) {
+			case BuildingType::SETTLEMENT:
+				index = POSITION_SETTLEMENT;
+				break;
+			case BuildingType::ROAD:
+				index = POSITION_ROAD;
+				break;
+			case BuildingType::CITY:
+				index = POSITION_CITY;
+				break;
+		}
+		container_t value = (*player)[index];
+		this->setPosition(value.x + player->xPos(), value.y + player->yPos());
+		this->setAngle(value.info);
+	}
 }
 
 void

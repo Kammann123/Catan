@@ -50,7 +50,7 @@ int main(int argc, char** argv) {
 	CONSOLE("Ingrese port: ");
 	cin >> port;
 
-	CatanGame game = CatanGame(localName);
+	CatanGame game = CatanGame();
 	testUI testUi(game);
 	CatanNetworking net = CatanNetworking(game);
 	net.setIp(ip);
@@ -60,6 +60,8 @@ int main(int argc, char** argv) {
 	
 	CatanNetworking::States netStatus = CatanNetworking::States::DISCONNECTED;
 	CatanGame::State gameStatus = CatanGame::State::GAME_SYNC;
+
+	net.start();
 
 	while (game.getState() != CatanGame::State::GAME_ERROR && game.getState() != CatanGame::State::GAME_END) {
 
@@ -81,12 +83,12 @@ int main(int argc, char** argv) {
 			if (netStatus != net.getNetworkingState()) {
 				netStatus = net.getNetworkingState();
 				CONSOLE("Networking cambio de estado: " + string((char*)net.getNetworkingString()));
-				CONSOLE(net.getError());
+				CONSOLE(net.info());
 			}
 		}
 		else {
 			CONSOLE("Hubo un error durante la ejecucion de networking!");
-			CONSOLE(net.getError());
+			CONSOLE(net.info());
 			break;
 		}
 
@@ -116,7 +118,7 @@ int main(int argc, char** argv) {
 
 void gui(CatanGame& game) {
 
-	Player& player = game.getPlayer(PlayerId::PLAYER_ONE);
+	Player& player = (*game.getPlayer(PlayerId::PLAYER_ONE));
 	list<ResourceCard*> cards = player.showCards();
 
 	cout << "[UserStatus] Hola, " << player.getName() << " tenes " << player.getVictoryPoints() << " puntos" << endl;

@@ -61,6 +61,12 @@
     <Filter Include="CatanGui\CatanLauncher">
       <UniqueIdentifier>{05e8aa29-aaeb-4ee5-b3ff-743e9753649f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CatanGui\CatanLauncher\MainMenu">
+      <UniqueIdentifier>{a69bc1fe-c92f-42a3-819f-dea1a0ba0d25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CatanGui\CatanLauncher\GameWindow">
+      <UniqueIdentifier>{0cbc9a36-c6c3-4865-8650-fd454005f919}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FSM\EventGenerator.h">
@@ -483,17 +489,59 @@
     <ClInclude Include="CatanGui\AllegroWidgets\LabelView.h">
       <Filter>CatanGui\AllegroWidgets</Filter>
     </ClInclude>
-    <ClInclude Include="CatanGui\CatanLauncher\CatanContext.h">
-      <Filter>CatanGui\CatanLauncher</Filter>
+    <ClInclude Include="CatanGui\AllegroWidgets\ImageView.h">
+      <Filter>CatanGui\AllegroWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGame\LongestRoad.h">
+      <Filter>CatanGame</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGame\LongestRoad.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGame\CatanMap.h">
+      <Filter>CatanGame</Filter>
     </ClInclude>
     <ClInclude Include="CatanGui\CatanLauncher\CatanLauncher.h">
       <Filter>CatanGui\CatanLauncher</Filter>
     </ClInclude>
-    <ClInclude Include="CatanGui\CatanLauncher\MainMenu.h">
-      <Filter>CatanGui\CatanLauncher</Filter>
+    <ClInclude Include="CatanGui\CatanLauncher\GameWindow\GameWindow.h">
+      <Filter>CatanGui\CatanLauncher\GameWindow</Filter>
     </ClInclude>
-    <ClInclude Include="CatanGui\AllegroWidgets\ImageView.h">
-      <Filter>CatanGui\AllegroWidgets</Filter>
+    <ClInclude Include="CatanGui\CatanLauncher\MainMenu\MainMenu.h">
+      <Filter>CatanGui\CatanLauncher\MainMenu</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGui\AllegroUI\ContainerUI.h">
+      <Filter>CatanGui\AllegroUI</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGui\AllegroUI\AnimationController.h">
+      <Filter>CatanGui\AllegroUI</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGui\AllegroUI\AnimationUI.h">
+      <Filter>CatanGui\AllegroUI</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGame\Dice.h">
+      <Filter>CatanGame</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGui\CatanLauncher\GameWindow\DiceView.h">
+      <Filter>CatanGui\CatanLauncher\GameWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGui\CatanLauncher\GameWindow\PlayerView.h">
+      <Filter>CatanGui\CatanLauncher\GameWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGui\CatanLauncher\GameWindow\BuildingView.h">
+      <Filter>CatanGui\CatanLauncher\GameWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGui\AllegroUI\Mouse.h">
+      <Filter>CatanGui\AllegroUI</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGui\CatanLauncher\GameWindow\RobberView.h">
+      <Filter>CatanGui\CatanLauncher\GameWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGui\CatanLauncher\GameWindow\LongestRoadView.h">
+      <Filter>CatanGui\CatanLauncher\GameWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGui\CatanLauncher\GameWindow\CatanMapView.h">
+      <Filter>CatanGui\CatanLauncher\GameWindow</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -902,25 +950,67 @@
     <ClCompile Include="CatanGui\AllegroWidgets\LabelView.cpp">
       <Filter>CatanGui\AllegroWidgets</Filter>
     </ClCompile>
-    <ClCompile Include="CatanGui\CatanLauncher\CatanContext.cpp">
-      <Filter>CatanGui\CatanLauncher</Filter>
-    </ClCompile>
     <ClCompile Include="CatanGui\AllegroUI\SoundConfig.cpp">
       <Filter>CatanGui\AllegroUI</Filter>
     </ClCompile>
     <ClCompile Include="CatanGui\AllegroWidgets\TextBoxView.cpp">
       <Filter>CatanGui\AllegroWidgets</Filter>
     </ClCompile>
-    <ClCompile Include="CatanGui\CatanLauncher\CatanLauncher.cpp">
-      <Filter>CatanGui\CatanLauncher</Filter>
-    </ClCompile>
-    <ClCompile Include="CatanGui\CatanLauncher\MainMenu.cpp">
-      <Filter>CatanGui\CatanLauncher</Filter>
-    </ClCompile>
     <ClCompile Include="CatanGui\AllegroWidgets\ImageView.cpp">
       <Filter>CatanGui\AllegroWidgets</Filter>
     </ClCompile>
-    <ClCompile Include="networkingTester.cpp">
+    <ClCompile Include="CatanGame\LongestRoad.cpp">
+      <Filter>CatanGame</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGame\LongestRoad.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGame\CatanMap.cpp">
+      <Filter>CatanGame</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGui\CatanLauncher\CatanLauncher.cpp">
+      <Filter>CatanGui\CatanLauncher</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGui\CatanLauncher\GameWindow\GameWindow.cpp">
+      <Filter>CatanGui\CatanLauncher\GameWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGui\CatanLauncher\MainMenu\MainMenu.cpp">
+      <Filter>CatanGui\CatanLauncher\MainMenu</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGui\AllegroUI\ContainerUI.cpp">
+      <Filter>CatanGui\AllegroUI</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGui\AllegroUI\AnimationController.cpp">
+      <Filter>CatanGui\AllegroUI</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGui\AllegroUI\AnimationUI.cpp">
+      <Filter>CatanGui\AllegroUI</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGame\Dice.cpp">
+      <Filter>CatanGame</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGui\CatanLauncher\GameWindow\DiceView.cpp">
+      <Filter>CatanGui\CatanLauncher\GameWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGui\CatanLauncher\GameWindow\PlayerView.cpp">
+      <Filter>CatanGui\CatanLauncher\GameWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGui\CatanLauncher\GameWindow\BuildingView.cpp">
+      <Filter>CatanGui\CatanLauncher\GameWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGui\AllegroUI\Mouse.cpp">
+      <Filter>CatanGui\AllegroUI</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGui\CatanLauncher\GameWindow\RobberView.cpp">
+      <Filter>CatanGui\CatanLauncher\GameWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGui\CatanLauncher\GameWindow\LongestRoadView.cpp">
+      <Filter>CatanGui\CatanLauncher\GameWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGui\CatanLauncher\GameWindow\CatanMapView.cpp">
+      <Filter>CatanGui\CatanLauncher\GameWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="launcher.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
