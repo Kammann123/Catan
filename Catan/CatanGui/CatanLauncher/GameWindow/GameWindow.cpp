@@ -200,7 +200,7 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI("gameWindow
 	* Posicion de las Childs *
 	*************************/
 	this->child("discardWindow")->setPosition(150, 70);
-	this->child("offerWindow")->setPosition(150, 70);
+	this->child("offerWindow")->setPosition(150, 40);
 
 	/***********************************
 	* Configuro general de la interfaz *

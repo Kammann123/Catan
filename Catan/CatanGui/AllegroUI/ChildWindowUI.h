@@ -47,12 +47,7 @@ private:
 	/************************************************
 	* Constructores, destructores e inicializadores *
 	************************************************/
-	void _create_bitmap(void);
-	void _destroy_bitmap(void);
-
 	WindowUI * parent;
-
-	ALLEGRO_BITMAP* bitmap;
 	
 	bool enable;
 	pos_t x;

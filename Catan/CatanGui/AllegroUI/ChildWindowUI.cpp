@@ -1,32 +1,14 @@
 #include "ChildWindowUI.h"
 
-void 
-ChildWindowUI::_create_bitmap(void) {
-	if (bitmap == nullptr) {
-		bitmap = al_create_bitmap(width, height);
-	}
-}
-
-void
-ChildWindowUI::_destroy_bitmap(void) {
-	if (bitmap) {
-		al_destroy_bitmap(bitmap);
-	}
-}
-
 ChildWindowUI::
 ChildWindowUI(string id, size_t _width, size_t _height) : WindowUI(id, _width, _height) {
 	this->width = width;
 	this->height = height;
 	this->enable = false;
-
-	_create_bitmap();
 }
 
 ChildWindowUI::
-~ChildWindowUI(void) {
-	_destroy_bitmap();
-}
+~ChildWindowUI(void) {}
 
 void
 ChildWindowUI::setParent(WindowUI* parent) {
@@ -95,13 +77,14 @@ void
 ChildWindowUI::draw(void) {
 	
 	if (parent) {
-
+		ALLEGRO_BITMAP* bitmap;
 
 		/* Primer para dibujar, verifico que no tenga alguna ventana hija
 		* que ademas, este activa, en cuyo cayo, primero dibujo lo mio, y luego
 		* le paso el control a ella. Para este paso, se define un
 		* bitmap buffer, en el cual se dibuja para posicion la ventana correctamente.
 		*/
+		bitmap = al_create_bitmap(width, height);
 		ALLEGRO_DISPLAY* display = al_get_current_display();
 		al_set_target_bitmap(bitmap);
 
@@ -135,6 +118,7 @@ ChildWindowUI::draw(void) {
 		*/
 		al_set_target_backbuffer(display);
 		al_draw_bitmap(bitmap, x, y, 0);
+		al_destroy_bitmap(bitmap);
 	}
 }
 
