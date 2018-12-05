@@ -388,7 +388,6 @@ WindowUI::shutdown(void) {
 	_destroy_display();
 	_destroy_queue();
 	_destroy_timer();
-	_destroy_components();
 
 	started = false;
 }

@@ -223,6 +223,7 @@ MainMenu::process(void) {
 			case CatanNetworking::States::IDLE:
 				launcher.change(CatanLauncher::States::GAME_WINDOW);
 				this->shutdown();
+				return;
 				break;
 		}
 	}
