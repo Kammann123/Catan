@@ -11,9 +11,6 @@ int main(int argc, char** argv) {
 
 		CatanLauncher launcher;
 
-		launcher.getContext().getGame().getCatanMap()->generateLand();
-		launcher.getContext().getGame().getCatanMap()->generateTokens();
-		auto blas = launcher.getContext().getGame().getCatanMap()->getMap();
 
 		/*
 		* Verifico que no haya terminado y,
