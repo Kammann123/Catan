@@ -7,6 +7,8 @@
 #include "../../../CatanGame/LongestRoad.h"
 #include "../../../CatanGame/CatanMap.h"
 
+#include "../../../MVC/Observer.h"
+
 /*
 * Definicion de posiciones ordenadas dentro de los containers
 * de los jugadores y el juego o tablero

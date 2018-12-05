@@ -1,6 +1,9 @@
 #include "CatanMapView.h"
 #include <allegro5/allegro.h>
 
+#define MAP_HEX_IMG			"CatanGui\\GUIDesigns\\GameMenu\\backHex.png"
+#define MAP_HEX_ID			"we_esto_nadie_lo_leera"
+
 #define FOREST_LAND_IMG		"CatanGui\\GUIDesigns\\GameMenu\\lands\\forest.png"
 #define HILL_LAND_IMG		"CatanGui\\GUIDesigns\\GameMenu\\lands\\brick.png"
 #define MOUNTAIN_LAND_IMG	"CatanGui\\GUIDesigns\\GameMenu\\lands\\ore.png"
@@ -30,6 +33,10 @@
 
 CatanMapView::CatanMapView(CatanMap * model_) : UIView(model_){
 	images.clear();
+
+	/*Config images de mapa*/
+	images.setConfig(MAP_HEX_ID, MAP_HEX_IMG);
+
 	/*Config imagenes de tierras*/
 	images.setConfig((unsigned int)ResourceId::FOREST, FOREST_LAND_IMG);
 	images.setConfig((unsigned int)ResourceId::HILL, HILL_LAND_IMG);
@@ -71,6 +78,10 @@ void CatanMapView::draw(void) {
 	unsigned char tokenValue;
 
 	if (model->getVisible()){
+		/* Imprimimos mapa */
+		btMap = images[MAP_HEX_ID].bitmap;
+		al_draw_bitmap(btMap, catanMap->xPos(), catanMap->yPos(), 0);
+
 		/* Se ciclan las tierras */
 		for (ResourceHex* resourceHex : catanMap->lands()) {
 			it = mymap.find(resourceHex->getCoord().getCoords());

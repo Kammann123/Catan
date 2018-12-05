@@ -2,7 +2,7 @@
 
 CatanLauncher::
 CatanLauncher() : mainmenu(*this), gamewindow(*this) {
-	this->state = States::MAIN_MENU;
+	this->state = States::GAME_WINDOW;
 }
 
 void

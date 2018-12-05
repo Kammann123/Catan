@@ -5,6 +5,7 @@ CatanContext() : game(), networking(game) {
 	this->username = "";
 	this->ip = "";
 	this->port = 0;
+	game.attach(&networking);
 }
 
 void CatanContext::setUsername(string name)
