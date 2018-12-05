@@ -58,7 +58,8 @@ WindowUI::InitAllegro(void) {
 }
 
 WindowUI::
-WindowUI(size_t width, size_t height, double fps ) {
+WindowUI(string id, size_t width, size_t height, double fps ) {
+	this->id = id;
 	this->width = width;
 	this->height = height;
 	this->fps = fps;
@@ -152,6 +153,21 @@ WindowUI::_destroy_childs(void) {
 			delete child;
 		}
 	}
+}
+
+string
+WindowUI::getId(void) {
+	return id;
+}
+
+ChildWindowUI*
+WindowUI::child(string id) {
+	for (ChildWindowUI* child : childs) {
+		if (child->getId() == id) {
+			return child;
+		}
+	}
+	return nullptr;
 }
 
 void

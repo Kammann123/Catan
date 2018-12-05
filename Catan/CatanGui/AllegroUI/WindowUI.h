@@ -50,7 +50,7 @@ public:
 	* WindowUI
 	* Se construye el objeto con un tamaño para definir el display
 	*/
-	WindowUI(size_t width, size_t height, double fps = DEFAULT_FPS);
+	WindowUI(string id, size_t width, size_t height, double fps = DEFAULT_FPS);
 	~WindowUI(void);
 
 	/******************************
@@ -87,9 +87,11 @@ public:
 	*************************************/
 	list<UIComponent*> operator()(string id);
 	UIComponent* operator[](string id);
+	ChildWindowUI* child(string id);
 	size_t getHeight(void);
 	size_t getWidth(void);
 	double getFps(void);
+	string getId(void);
 	bool isOpen(void);
 
 	/*******************************************
@@ -122,6 +124,7 @@ protected:
 	size_t height;
 	double fps;
 	bool started;
+	string id;
 	bool musicPlaying;
 
 	ALLEGRO_DISPLAY * display;
