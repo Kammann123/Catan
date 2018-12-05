@@ -141,3 +141,8 @@ Mouse::isMouse(ALLEGRO_EVENT* event){
 		event->type == ALLEGRO_EVENT_MOUSE_WARPED
 	);
 }
+
+MouseController*
+Mouse::who(void) {
+	return clicked;
+}

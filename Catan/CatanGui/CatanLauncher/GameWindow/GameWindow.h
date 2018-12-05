@@ -57,18 +57,24 @@ class CatanLauncher;
 * GameWindow
 * Interfaz grafica del juego Catan.
 */
-class GameWindow : public WindowUI {
+class GameWindow : public WindowUI, public Observer {
 public:
 	/* Constructor */
 	GameWindow(CatanLauncher& _launcher);
+	void update(void);
 
 private:
 
 	/***********************
 	* Callbacks y acciones *
 	***********************/
-	void onDice(void* data);
+	void onBuildingDrop(void* data);
 	void onDicesThrown(void* data);
+	void onRobberDrop(void* data);
+	//void onDiscard(void* data);
+	//void onTrade(void* data);
+	void onDice(void* data);
+	void onExit(void* data);
 
 	/*******************
 	* Layouts de la UI *

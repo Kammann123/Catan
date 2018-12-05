@@ -5,6 +5,12 @@
 #include "../../AllegroWidgets/UIBuilder.h"
 #include "../../../CatanGame/Dice.h"
 #include "../CatanLauncher.h"
+
+#include "../../../CatanEvents/BuildingEvent.h"
+#include "../../../CatanEvents/RobberCardEvent.h"
+#include "../../../CatanEvents/RobberMoveEvent.h"
+#include "../../../CatanEvents/DicesEvent.h"
+
 #include "PlayerView.h"
 #include "RobberView.h"
 #include "DiceView.h"
@@ -30,6 +36,7 @@
 #define GAMEWINDOW_TRADE_FOCUSED "CatanGui\\GUIDesigns\\GameMenu\\trade_focused.png"
 #define GAMEWINDOW_TRADE_SELECTED	"CatanGui\\GUIDesigns\\GameMenu\\trade_selected.png"
 
+#define PLACING_RADIO		20
 #define PLAYER_TWO_OFFSET	25
 
 GameWindow::
@@ -151,6 +158,18 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI(1080, 640) 
 	MODEL(secondDice, Dice*)->setClickAction(bind(&GameWindow::onDice, this, _1));
 	MODEL(firstDice, Dice*)->setLoopEndAction(bind(&GameWindow::onDicesThrown, this, _1));
 	MODEL(secondDice, Dice*)->setLoopEndAction(bind(&GameWindow::onDicesThrown, this, _1));
+	MODEL(exitButton, MouseUI*)->setClickAction(bind(&GameWindow::onExit, this, _1));
+	MODEL(robber, Robber*)->setDropAction(bind(&GameWindow::onRobberDrop, this, _1));
+
+	/*************************************
+	* Configuro acciones de los Building *
+	*************************************/
+	for (UIComponent* component : localBuildings) {
+		MODEL(component, Building*)->setDropAction(bind(&GameWindow::onBuildingDrop, this, _1));
+	}
+	for (UIComponent* component : remoteBuildings) {
+		MODEL(component, Building*)->setDropAction(bind(&GameWindow::onBuildingDrop, this, _1));
+	}
 
 	/**************************************
 	* Configuro posiciones de la interfaz *
@@ -168,11 +187,21 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI(1080, 640) 
 	this->setCursor(GAMEWINDOW_CURSOR);
 	this->setClickCursor(GAMEWINDOW_CLICK_CURSOR);
 	this->setGrabCursor(GAMEWINDOW_GRAB_CURSOR);
+	this->setCloseAction(bind(&GameWindow::onExit, this, _1));
 
 	/**************************
 	* Activo el layout actual *
 	**************************/
 	normal_layout();
+}
+
+void
+GameWindow::update(void) {
+
+	/* Siempre, por las dudas, confirmo recibida la accion
+	* del otro jugador
+	*/
+	launcher.getGame().confirm(PlayerId::PLAYER_TWO);
 }
 
 void
@@ -185,8 +214,119 @@ GameWindow::onDice(void* data) {
 
 void
 GameWindow::onDicesThrown(void* data) {
-	(*(*this)["dice_one"])[UIController::Id::MOUSE]->setEnable(true);
-	(*(*this)["dice_two"])[UIController::Id::MOUSE]->setEnable(true);
+
+	/* Busco el valor de los dados y pregunto 
+	* si son valores validos, ante lo cual ejecuto acciones correspondientes
+	*/
+	unsigned int fDice = MODEL((*this)["dice_one"], Dice*)->getValue();
+	unsigned int sDice = MODEL((*this)["dice_two"], Dice*)->getValue();
+
+	CatanGame& game = launcher.getGame();
+	if (game.validDices(fDice, sDice)) {
+		game.syncHandle(new DicesEvent(fDice, sDice, PlayerId::PLAYER_TWO));
+	}
+
+	/* Mensaje informativo! */
+}
+
+void
+GameWindow::onExit(void* data) {
+	/* Primero pregunto al usuario si esta seguro de ello, y espero su 
+	* respuesta, ante la cual, de ser afirmativo, continuo 
+	*/
+	bool answer = true;
+	
+	/* Si acepta, entonces lo que hago es mandar un evento de cierre
+	* y el juego directamente aviso a todos los observers y se cierra,
+	* de este lado, se cambia el estado del launcher
+	*/
+	if (answer) {
+
+		/* Evento al handler del game */
+		launcher.getGame().syncHandle(new CatanEvent(CatanEvent::Events::QUIT, CatanEvent::Sources::GUI, PlayerId::PLAYER_TWO));
+
+		/* Luego finalmente, lo que hago es cambiar de estado */
+		launcher.change(CatanLauncher::States::MAIN_MENU);
+	}
+}
+
+void
+GameWindow::onBuildingDrop(void* data) {
+
+	/* Se le pide a Sr.Mouse el controller que tenia
+	* agarrado en el proceso de grabbing y de el luego,
+	* se obtiene el modelo Building
+	*/
+	MouseController* controller = mouse.who();
+	Building* building = nullptr;
+	if (controller) {
+		building = (Building*)controller->getModel();
+	}
+
+	/* Luego tomo la posicion actual del Building y 
+	* le pido al mapa del CatanGame que me de todas las coordenadas
+	* de logica a mapa en pixeles, busco si en alguna hay coincidencia
+	*/
+	position_t buildingPixel = {building->xPos(), building->yPos(), 0};
+	map<string, position_t> pixels = launcher.getGame().getCatanMap()->screen();
+
+	for (auto pixel : pixels) {
+		if (positionDistance(buildingPixel, pixel.second) < PLACING_RADIO) {
+
+			/* Se encuentra una ubicacion valida con lo cual,
+			* se pregunta si en si misma, la operacion es valida
+			* antes de enviarla para no generar errores!
+			*/
+			CatanGame& game = launcher.getGame();
+
+			if (game.buildingOk(building->getType(), pixel.first, PlayerId::PLAYER_TWO)) {
+				game.syncHandle(new BuildingEvent(pixel.first, building->getType(), PlayerId::PLAYER_TWO));
+				return;
+			}
+		}
+	}
+
+	/* Muestro un mensaje informativo! */
+
+	/* No se pudo reconocer una ubicacion valida que fuera permitida
+	* para realizar la construccion y donde el usuario tuviera las 
+	* disponibilidades necesarias, vuelve a casa!
+	*/
+	building->refactor();
+}
+
+void
+GameWindow::onRobberDrop(void* data) {
+	 
+	/* Busco el modelo del robber para determinar su ubicacion actual
+	* y buscar una compatibilidad dentro del mapa de pixeles del mapa
+	*/
+	Robber* robber = launcher.getGame().getCatanMap()->getRobber();
+	position_t robberPosition = { robber->xPos(), robber->yPos(), 0 };
+
+	map<string, position_t> pixels = launcher.getGame().getCatanMap()->screen();
+	for (auto pixel : pixels) {
+
+		if (positionDistance(robberPosition, pixel.second) < PLACING_RADIO) {
+
+			/* Le mando el evento de cambio de ubicacion al juego
+			* para lo cual primero accedo al mismo, obviamente se pregunta si
+			* es valido el movimiento antes
+			*/
+			CatanGame& game = launcher.getGame();
+
+			if (game.validRobberMovement(pixel.first)) {
+				game.syncHandle(new RobberMoveEvent(pixel.first, PlayerId::PLAYER_TWO));
+			}
+		}
+	}
+
+	/* Muestro un mensaje informativo! */
+
+	/* Fue un movimiento equivoco o invalido, volve a casa
+	* papa, que aca no tenes nada que hacer
+	*/
+	robber->refactor();
 }
 
 void

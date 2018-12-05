@@ -153,7 +153,7 @@ public:
 	*/
 	void shutdown(void);
 
-private:
+protected:
 
 	/* Rutinas de inicializacion de la ventana */
 	void _init_display(void);

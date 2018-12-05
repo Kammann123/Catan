@@ -342,6 +342,11 @@ public:
 	bool hasSettlementResources(PlayerId playerID);
 	bool hasCityResources(PlayerId playerID);
 	bool hasRoadResources(PlayerId playerID);
+
+	/*
+	* Encapsulacion de validaciones
+	*/
+	bool buildingOk(BuildingType type, Coord coords, PlayerId player);
 	
 	/*
 	* buildRoad, buildCity, buildSettlement

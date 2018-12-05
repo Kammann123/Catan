@@ -8,6 +8,7 @@ CatanLauncher() : game(), networking(game), mainmenu(*this), gamewindow(*this) {
 
 	/* Configuraciones de los elementos */
 	game.attach(&networking);
+	game.attach(&gamewindow);
 
 	/* Cambio de estado inicial */
 	change(States::GAME_WINDOW);

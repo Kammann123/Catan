@@ -1035,6 +1035,55 @@ CatanGame::hasRoadResources(PlayerId playerID) {
 	}
 }
 
+bool
+CatanGame::buildingOk(BuildingType type, Coord coords, PlayerId player) {
+
+	/* Valido para cada tipo de construccion si es valido
+	* en cuanto a disponibilidad de recursos y luego verifico
+	* que sea valida la construccion en cuanto a ubicacion,
+	* teniendo en cuenta caso particular de primeros buildings
+	*/
+	switch (type) {
+		case BuildingType::SETTLEMENT:
+			if (hasSettlementResources(player)) {
+				if (getState() == State::FIRST_BUILDS) {
+					if (validFirstSettlement(coords, player)) {
+						return true;
+					}
+				}
+				else {
+					if (isValidSettlement(coords, player)) {
+						return true;
+					}
+				}
+			}
+			else {
+				if (getState() == State::FIRST_BUILDS) {
+					if (validFirstSettlement(coords, player)) {
+						return true;
+					}
+				}
+			}
+			break;
+		case BuildingType::ROAD:
+			if (hasRoadResources(player)) {
+				if (isValidRoad(coords, player)) {
+					return true;
+				}
+			}
+			break;
+		case BuildingType::CITY:
+			if (hasCityResources(player)) {
+				if (isValidCity(coords, player)) {
+					return true;
+				}
+			}
+			break;
+	}
+
+	return false;
+}
+
 void
 CatanGame::buildRoad(Building* building, Coord coords, PlayerId playerID)
 {
@@ -1224,6 +1273,8 @@ CatanGame::isValidDockExchange(list<ResourceId>& offeredCards, PlayerId playerId
 			}
 		}
 	}
+
+	setInfo("[CatanGame] Ningun muelle acepta esa cantidad de cartas!");
 	return false;
 }
 
@@ -1236,19 +1287,29 @@ CatanGame::isValidPlayerExchange(list<ResourceId>& offeredCards, list<ResourceId
 	* no se pase del maximo valor de transacciones posibles
 	*/
 	if (offeredCards.size() > 9 || requestedCards.size() > 9) {
+		setInfo("[CatanGame] Maximo de cartas para intercambios superado!");
 		return false;
 	}
 
-	return	(
-		canPlayerAccept(offeredCards, srcPlayerID) &&
-		canPlayerAccept(requestedCards, (OPONENT_ID(srcPlayerID)))
-	);
+	if (canPlayerAccept(offeredCards, srcPlayerID) && canPlayerAccept(requestedCards, (OPONENT_ID(srcPlayerID)))) {
+		return true;
+	}
+	else {
+		setInfo("[CatanGame] No es posible realizar ese intercambio.");
+		return false;
+	}
 }
 
 bool
 CatanGame::isValidBankExchange(list<ResourceId>& offeredCards, PlayerId playerID) {
 
-	return accepts(offeredCards, BANK_TRANSACTION_CARDS_COUNT) && canPlayerAccept(offeredCards, playerID);
+	if (accepts(offeredCards, BANK_TRANSACTION_CARDS_COUNT) && canPlayerAccept(offeredCards, playerID)) {
+		return true;
+	}
+	else {
+		setInfo("[CatanGame] Transaccion con el Banco invalida! Revise cantidad y tipo de cartas.");
+		return false;
+	}
 }
 
 bool
@@ -1281,6 +1342,7 @@ CatanGame::Exchange(list<ResourceId>& offered, ResourceId wanted, PlayerId playe
 	* Creo la carta pedida y se la entrego al jugador en cuestion
 	*/
 	getPlayer(playerID)->addCard(takeCards(wanted, 1));
+	setInfo("[CatanGame] Intercambio de cartas realizado exitosamente!");
 }
 
 void
@@ -1298,11 +1360,13 @@ CatanGame::playerExchange(list<ResourceId>& offered, list<ResourceId>& wanted, P
 	* al que las recibe
 	*/
 	getPlayer(srcPlayerID)->addCard(getPlayer(oponent)->giveCards(wanted));
+	setInfo("[CatanGame] Intercambio de cartas realizado exitosamente!");
 }
 
 void
 CatanGame::pass() {
 	this->turn = OPONENT_ID(this->turn);
+	setInfo("[CatanGame] Ha pasado de turno.");
 }
 
 bool
@@ -1319,8 +1383,10 @@ void
 CatanGame::updateWinner(void) {
 	if (localPlayer->getVictoryPoints() == WINNER_POINTS) {
 		winner = PlayerId::PLAYER_ONE;
+		setInfo("[CatanGame] ENHORABUENA, has ganado la partida!");
 	}
 	else if (remotePlayer->getVictoryPoints() == WINNER_POINTS) {
 		winner = PlayerId::PLAYER_TWO;
+		setInfo("[CatanGame] UUUF CASI! La proxima sera campeon, perdiste...");
 	}
 }
