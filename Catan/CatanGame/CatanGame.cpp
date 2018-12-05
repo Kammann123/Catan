@@ -208,7 +208,7 @@ CatanGame::syncHandle(CatanEvent* event) {
 			* en cuyo caso... adios!
 			*/
 			if (event->getEvent() == CatanEvent::Events::QUIT) {
-				changeState(new GameEnd(*this), "CatanGame - El juego ha finalizado por cierre de alguna de las partes.");
+				changeState(new GameEnd(*this), "[CatanGame] El juego ha finalizado por cierre de alguna de las partes.");
 			}
 			else {
 				this->state->handle(event);
@@ -223,7 +223,7 @@ CatanGame::syncHandle(CatanEvent* event) {
 		}
 	}
 	else {
-		this->changeState(new GameError(*this), "CatanGame - Se intento realizar una accion de juego sin la confirmacion de la accion previa!");
+		this->changeState(new GameError(*this), "[CatanGame] Se intento realizar una accion de juego sin la confirmacion de la accion previa!");
 		delete event;
 	}
 }
@@ -270,7 +270,7 @@ CatanGame::handle(CatanEvent* event) {
 		* en cuyo caso... adios!
 		*/
 		if (event->getEvent() == CatanEvent::Events::QUIT) {
-			changeState(new GameEnd(*this), "CatanGame - El juego ha finalizado por cierre de alguna de las partes.");
+			changeState(new GameEnd(*this), "[CatanGame] El juego ha finalizado por cierre de alguna de las partes.");
 		}
 		else {
 			this->state->handle(event);
@@ -641,6 +641,7 @@ CatanGame::assignResources(PlayerId player, ResourceId resource, unsigned int qt
 	*/
 	Player* playerObject = getPlayer(player);
 	playerObject->addCard(takeCards(resource, qty));
+	setInfo("[CatanGame] Se han asignado los recursos de la jugada actual!");
 }
 
 void
@@ -678,6 +679,9 @@ CatanGame::updateLongestRoad(void) {
 		else if (longestRoad->who() == PlayerId::PLAYER_TWO && (playerLongestRoad[PlayerId::PLAYER_ONE] > playerLongestRoad[PlayerId::PLAYER_TWO])) {
 			longestRoad->assign(getPlayer(PlayerId::PLAYER_ONE));
 		}
+		else {
+			return;
+		}
 	}
 	else if (playerLongestRoad[PlayerId::PLAYER_ONE] >= MIN_LONGEST_ROAD) {
 		longestRoad->assign(getPlayer(PlayerId::PLAYER_ONE));
@@ -685,6 +689,11 @@ CatanGame::updateLongestRoad(void) {
 	else if (playerLongestRoad[PlayerId::PLAYER_TWO] >= MIN_LONGEST_ROAD) {
 		longestRoad->assign(getPlayer(PlayerId::PLAYER_TWO));
 	}
+	else {
+		return;
+	}
+
+	setInfo("[CatanGame] La carga de Longest Road ha sido asignada a un nuevo jugador!");
 }
 
 bool
@@ -761,7 +770,13 @@ CatanGame::validateRobberCards(list<ResourceId>& cards, PlayerId playerID) {
 	/*
 	* Valido la cantidad de cartas entregadas
 	*/
-	return cards.size() == shouldGive;
+	if (cards.size() == shouldGive) {
+		return true;
+	}
+	else {
+		setInfo("[CatanGame] Las cartas elegidas a descartar son invalidas, no cumplen con la cantidad debida.");
+		return false;
+	}
 }
 
 void
@@ -782,6 +797,8 @@ CatanGame::validRobberMovement(Coord coord) {
 			return true;
 		}
 	}
+
+	setInfo("[CatanGame] El Robber no puede mantenerse en la misma posicion! Y debe ir siempre en tierra.");
 	return false;
 }
 
@@ -827,6 +844,7 @@ CatanGame::isValidRoad(Coord coords, PlayerId playerID) {
 
 		for (Building* building : catanMap->buildings()) {
 			if (building->getPlace() == coords) {
+				setInfo("[CatanGame] Ubicacion ocupada por otra construccion!");
 				return nullptr;
 			}
 		}
@@ -852,6 +870,7 @@ CatanGame::isValidRoad(Coord coords, PlayerId playerID) {
 						for (Building* otherBuilding : catanMap->buildings()) {
 							if (otherBuilding->getPlayer()->getPlayerId() == OPONENT_ID(playerID)) {
 								if (otherBuilding->getPlace() == checkCoord) {
+									setInfo("[CatanGame] Esa construccion no cumple la regla de la distancia!");
 									return nullptr;
 								}
 							}
@@ -869,6 +888,7 @@ CatanGame::isValidRoad(Coord coords, PlayerId playerID) {
 		}
 	}
 
+	setInfo("[CatanGame] Para construir un Road es necesario continuar a otra construccion.");
 	return nullptr;
 }
 
@@ -892,12 +912,15 @@ CatanGame::isValidCity(Coord coords, PlayerId playerID) {
 						return building;
 					}
 					else {
+						setInfo("[CatanGame] Una City solo puede ubicarse donde haya un Settlement.");
 						return nullptr;
 					}
 				}
 			}
 		}
 	}
+
+	setInfo("[CatanGame] Una City solo puede ubicarse donde haya un Settlement.");
 	return nullptr;
 }
 
@@ -912,6 +935,7 @@ CatanGame::isValidSettlement(Coord coords, PlayerId playerID) {
 	if (coords.isDot()) {
 		for (Building* building : catanMap->buildings()) {
 			if (building->getPlace() == coords) {
+				setInfo("[CatanGame] Ubicacion ocupada por otra construccion!");
 				return nullptr;
 			}
 		}
@@ -947,6 +971,7 @@ CatanGame::isValidSettlement(Coord coords, PlayerId playerID) {
 		}
 	}
 
+	setInfo("[CatanGame] Un Settlemente debe colocarse continuando alguna construccion realizada.");
 	return nullptr;
 }
 
@@ -960,11 +985,14 @@ CatanGame::validFirstSettlement(Coord coords, PlayerId playerId) {
 	if (coords.isDot()) {
 		for (Building* building : catanMap->buildings()) {
 			if (building->getPlace() == coords) {
+				setInfo("[CatanGame] Ubicacion ocupada por otra construccion!");
 				return false;
 			}
 		}
 		return true;
 	}
+
+	setInfo("[CatanGame] Solo puede construirse en esquinas!");
 	return false;
 }
 
@@ -972,32 +1000,39 @@ bool
 CatanGame::hasCityResources(PlayerId playerID) {
 	Player* player = getPlayer(playerID);
 
-	return (
-		player->getResourceCount(ResourceId::MOUNTAIN) >= CITY_ORE_NEEDED &&
-		player->getResourceCount(ResourceId::FIELD) >= CITY_GRAIN_NEEDED
-		);
+	if (player->getResourceCount(ResourceId::MOUNTAIN) >= CITY_ORE_NEEDED && player->getResourceCount(ResourceId::FIELD) >= CITY_GRAIN_NEEDED) {
+		return true;
+	}
+	else {
+		setInfo("[CatanGame] No tenes suficientes recursos para hacer eso!");
+		return false;
+	}
 }
 
 bool 
 CatanGame::hasSettlementResources(PlayerId playerID) {
 	Player* player = getPlayer(playerID);
 
-	return(
-		player->getResourceCount(ResourceId::HILL) >= SETTLEMENT_BRICK_NEEDED &&
-		player->getResourceCount(ResourceId::FIELD) >= SETTLEMENT_GRAIN_NEEDED &&
-		player->getResourceCount(ResourceId::FOREST) >= SETTLEMENT_LUMBER_NEEDED &&
-		player->getResourceCount(ResourceId::PASTURES) >= SETTLEMENT_WOOL_NEEDED
-		);
+	if (player->getResourceCount(ResourceId::HILL) >= SETTLEMENT_BRICK_NEEDED && player->getResourceCount(ResourceId::FIELD) >= SETTLEMENT_GRAIN_NEEDED && player->getResourceCount(ResourceId::FOREST) >= SETTLEMENT_LUMBER_NEEDED && player->getResourceCount(ResourceId::PASTURES) >= SETTLEMENT_WOOL_NEEDED) {
+		return true;
+	}
+	else {
+		setInfo("[CatanGame] No tenes suficientes recursos para hacer eso!");
+		return false;
+	}
 }
 
 bool
 CatanGame::hasRoadResources(PlayerId playerID) {
 	Player* player = getPlayer(playerID);
 
-	return (
-		player->getResourceCount(ResourceId::HILL) >= ROAD_BRICK_NEEDED &&
-		player->getResourceCount(ResourceId::FOREST) >= ROAD_LUMBER_NEEDED
-		);
+	if ( player->getResourceCount(ResourceId::HILL) >= ROAD_BRICK_NEEDED && player->getResourceCount(ResourceId::FOREST) >= ROAD_LUMBER_NEEDED ) {
+		return true;
+	}
+	else {
+		setInfo("[CatanGame] No tenes suficientes recursos para hacer eso!");
+		return false;
+	}
 }
 
 void

@@ -54,11 +54,11 @@ public:
 private:
 	States state;
 
+	CatanGame game;
+	CatanNetworking networking;
+
 	GameWindow gamewindow;
 	MainMenu mainmenu;
-
-	CatanNetworking networking;
-	CatanGame game;
 
 	unsigned int port;
 	string username;

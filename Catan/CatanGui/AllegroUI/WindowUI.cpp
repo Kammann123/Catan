@@ -216,7 +216,9 @@ WindowUI::stop(void) {
 	}
 
 	/* Paro el timer y el dibujo */
-	al_stop_timer(timer);
+	if (timer) {
+		al_stop_timer(timer);
+	}
 	started = false;
 }
 

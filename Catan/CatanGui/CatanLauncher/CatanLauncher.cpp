@@ -2,11 +2,15 @@
 
 CatanLauncher::
 CatanLauncher() : game(), networking(game), mainmenu(*this), gamewindow(*this) {
-	this->state = States::MAIN_MENU;
 	this->username = "";
 	this->ip = "";
 	this->port = 0;
+
+	/* Configuraciones de los elementos */
 	game.attach(&networking);
+
+	/* Cambio de estado inicial */
+	change(States::MAIN_MENU);
 }
 
 void 
