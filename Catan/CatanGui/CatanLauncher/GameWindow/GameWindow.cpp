@@ -6,11 +6,13 @@
 #include "../../../CatanGame/Dice.h"
 #include "../CatanLauncher.h"
 
+#include "../../AllegroUI/CounterUI.h"
 #include "../../../CatanEvents/BuildingEvent.h"
 #include "../../../CatanEvents/RobberCardEvent.h"
 #include "../../../CatanEvents/RobberMoveEvent.h"
 #include "../../../CatanEvents/DicesEvent.h"
 
+#include "OfferWindow.h"
 #include "DiscardWindow.h"
 
 #include "PlayerView.h"
@@ -57,6 +59,7 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI("gameWindow
 	UIComponent* map = GameBuilder::createMap(launcher.getGame().getCatanMap());
 
 	ChildWindowUI* discardWindow = new DiscardWindow("discardWindow");
+	ChildWindowUI* offerWindow = new OfferWindow("offerWindow");
 
 
 	/***********************************
@@ -133,6 +136,7 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI("gameWindow
 	* Agrego ventanas hijas *
 	************************/
 	this->attachChild(discardWindow);
+	this->attachChild(offerWindow);
 
 	/***********************************
 	* Agrego componente a la interfaz  *
@@ -196,6 +200,7 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI("gameWindow
 	* Posicion de las Childs *
 	*************************/
 	this->child("discardWindow")->setPosition(150, 70);
+	this->child("offerWindow")->setPosition(150, 70);
 
 	/***********************************
 	* Configuro general de la interfaz *
@@ -353,7 +358,7 @@ GameWindow::onDiscard(void* data) {
 
 void
 GameWindow::onTrade(void* data) {
-
+	this->child("offerWindow")->setEnable(true);
 }
 
 void

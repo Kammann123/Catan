@@ -7,12 +7,17 @@
 #include "../AllegroWidgets/LabelView.h"
 #include "../AllegroWidgets/SoundStatusView.h"
 #include "../AllegroWidgets/ImageView.h"
+#include "../AllegroWidgets/CounterView.h"
 
 #include "../AllegroUI/MouseUI.h"
 #include "../AllegroUI/TextUI.h"
+#include "../AllegroUI/CounterUI.h"
 
 #include "../AllegroUI/MouseController.h"
 #include "../AllegroUI/TextController.h"
+
+#define PLUS_IMG	"CatanGui\\Buttons\\plusButton.png"
+#define MINUS_IMG	"CatanGui\\Buttons\\minusButton.png"
 
 UIComponent* UIBuilder::
 createSimpleButton(string id, const char* text, size_t height) {
@@ -156,4 +161,48 @@ createImage(string id)
 
 	UIComponent* component = new UIComponent(imageModel, { imageView }, {});
 	return component;
+}
+
+UIComponent* 
+UIBuilder::createCounter(string id, unsigned int max) {
+
+	/* Creo los modelos que necesito! */
+	UIModel* counterModel = new CounterUI(id, max);
+
+	/* Creo el view que necesito */
+	UIView* counterView = new CounterView((CounterUI*)counterModel);
+	counterModel->attach(counterView);
+
+	/* Creo los otros componentes que necesito */
+	UIComponent* plus = UIBuilder::createButton(id + string("_plus"));
+	UIComponent* minus = UIBuilder::createButton(id + string("_minus"));
+
+	plus->getModel()->setEnable(true);
+
+	/* Configuro los componentes con sus imagenes */
+	(*plus)[0]->getImages().setConfig((unsigned int)MouseUI::Status::IDLE, PLUS_IMG);
+	(*plus)[0]->getImages().setConfig((unsigned int)MouseUI::Status::FOCUSED, PLUS_IMG);
+	(*plus)[0]->getImages().setConfig((unsigned int)MouseUI::Status::SELECTED, PLUS_IMG);
+	(*plus)[0]->getImages().setConfig((unsigned int)MouseUI::Status::DRAGGED, PLUS_IMG);
+
+	(*minus)[0]->getImages().setConfig((unsigned int)MouseUI::Status::IDLE, MINUS_IMG);
+	(*minus)[0]->getImages().setConfig((unsigned int)MouseUI::Status::FOCUSED, MINUS_IMG);
+	(*minus)[0]->getImages().setConfig((unsigned int)MouseUI::Status::SELECTED, MINUS_IMG);
+	(*minus)[0]->getImages().setConfig((unsigned int)MouseUI::Status::DRAGGED, MINUS_IMG);
+
+	/* Configuro los componentes con sus callbacks */
+	((MouseUI*)plus->getModel())->setClickAction(bind(&CounterUI::plusValue, (CounterUI*)counterModel, _1));
+	((MouseUI*)minus->getModel())->setClickAction(bind(&CounterUI::minusValue, (CounterUI*)counterModel, _1));
+
+	/* Creo el model container */
+	((UIModelContainer*)counterModel)->attachModel((FrameUI*)plus->getModel(), -30, 0);
+	((UIModelContainer*)counterModel)->attachModel((FrameUI*)minus->getModel(), 30, 0);
+
+	/* Creo el componente final */
+	UIComponent* counterComponent = new UIComponent(counterModel, {counterView, (*plus)[0] , (*minus)[0] }, { (*plus)[UIController::Id::MOUSE], (*minus)[UIController::Id::MOUSE] });
+
+	/* Configuro destroy y despues devuelvo! */
+	plus->getModel()->setUIDestroy(false);
+	minus->getModel()->setUIDestroy(false);
+	return counterComponent;
 }

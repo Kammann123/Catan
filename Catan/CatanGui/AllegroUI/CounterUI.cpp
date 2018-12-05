@@ -6,21 +6,25 @@ CounterUI(string id, unsigned int max) : UIModelContainer(id) {
 	this->max = max;
 }
 
-unsigned int getValue(void) {
+unsigned int 
+CounterUI::getValue(void) {
 	return counter;
 }
 
-void reset(void* data) {
+void
+CounterUI::reset(void* data) {
 	counter = 0;
 }
 
-void plusValue(void* data) {
+void
+CounterUI::plusValue(void* data) {
 	if (counter < max) {
 		counter++;
 	}
 }
 
-void minusValue(void* data) {
+void
+CounterUI::minusValue(void* data) {
 	if (counter) {
 		counter--;
 	}

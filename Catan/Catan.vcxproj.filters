@@ -552,6 +552,15 @@
     <ClInclude Include="CatanGui\AllegroUI\UIModelContainer.h">
       <Filter>CatanGui\AllegroUI</Filter>
     </ClInclude>
+    <ClInclude Include="CatanGui\AllegroUI\CounterUI.h">
+      <Filter>CatanGui\AllegroWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGui\AllegroWidgets\CounterView.h">
+      <Filter>CatanGui\AllegroWidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGui\CatanLauncher\GameWindow\OfferWindow.h">
+      <Filter>CatanGui\CatanLauncher\GameWindow</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FSM\EventQueue.cpp">
@@ -1030,6 +1039,15 @@
     </ClCompile>
     <ClCompile Include="CatanGui\AllegroUI\UIModelContainer.cpp">
       <Filter>CatanGui\AllegroUI</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGui\AllegroUI\CounterUI.cpp">
+      <Filter>CatanGui\AllegroWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGui\AllegroWidgets\CounterView.cpp">
+      <Filter>CatanGui\AllegroWidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGui\CatanLauncher\GameWindow\OfferWindow.cpp">
+      <Filter>CatanGui\CatanLauncher\GameWindow</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
