@@ -160,6 +160,8 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI(1080, 640) 
 	MODEL(secondDice, Dice*)->setLoopEndAction(bind(&GameWindow::onDicesThrown, this, _1));
 	MODEL(exitButton, MouseUI*)->setClickAction(bind(&GameWindow::onExit, this, _1));
 	MODEL(robber, Robber*)->setDropAction(bind(&GameWindow::onRobberDrop, this, _1));
+	MODEL(tradeButton, MouseUI*)->setClickAction(bind(&GameWindow::onTrade, this, _1));
+	MODEL(discardButton, MouseUI*)->setClickAction(bind(&GameWindow::onDiscard, this, _1));
 
 	/*************************************
 	* Configuro acciones de los Building *
@@ -327,6 +329,16 @@ GameWindow::onRobberDrop(void* data) {
 	* papa, que aca no tenes nada que hacer
 	*/
 	robber->refactor();
+}
+
+void
+GameWindow::onDiscard(void* data) {
+
+}
+
+void
+GameWindow::onTrade(void* data) {
+
 }
 
 void

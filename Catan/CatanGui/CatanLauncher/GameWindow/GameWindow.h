@@ -71,8 +71,8 @@ private:
 	void onBuildingDrop(void* data);
 	void onDicesThrown(void* data);
 	void onRobberDrop(void* data);
-	//void onDiscard(void* data);
-	//void onTrade(void* data);
+	void onDiscard(void* data);
+	void onTrade(void* data);
 	void onDice(void* data);
 	void onExit(void* data);
 

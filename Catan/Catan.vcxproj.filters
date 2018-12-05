@@ -543,6 +543,9 @@
     <ClInclude Include="CatanGui\CatanLauncher\GameWindow\CatanMapView.h">
       <Filter>CatanGui\CatanLauncher\GameWindow</Filter>
     </ClInclude>
+    <ClInclude Include="CatanGui\AllegroUI\ChildWindowUI.h">
+      <Filter>CatanGui\AllegroUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FSM\EventQueue.cpp">
@@ -1012,6 +1015,9 @@
     </ClCompile>
     <ClCompile Include="launcher.cpp">
       <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGui\AllegroUI\ChildWindowUI.cpp">
+      <Filter>CatanGui\AllegroUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

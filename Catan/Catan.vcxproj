@@ -173,6 +173,7 @@
     <ClInclude Include="CatanGame\SeaHex.h" />
     <ClInclude Include="CatanGui\AllegroUI\AnimationController.h" />
     <ClInclude Include="CatanGui\AllegroUI\AnimationUI.h" />
+    <ClInclude Include="CatanGui\AllegroUI\ChildWindowUI.h" />
     <ClInclude Include="CatanGui\AllegroUI\ColorConfig.h" />
     <ClInclude Include="CatanGui\AllegroUI\Config.h" />
     <ClInclude Include="CatanGui\AllegroUI\ContainerUI.h" />
@@ -333,6 +334,7 @@
     <ClCompile Include="CatanGame\SeaHex.cpp" />
     <ClCompile Include="CatanGui\AllegroUI\AnimationController.cpp" />
     <ClCompile Include="CatanGui\AllegroUI\AnimationUI.cpp" />
+    <ClCompile Include="CatanGui\AllegroUI\ChildWindowUI.cpp" />
     <ClCompile Include="CatanGui\AllegroUI\ColorConfig.cpp" />
     <ClCompile Include="CatanGui\AllegroUI\Config.cpp" />
     <ClCompile Include="CatanGui\AllegroUI\ContainerUI.cpp" />

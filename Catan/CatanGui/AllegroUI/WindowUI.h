@@ -29,6 +29,8 @@ using namespace std::placeholders;
 
 using Action = function<void(void*)>;
 
+class ChildWindowUI;
+
 /*
 * WindowUI
 * Modelizacion de una ventana como interfaz grafica
@@ -51,107 +53,55 @@ public:
 	WindowUI(size_t width, size_t height, double fps = DEFAULT_FPS);
 	~WindowUI(void);
 
-	/*
-	* process
-	* Permite correr procesos alternamente con
-	* la revision de los eventos de la interfaz grafica,
-	* para ello debe sobreescribirse virtualmente
-	*/
+	/******************************
+	* Interfaz principal de la UI *
+	******************************/
 	virtual void process(void);
+	virtual void draw(void);
+	virtual void run(void);
 
-	/*
-	* draw
-	* Actualiza los elementos a dibujar en la pantalla
-	*/
-	void draw(void);
-
-	/*
-	* start y stop
-	* Ejecuta las acciones necesarias previas al funcionamiento
-	* de la gui para garantizar que funcione correctamente, luego
-	* permite parar el funcionamiento de la ui
-	*/
+	/*********************************
+	* Interfaz de ejecucion de la UI *
+	*********************************/
+	void close(void* data);
+	void shutdown(void);
 	void start(void);
 	void stop(void);
 
-	/*
-	* run
-	* Ejecuta la actualizacion de las colas de eventos
-	* y revisa nuevas apariciones, parseandolo por los controllers
-	* de los componentes de la interfaz grafica
-	*/
-	void run(void);
+	/***********************
+	* Interfaz para Childs *
+	***********************/
+	void attachChild(ChildWindowUI* child);
+	void detachChild(ChildWindowUI* child);
 
-	/*
-	* attachComponent
-	* Agrega un componente de interfaz grafica a la ventana
-	*/
+	/************************************************
+	* Interfaz para edicion de componentes de la UI *
+	************************************************/
 	void attachComponent(UIComponent* component);
-
-	/*
-	* detachComponent
-	* Quita un componente de la interfaz grafica
-	*/
 	void detachComponent(UIComponent* component);
-
-	/*
-	* enableComponent
-	* Habilita un componente determinado
-	*/
 	void enableComponent(string id, bool value);
-
-	/* 
-	* visibleComponent
-	* Habilita la visibilidad del componente
-	*/
 	void visibleComponent(string id, bool value);
 
-	/*
-	* isOpen
-	* Devuelve si esta abierta la ventana o no
-	*/
-	bool isOpen(void);
-
-	/*
-	* operator[] - Para acceder mas facilmente
-	* a los diferentes componentes segun su id.
-	*/
-	UIComponent* operator[](string id);
+	/*************************************
+	* Interfaz de acceso a configuracion *
+	*************************************/
 	list<UIComponent*> operator()(string id);
-
+	UIComponent* operator[](string id);
 	size_t getHeight(void);
 	size_t getWidth(void);
 	double getFps(void);
-	
-	/*
-	* setBackground
-	* Configura los parametros del fondo de ventana
-	*/
-	void setBackground(unsigned char red, unsigned char green, unsigned char blue);
-	void setBackground(const char* image);
+	bool isOpen(void);
 
-	/*
-	* setCursor
-	* Permite configurar el cursor de la ventana
-	*/
-	void setCursor(const char* image);
+	/*******************************************
+	* Interfaz de configuracion de la WindowUI *
+	*******************************************/
+	void setBackground(unsigned char red, unsigned char green, unsigned char blue);
 	void setClickCursor(const char* image);
 	void setGrabCursor(const char* image);
-	
-	/*
-	* setMusic
-	* Configura los parametros del fondo de ventana
-	*/
-	void setMusic(const char* image);
-
-	/* Configuracion del callback de cierre de ventana */
+	void setBackground(const char* image);
+	void setCursor(const char* image);
 	void setCloseAction(Action close);
-	void close(void* data);
-
-	/*
-	* shutdown - Cierra todo
-	*/
-	void shutdown(void);
+	void setMusic(const char* image);
 
 protected:
 
@@ -166,6 +116,7 @@ protected:
 	void _destroy_queue(void);
 	void _destroy_timer(void);
 	void _destroy_components(void);
+	void _destroy_childs(void);
 
 	size_t width;
 	size_t height;
@@ -188,4 +139,5 @@ protected:
 	Mouse mouse;
 
 	list<UIComponent*> components;
+	list<ChildWindowUI*> childs;
 };

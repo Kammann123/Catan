@@ -1,5 +1,7 @@
 #include "WindowUI.h"
 
+#include "ChildWindowUI.h"
+
 /* Configuraciones e inicializacion estaticas de la clase WindowUI
 *  configurar correctamente la inicializacion de allegro
 */
@@ -79,6 +81,7 @@ WindowUI::
 	_destroy_queue();
 	_destroy_timer();
 	_destroy_components();
+	_destroy_childs();
 }
 
 void
@@ -143,6 +146,15 @@ WindowUI::_destroy_components(void) {
 }
 
 void
+WindowUI::_destroy_childs(void) {
+	for (ChildWindowUI* child : childs) {
+		if (child) {
+			delete child;
+		}
+	}
+}
+
+void
 WindowUI::process(void) {}
 
 void
@@ -164,6 +176,15 @@ WindowUI::draw(void) {
 		/* Redibujo los componentes */
 		for (UIComponent* component : components) {
 			component->draw();
+		}
+
+		/* Redibujo los childs */
+		for (ChildWindowUI* child : childs) {
+			if (child) {
+				if (child->isEnabled()) {
+					child->draw();
+				}
+			}
 		}
 
 		/* Actualizo pantalla */
@@ -239,6 +260,17 @@ WindowUI::run(void) {
 			this->close(&event);
 		}
 		else {
+
+			/* Primero verifico si tengo alguna ventana hija, y dentro de esas
+			* me fijo cual esta activada, en dicho caso, se le pasa el evento a ella
+			*/
+			for (ChildWindowUI* child : childs) {
+				if (child->isEnabled()) {
+					child->run(&event);
+					return;
+				}
+			}
+
 			if (mouse.isMouse(&event)) {
 				mouse.parse(&event);
 
@@ -272,6 +304,17 @@ WindowUI::run(void) {
 	* procesos configurables
 	*/
 	process();
+}
+
+void
+WindowUI::attachChild(ChildWindowUI* child) {
+	child->setParent(this);
+	childs.push_back(child);
+}
+
+void
+WindowUI::detachChild(ChildWindowUI* child) {
+	childs.remove(child);
 }
 
 void
