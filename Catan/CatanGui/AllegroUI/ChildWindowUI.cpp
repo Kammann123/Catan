@@ -2,7 +2,7 @@
 
 void 
 ChildWindowUI::_create_bitmap(void) {
-	if (bitmap != nullptr) {
+	if (bitmap == nullptr) {
 		bitmap = al_create_bitmap(width, height);
 	}
 }
@@ -15,7 +15,7 @@ ChildWindowUI::_destroy_bitmap(void) {
 }
 
 ChildWindowUI::
-ChildWindowUI(size_t _width, size_t _height) : WindowUI(_width, _height) {
+ChildWindowUI(string id, size_t _width, size_t _height) : WindowUI(id, _width, _height) {
 	this->width = width;
 	this->height = height;
 	this->enable = false;
@@ -53,7 +53,14 @@ ChildWindowUI::run(ALLEGRO_EVENT* event) {
 	*/
 	for (UIComponent* component : components) {
 		if (component) {
-			component->parse(event);
+			ALLEGRO_EVENT eventCopy = *event;
+
+			if (mouse.isMouse(event)) {
+				eventCopy.mouse.x -= x;
+				eventCopy.mouse.y -= y;
+			}
+
+			component->parse(&eventCopy);
 		}
 	}
 
@@ -66,6 +73,7 @@ ChildWindowUI::run(ALLEGRO_EVENT* event) {
 void
 ChildWindowUI::setEnable(bool status) {
 	this->enable = status;
+	refresh();
 }
 
 void 
@@ -77,46 +85,57 @@ ChildWindowUI::isEnabled(void) {
 }
 
 void
+ChildWindowUI::refresh(void) {
+	if (parent) {
+		parent->draw();
+	}
+}
+
+void
 ChildWindowUI::draw(void) {
-
-	/* Primer para dibujar, verifico que no tenga alguna ventana hija
-	* que ademas, este activa, en cuyo cayo, primero dibujo lo mio, y luego
-	* le paso el control a ella. Para este paso, se define un 
-	* bitmap buffer, en el cual se dibuja para posicion la ventana correctamente.
-	*/
-	ALLEGRO_DISPLAY* display = al_get_current_display();
-	al_set_target_bitmap(bitmap);
 	
-	/* Limpio pantalla con los fondos */
-	if (colors.has(CHILD_WINDOW_BACKGROUND)) {
-		al_clear_to_color(colors[CHILD_WINDOW_BACKGROUND].color);
-	}
-	if (images.has(CHILD_WINDOW_BACKGROUND)) {
-		al_draw_bitmap(images[CHILD_WINDOW_BACKGROUND].bitmap, 0, 0, 0);
-	}
+	if (parent) {
 
-	/* Redibujo components */
-	for (UIComponent* component : components) {
-		if (component) {
-			component->draw();
+
+		/* Primer para dibujar, verifico que no tenga alguna ventana hija
+		* que ademas, este activa, en cuyo cayo, primero dibujo lo mio, y luego
+		* le paso el control a ella. Para este paso, se define un
+		* bitmap buffer, en el cual se dibuja para posicion la ventana correctamente.
+		*/
+		ALLEGRO_DISPLAY* display = al_get_current_display();
+		al_set_target_bitmap(bitmap);
+
+		/* Limpio pantalla con los fondos */
+		if (colors.has(CHILD_WINDOW_BACKGROUND)) {
+			al_clear_to_color(colors[CHILD_WINDOW_BACKGROUND].color);
 		}
-	}
+		if (images.has(CHILD_WINDOW_BACKGROUND)) {
+			al_draw_bitmap(images[CHILD_WINDOW_BACKGROUND].bitmap, 0, 0, 0);
+		}
 
-	/* Redibujo los childs */
-	for (ChildWindowUI* child : childs) {
-		if (child) {
-			if (child->isEnabled()) {
-				child->draw();
+		/* Redibujo components */
+		for (UIComponent* component : components) {
+			if (component) {
+				component->draw();
 			}
 		}
-	}
 
-	/*
-	* Vuelvo a configurar el target display y luego dibujo donde corresponde
-	* el bitmap de la ventana del ChildWindow
-	*/
-	al_set_target_backbuffer(display);
-	al_draw_bitmap(bitmap, x, y, 0);
+		/* Redibujo los childs */
+		for (ChildWindowUI* child : childs) {
+			if (child) {
+				if (child->isEnabled()) {
+					child->draw();
+				}
+			}
+		}
+
+		/*
+		* Vuelvo a configurar el target display y luego dibujo donde corresponde
+		* el bitmap de la ventana del ChildWindow
+		*/
+		al_set_target_backbuffer(display);
+		al_draw_bitmap(bitmap, x, y, 0);
+	}
 }
 
 void

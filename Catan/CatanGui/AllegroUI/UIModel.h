@@ -32,10 +32,10 @@ public:
 	* Configuracion y lectura de los estados actuales del modelo
 	* en cuestion.
 	*/
-	void setVisible(bool visibleStatus);
-	void setEnable(bool enableStatus);
-	void setUIDestroy(bool destroys);
-	void setId(string id);
+	virtual void setVisible(bool visibleStatus);
+	virtual void setEnable(bool enableStatus);
+	virtual void setUIDestroy(bool destroys);
+	virtual void setId(string id);
 
 	bool shouldUIDestroy(void);
 	bool getVisible(void);

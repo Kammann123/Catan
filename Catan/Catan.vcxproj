@@ -189,6 +189,7 @@
     <ClInclude Include="CatanGui\AllegroUI\TextUI.h" />
     <ClInclude Include="CatanGui\AllegroUI\UIController.h" />
     <ClInclude Include="CatanGui\AllegroUI\UIModel.h" />
+    <ClInclude Include="CatanGui\AllegroUI\UIModelContainer.h" />
     <ClInclude Include="CatanGui\AllegroUI\UIView.h" />
     <ClInclude Include="CatanGui\AllegroUI\WindowUI.h" />
     <ClInclude Include="CatanGui\AllegroWidgets\ButtonView.h" />
@@ -203,6 +204,7 @@
     <ClInclude Include="CatanGui\CatanLauncher\GameWindow\BuildingView.h" />
     <ClInclude Include="CatanGui\CatanLauncher\GameWindow\CatanMapView.h" />
     <ClInclude Include="CatanGui\CatanLauncher\GameWindow\DiceView.h" />
+    <ClInclude Include="CatanGui\CatanLauncher\GameWindow\DiscardWindow.h" />
     <ClInclude Include="CatanGui\CatanLauncher\GameWindow\GameWindow.h" />
     <ClInclude Include="CatanGui\CatanLauncher\GameWindow\LongestRoadView.h" />
     <ClInclude Include="CatanGui\CatanLauncher\GameWindow\PlayerView.h" />
@@ -350,6 +352,7 @@
     <ClCompile Include="CatanGui\AllegroUI\UIComponent.cpp" />
     <ClCompile Include="CatanGui\AllegroUI\UIController.cpp" />
     <ClCompile Include="CatanGui\AllegroUI\UIModel.cpp" />
+    <ClCompile Include="CatanGui\AllegroUI\UIModelContainer.cpp" />
     <ClCompile Include="CatanGui\AllegroUI\UIView.cpp" />
     <ClCompile Include="CatanGui\AllegroUI\WindowUI.cpp" />
     <ClCompile Include="CatanGui\AllegroWidgets\ButtonView.cpp" />
@@ -364,6 +367,7 @@
     <ClCompile Include="CatanGui\CatanLauncher\GameWindow\BuildingView.cpp" />
     <ClCompile Include="CatanGui\CatanLauncher\GameWindow\CatanMapView.cpp" />
     <ClCompile Include="CatanGui\CatanLauncher\GameWindow\DiceView.cpp" />
+    <ClCompile Include="CatanGui\CatanLauncher\GameWindow\DiscardWindow.cpp" />
     <ClCompile Include="CatanGui\CatanLauncher\GameWindow\GameWindow.cpp" />
     <ClCompile Include="CatanGui\CatanLauncher\GameWindow\LongestRoadView.cpp" />
     <ClCompile Include="CatanGui\CatanLauncher\GameWindow\PlayerView.cpp" />

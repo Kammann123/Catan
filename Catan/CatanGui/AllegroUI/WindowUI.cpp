@@ -174,6 +174,11 @@ void
 WindowUI::process(void) {}
 
 void
+WindowUI::refresh(void) {
+	this->draw();
+}
+
+void
 WindowUI::draw(void) {
 
 	if (started) {
@@ -223,8 +228,11 @@ WindowUI::start(void) {
 	/*
 	* Se hace refactorizacion de todos los componentes
 	*/
-	for (UIComponent* component : components) {
-		component->refactor();
+	refactor();
+	for (ChildWindowUI* child : childs) {
+		if (child) {
+			child->refactor();
+		}
 	}
 
 	/* Inicio el timer */
@@ -242,6 +250,13 @@ WindowUI::start(void) {
 	/* Inicio el dibujo */
 	started = true;
 	draw();
+}
+
+void
+WindowUI::refactor(void) {
+	for (UIComponent* component : components) {
+		component->refactor();
+	}
 }
 
 void

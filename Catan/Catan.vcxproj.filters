@@ -546,6 +546,12 @@
     <ClInclude Include="CatanGui\AllegroUI\ChildWindowUI.h">
       <Filter>CatanGui\AllegroUI</Filter>
     </ClInclude>
+    <ClInclude Include="CatanGui\CatanLauncher\GameWindow\DiscardWindow.h">
+      <Filter>CatanGui\CatanLauncher\GameWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="CatanGui\AllegroUI\UIModelContainer.h">
+      <Filter>CatanGui\AllegroUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FSM\EventQueue.cpp">
@@ -1017,6 +1023,12 @@
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="CatanGui\AllegroUI\ChildWindowUI.cpp">
+      <Filter>CatanGui\AllegroUI</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGui\CatanLauncher\GameWindow\DiscardWindow.cpp">
+      <Filter>CatanGui\CatanLauncher\GameWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGui\AllegroUI\UIModelContainer.cpp">
       <Filter>CatanGui\AllegroUI</Filter>
     </ClCompile>
   </ItemGroup>

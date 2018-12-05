@@ -10,14 +10,14 @@
 * parent en la cual nace. Esta pensada para pop-ups y sub ventanas internas
 * que aparecen mas dinamicamente
 */
-class ChildWindowUI : protected WindowUI {
+class ChildWindowUI : public WindowUI {
 public:
 	/*
 	* ChildWindowUI - Se construye necesariamente con una referencia al padre
 	* y las dimensiones de la misma, para poder ser dimensionada correctamente
 	* en el dibujo de la misma
 	*/
-	ChildWindowUI(size_t _width, size_t _height);
+	ChildWindowUI(string id, size_t _width, size_t _height);
 	~ChildWindowUI(void);
 
 	/******************************************
@@ -27,6 +27,7 @@ public:
 	void setEnable(bool status);
 	virtual void process(void);
 	bool isEnabled(void);
+	void refresh(void);
 	void draw(void);
 
 	/********************************

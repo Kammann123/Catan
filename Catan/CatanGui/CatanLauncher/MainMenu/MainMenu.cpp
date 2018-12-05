@@ -37,7 +37,7 @@ using namespace std;
 #define CANCEL_SELECT_SOUND CONNECT_SELECT_SOUND
 
 MainMenu::
-MainMenu(CatanLauncher& _launcher) : WindowUI(1080, 640), launcher(_launcher) {
+MainMenu(CatanLauncher& _launcher) : WindowUI("mainWindow", 1080, 640), launcher(_launcher) {
 	prevState = CatanNetworking::States::CLOSED;
 
 	/* Creo los componentes */

@@ -16,6 +16,7 @@
 #include "UIComponent.h"
 
 #include <functional>
+#include <string>
 
 #define DEFAULT_FPS 1.0/50
 
@@ -59,6 +60,7 @@ public:
 	virtual void process(void);
 	virtual void draw(void);
 	virtual void run(void);
+	virtual void refresh(void);
 
 	/*********************************
 	* Interfaz de ejecucion de la UI *
@@ -67,6 +69,7 @@ public:
 	void shutdown(void);
 	void start(void);
 	void stop(void);
+	void refactor(void);
 
 	/***********************
 	* Interfaz para Childs *

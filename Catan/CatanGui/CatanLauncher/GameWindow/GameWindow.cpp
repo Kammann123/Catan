@@ -11,6 +11,8 @@
 #include "../../../CatanEvents/RobberMoveEvent.h"
 #include "../../../CatanEvents/DicesEvent.h"
 
+#include "DiscardWindow.h"
+
 #include "PlayerView.h"
 #include "RobberView.h"
 #include "DiceView.h"
@@ -40,7 +42,7 @@
 #define PLAYER_TWO_OFFSET	25
 
 GameWindow::
-GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI(1080, 640) {
+GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI("gameWindow", 1080, 640) {
 
 	UIComponent* exitButton = UIBuilder::createButton("exit");
 	UIComponent* discardButton = UIBuilder::createButton("discard");
@@ -53,6 +55,9 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI(1080, 640) 
 	UIComponent* game = GameBuilder::createCatanGame(&launcher.getGame());
 	UIComponent* longestRoad = GameBuilder::createLongestRoad(launcher.getGame().getLongestRoad());
 	UIComponent* map = GameBuilder::createMap(launcher.getGame().getCatanMap());
+
+	ChildWindowUI* discardWindow = new DiscardWindow("discardWindow");
+
 
 	/***********************************
 	* Creacion de componentes Building *
@@ -124,6 +129,11 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI(1080, 640) 
 	(*tradeButton)[0]->getImages().setConfig(MouseUI::Status::SELECTED, GAMEWINDOW_TRADE_SELECTED);
 	(*tradeButton)[0]->getImages().setConfig(MouseUI::Status::DRAGGED, GAMEWINDOW_TRADE_SELECTED);
 
+	/************************
+	* Agrego ventanas hijas *
+	************************/
+	this->attachChild(discardWindow);
+
 	/***********************************
 	* Agrego componente a la interfaz  *
 	***********************************/
@@ -181,6 +191,11 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI(1080, 640) 
 	MODEL(tradeButton, MouseUI*)->setPosition(63, 140);
 	MODEL(firstDice, Dice*)->setPosition(900, 20);
 	MODEL(secondDice, Dice*)->setPosition(950, 20);
+
+	/*************************
+	* Posicion de las Childs *
+	*************************/
+	this->child("discardWindow")->setPosition(150, 70);
 
 	/***********************************
 	* Configuro general de la interfaz *
@@ -333,7 +348,7 @@ GameWindow::onRobberDrop(void* data) {
 
 void
 GameWindow::onDiscard(void* data) {
-
+	this->child("discardWindow")->setEnable(true);
 }
 
 void

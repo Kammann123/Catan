@@ -32,11 +32,11 @@ public:
 	/*
 	* Interfaz para el manejo de los estados, y su lectura.
 	*/
-	void setPosition(pos_t x, pos_t y);
-	void addPosition(pos_t x, pos_t y);
-	void setWidth(size_t width);
-	void setHeight(size_t height);
-	void setAngle(pos_t radian);
+	virtual void setPosition(pos_t x, pos_t y);
+	virtual void addPosition(pos_t x, pos_t y);
+	virtual void setWidth(size_t width);
+	virtual void setHeight(size_t height);
+	virtual void setAngle(pos_t radian);
 
 	size_t getWidth(void);
 	size_t getHeight(void);
