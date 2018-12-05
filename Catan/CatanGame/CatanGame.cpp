@@ -1054,6 +1054,7 @@ CatanGame::buildRoad(Building* building, Coord coords, PlayerId playerID)
 	*/
 	catanMap->build(newRoad, coords);
 	getPlayer(playerID)->addPoints(ROAD_BUILT_POINTS);
+	setInfo("[CatanGame] Un nuevo Road ha sido colocado!");
 
 	/* Actualizo camino mas largo */
 	updateLongestRoad();
@@ -1088,6 +1089,7 @@ CatanGame::buildCity(Building* building, Coord coords, PlayerId playerID)
 	getPlayer(playerID)->giveBackBuilding(building);
 	getPlayer(playerID)->removePoints(SETTLEMENT_BUILT_POINTS);
 	getPlayer(playerID)->addPoints(CITY_BUILT_POINTS);
+	setInfo("[CatanGame] Una nueva ciudad ha sido colocada!");
 
 	/* Actualizo los puntos y veo ganador */
 	updateWinner();
@@ -1110,6 +1112,7 @@ CatanGame::buildSettlement(Building* building, Coord coords, PlayerId playerID)
 	*/
 	catanMap->build(newSettlement, coords);
 	getPlayer(playerID)->addPoints(SETTLEMENT_BUILT_POINTS);
+	setInfo("[CatanGame] Un nuevo Settlement ha sido colocado!");
 
 	/* Actualizo los docks disponibles del usuario/jugador */
 	updateDocks(coords, playerID);

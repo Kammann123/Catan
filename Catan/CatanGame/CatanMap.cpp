@@ -196,6 +196,8 @@ CatanMap::generateLand(void) {
 			}
 		}
 	}
+
+	notifyObservers();
 }
 
 void
@@ -216,6 +218,8 @@ CatanMap::generateSea(void) {
 			hex->place(coords.back()), coords.pop_back();
 		}
 	}
+
+	notifyObservers();
 }
 
 void
@@ -244,6 +248,8 @@ CatanMap::generateTokens(void) {
 			}
 		}
 	}
+
+	notifyObservers();
 }
 
 bool
@@ -381,11 +387,17 @@ CatanMap::loadMap(map<Coord, MapValue> gameMap) {
 				if (land->getResource() == hexId) {
 					land->place(coord);
 					landCopy.remove(land);
+
+					if (hexId == ResourceId::DESERT) {
+						moveRobber(coord);
+					}
 					break;
 				}
 			}
 		}
 	}
+
+	notifyObservers();
 }
 
 void

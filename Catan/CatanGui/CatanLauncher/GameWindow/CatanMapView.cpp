@@ -24,12 +24,14 @@
 
 /******************************************COMPLETAR****************************************/
 
-#define NORMAL_SEA_IMG		"CatanGui\\GUIDesigns\\GameMenu\\seas\\"
-#define	WHEAT_SEA_IMG		"CatanGui\\GUIDesigns\\GameMenu\\seas\\"
-#define	SHEEP_SEA_IMG		"CatanGui\\GUIDesigns\\GameMenu\\seas\\"
-#define	BRICK_SEA_IMG		"CatanGui\\GUIDesigns\\GameMenu\\seas\\"
-#define	STONE_SEA_IMG		"CatanGui\\GUIDesigns\\GameMenu\\seas\\"
-#define	WOOD_SEA_IMG		"CatanGui\\GUIDesigns\\GameMenu\\seas\\"
+#define NORMAL_SEA_IMG		"CatanGui\\GUIDesigns\\GameMenu\\sea\\normal_sea.png"
+#define	WHEAT_SEA_IMG		"CatanGui\\GUIDesigns\\GameMenu\\sea\\wheat_normal_sea.png"
+#define	SHEEP_SEA_IMG		"CatanGui\\GUIDesigns\\GameMenu\\sea\\wool_normal_sea.png"
+#define	BRICK_SEA_IMG		"CatanGui\\GUIDesigns\\GameMenu\\sea\\brick_normal_sea.png"
+#define	STONE_SEA_IMG		"CatanGui\\GUIDesigns\\GameMenu\\sea\\ore_sea.png"
+#define	WOOD_SEA_IMG		"CatanGui\\GUIDesigns\\GameMenu\\sea\\wood_sea.png"
+
+#define SEA_INDEX_OFFSET	1234
 
 CatanMapView::CatanMapView(CatanMap * model_) : UIView(model_){
 	images.clear();
@@ -58,12 +60,12 @@ CatanMapView::CatanMapView(CatanMap * model_) : UIView(model_){
 	images.setConfig(12, TOKEN_12_IMG);
 
 	/*Config imagenes de mar*/
-	/*images.setConfig((unsigned int)SeaId::NORMAL, NORMAL_SEA_IMG);
-	images.setConfig((unsigned int)SeaId::WHEAT, WHEAT_SEA_IMG);
-	images.setConfig((unsigned int)SeaId::SHEEP, SHEEP_SEA_IMG);
-	images.setConfig((unsigned int)SeaId::BRICK, BRICK_SEA_IMG);
-	images.setConfig((unsigned int)SeaId::STONE, STONE_SEA_IMG);
-	images.setConfig((unsigned int)SeaId::WOOD, WOOD_SEA_IMG);*/
+	images.setConfig((unsigned int)SeaId::NORMAL + SEA_INDEX_OFFSET, NORMAL_SEA_IMG);
+	images.setConfig((unsigned int)SeaId::WHEAT + SEA_INDEX_OFFSET, WHEAT_SEA_IMG);
+	images.setConfig((unsigned int)SeaId::SHEEP + SEA_INDEX_OFFSET, SHEEP_SEA_IMG);
+	images.setConfig((unsigned int)SeaId::BRICK + SEA_INDEX_OFFSET, BRICK_SEA_IMG);
+	images.setConfig((unsigned int)SeaId::STONE + SEA_INDEX_OFFSET, STONE_SEA_IMG);
+	images.setConfig((unsigned int)SeaId::WOOD + SEA_INDEX_OFFSET, WOOD_SEA_IMG);
 }
 
 void CatanMapView::draw(void) {
@@ -78,9 +80,6 @@ void CatanMapView::draw(void) {
 	unsigned char tokenValue;
 
 	if (model->getVisible()){
-		/* Imprimimos mapa */
-		btMap = images[MAP_HEX_ID].bitmap;
-		al_draw_bitmap(btMap, catanMap->xPos(), catanMap->yPos(), 0);
 
 		/* Se ciclan las tierras */
 		for (ResourceHex* resourceHex : catanMap->lands()) {
@@ -110,5 +109,27 @@ void CatanMapView::draw(void) {
 				}
 			}
 		}
+
+		/* Se ciclan los mares */
+		for (SeaHex* seaHex : catanMap->seas()) {
+			it = mymap.find(seaHex->getCoord().getCoords());
+
+			if (it != mymap.end()) {
+
+				resourcePosition = it->second;
+				if (images.has((unsigned int)seaHex->getDocks() + SEA_INDEX_OFFSET)) {
+					btMap = images[(unsigned int)seaHex->getDocks() + SEA_INDEX_OFFSET].bitmap;
+				}
+
+				if (btMap != nullptr) {
+					al_draw_rotated_bitmap(btMap, al_get_bitmap_width(btMap) / 2, al_get_bitmap_height(btMap) / 2, resourcePosition.x + catanMap->xPos(), resourcePosition.y + catanMap->yPos(), resourcePosition.info, 0);
+				}
+				btMap = nullptr;
+			}
+		}
+
+		/* Imprimimos mapa */
+		btMap = images[MAP_HEX_ID].bitmap;
+		al_draw_bitmap(btMap, catanMap->xPos() + 81, catanMap->yPos() + 53, 0);
 	}
 }

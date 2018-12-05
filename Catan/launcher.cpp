@@ -11,6 +11,10 @@ int main(int argc, char** argv) {
 
 		CatanLauncher launcher;
 
+		launcher.getGame().getCatanMap()->generateLand();
+		launcher.getGame().getCatanMap()->generateSea();
+		launcher.getGame().getCatanMap()->generateTokens();
+
 		/*
 		* Verifico que no haya terminado y,
 		* cerrado... y bueno, eso es todo!

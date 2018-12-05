@@ -30,6 +30,8 @@
 #define GAMEWINDOW_TRADE_FOCUSED "CatanGui\\GUIDesigns\\GameMenu\\trade_focused.png"
 #define GAMEWINDOW_TRADE_SELECTED	"CatanGui\\GUIDesigns\\GameMenu\\trade_selected.png"
 
+#define PLAYER_TWO_OFFSET	25
+
 GameWindow::
 GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI(1080, 640) {
 
@@ -62,15 +64,15 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI(1080, 640) 
 	/****************************
 	* Configuracion del tablero *
 	****************************/
-	MODEL(game, CatanGame*)->set(POSITION_LONGEST_ROAD, 910, 80, 0);
-	MODEL(map, CatanMap*)->setPosition(180, 0);
+	MODEL(game, CatanGame*)->set(POSITION_LONGEST_ROAD, 910, 85, 0);
+	MODEL(map, CatanMap*)->setPosition(180, 20);
 
 	/******************************
 	* Configuracion de player one *
 	******************************/
 	MODEL(localPlayer, Player*)->setPosition(10, 400);
-	MODEL(localPlayer, Player*)->set(PLAYER_NAME, 0, 0, 0);
-	MODEL(localPlayer, Player*)->set(PLAYER_VICTORY_POINTS, 190, 0, 0);
+	MODEL(localPlayer, Player*)->set(PLAYER_NAME, 40, 0, 0);
+	MODEL(localPlayer, Player*)->set(PLAYER_VICTORY_POINTS, 165, 20, 0);
 	MODEL(localPlayer, Player*)->set(PLAYER_ORE, 0, 150, 0);
 	MODEL(localPlayer, Player*)->set(PLAYER_LUMBER, 60, 150, 0);
 	MODEL(localPlayer, Player*)->set(PLAYER_BRICK, 120, 150, 0);
@@ -85,17 +87,17 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI(1080, 640) 
 	* Configuracion de player two *
 	******************************/
 	MODEL(remotePlayer, Player*)->setPosition(775, 400);
-	MODEL(remotePlayer, Player*)->set(PLAYER_NAME, 0, 0, 0);
-	MODEL(remotePlayer, Player*)->set(PLAYER_VICTORY_POINTS, 190, 0, 0);
+	MODEL(remotePlayer, Player*)->set(PLAYER_NAME, 40 + PLAYER_TWO_OFFSET, 0, 0);
+	MODEL(remotePlayer, Player*)->set(PLAYER_VICTORY_POINTS, 165 + PLAYER_TWO_OFFSET, 20, 0);
 	MODEL(remotePlayer, Player*)->set(PLAYER_ORE, 0, 150, 0);
 	MODEL(remotePlayer, Player*)->set(PLAYER_LUMBER, 60, 150, 0);
 	MODEL(remotePlayer, Player*)->set(PLAYER_BRICK, 120, 150, 0);
 	MODEL(remotePlayer, Player*)->set(PLAYER_WOOL, 180, 150, 0);
 	MODEL(remotePlayer, Player*)->set(PLAYER_GRAIN, 240, 150, 0);
-	MODEL(remotePlayer, Player*)->set(PLAYER_SETTLEMENTS, 55, 60, 0);
-	MODEL(remotePlayer, Player*)->set(PLAYER_ROADS, 0, 70, 0);
-	MODEL(remotePlayer, Player*)->set(PLAYER_CITY, 130, 70, 0);
-	MODEL(remotePlayer, Player*)->set(PLAYER_LONGEST_ROAD, 0, 0, 0);
+	MODEL(remotePlayer, Player*)->set(PLAYER_SETTLEMENTS, 55 + PLAYER_TWO_OFFSET, 60, 0);
+	MODEL(remotePlayer, Player*)->set(PLAYER_ROADS, 0 + PLAYER_TWO_OFFSET, 70, 0);
+	MODEL(remotePlayer, Player*)->set(PLAYER_CITY, 130 + PLAYER_TWO_OFFSET, 70, 0);
+	MODEL(remotePlayer, Player*)->set(PLAYER_LONGEST_ROAD, 0 + PLAYER_TWO_OFFSET, 0, 0);
 
 	/****************************/
 	/* Configuracion de botones */
