@@ -211,6 +211,7 @@
     <ClInclude Include="CatanGui\CatanLauncher\GameWindow\LongestRoadView.h" />
     <ClInclude Include="CatanGui\CatanLauncher\GameWindow\OfferWindow.h" />
     <ClInclude Include="CatanGui\CatanLauncher\GameWindow\PlayerView.h" />
+    <ClInclude Include="CatanGui\CatanLauncher\GameWindow\QuestionWindow.h" />
     <ClInclude Include="CatanGui\CatanLauncher\GameWindow\RobberView.h" />
     <ClInclude Include="CatanGui\CatanLauncher\MainMenu\MainMenu.h" />
     <ClInclude Include="CatanNetworking\CatanNetworking.h" />
@@ -377,6 +378,7 @@
     <ClCompile Include="CatanGui\CatanLauncher\GameWindow\LongestRoadView.cpp" />
     <ClCompile Include="CatanGui\CatanLauncher\GameWindow\OfferWindow.cpp" />
     <ClCompile Include="CatanGui\CatanLauncher\GameWindow\PlayerView.cpp" />
+    <ClCompile Include="CatanGui\CatanLauncher\GameWindow\QuestionWindow.cpp" />
     <ClCompile Include="CatanGui\CatanLauncher\GameWindow\RobberView.cpp" />
     <ClCompile Include="CatanGui\CatanLauncher\MainMenu\MainMenu.cpp" />
     <ClCompile Include="CatanNetworking\CatanNetworking.cpp" />

@@ -561,6 +561,9 @@
     <ClInclude Include="CatanGui\CatanLauncher\GameWindow\OfferWindow.h">
       <Filter>CatanGui\CatanLauncher\GameWindow</Filter>
     </ClInclude>
+    <ClInclude Include="CatanGui\CatanLauncher\GameWindow\QuestionWindow.h">
+      <Filter>CatanGui\CatanLauncher\GameWindow</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FSM\EventQueue.cpp">
@@ -1047,6 +1050,9 @@
       <Filter>CatanGui\AllegroWidgets</Filter>
     </ClCompile>
     <ClCompile Include="CatanGui\CatanLauncher\GameWindow\OfferWindow.cpp">
+      <Filter>CatanGui\CatanLauncher\GameWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGui\CatanLauncher\GameWindow\QuestionWindow.cpp">
       <Filter>CatanGui\CatanLauncher\GameWindow</Filter>
     </ClCompile>
   </ItemGroup>

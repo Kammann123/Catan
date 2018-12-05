@@ -75,6 +75,10 @@ private:
 	void onTrade(void* data);
 	void onDice(void* data);
 	void onExit(void* data);
+	void acceptOffer(void* data);
+	void denyOffer(void* data);
+	void gameOver(void* data);
+	void playAgain(void* data);
 
 	/*******************
 	* Layouts de la UI *

@@ -14,6 +14,7 @@
 
 #include "OfferWindow.h"
 #include "DiscardWindow.h"
+#include "QuestionWindow.h"
 
 #include "PlayerView.h"
 #include "RobberView.h"
@@ -60,7 +61,8 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI("gameWindow
 
 	ChildWindowUI* discardWindow = new DiscardWindow("discardWindow");
 	ChildWindowUI* offerWindow = new OfferWindow("offerWindow");
-
+	ChildWindowUI* answerOffer = new QuestionWindow("answerOffer", bind(&GameWindow::acceptOffer, this, _1), bind(&GameWindow::denyOffer, this, _1));
+	ChildWindowUI* answerAgain = new QuestionWindow("answerAgain", bind(&GameWindow::playAgain, this, _1), bind(&GameWindow::gameOver, this, _1));
 
 	/***********************************
 	* Creacion de componentes Building *
@@ -137,6 +139,8 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI("gameWindow
 	************************/
 	this->attachChild(discardWindow);
 	this->attachChild(offerWindow);
+	this->attachChild(answerOffer);
+	this->attachChild(answerAgain);
 
 	/***********************************
 	* Agrego componente a la interfaz  *
@@ -201,6 +205,8 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI("gameWindow
 	*************************/
 	this->child("discardWindow")->setPosition(150, 70);
 	this->child("offerWindow")->setPosition(150, 40);
+	this->child("answerOffer")->setPosition(150, 40);
+	this->child("answerAgain")->setPosition(150, 40);
 
 	/***********************************
 	* Configuro general de la interfaz *
@@ -359,6 +365,26 @@ GameWindow::onDiscard(void* data) {
 void
 GameWindow::onTrade(void* data) {
 	this->child("offerWindow")->setEnable(true);
+}
+
+void
+GameWindow::acceptOffer(void* data) {
+
+}
+
+void
+GameWindow::denyOffer(void* data) {
+
+}
+
+void
+GameWindow::gameOver(void* data) {
+
+}
+
+void
+GameWindow::playAgain(void* data) {
+
 }
 
 void
