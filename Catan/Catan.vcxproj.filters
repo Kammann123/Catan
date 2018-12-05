@@ -504,9 +504,6 @@
     <ClInclude Include="CatanGui\CatanLauncher\CatanLauncher.h">
       <Filter>CatanGui\CatanLauncher</Filter>
     </ClInclude>
-    <ClInclude Include="CatanGui\CatanLauncher\CatanContext.h">
-      <Filter>CatanGui\CatanLauncher</Filter>
-    </ClInclude>
     <ClInclude Include="CatanGui\CatanLauncher\GameWindow\GameWindow.h">
       <Filter>CatanGui\CatanLauncher\GameWindow</Filter>
     </ClInclude>
@@ -962,9 +959,6 @@
     <ClCompile Include="CatanGui\AllegroWidgets\ImageView.cpp">
       <Filter>CatanGui\AllegroWidgets</Filter>
     </ClCompile>
-    <ClCompile Include="launcher.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
     <ClCompile Include="CatanGame\LongestRoad.cpp">
       <Filter>CatanGame</Filter>
     </ClCompile>
@@ -975,9 +969,6 @@
       <Filter>CatanGame</Filter>
     </ClCompile>
     <ClCompile Include="CatanGui\CatanLauncher\CatanLauncher.cpp">
-      <Filter>CatanGui\CatanLauncher</Filter>
-    </ClCompile>
-    <ClCompile Include="CatanGui\CatanLauncher\CatanContext.cpp">
       <Filter>CatanGui\CatanLauncher</Filter>
     </ClCompile>
     <ClCompile Include="CatanGui\CatanLauncher\GameWindow\GameWindow.cpp">
@@ -1018,6 +1009,9 @@
     </ClCompile>
     <ClCompile Include="CatanGui\CatanLauncher\GameWindow\CatanMapView.cpp">
       <Filter>CatanGui\CatanLauncher\GameWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="launcher.cpp">
+      <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -158,12 +158,12 @@ MainMenu::onConnect(void* data) {
 	* lugares, como el nombre dentro del context en el launcher, y luego las ip y el port
 	* en el networking.
 	*/
-	launcher.getContext().getGame().getLocalPlayer()->setName(name);
-	launcher.getContext().getNetworking().setIp(ip);
-	launcher.getContext().getNetworking().setPort(port);
+	launcher.getGame().getLocalPlayer()->setName(name);
+	launcher.getNetworking().setIp(ip);
+	launcher.getNetworking().setPort(port);
 
 	/* Inicializo el funcionamiento del networking */
-	launcher.getContext().getNetworking().start();
+	launcher.getNetworking().start();
 
 	/* Cambio el layout */
 	_connecting_layout();
@@ -175,7 +175,7 @@ MainMenu::onCancel(void* data) {
 	/*
 	* Reinicio el estado del networking 
 	*/
-	launcher.getContext().getNetworking().reset();
+	launcher.getNetworking().reset();
 
 	/*
 	* Reinicio el estado de la imagen
@@ -194,7 +194,7 @@ MainMenu::process(void) {
 	/* Ejecuto procesos alternos al chequeo de los eventos
 	* que se ejecuta para el funcionamiento de la interfaz grafica
 	*/
-	CatanNetworking::States state = launcher.getContext().getNetworking().getNetworkingState();
+	CatanNetworking::States state = launcher.getNetworking().getNetworkingState();
 
 	/* Si hubo un cambio de estado en el networking
 	* con respecto al anterior, reviso...
@@ -233,7 +233,7 @@ MainMenu::process(void) {
 	* lo informo mismo en el label
 	*/
 	string message = MODEL((*this)["message"], TextUI*)->getText();
-	string newMessage = launcher.getContext().getNetworking().info();
+	string newMessage = launcher.getNetworking().info();
 	if (message != newMessage) {
 		MODEL((*this)["message"], TextUI*)->setText(newMessage);
 	}

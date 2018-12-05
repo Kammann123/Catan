@@ -38,23 +38,23 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI(1080, 640) 
 	UIComponent* tradeButton = UIBuilder::createButton("trade");
 	UIComponent* firstDice = GameBuilder::createDice("dice_one");
 	UIComponent* secondDice = GameBuilder::createDice("dice_two");
-	UIComponent* localPlayer = GameBuilder::createPlayer(launcher.getContext().getGame().getLocalPlayer());
-	UIComponent* remotePlayer = GameBuilder::createPlayer(launcher.getContext().getGame().getRemotePlayer());
-	UIComponent* robber = GameBuilder::createRobber(launcher.getContext().getGame().getCatanMap()->getRobber());
-	UIComponent* game = GameBuilder::createCatanGame(&launcher.getContext().getGame());
-	UIComponent* longestRoad = GameBuilder::createLongestRoad(launcher.getContext().getGame().getLongestRoad());
-	UIComponent* map = GameBuilder::createMap(launcher.getContext().getGame().getCatanMap());
+	UIComponent* localPlayer = GameBuilder::createPlayer(launcher.getGame().getLocalPlayer());
+	UIComponent* remotePlayer = GameBuilder::createPlayer(launcher.getGame().getRemotePlayer());
+	UIComponent* robber = GameBuilder::createRobber(launcher.getGame().getCatanMap()->getRobber());
+	UIComponent* game = GameBuilder::createCatanGame(&launcher.getGame());
+	UIComponent* longestRoad = GameBuilder::createLongestRoad(launcher.getGame().getLongestRoad());
+	UIComponent* map = GameBuilder::createMap(launcher.getGame().getCatanMap());
 
 	/***********************************
 	* Creacion de componentes Building *
 	***********************************/
 	list<UIComponent*> localBuildings;
-	for (Building* building : launcher.getContext().getGame().getLocalPlayer()->buildings()) {
+	for (Building* building : launcher.getGame().getLocalPlayer()->buildings()) {
 		UIComponent* buildingComponent = GameBuilder::createBuilding(building);
 		localBuildings.push_back(buildingComponent);
 	}
 	list<UIComponent*> remoteBuildings;
-	for (Building* building : launcher.getContext().getGame().getRemotePlayer()->buildings()) {
+	for (Building* building : launcher.getGame().getRemotePlayer()->buildings()) {
 		UIComponent* buildingComponent = GameBuilder::createRemoteBuilding(building);
 		remoteBuildings.push_back(buildingComponent);
 	}

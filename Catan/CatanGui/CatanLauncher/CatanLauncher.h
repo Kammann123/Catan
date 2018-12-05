@@ -1,6 +1,5 @@
 #pragma once
 
-#include "CatanContext.h"
 #include "MainMenu/MainMenu.h"
 #include "GameWindow/GameWindow.h"
 
@@ -38,14 +37,30 @@ public:
 	*/
 	void change(States newState);
 
-	/*
-	* Acceso a la informacion del contexto
-	*/
-	CatanContext& getContext(void);
+	/*****************************************
+	* Interfaz a la informacion del contexto *
+	*****************************************/
+	void setUsername(string name);
+	void setIp(string ip);
+	void setPort(unsigned int port);
+
+	string getUsername(void);
+	string getIp(void);
+	unsigned int getPort(void);
+
+	CatanGame& getGame(void);
+	CatanNetworking& getNetworking(void);
 
 private:
 	States state;
-	CatanContext context;
-	MainMenu mainmenu;
+
 	GameWindow gamewindow;
+	MainMenu mainmenu;
+
+	CatanNetworking networking;
+	CatanGame game;
+
+	unsigned int port;
+	string username;
+	string ip;
 };
