@@ -17,7 +17,7 @@ UIView::refactor(void) {}
 void
 UIView::update(void) {
 	if( interface )
-		this->interface->draw();
+		this->interface->refresh();
 }
 
 ColorConfig&

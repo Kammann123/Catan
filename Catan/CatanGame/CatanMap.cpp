@@ -17,6 +17,13 @@
 #define MAP_VERTICAL 0
 #define MAP_NONE 0
 
+double
+positionDistance(position_t p1, position_t p2) {
+	double distance = 0;
+	distance = sqrt(pow((p2.y - p1.y), 2) + pow((p2.x - p1.x), 2));
+	return distance;
+}
+
 void 
 CatanMap::_create_land(void) {
 	/* Creo los resource hex correspondientes */
@@ -94,7 +101,7 @@ CatanMap::_create_sea(void) {
 
 void
 CatanMap::_create_robber(void) {
-	robber = new Robber();
+	robber = new Robber(this);
 }
 
 void
@@ -196,6 +203,8 @@ CatanMap::generateLand(void) {
 			}
 		}
 	}
+
+	notifyObservers();
 }
 
 void
@@ -216,6 +225,8 @@ CatanMap::generateSea(void) {
 			hex->place(coords.back()), coords.pop_back();
 		}
 	}
+
+	notifyObservers();
 }
 
 void
@@ -244,6 +255,8 @@ CatanMap::generateTokens(void) {
 			}
 		}
 	}
+
+	notifyObservers();
 }
 
 bool
@@ -381,11 +394,17 @@ CatanMap::loadMap(map<Coord, MapValue> gameMap) {
 				if (land->getResource() == hexId) {
 					land->place(coord);
 					landCopy.remove(land);
+
+					if (hexId == ResourceId::DESERT) {
+						moveRobber(coord);
+					}
 					break;
 				}
 			}
 		}
 	}
+
+	notifyObservers();
 }
 
 void

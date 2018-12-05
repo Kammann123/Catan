@@ -28,11 +28,11 @@ public:
 	/*
 	* Acceso, lectura y modificacion del contenido
 	*/
-	void setText(const char* value);
-	void setText(string value);
-	void setMode(Mode mode);
-	string getText(void);
-	Mode getMode(void);
+	virtual void setText(const char* value);
+	virtual void setText(string value);
+	virtual void setMode(Mode mode);
+	virtual string getText(void);
+	virtual Mode getMode(void);
 
 	/*
 	* append

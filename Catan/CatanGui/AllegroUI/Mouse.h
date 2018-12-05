@@ -73,6 +73,11 @@ public:
 	*/
 	bool isMouse(ALLEGRO_EVENT* event);
 
+	/* 
+	* who - Devuelve el controller que tiene agarrado
+	*/
+	MouseController* who(void);
+
 private:
 	map<States, ALLEGRO_MOUSE_CURSOR*> cursors;
 	ALLEGRO_DISPLAY * display;

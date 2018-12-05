@@ -3,6 +3,8 @@
 #include "Coord.h"
 #include "../CatanGui/AllegroUI/MouseUI.h"
 
+class CatanMap;
+
 /*
 * Robber
 * La mejor clase del mundo para el Robber del juego.
@@ -10,8 +12,8 @@
 class Robber : public MouseUI {
 public:
 	/* Constructor */
-	Robber(Coord coord);
-	Robber();
+	Robber(CatanMap* map, Coord coord);
+	Robber(CatanMap* map);
 
 	/* 
 	* getCoord
@@ -24,6 +26,10 @@ public:
 	*/
 	void move(Coord coord, double x, double y);
 
+	/* refactor method */
+	void refactor(void);
+
 private:
+	CatanMap * map;
 	Coord coord;
 };

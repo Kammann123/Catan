@@ -5,6 +5,16 @@
 #include "../../AllegroWidgets/UIBuilder.h"
 #include "../../../CatanGame/Dice.h"
 #include "../CatanLauncher.h"
+
+#include "../../AllegroUI/CounterUI.h"
+#include "../../../CatanEvents/BuildingEvent.h"
+#include "../../../CatanEvents/RobberCardEvent.h"
+#include "../../../CatanEvents/RobberMoveEvent.h"
+#include "../../../CatanEvents/DicesEvent.h"
+
+#include "OfferWindow.h"
+#include "DiscardWindow.h"
+
 #include "PlayerView.h"
 #include "RobberView.h"
 #include "DiceView.h"
@@ -30,31 +40,38 @@
 #define GAMEWINDOW_TRADE_FOCUSED "CatanGui\\GUIDesigns\\GameMenu\\trade_focused.png"
 #define GAMEWINDOW_TRADE_SELECTED	"CatanGui\\GUIDesigns\\GameMenu\\trade_selected.png"
 
+#define PLACING_RADIO		20
+#define PLAYER_TWO_OFFSET	25
+
 GameWindow::
-GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI(1080, 640) {
+GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI("gameWindow", 1080, 640) {
 
 	UIComponent* exitButton = UIBuilder::createButton("exit");
 	UIComponent* discardButton = UIBuilder::createButton("discard");
 	UIComponent* tradeButton = UIBuilder::createButton("trade");
 	UIComponent* firstDice = GameBuilder::createDice("dice_one");
 	UIComponent* secondDice = GameBuilder::createDice("dice_two");
-	UIComponent* localPlayer = GameBuilder::createPlayer(launcher.getContext().getGame().getLocalPlayer());
-	UIComponent* remotePlayer = GameBuilder::createPlayer(launcher.getContext().getGame().getRemotePlayer());
-	UIComponent* robber = GameBuilder::createRobber(launcher.getContext().getGame().getCatanMap()->getRobber());
-	UIComponent* game = GameBuilder::createCatanGame(&launcher.getContext().getGame());
-	UIComponent* longestRoad = GameBuilder::createLongestRoad(launcher.getContext().getGame().getLongestRoad());
-	UIComponent* map = GameBuilder::createMap(launcher.getContext().getGame().getCatanMap());
+	UIComponent* localPlayer = GameBuilder::createPlayer(launcher.getGame().getLocalPlayer());
+	UIComponent* remotePlayer = GameBuilder::createPlayer(launcher.getGame().getRemotePlayer());
+	UIComponent* robber = GameBuilder::createRobber(launcher.getGame().getCatanMap()->getRobber());
+	UIComponent* game = GameBuilder::createCatanGame(&launcher.getGame());
+	UIComponent* longestRoad = GameBuilder::createLongestRoad(launcher.getGame().getLongestRoad());
+	UIComponent* map = GameBuilder::createMap(launcher.getGame().getCatanMap());
+
+	ChildWindowUI* discardWindow = new DiscardWindow("discardWindow");
+	ChildWindowUI* offerWindow = new OfferWindow("offerWindow");
+
 
 	/***********************************
 	* Creacion de componentes Building *
 	***********************************/
 	list<UIComponent*> localBuildings;
-	for (Building* building : launcher.getContext().getGame().getLocalPlayer()->buildings()) {
+	for (Building* building : launcher.getGame().getLocalPlayer()->buildings()) {
 		UIComponent* buildingComponent = GameBuilder::createBuilding(building);
 		localBuildings.push_back(buildingComponent);
 	}
 	list<UIComponent*> remoteBuildings;
-	for (Building* building : launcher.getContext().getGame().getRemotePlayer()->buildings()) {
+	for (Building* building : launcher.getGame().getRemotePlayer()->buildings()) {
 		UIComponent* buildingComponent = GameBuilder::createRemoteBuilding(building);
 		remoteBuildings.push_back(buildingComponent);
 	}
@@ -62,15 +79,15 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI(1080, 640) 
 	/****************************
 	* Configuracion del tablero *
 	****************************/
-	MODEL(game, CatanGame*)->set(POSITION_LONGEST_ROAD, 910, 80, 0);
-	MODEL(map, CatanMap*)->setPosition(180, 0);
+	MODEL(game, CatanGame*)->set(POSITION_LONGEST_ROAD, 910, 85, 0);
+	MODEL(map, CatanMap*)->setPosition(180, 20);
 
 	/******************************
 	* Configuracion de player one *
 	******************************/
 	MODEL(localPlayer, Player*)->setPosition(10, 400);
-	MODEL(localPlayer, Player*)->set(PLAYER_NAME, 0, 0, 0);
-	MODEL(localPlayer, Player*)->set(PLAYER_VICTORY_POINTS, 190, 0, 0);
+	MODEL(localPlayer, Player*)->set(PLAYER_NAME, 40, 0, 0);
+	MODEL(localPlayer, Player*)->set(PLAYER_VICTORY_POINTS, 165, 20, 0);
 	MODEL(localPlayer, Player*)->set(PLAYER_ORE, 0, 150, 0);
 	MODEL(localPlayer, Player*)->set(PLAYER_LUMBER, 60, 150, 0);
 	MODEL(localPlayer, Player*)->set(PLAYER_BRICK, 120, 150, 0);
@@ -85,17 +102,17 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI(1080, 640) 
 	* Configuracion de player two *
 	******************************/
 	MODEL(remotePlayer, Player*)->setPosition(775, 400);
-	MODEL(remotePlayer, Player*)->set(PLAYER_NAME, 0, 0, 0);
-	MODEL(remotePlayer, Player*)->set(PLAYER_VICTORY_POINTS, 190, 0, 0);
+	MODEL(remotePlayer, Player*)->set(PLAYER_NAME, 40 + PLAYER_TWO_OFFSET, 0, 0);
+	MODEL(remotePlayer, Player*)->set(PLAYER_VICTORY_POINTS, 165 + PLAYER_TWO_OFFSET, 20, 0);
 	MODEL(remotePlayer, Player*)->set(PLAYER_ORE, 0, 150, 0);
 	MODEL(remotePlayer, Player*)->set(PLAYER_LUMBER, 60, 150, 0);
 	MODEL(remotePlayer, Player*)->set(PLAYER_BRICK, 120, 150, 0);
 	MODEL(remotePlayer, Player*)->set(PLAYER_WOOL, 180, 150, 0);
 	MODEL(remotePlayer, Player*)->set(PLAYER_GRAIN, 240, 150, 0);
-	MODEL(remotePlayer, Player*)->set(PLAYER_SETTLEMENTS, 55, 60, 0);
-	MODEL(remotePlayer, Player*)->set(PLAYER_ROADS, 0, 70, 0);
-	MODEL(remotePlayer, Player*)->set(PLAYER_CITY, 130, 70, 0);
-	MODEL(remotePlayer, Player*)->set(PLAYER_LONGEST_ROAD, 0, 0, 0);
+	MODEL(remotePlayer, Player*)->set(PLAYER_SETTLEMENTS, 55 + PLAYER_TWO_OFFSET, 60, 0);
+	MODEL(remotePlayer, Player*)->set(PLAYER_ROADS, 0 + PLAYER_TWO_OFFSET, 70, 0);
+	MODEL(remotePlayer, Player*)->set(PLAYER_CITY, 130 + PLAYER_TWO_OFFSET, 70, 0);
+	MODEL(remotePlayer, Player*)->set(PLAYER_LONGEST_ROAD, 0 + PLAYER_TWO_OFFSET, 0, 0);
 
 	/****************************/
 	/* Configuracion de botones */
@@ -114,6 +131,12 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI(1080, 640) 
 	(*tradeButton)[0]->getImages().setConfig(MouseUI::Status::FOCUSED, GAMEWINDOW_TRADE_FOCUSED);
 	(*tradeButton)[0]->getImages().setConfig(MouseUI::Status::SELECTED, GAMEWINDOW_TRADE_SELECTED);
 	(*tradeButton)[0]->getImages().setConfig(MouseUI::Status::DRAGGED, GAMEWINDOW_TRADE_SELECTED);
+
+	/************************
+	* Agrego ventanas hijas *
+	************************/
+	this->attachChild(discardWindow);
+	this->attachChild(offerWindow);
 
 	/***********************************
 	* Agrego componente a la interfaz  *
@@ -149,6 +172,20 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI(1080, 640) 
 	MODEL(secondDice, Dice*)->setClickAction(bind(&GameWindow::onDice, this, _1));
 	MODEL(firstDice, Dice*)->setLoopEndAction(bind(&GameWindow::onDicesThrown, this, _1));
 	MODEL(secondDice, Dice*)->setLoopEndAction(bind(&GameWindow::onDicesThrown, this, _1));
+	MODEL(exitButton, MouseUI*)->setClickAction(bind(&GameWindow::onExit, this, _1));
+	MODEL(robber, Robber*)->setDropAction(bind(&GameWindow::onRobberDrop, this, _1));
+	MODEL(tradeButton, MouseUI*)->setClickAction(bind(&GameWindow::onTrade, this, _1));
+	MODEL(discardButton, MouseUI*)->setClickAction(bind(&GameWindow::onDiscard, this, _1));
+
+	/*************************************
+	* Configuro acciones de los Building *
+	*************************************/
+	for (UIComponent* component : localBuildings) {
+		MODEL(component, Building*)->setDropAction(bind(&GameWindow::onBuildingDrop, this, _1));
+	}
+	for (UIComponent* component : remoteBuildings) {
+		MODEL(component, Building*)->setDropAction(bind(&GameWindow::onBuildingDrop, this, _1));
+	}
 
 	/**************************************
 	* Configuro posiciones de la interfaz *
@@ -159,6 +196,12 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI(1080, 640) 
 	MODEL(firstDice, Dice*)->setPosition(900, 20);
 	MODEL(secondDice, Dice*)->setPosition(950, 20);
 
+	/*************************
+	* Posicion de las Childs *
+	*************************/
+	this->child("discardWindow")->setPosition(150, 70);
+	this->child("offerWindow")->setPosition(150, 40);
+
 	/***********************************
 	* Configuro general de la interfaz *
 	***********************************/
@@ -166,11 +209,21 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI(1080, 640) 
 	this->setCursor(GAMEWINDOW_CURSOR);
 	this->setClickCursor(GAMEWINDOW_CLICK_CURSOR);
 	this->setGrabCursor(GAMEWINDOW_GRAB_CURSOR);
+	this->setCloseAction(bind(&GameWindow::onExit, this, _1));
 
 	/**************************
 	* Activo el layout actual *
 	**************************/
 	normal_layout();
+}
+
+void
+GameWindow::update(void) {
+
+	/* Siempre, por las dudas, confirmo recibida la accion
+	* del otro jugador
+	*/
+	launcher.getGame().confirm(PlayerId::PLAYER_TWO);
 }
 
 void
@@ -183,8 +236,129 @@ GameWindow::onDice(void* data) {
 
 void
 GameWindow::onDicesThrown(void* data) {
-	(*(*this)["dice_one"])[UIController::Id::MOUSE]->setEnable(true);
-	(*(*this)["dice_two"])[UIController::Id::MOUSE]->setEnable(true);
+
+	/* Busco el valor de los dados y pregunto 
+	* si son valores validos, ante lo cual ejecuto acciones correspondientes
+	*/
+	unsigned int fDice = MODEL((*this)["dice_one"], Dice*)->getValue();
+	unsigned int sDice = MODEL((*this)["dice_two"], Dice*)->getValue();
+
+	CatanGame& game = launcher.getGame();
+	if (game.validDices(fDice, sDice)) {
+		game.syncHandle(new DicesEvent(fDice, sDice, PlayerId::PLAYER_TWO));
+	}
+
+	/* Mensaje informativo! */
+}
+
+void
+GameWindow::onExit(void* data) {
+	/* Primero pregunto al usuario si esta seguro de ello, y espero su 
+	* respuesta, ante la cual, de ser afirmativo, continuo 
+	*/
+	bool answer = true;
+	
+	/* Si acepta, entonces lo que hago es mandar un evento de cierre
+	* y el juego directamente aviso a todos los observers y se cierra,
+	* de este lado, se cambia el estado del launcher
+	*/
+	if (answer) {
+
+		/* Evento al handler del game */
+		launcher.getGame().syncHandle(new CatanEvent(CatanEvent::Events::QUIT, CatanEvent::Sources::GUI, PlayerId::PLAYER_TWO));
+
+		/* Luego finalmente, lo que hago es cambiar de estado */
+		launcher.change(CatanLauncher::States::MAIN_MENU);
+	}
+}
+
+void
+GameWindow::onBuildingDrop(void* data) {
+
+	/* Se le pide a Sr.Mouse el controller que tenia
+	* agarrado en el proceso de grabbing y de el luego,
+	* se obtiene el modelo Building
+	*/
+	MouseController* controller = mouse.who();
+	Building* building = nullptr;
+	if (controller) {
+		building = (Building*)controller->getModel();
+	}
+
+	/* Luego tomo la posicion actual del Building y 
+	* le pido al mapa del CatanGame que me de todas las coordenadas
+	* de logica a mapa en pixeles, busco si en alguna hay coincidencia
+	*/
+	position_t buildingPixel = {building->xPos(), building->yPos(), 0};
+	map<string, position_t> pixels = launcher.getGame().getCatanMap()->screen();
+
+	for (auto pixel : pixels) {
+		if (positionDistance(buildingPixel, pixel.second) < PLACING_RADIO) {
+
+			/* Se encuentra una ubicacion valida con lo cual,
+			* se pregunta si en si misma, la operacion es valida
+			* antes de enviarla para no generar errores!
+			*/
+			CatanGame& game = launcher.getGame();
+
+			if (game.buildingOk(building->getType(), pixel.first, PlayerId::PLAYER_TWO)) {
+				game.syncHandle(new BuildingEvent(pixel.first, building->getType(), PlayerId::PLAYER_TWO));
+				return;
+			}
+		}
+	}
+
+	/* Muestro un mensaje informativo! */
+
+	/* No se pudo reconocer una ubicacion valida que fuera permitida
+	* para realizar la construccion y donde el usuario tuviera las 
+	* disponibilidades necesarias, vuelve a casa!
+	*/
+	building->refactor();
+}
+
+void
+GameWindow::onRobberDrop(void* data) {
+	 
+	/* Busco el modelo del robber para determinar su ubicacion actual
+	* y buscar una compatibilidad dentro del mapa de pixeles del mapa
+	*/
+	Robber* robber = launcher.getGame().getCatanMap()->getRobber();
+	position_t robberPosition = { robber->xPos(), robber->yPos(), 0 };
+
+	map<string, position_t> pixels = launcher.getGame().getCatanMap()->screen();
+	for (auto pixel : pixels) {
+
+		if (positionDistance(robberPosition, pixel.second) < PLACING_RADIO) {
+
+			/* Le mando el evento de cambio de ubicacion al juego
+			* para lo cual primero accedo al mismo, obviamente se pregunta si
+			* es valido el movimiento antes
+			*/
+			CatanGame& game = launcher.getGame();
+
+			if (game.validRobberMovement(pixel.first)) {
+				game.syncHandle(new RobberMoveEvent(pixel.first, PlayerId::PLAYER_TWO));
+			}
+		}
+	}
+
+	/* Muestro un mensaje informativo! */
+
+	/* Fue un movimiento equivoco o invalido, volve a casa
+	* papa, que aca no tenes nada que hacer
+	*/
+	robber->refactor();
+}
+
+void
+GameWindow::onDiscard(void* data) {
+	this->child("discardWindow")->setEnable(true);
+}
+
+void
+GameWindow::onTrade(void* data) {
+	this->child("offerWindow")->setEnable(true);
 }
 
 void

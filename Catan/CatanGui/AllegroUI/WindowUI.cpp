@@ -1,5 +1,7 @@
 #include "WindowUI.h"
 
+#include "ChildWindowUI.h"
+
 /* Configuraciones e inicializacion estaticas de la clase WindowUI
 *  configurar correctamente la inicializacion de allegro
 */
@@ -56,7 +58,8 @@ WindowUI::InitAllegro(void) {
 }
 
 WindowUI::
-WindowUI(size_t width, size_t height, double fps ) {
+WindowUI(string id, size_t width, size_t height, double fps ) {
+	this->id = id;
 	this->width = width;
 	this->height = height;
 	this->fps = fps;
@@ -79,6 +82,7 @@ WindowUI::
 	_destroy_queue();
 	_destroy_timer();
 	_destroy_components();
+	_destroy_childs();
 }
 
 void
@@ -143,7 +147,36 @@ WindowUI::_destroy_components(void) {
 }
 
 void
+WindowUI::_destroy_childs(void) {
+	for (ChildWindowUI* child : childs) {
+		if (child) {
+			delete child;
+		}
+	}
+}
+
+string
+WindowUI::getId(void) {
+	return id;
+}
+
+ChildWindowUI*
+WindowUI::child(string id) {
+	for (ChildWindowUI* child : childs) {
+		if (child->getId() == id) {
+			return child;
+		}
+	}
+	return nullptr;
+}
+
+void
 WindowUI::process(void) {}
+
+void
+WindowUI::refresh(void) {
+	this->draw();
+}
 
 void
 WindowUI::draw(void) {
@@ -166,6 +199,15 @@ WindowUI::draw(void) {
 			component->draw();
 		}
 
+		/* Redibujo los childs */
+		for (ChildWindowUI* child : childs) {
+			if (child) {
+				if (child->isEnabled()) {
+					child->draw();
+				}
+			}
+		}
+
 		/* Actualizo pantalla */
 		al_flip_display();
 	}
@@ -186,8 +228,11 @@ WindowUI::start(void) {
 	/*
 	* Se hace refactorizacion de todos los componentes
 	*/
-	for (UIComponent* component : components) {
-		component->refactor();
+	refactor();
+	for (ChildWindowUI* child : childs) {
+		if (child) {
+			child->refactor();
+		}
 	}
 
 	/* Inicio el timer */
@@ -208,6 +253,13 @@ WindowUI::start(void) {
 }
 
 void
+WindowUI::refactor(void) {
+	for (UIComponent* component : components) {
+		component->refactor();
+	}
+}
+
+void
 WindowUI::stop(void) {
 	/* Paro el sonido */
 	if (musicPlaying) {
@@ -216,7 +268,9 @@ WindowUI::stop(void) {
 	}
 
 	/* Paro el timer y el dibujo */
-	al_stop_timer(timer);
+	if (timer) {
+		al_stop_timer(timer);
+	}
 	started = false;
 }
 
@@ -237,6 +291,17 @@ WindowUI::run(void) {
 			this->close(&event);
 		}
 		else {
+
+			/* Primero verifico si tengo alguna ventana hija, y dentro de esas
+			* me fijo cual esta activada, en dicho caso, se le pasa el evento a ella
+			*/
+			for (ChildWindowUI* child : childs) {
+				if (child->isEnabled()) {
+					child->run(&event);
+					return;
+				}
+			}
+
 			if (mouse.isMouse(&event)) {
 				mouse.parse(&event);
 
@@ -270,6 +335,17 @@ WindowUI::run(void) {
 	* procesos configurables
 	*/
 	process();
+}
+
+void
+WindowUI::attachChild(ChildWindowUI* child) {
+	child->setParent(this);
+	childs.push_back(child);
+}
+
+void
+WindowUI::detachChild(ChildWindowUI* child) {
+	childs.remove(child);
 }
 
 void

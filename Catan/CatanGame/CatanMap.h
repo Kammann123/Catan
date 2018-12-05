@@ -36,6 +36,12 @@ typedef struct {
 	double info;
 } position_t;
 
+/* Permite calcular la distancia entre dos posiciones
+* dentro del mapa de pixeles o la ventana de la GUI,
+* aunque bien no se restringe a ello.
+*/
+double positionDistance(position_t p1, position_t p2);
+
 /*
 * CatanMap 
 * Clase CatanMap - Modelizacion del mapa del juego que contiene
