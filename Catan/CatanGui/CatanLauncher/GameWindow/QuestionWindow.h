@@ -8,5 +8,6 @@ using namespace std;
 
 class QuestionWindow : public ChildWindowUI {
 public:
-	QuestionWindow(string id, Action onYes, Action onNo);
+	QuestionWindow(string id);
+	void question(string msg, Action onYes, Action onNo);
 };

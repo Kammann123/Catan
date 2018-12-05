@@ -564,6 +564,9 @@
     <ClInclude Include="CatanGui\CatanLauncher\GameWindow\QuestionWindow.h">
       <Filter>CatanGui\CatanLauncher\GameWindow</Filter>
     </ClInclude>
+    <ClInclude Include="CatanGui\AllegroWidgets\MultiLabelView.h">
+      <Filter>CatanGui\AllegroWidgets</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FSM\EventQueue.cpp">
@@ -1054,6 +1057,9 @@
     </ClCompile>
     <ClCompile Include="CatanGui\CatanLauncher\GameWindow\QuestionWindow.cpp">
       <Filter>CatanGui\CatanLauncher\GameWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="CatanGui\AllegroWidgets\MultiLabelView.cpp">
+      <Filter>CatanGui\AllegroWidgets</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

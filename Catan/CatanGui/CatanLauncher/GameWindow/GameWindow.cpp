@@ -61,8 +61,7 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI("gameWindow
 
 	ChildWindowUI* discardWindow = new DiscardWindow("discardWindow");
 	ChildWindowUI* offerWindow = new OfferWindow("offerWindow");
-	ChildWindowUI* answerOffer = new QuestionWindow("answerOffer", bind(&GameWindow::acceptOffer, this, _1), bind(&GameWindow::denyOffer, this, _1));
-	ChildWindowUI* answerAgain = new QuestionWindow("answerAgain", bind(&GameWindow::playAgain, this, _1), bind(&GameWindow::gameOver, this, _1));
+	ChildWindowUI* gandalf = new QuestionWindow("gandalf");
 
 	/***********************************
 	* Creacion de componentes Building *
@@ -139,8 +138,7 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI("gameWindow
 	************************/
 	this->attachChild(discardWindow);
 	this->attachChild(offerWindow);
-	this->attachChild(answerOffer);
-	this->attachChild(answerAgain);
+	this->attachChild(gandalf);
 
 	/***********************************
 	* Agrego componente a la interfaz  *
@@ -205,8 +203,7 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI("gameWindow
 	*************************/
 	this->child("discardWindow")->setPosition(150, 70);
 	this->child("offerWindow")->setPosition(150, 40);
-	this->child("answerOffer")->setPosition(150, 40);
-	this->child("answerAgain")->setPosition(150, 40);
+	this->child("gandalf")->setPosition(95, 40);
 
 	/***********************************
 	* Configuro general de la interfaz *
@@ -309,7 +306,6 @@ GameWindow::onBuildingDrop(void* data) {
 
 			if (game.buildingOk(building->getType(), pixel.first, PlayerId::PLAYER_ONE)) {
 				game.syncHandle(new BuildingEvent(pixel.first, building->getType(), PlayerId::PLAYER_ONE));
-
 				((MouseUI*)controller->getModel())->setStatus(MouseUI::Status::IDLE);
 				controller->getModel()->setEnable(false);
 				return;
@@ -372,22 +368,23 @@ GameWindow::onTrade(void* data) {
 
 void
 GameWindow::acceptOffer(void* data) {
-
+	launcher.getGame().syncHandle(new CatanEvent(CatanEvent::Events::YES, CatanEvent::Sources::GUI, PlayerId::PLAYER_ONE));
 }
 
 void
 GameWindow::denyOffer(void* data) {
-
+	launcher.getGame().syncHandle(new CatanEvent(CatanEvent::Events::NO, CatanEvent::Sources::GUI, PlayerId::PLAYER_ONE));
 }
 
 void
 GameWindow::gameOver(void* data) {
-
+	launcher.getGame().syncHandle(new CatanEvent(CatanEvent::Events::GAME_OVER, CatanEvent::Sources::GUI, PlayerId::PLAYER_ONE));
+	launcher.change(CatanLauncher::States::MAIN_MENU);
 }
 
 void
 GameWindow::playAgain(void* data) {
-
+	launcher.getGame().syncHandle(new CatanEvent(CatanEvent::Events::PLAY_AGAIN, CatanEvent::Sources::GUI, PlayerId::PLAYER_ONE));
 }
 
 void

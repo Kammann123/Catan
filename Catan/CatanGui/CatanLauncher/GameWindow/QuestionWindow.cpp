@@ -11,9 +11,10 @@
 #define NO_FOCUS "CatanGui\\GUIDesigns\\QuestionWindow\\no_focus.png"
 
 QuestionWindow::
-QuestionWindow(string id, Action onYes, Action onNo) : ChildWindowUI(id, 800, 500) {
+QuestionWindow(string id) : ChildWindowUI(id, 800, 500) {
 	UIComponent* yesButton = UIBuilder::createButton("yesButton");
 	UIComponent* noButton = UIBuilder::createButton("noButton");
+	UIComponent* label = UIBuilder::createMultiLabel("message", 215, 15);
 
 	/* Configuro los botones */
 	(*yesButton)[0]->getImages().setConfig((unsigned int)MouseUI::Status::IDLE, YES_NORMAL);
@@ -29,14 +30,12 @@ QuestionWindow(string id, Action onYes, Action onNo) : ChildWindowUI(id, 800, 50
 	/* Posiciones */
 	MODEL(yesButton, MouseUI*)->setPosition(520, 250);
 	MODEL(noButton, MouseUI*)->setPosition(520, 330);
+	MODEL(label, TextUI*)->setPosition(345, 120);
 
 	/* Attach de componentes */
 	this->attachComponent(yesButton);
 	this->attachComponent(noButton);
-
-	/* Callbacks */
-	MODEL(yesButton, MouseUI*)->setClickAction(onYes);
-	MODEL(noButton, MouseUI*)->setClickAction(onNo);
+	this->attachComponent(label);
 
 	/* Configuracion general */
 	this->setBackground(QUESTION_BACKGROUND);
@@ -46,4 +45,19 @@ QuestionWindow(string id, Action onYes, Action onNo) : ChildWindowUI(id, 800, 50
 	yesButton->getModel()->setEnable(true);
 	noButton->getModel()->setVisible(true);
 	noButton->getModel()->setEnable(true);
+	label->getModel()->setVisible(true);
+	label->getModel()->setEnable(true);
+}
+
+void
+QuestionWindow::question(string msg, Action onYes, Action onNo) {
+
+	/* Se configuran los callbacks de la respuesta, modifica
+	* el texto actual del mensaje de mi amigo Gandalf, y luego
+	* se activa la ventana.
+	*/
+	MODEL((*this)["message"], TextUI*)->setText(msg);
+	MODEL((*this)["yesButton"], MouseUI*)->setClickAction(onYes);
+	MODEL((*this)["noButton"], MouseUI*)->setClickAction(onNo);
+	this->setEnable(true);
 }

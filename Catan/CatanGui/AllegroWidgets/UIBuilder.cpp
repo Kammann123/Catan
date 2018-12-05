@@ -8,6 +8,7 @@
 #include "../AllegroWidgets/SoundStatusView.h"
 #include "../AllegroWidgets/ImageView.h"
 #include "../AllegroWidgets/CounterView.h"
+#include "../AllegroWidgets/MultiLabelView.h"
 
 #include "../AllegroUI/MouseUI.h"
 #include "../AllegroUI/TextUI.h"
@@ -205,4 +206,22 @@ UIBuilder::createCounter(string id, unsigned int max) {
 	plus->getModel()->setUIDestroy(false);
 	minus->getModel()->setUIDestroy(false);
 	return counterComponent;
+}
+
+UIComponent*
+UIBuilder::createMultiLabel(string id, double width, double height){
+	/* Creación de la View */
+	MultiLabelView* labelView = new MultiLabelView();
+	((MultiLabelView*)labelView)->setWidth(width);
+	((MultiLabelView*)labelView)->setHeight(height);
+
+	/* Creación del modelo */
+	TextUI* labelModel = new TextUI(id, width, height);
+
+	/*Attach modelo-vista*/
+	labelModel->attach(labelView);
+	labelView->setModel(labelModel);
+
+	UIComponent* component = new UIComponent(labelModel, { labelView }, {});
+	return component;
 }

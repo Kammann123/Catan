@@ -197,6 +197,7 @@
     <ClInclude Include="CatanGui\AllegroWidgets\CounterView.h" />
     <ClInclude Include="CatanGui\AllegroWidgets\ImageView.h" />
     <ClInclude Include="CatanGui\AllegroWidgets\LabelView.h" />
+    <ClInclude Include="CatanGui\AllegroWidgets\MultiLabelView.h" />
     <ClInclude Include="CatanGui\AllegroWidgets\SimpleButtonView.h" />
     <ClInclude Include="CatanGui\AllegroWidgets\TextBoxView.h" />
     <ClInclude Include="CatanGui\AllegroWidgets\SoundStatusView.h" />
@@ -364,6 +365,7 @@
     <ClCompile Include="CatanGui\AllegroWidgets\CounterView.cpp" />
     <ClCompile Include="CatanGui\AllegroWidgets\ImageView.cpp" />
     <ClCompile Include="CatanGui\AllegroWidgets\LabelView.cpp" />
+    <ClCompile Include="CatanGui\AllegroWidgets\MultiLabelView.cpp" />
     <ClCompile Include="CatanGui\AllegroWidgets\SimpleButtonView.cpp" />
     <ClCompile Include="CatanGui\AllegroWidgets\SoundStatusView.cpp" />
     <ClCompile Include="CatanGui\AllegroWidgets\TextBoxView.cpp" />

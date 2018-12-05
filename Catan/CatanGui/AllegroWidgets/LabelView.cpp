@@ -7,9 +7,6 @@ LabelView(TextUI* model_) : UIView(model_)
 	fonts.setConfig(LA_FONT, LA_DEFAULT_FONT, LA_DEFAULT_FONT_SIZE);
 }
 
-LabelView::
-~LabelView() {}
-
 void LabelView::
 draw(void)
 {
