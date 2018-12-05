@@ -117,7 +117,7 @@ MainMenu(CatanLauncher& _launcher) : WindowUI(1080, 640), launcher(_launcher) {
 
 	/* Configuro ventana general */
 	this->setBackground(MAINMENU_BACKGROUND);
-	this->setMusic(MAINMENU_MUSIC);
+	//this->setMusic(MAINMENU_MUSIC);
 	this->setCloseAction(bind(&MainMenu::onExit, this, _1));
 	this->setCursor(MAINMENU_CURSOR);
 	this->setClickCursor(MAINMENU_CLICK_CURSOR);
