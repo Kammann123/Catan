@@ -221,8 +221,7 @@ CatanGame::syncHandle(CatanEvent* event) {
 				notifyChange();
 			}
 		}
-	}
-	else {
+	}else {
 		this->changeState(new GameError(*this), "[CatanGame] Se intento realizar una accion de juego sin la confirmacion de la accion previa!");
 		delete event;
 	}

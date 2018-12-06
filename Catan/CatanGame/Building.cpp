@@ -40,12 +40,14 @@ Building::build(Coord coord, double x, double y, double radian) {
 	this->coord = coord;
 	this->setPosition(x - width / 2, y - height / 2);
 	this->setAngle(radian);
+	this->setEnable(false);
 }
 
 void
 Building::demolish(void) {
 	/* Configuro la remocion de la construccion */
 	this->built = false;
+	this->setEnable(true);
 	refactor();
 }
 

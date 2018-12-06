@@ -346,9 +346,6 @@ GameWindow::onBuildingDrop(void* data) {
 
 			if (game.buildingOk(building->getType(), pixel.first, PlayerId::PLAYER_ONE)) {
 				game.syncHandle(new BuildingEvent(pixel.first, building->getType(), PlayerId::PLAYER_ONE));
-				((MouseUI*)controller->getModel())->setStatus(MouseUI::Status::IDLE);
-				controller->getModel()->setEnable(false);
-				return;
 			}
 		}
 	}
