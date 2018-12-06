@@ -246,6 +246,10 @@ GameWindow::onDice(void* data) {
 void 
 GameWindow::onBuildingMove(void* data) {
 
+	/* Se le pide a Sr.Mouse el controller que tenia
+	* agarrado en el proceso de grabbing y de el luego,
+	* se obtiene el modelo Building
+	*/
 	MouseController* controller = mouse.who();
 	Building* building = nullptr;
 	if (controller) {
@@ -257,17 +261,19 @@ GameWindow::onBuildingMove(void* data) {
 	* de logica a mapa en pixeles, busco si en alguna hay coincidencia
 	*/
 	ALLEGRO_EVENT* event = (ALLEGRO_EVENT*)data;
-	position_t mousePosition = { event->mouse.x, event->mouse.y };
+	position_t mousePosition = { event->mouse.x - MODEL((*this)[MAP_ID], FrameUI*)->xPos(), event->mouse.y - MODEL((*this)[MAP_ID], FrameUI*)->yPos() };
 	map<string, position_t> pixels = launcher.getGame().getCatanMap()->screen();
 
 	for (auto pixel : pixels) {
 		if (positionDistance(mousePosition, pixel.second) < PLACING_RADIO) {
 
-			cout << "Le pegaste a " << pixel.first << endl;
-			return;
+			/*
+			* Se encuentra una coordenada para la cual puede funcionar... deberia informar
+			* algo o hacer algun chiche decorativo!
+			*/
+			cout << "Le pegaste a: " << pixel.first << endl;
 		}
 	}
-	cout << "No le pegaste a nada!" << endl;
 }
 
 void
@@ -326,7 +332,7 @@ GameWindow::onBuildingDrop(void* data) {
 	* de logica a mapa en pixeles, busco si en alguna hay coincidencia
 	*/
 	ALLEGRO_EVENT* event = (ALLEGRO_EVENT*)data;
-	position_t mousePosition = {event->mouse.x, event->mouse.y};
+	position_t mousePosition = { event->mouse.x - MODEL((*this)[MAP_ID], FrameUI*)->xPos(), event->mouse.y - MODEL((*this)[MAP_ID], FrameUI*)->yPos() };
 	map<string, position_t> pixels = launcher.getGame().getCatanMap()->screen();
 
 	for (auto pixel : pixels) {
