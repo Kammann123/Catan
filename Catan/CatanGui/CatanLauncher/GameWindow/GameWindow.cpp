@@ -95,7 +95,7 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI("gameWindow
 	MODEL(localPlayer, Player*)->set(PLAYER_WOOL, 180, 150, 0);
 	MODEL(localPlayer, Player*)->set(PLAYER_GRAIN, 240, 150, 0);
 	MODEL(localPlayer, Player*)->set(PLAYER_SETTLEMENTS, 55, 60, 0);
-	MODEL(localPlayer, Player*)->set(PLAYER_ROADS, 0, 70, 0);
+	MODEL(localPlayer, Player*)->set(PLAYER_ROADS, -20, 55, 0);
 	MODEL(localPlayer, Player*)->set(PLAYER_CITY, 130, 70, 0);
 	MODEL(localPlayer, Player*)->set(PLAYER_LONGEST_ROAD, 0, 0, 0);
 
@@ -111,7 +111,7 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI("gameWindow
 	MODEL(remotePlayer, Player*)->set(PLAYER_WOOL, 180, 150, 0);
 	MODEL(remotePlayer, Player*)->set(PLAYER_GRAIN, 240, 150, 0);
 	MODEL(remotePlayer, Player*)->set(PLAYER_SETTLEMENTS, 55 + PLAYER_TWO_OFFSET, 60, 0);
-	MODEL(remotePlayer, Player*)->set(PLAYER_ROADS, 0 + PLAYER_TWO_OFFSET, 70, 0);
+	MODEL(remotePlayer, Player*)->set(PLAYER_ROADS, -20 + PLAYER_TWO_OFFSET, 55, 0);
 	MODEL(remotePlayer, Player*)->set(PLAYER_CITY, 130 + PLAYER_TWO_OFFSET, 70, 0);
 	MODEL(remotePlayer, Player*)->set(PLAYER_LONGEST_ROAD, 0 + PLAYER_TWO_OFFSET, 0, 0);
 

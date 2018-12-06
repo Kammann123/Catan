@@ -172,6 +172,7 @@ CatanGame(void) : ContainerUI(GAME_ID, 0, 0) {
 	_create_remote_player();
 	_create_local_player();
 	_create_longest_road();
+	_create_cards();
 	_create_map();
 
 	srand(time(NULL));

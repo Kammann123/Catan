@@ -41,6 +41,7 @@ Building::build(Coord coord, double x, double y, double radian) {
 	this->setPosition(x - width / 2, y - height / 2);
 	this->setAngle(radian);
 	this->setEnable(false);
+	((MouseUI*)this)->setStatus(MouseUI::Status::IDLE);
 }
 
 void
