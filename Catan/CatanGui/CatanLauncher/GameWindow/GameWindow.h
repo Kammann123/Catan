@@ -68,6 +68,7 @@ private:
 	/***********************
 	* Callbacks y acciones *
 	***********************/
+	void onBuildingMove(void* data);
 	void onBuildingDrop(void* data);
 	void onDicesThrown(void* data);
 	void onRobberDrop(void* data);

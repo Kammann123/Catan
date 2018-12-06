@@ -184,9 +184,7 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI("gameWindow
 	*************************************/
 	for (UIComponent* component : localBuildings) {
 		MODEL(component, Building*)->setDropAction(bind(&GameWindow::onBuildingDrop, this, _1));
-	}
-	for (UIComponent* component : remoteBuildings) {
-		MODEL(component, Building*)->setDropAction(bind(&GameWindow::onBuildingDrop, this, _1));
+		MODEL(component, Building*)->setMoveAction(bind(&GameWindow::onBuildingMove, this, _1));
 	}
 
 	/**************************************
@@ -235,6 +233,33 @@ GameWindow::onDice(void* data) {
 	MODEL((*this)["dice_two"], AnimationUI*)->start();
 	(*(*this)["dice_one"])[UIController::Id::MOUSE]->setEnable(false);
 	(*(*this)["dice_two"])[UIController::Id::MOUSE]->setEnable(false);
+}
+
+void 
+GameWindow::onBuildingMove(void* data) {
+
+	MouseController* controller = mouse.who();
+	Building* building = nullptr;
+	if (controller) {
+		building = (Building*)controller->getModel();
+	}
+
+	/* Luego tomo la posicion actual del Building y
+	* le pido al mapa del CatanGame que me de todas las coordenadas
+	* de logica a mapa en pixeles, busco si en alguna hay coincidencia
+	*/
+	ALLEGRO_EVENT* event = (ALLEGRO_EVENT*)data;
+	position_t mousePosition = { event->mouse.x, event->mouse.y };
+	map<string, position_t> pixels = launcher.getGame().getCatanMap()->screen();
+
+	for (auto pixel : pixels) {
+		if (positionDistance(mousePosition, pixel.second) < PLACING_RADIO) {
+
+			cout << "Le pegaste a " << pixel.first << endl;
+			return;
+		}
+	}
+	cout << "No le pegaste a nada!" << endl;
 }
 
 void
