@@ -95,13 +95,13 @@ void BuildingView::draw(void){
 				else {
 					switch ((int)building->getAngle()) {
 					case 0:
-						btMap = images["150_0_focus"].bitmap;
+						btMap = images["90_0_focus"].bitmap;
 						break;
 					case 3:
-						btMap = images["150_0_focus"].bitmap;
+						btMap = images["0_0_focus"].bitmap;
 						break;
 					case 1: case 4:
-						btMap = images["150_0_focus"].bitmap;
+						btMap = images["30_0_focus"].bitmap;
 						break;
 					case 2: case 5:
 						btMap = images["150_0_focus"].bitmap;
