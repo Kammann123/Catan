@@ -429,7 +429,7 @@ CatanMap::build(Building* building, Coord coord) {
 	* y su locacion logica dentro del juego
 	*/
 	position_t pos = screenCoords[coord.getCoords()];
-	building->build(coord, pos.x + x, pos.y + y, pos.info);
+	building->build(coord, pos.x + x, pos.y + x, pos.info);
 
 	/* Agrego el building al conjunto de construcciones
 	* realizadas
