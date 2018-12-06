@@ -103,4 +103,5 @@ private:
 	};
 
 	CatanLauncher& launcher;
+	CatanGame::State prevState;
 };

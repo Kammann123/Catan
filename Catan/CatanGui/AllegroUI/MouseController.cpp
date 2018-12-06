@@ -85,7 +85,7 @@ MouseController::parse(ALLEGRO_EVENT* event) {
 			case MouseUI::Status::DRAGGED:
 				if (event->type == ALLEGRO_EVENT_MOUSE_AXES) {
 					frame->addPosition(event->mouse.dx, event->mouse.dy);
-					frame->drag(event);
+					frame->move(event);
 				}
 				else if (event->type == ALLEGRO_EVENT_MOUSE_BUTTON_UP) {
 					if (!frame->isInside(event->mouse.x, event->mouse.y)) {
