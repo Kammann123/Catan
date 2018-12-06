@@ -1071,6 +1071,11 @@ CatanGame::buildingOk(BuildingType type, Coord coords, PlayerId player) {
 					return true;
 				}
 			}
+			else if (getState() == State::FIRST_BUILDS) {
+				if (isValidRoad(coords, player)) {
+					return true;
+				}
+			}
 			break;
 		case BuildingType::CITY:
 			if (hasCityResources(player)) {
