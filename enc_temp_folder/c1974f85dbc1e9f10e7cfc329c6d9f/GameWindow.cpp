@@ -41,7 +41,7 @@
 #define GAMEWINDOW_TRADE_FOCUSED "CatanGui\\GUIDesigns\\GameMenu\\trade_focused.png"
 #define GAMEWINDOW_TRADE_SELECTED	"CatanGui\\GUIDesigns\\GameMenu\\trade_selected.png"
 
-#define PLACING_RADIO		15
+#define PLACING_RADIO		20
 #define PLAYER_TWO_OFFSET	25
 
 GameWindow::
@@ -292,12 +292,11 @@ GameWindow::onBuildingDrop(void* data) {
 	* le pido al mapa del CatanGame que me de todas las coordenadas
 	* de logica a mapa en pixeles, busco si en alguna hay coincidencia
 	*/
-	ALLEGRO_EVENT* event = (ALLEGRO_EVENT*)data;
-	position_t mousePosition = {event->mouse.x, event->mouse.y};
+	position_t buildingPixel = {building->xPos(), building->yPos(), 0};
 	map<string, position_t> pixels = launcher.getGame().getCatanMap()->screen();
 
 	for (auto pixel : pixels) {
-		if (positionDistance(mousePosition, pixel.second) < PLACING_RADIO) {
+		if (positionDistance(buildingPixel, pixel.second) < PLACING_RADIO) {
 
 			/* Se encuentra una ubicacion valida con lo cual,
 			* se pregunta si en si misma, la operacion es valida
