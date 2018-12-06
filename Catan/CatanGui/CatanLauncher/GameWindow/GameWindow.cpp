@@ -216,6 +216,8 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI("gameWindow
 	* Activo el layout actual *
 	**************************/
 	normal_layout();
+
+	prevState = CatanGame::State::GAME_SYNC;
 }
 
 void
@@ -225,6 +227,12 @@ GameWindow::update(void) {
 	* del otro jugador
 	*/
 	launcher.getGame().confirm(PlayerId::PLAYER_ONE);
+
+	CatanGame::State currState = launcher.getGame().getState();
+	if (currState != prevState) {
+		prevState = currState;
+		cout << "Cambio de estado!!! " << launcher.getGame().info() << endl;
+	}
 }
 
 void

@@ -6,6 +6,7 @@
 #include "../../../CatanGame/Building.h"
 #include "../../../CatanGame/LongestRoad.h"
 #include "../../../CatanGame/CatanMap.h"
+#include "../../../CatanGame/CatanGame.h"
 
 #include "../../../MVC/Observer.h"
 
