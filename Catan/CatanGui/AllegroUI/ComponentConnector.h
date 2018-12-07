@@ -1,7 +1,25 @@
 #pragma
 
-#include "MouseUI.h"
+#include <functional>
 
+/*************************************************************************
+* Macros de utilizacion del ComponentConnector 
+*
+* Su utilizacion se comprende de dos fases, la 
+* creacion del conector mediante el uso de
+* CREATE_CONNECTOR:
+*	+CREATE_CONNECTOR(
+*		TextUI::setText, 
+*		label, 
+*		string, 
+*		ComponentConnector::Mode::NO_ARG
+*	)
+* Luego se debera agregar el conector como callback
+* de alguna rutina de accion.
+*	+ myButton->setClickAction( ATTACH_CONNECTOR(myConnector, string) )
+*************************************************************************/
+#define CREATE_CONNECTOR(_method, _object, _type, ...)	new ComponentConnector<_type>(bind(&_method, _object, _1), __VA_ARGS__)
+#define ATTACH_CONNECTOR(_connector, _type)	bind(&ComponentConnector<_type>::execute, _connector, _1)
 /*
 * ComponentConnector
 * 
@@ -32,15 +50,15 @@ public:
 	* ComponentConnector - Se lo construye con el modo, el callback
 	* y eventualmente la informacion de cada modo.
 	*/
-	ComponentConnector(Action callback, Mode mode);
-	ComponentConnector(Action callback, T fixedArg);
+	ComponentConnector(std::function<void(T)> callback, Mode mode);
+	ComponentConnector(std::function<void(T)> callback, T fixedArg);
 
 	/*
 	* execute - Ejecuta el callback.
 	*/
 	void execute(void*);
 private:
-	Action callback;
+	std::function<void(T)> callback;
 	Mode mode;
 	T fixedArg;
 };
@@ -49,7 +67,7 @@ private:
 * Definicion del template *
 **************************/
 template <class T>
-ComponentConnector<T>::ComponentConnector(Action callback, Mode mode) {
+ComponentConnector<T>::ComponentConnector(std::function<void(T)> callback, Mode mode) {
 	this->callback = callback;
 	this->mode = mode;
 
@@ -59,7 +77,7 @@ ComponentConnector<T>::ComponentConnector(Action callback, Mode mode) {
 }
 
 template <class T>
-ComponentConnector<T>::ComponentConnector(Action callback, T fixedArg) {
+ComponentConnector<T>::ComponentConnector(std::function<void(T)> callback, T fixedArg) {
 	this->callback = callback;
 	this->mode = ComponentConnector::Mode::FIXED_ARG;
 	this->fixedArg = fixedArg;
