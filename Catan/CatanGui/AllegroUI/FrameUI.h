@@ -26,7 +26,7 @@ public:
 	* Se construye con un tamaño, y luego se posible definir,
 	* posiciones y estado inicial, de todas formas tiene argumento por defecto
 	*/
-	FrameUI(string id, size_t width, size_t height, pos_t angle = 0, pos_t x = 0, pos_t y = 0);
+	FrameUI(string id, size_t width, size_t height, int angle = 0, pos_t x = 0, pos_t y = 0);
 	~FrameUI(void);
 
 	/*
@@ -36,11 +36,11 @@ public:
 	virtual void addPosition(pos_t x, pos_t y);
 	virtual void setWidth(size_t width);
 	virtual void setHeight(size_t height);
-	virtual void setAngle(pos_t radian);
+	virtual void setAngle(int angle);
 
 	size_t getWidth(void);
 	size_t getHeight(void);
-	pos_t getAngle(void);
+	int getAngle(void);
 	pos_t xPos(void);
 	pos_t yPos(void);
 	
@@ -54,7 +54,7 @@ public:
 protected:
 	pos_t x;
 	pos_t y;
-	pos_t radian;
+	int angle;
 	size_t height;
 	size_t width;
 };

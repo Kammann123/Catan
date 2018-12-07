@@ -87,9 +87,9 @@ void PlayerView::draw(void)
 	string settlementCount = to_string(player->hasSettlements());
 	string roadsCount = to_string(player->hasRoads());
 	string cityCount = to_string(player->hasCities());
-	al_draw_text(fontCounter, color, (*player)[PLAYER_SETTLEMENTS].x + player->xPos() + 10, (*player)[PLAYER_CITY].y - counterOffset + player->yPos() + 15, 0, settlementCount.c_str());
-	al_draw_text(fontCounter, color, (*player)[PLAYER_ROADS].x + player->xPos() + 10, (*player)[PLAYER_CITY].y - counterOffset + player->yPos() + 15, 0, roadsCount.c_str());
-	al_draw_text(fontCounter, color, (*player)[PLAYER_CITY].x + player->xPos() + 10, (*player)[PLAYER_CITY].y - counterOffset + player->yPos() + 15, 0, cityCount.c_str());
+	al_draw_text(fontCounter, color, (*player)[PLAYER_SETTLEMENTS].x + player->xPos() + 20, (*player)[PLAYER_CITY].y - counterOffset + player->yPos() + 15, 0, settlementCount.c_str());
+	al_draw_text(fontCounter, color, (*player)[PLAYER_ROADS].x + player->xPos() + 20, (*player)[PLAYER_CITY].y - counterOffset + player->yPos() + 15, 0, roadsCount.c_str());
+	al_draw_text(fontCounter, color, (*player)[PLAYER_CITY].x + player->xPos() + 20, (*player)[PLAYER_CITY].y - counterOffset + player->yPos() + 15, 0, cityCount.c_str());
 
 	/* Dibujo las cantidades de las cartas */
 	counterOffset = 20;

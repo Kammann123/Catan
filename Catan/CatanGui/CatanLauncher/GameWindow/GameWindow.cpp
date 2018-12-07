@@ -26,6 +26,9 @@
 #define GAMEWINDOW_CURSOR		"CatanGui\\Cursor\\cursor_normal.png"
 #define GAMEWINDOW_CLICK_CURSOR		"CatanGui\\Cursor\\cursor_clicking.png"
 #define GAMEWINDOW_GRAB_CURSOR		"CatanGui\\Cursor\\cursor_grabbing.png"
+#define GAMEWINDOW_BUILD_CURSOR		"CatanGui\\Cursor\\cursor_building.png"
+
+#define BUILD_CURSOR_ID		10
 
 #define GAMEWINDOW_BACKGROUND "CatanGui\\GUIDesigns\\GameMenu\\background.png"
 
@@ -45,7 +48,7 @@
 #define GAMEWINDOW_TRADE_FOCUSED "CatanGui\\GUIDesigns\\GameMenu\\trade_focused.png"
 #define GAMEWINDOW_TRADE_SELECTED	"CatanGui\\GUIDesigns\\GameMenu\\trade_selected.png"
 
-#define PLACING_RADIO		15
+#define PLACING_RADIO		10
 #define PLAYER_TWO_OFFSET	25
 
 GameWindow::
@@ -92,14 +95,14 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI("gameWindow
 	******************************/
 	MODEL(localPlayer, Player*)->setPosition(10, 400);
 	MODEL(localPlayer, Player*)->set(PLAYER_NAME, 40, 0, 0);
-	MODEL(localPlayer, Player*)->set(PLAYER_VICTORY_POINTS, 165, 20, 0);
+	MODEL(localPlayer, Player*)->set(PLAYER_VICTORY_POINTS, 175, 10, 0);
 	MODEL(localPlayer, Player*)->set(PLAYER_ORE, 0, 150, 0);
 	MODEL(localPlayer, Player*)->set(PLAYER_LUMBER, 60, 150, 0);
 	MODEL(localPlayer, Player*)->set(PLAYER_BRICK, 120, 150, 0);
 	MODEL(localPlayer, Player*)->set(PLAYER_WOOL, 180, 150, 0);
 	MODEL(localPlayer, Player*)->set(PLAYER_GRAIN, 240, 150, 0);
-	MODEL(localPlayer, Player*)->set(PLAYER_SETTLEMENTS, 55, 60, 0);
-	MODEL(localPlayer, Player*)->set(PLAYER_ROADS, -20, 55, 0);
+	MODEL(localPlayer, Player*)->set(PLAYER_SETTLEMENTS, 55, 70, 0);
+	MODEL(localPlayer, Player*)->set(PLAYER_ROADS, -20, 75, 0);
 	MODEL(localPlayer, Player*)->set(PLAYER_CITY, 130, 70, 0);
 	MODEL(localPlayer, Player*)->set(PLAYER_LONGEST_ROAD, 0, 0, 0);
 
@@ -108,14 +111,14 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI("gameWindow
 	******************************/
 	MODEL(remotePlayer, Player*)->setPosition(775, 400);
 	MODEL(remotePlayer, Player*)->set(PLAYER_NAME, 40 + PLAYER_TWO_OFFSET, 0, 0);
-	MODEL(remotePlayer, Player*)->set(PLAYER_VICTORY_POINTS, 165 + PLAYER_TWO_OFFSET, 20, 0);
+	MODEL(remotePlayer, Player*)->set(PLAYER_VICTORY_POINTS, 175 + PLAYER_TWO_OFFSET, 10, 0);
 	MODEL(remotePlayer, Player*)->set(PLAYER_ORE, 0, 150, 0);
 	MODEL(remotePlayer, Player*)->set(PLAYER_LUMBER, 60, 150, 0);
 	MODEL(remotePlayer, Player*)->set(PLAYER_BRICK, 120, 150, 0);
 	MODEL(remotePlayer, Player*)->set(PLAYER_WOOL, 180, 150, 0);
 	MODEL(remotePlayer, Player*)->set(PLAYER_GRAIN, 240, 150, 0);
-	MODEL(remotePlayer, Player*)->set(PLAYER_SETTLEMENTS, 55 + PLAYER_TWO_OFFSET, 60, 0);
-	MODEL(remotePlayer, Player*)->set(PLAYER_ROADS, -20 + PLAYER_TWO_OFFSET, 55, 0);
+	MODEL(remotePlayer, Player*)->set(PLAYER_SETTLEMENTS, 55 + PLAYER_TWO_OFFSET, 70, 0);
+	MODEL(remotePlayer, Player*)->set(PLAYER_ROADS, -20 + PLAYER_TWO_OFFSET, 75, 0);
 	MODEL(remotePlayer, Player*)->set(PLAYER_CITY, 130 + PLAYER_TWO_OFFSET, 70, 0);
 	MODEL(remotePlayer, Player*)->set(PLAYER_LONGEST_ROAD, 0 + PLAYER_TWO_OFFSET, 0, 0);
 
@@ -222,6 +225,7 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI("gameWindow
 	this->setClickCursor(GAMEWINDOW_CLICK_CURSOR);
 	this->setGrabCursor(GAMEWINDOW_GRAB_CURSOR);
 	this->setCloseAction(bind(&GameWindow::onExit, this, _1));
+	this->mouse.set(BUILD_CURSOR_ID, GAMEWINDOW_BUILD_CURSOR);
 
 	/**************************
 	* Activo el layout actual *
@@ -277,14 +281,11 @@ GameWindow::onBuildingMove(void* data) {
 
 	for (auto pixel : pixels) {
 		if (positionDistance(mousePosition, pixel.second) < PLACING_RADIO) {
-
-			/*
-			* Se encuentra una coordenada para la cual puede funcionar... deberia informar
-			* algo o hacer algun chiche decorativo!
-			*/
-			cout << "Le pegaste a: " << pixel.first << endl;
+			this->mouse.force(BUILD_CURSOR_ID);
+			return;
 		}
 	}
+	this->mouse.release();
 }
 
 void
@@ -327,6 +328,7 @@ GameWindow::onExit(void* data) {
 
 void
 GameWindow::onBuildingDrop(void* data) {
+	this->mouse.release();
 
 	/* Se le pide a Sr.Mouse el controller que tenia
 	* agarrado en el proceso de grabbing y de el luego,
@@ -416,7 +418,7 @@ GameWindow::onTrade(void* data) {
 
 void
 GameWindow::onPass(void* data) {
-	launcher.getGame().syncHandle(new CatanEvent(CatanEvent::Events::PASS, CatanEvent::Sources::GUI, PlayerId::PLAYER_ONE);
+	launcher.getGame().syncHandle(new CatanEvent(CatanEvent::Events::PASS, CatanEvent::Sources::GUI, PlayerId::PLAYER_ONE));
 }
 
 void

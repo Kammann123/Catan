@@ -10,6 +10,7 @@ Building(Player* player, BuildingType type) : MouseUI(BUILDING_ID, 0, 0, true) {
 	this->neighbours.clear();
 	this->built = false;
 	this->visited = false;
+	this->angle = 90;
 }
 
 bool
