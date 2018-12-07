@@ -178,8 +178,6 @@ UIBuilder::createCounter(string id, unsigned int max) {
 	UIComponent* plus = UIBuilder::createButton(id + string("_plus"));
 	UIComponent* minus = UIBuilder::createButton(id + string("_minus"));
 
-	plus->getModel()->setEnable(true);
-
 	/* Configuro los componentes con sus imagenes */
 	(*plus)[0]->getImages().setConfig((unsigned int)MouseUI::Status::IDLE, PLUS_IMG);
 	(*plus)[0]->getImages().setConfig((unsigned int)MouseUI::Status::FOCUSED, PLUS_IMG);

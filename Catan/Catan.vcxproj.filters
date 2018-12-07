@@ -567,6 +567,9 @@
     <ClInclude Include="CatanGui\AllegroWidgets\MultiLabelView.h">
       <Filter>CatanGui\AllegroWidgets</Filter>
     </ClInclude>
+    <ClInclude Include="CatanGui\AllegroUI\ComponentConnector.h">
+      <Filter>CatanGui\AllegroUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FSM\EventQueue.cpp">

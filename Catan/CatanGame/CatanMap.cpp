@@ -3,18 +3,16 @@
 
 #include <algorithm>
 
-#define MAP_PI 3.14159265359
-
-#define _0_SEA_ROTATION MAP_PI
-#define _1_SEA_ROTATION (4*MAP_PI/3)
-#define _2_SEA_ROTATION (5*MAP_PI/3)
+#define _0_SEA_ROTATION 180
+#define _1_SEA_ROTATION 240
+#define _2_SEA_ROTATION 300
 #define _3_SEA_ROTATION 0
-#define _4_SEA_ROTATION (MAP_PI/3)
-#define _5_SEA_ROTATION (2*MAP_PI/3)
+#define _4_SEA_ROTATION 60
+#define _5_SEA_ROTATION 120
 
-#define MAP_ALPHA (5*MAP_PI/3)
-#define MAP_BETA (MAP_PI/3)
-#define MAP_VERTICAL 0
+#define MAP_ALPHA 300
+#define MAP_BETA 60
+#define MAP_VERTICAL 90
 #define MAP_NONE 0
 
 double

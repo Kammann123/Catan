@@ -57,6 +57,11 @@ WindowUI::InitAllegro(void) {
 	}
 }
 
+void 
+WindowUI::CloseAllegro(void) {
+
+}
+
 WindowUI::
 WindowUI(string id, size_t width, size_t height, double fps ) {
 	this->id = id;
@@ -350,18 +355,40 @@ WindowUI::detachChild(ChildWindowUI* child) {
 
 void
 WindowUI::attachComponent(UIComponent* component) {
+	/* Configuro la pertenencia de todos los views
+	* del componente a esta ventana en particular.
+	*/
 	for (UIView* view : component->getView()) {
 		view->setWindow(this);
 	}
+
+	/* Agrego el componente a la lista de componentes */
 	components.push_back(component);
+
+	/* Ejecuto recursivamente el attachment
+	* de los subcomponentes del component */
+	for (UIComponent* subcomponent : (*component)) {
+		attachComponent(subcomponent);
+	}
 }
 
 void
 WindowUI::detachComponent(UIComponent* component) {
+	/* Remuevo las Views del componente especifico
+	* desconfigurando la window a la que pertenencen
+	*/
 	for (UIView* view : component->getView()) {
 		view->clearWindow();
 	}
+	
+	/* Remuevo al componente de mi lista de componentes */
 	components.remove(component);
+
+	/* Ejecuto recursivamente el detachment
+	* de los subcomponentes del component */
+	for (UIComponent* subcomponent : (*component)) {
+		detachComponent(subcomponent);
+	}
 }
 
 void

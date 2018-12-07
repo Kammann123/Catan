@@ -49,8 +49,19 @@ public:
 	/*
 	* set - Permite configurar las imagenes para los estados corresspondientes
 	* del mouse. En base a lo cual se definen los sprites del cursor.
+	* Nota: En la sobrecarga sin identificacion por state, mas bien por id,
+	* se permiten agregar estados del cursor especiales, que deben ser forzados
+	* exteriormente.
 	*/
 	void set(States state, const char* filename);
+	void set(unsigned int id, const char* filename);
+
+	/*
+	* force y release - Permiten forzar un estado especial del cursor
+	* o bien liberarlo del mismo.
+	*/
+	void force(unsigned int id);
+	void release(void);
 
 	/*
 	* setDisplay - Permite guardar el display a quien pertenece el mouue
@@ -80,8 +91,10 @@ public:
 
 private:
 	map<States, ALLEGRO_MOUSE_CURSOR*> cursors;
+	map<unsigned int, ALLEGRO_MOUSE_CURSOR*> especialCursors;
 	ALLEGRO_DISPLAY * display;
 	MouseController * clicked;
 	ImageConfig images;
 	States state;
+	bool especialMode;
 };

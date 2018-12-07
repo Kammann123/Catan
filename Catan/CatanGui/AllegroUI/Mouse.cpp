@@ -7,6 +7,7 @@ Mouse(ALLEGRO_DISPLAY* display) {
 	this->images.clear();
 	this->state = States::NORMAL;
 	this->cursors.clear();
+	this->especialMode = false;
 }
 
 Mouse::
@@ -43,14 +44,10 @@ Mouse::parse(ALLEGRO_EVENT* event) {
 			if (event->type == ALLEGRO_EVENT_MOUSE_BUTTON_UP) {
 				state = States::NORMAL;
 			}
+			else if (event->type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
+				state = States::CLICKING;
+			}
 			break;
-	}
-
-	/* Evaluo si hubo algun cambio de estado para actualizar
-	* el sprite 
-	*/
-	if (prevState != state) {
-		update();
 	}
 }
 
@@ -94,6 +91,11 @@ Mouse::set(States state, const char* filename) {
 }
 
 void
+Mouse::set(unsigned int id, const char* filename) {
+	images.setConfig(id, filename);
+}
+
+void
 Mouse::setDisplay(ALLEGRO_DISPLAY* display) {
 	this->display = display;
 }
@@ -101,21 +103,58 @@ Mouse::setDisplay(ALLEGRO_DISPLAY* display) {
 void
 Mouse::update(void) {
 
-	/* Verifico si para el estado actual existe un sprite
-	* definido en la galeria de imagenes correspondientes al mouse
-	* ademas verifico tener configurado el display.
-	*/
-	if (images.has(state)){
-		if (display) {
+	if (!especialMode) {
+		/* Verifico si para el estado actual existe un sprite
+		* definido en la galeria de imagenes correspondientes al mouse
+		* ademas verifico tener configurado el display.
+		*/
+		if (images.has(state)) {
+			if (display) {
 
-			/* Primero valido la existencia previa de un cursor,
-			* y en caso de haberla, se elimina el mismo y se habre nuevo 
-			*/
-			if (cursors.find(state) == cursors.end()) {
-				this->cursors.insert(pair<States, ALLEGRO_MOUSE_CURSOR*>(state, al_create_mouse_cursor(images[state].bitmap, 0, 0)));
+				/* Primero valido la existencia previa de un cursor,
+				* y en caso de haberla, se elimina el mismo y se habre nuevo
+				*/
+				if (cursors.find(state) == cursors.end()) {
+					this->cursors.insert(pair<States, ALLEGRO_MOUSE_CURSOR*>(state, al_create_mouse_cursor(images[state].bitmap, 0, 0)));
+				}
+				al_set_mouse_cursor(display, cursors[state]);
 			}
-			al_set_mouse_cursor(display, cursors[state]);
 		}
+	}
+}
+
+void
+Mouse::force(unsigned int id) {
+
+	if (!especialMode) {
+		/* Verifico si para el estado especial en el cual
+		* se esta forzando el id, se tiene un sprite, y para ese
+		* existe precargado el mismo como cursor
+		*/
+		if (images.has(id)) {
+			if (display) {
+				/* Pongo en modo especial y entonces se
+				* bloquean los cambios de estado por interaccion
+				*/
+				especialMode = true;
+
+				/*
+				* Verifico que no existe, pues de no ser asi, lo agrego
+				*/
+				if (especialCursors.find(id) == especialCursors.end()) {
+					this->especialCursors.insert(pair<unsigned int, ALLEGRO_MOUSE_CURSOR*>(id, al_create_mouse_cursor(images[id].bitmap, 0, 0)));
+				}
+				al_set_mouse_cursor(display, especialCursors[id]);
+			}
+		}
+	}
+}
+
+void
+Mouse::release(void) {
+	if (especialMode) {
+		especialMode = false;
+		update();
 	}
 }
 

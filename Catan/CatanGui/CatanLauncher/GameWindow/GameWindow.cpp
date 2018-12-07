@@ -23,30 +23,37 @@
 #include "LongestRoadView.h"
 #include "CatanMapView.h"
 
-#define GAMEWINDOW_CURSOR		"CatanGui\\Cursor\\cursor_normal.png"
+#define GAMEWINDOW_CURSOR			"CatanGui\\Cursor\\cursor_normal.png"
 #define GAMEWINDOW_CLICK_CURSOR		"CatanGui\\Cursor\\cursor_clicking.png"
 #define GAMEWINDOW_GRAB_CURSOR		"CatanGui\\Cursor\\cursor_grabbing.png"
+#define GAMEWINDOW_BUILD_CURSOR		"CatanGui\\Cursor\\cursor_building.png"
+
+#define BUILD_CURSOR_ID		10
 
 #define GAMEWINDOW_BACKGROUND "CatanGui\\GUIDesigns\\GameMenu\\background.png"
 
-#define GAMEWINDOW_EXIT_NORMAL "CatanGui\\GUIDesigns\\GameMenu\\exit_normal.png"
-#define GAMEWINDOW_EXIT_FOCUSED "CatanGui\\GUIDesigns\\GameMenu\\exit_focused.png"
+#define GAMEWINDOW_PASS_NORMAL		"CatanGui\\GUIDesigns\\GameMenu\\pass.png"
+#define GAMEWINDOW_PASS_FOCUSED		"CatanGui\\GUIDesigns\\GameMenu\\pass_focused.png"
+#define GAMEWINDOW_PASS_SELECTED	"CatanGui\\GUIDesigns\\GameMenu\\pass_selected.png"
+
+#define GAMEWINDOW_EXIT_NORMAL		"CatanGui\\GUIDesigns\\GameMenu\\exit_normal.png"
+#define GAMEWINDOW_EXIT_FOCUSED		"CatanGui\\GUIDesigns\\GameMenu\\exit_focused.png"
 #define GAMEWINDOW_EXIT_SELECTED	"CatanGui\\GUIDesigns\\GameMenu\\exit_selected.png"
 
-#define GAMEWINDOW_DISCARD_NORMAL "CatanGui\\GUIDesigns\\GameMenu\\discard_normal.png"
-#define GAMEWINDOW_DISCARD_FOCUSED "CatanGui\\GUIDesigns\\GameMenu\\discard_focused.png"
+#define GAMEWINDOW_DISCARD_NORMAL	"CatanGui\\GUIDesigns\\GameMenu\\discard_normal.png"
+#define GAMEWINDOW_DISCARD_FOCUSED	"CatanGui\\GUIDesigns\\GameMenu\\discard_focused.png"
 #define GAMEWINDOW_DISCARD_SELECTED	"CatanGui\\GUIDesigns\\GameMenu\\discard_selected.png"
 
-#define GAMEWINDOW_TRADE_NORMAL "CatanGui\\GUIDesigns\\GameMenu\\trade_normal.png"
-#define GAMEWINDOW_TRADE_FOCUSED "CatanGui\\GUIDesigns\\GameMenu\\trade_focused.png"
+#define GAMEWINDOW_TRADE_NORMAL		"CatanGui\\GUIDesigns\\GameMenu\\trade_normal.png"
+#define GAMEWINDOW_TRADE_FOCUSED	"CatanGui\\GUIDesigns\\GameMenu\\trade_focused.png"
 #define GAMEWINDOW_TRADE_SELECTED	"CatanGui\\GUIDesigns\\GameMenu\\trade_selected.png"
 
-#define PLACING_RADIO		15
+#define PLACING_RADIO		10
 #define PLAYER_TWO_OFFSET	25
 
 GameWindow::
 GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI("gameWindow", 1080, 640) {
-
+	UIComponent* passButton = UIBuilder::createButton("pass");
 	UIComponent* exitButton = UIBuilder::createButton("exit");
 	UIComponent* discardButton = UIBuilder::createButton("discard");
 	UIComponent* tradeButton = UIBuilder::createButton("trade");
@@ -88,14 +95,14 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI("gameWindow
 	******************************/
 	MODEL(localPlayer, Player*)->setPosition(10, 400);
 	MODEL(localPlayer, Player*)->set(PLAYER_NAME, 40, 0, 0);
-	MODEL(localPlayer, Player*)->set(PLAYER_VICTORY_POINTS, 165, 20, 0);
+	MODEL(localPlayer, Player*)->set(PLAYER_VICTORY_POINTS, 175, 10, 0);
 	MODEL(localPlayer, Player*)->set(PLAYER_ORE, 0, 150, 0);
 	MODEL(localPlayer, Player*)->set(PLAYER_LUMBER, 60, 150, 0);
 	MODEL(localPlayer, Player*)->set(PLAYER_BRICK, 120, 150, 0);
 	MODEL(localPlayer, Player*)->set(PLAYER_WOOL, 180, 150, 0);
 	MODEL(localPlayer, Player*)->set(PLAYER_GRAIN, 240, 150, 0);
-	MODEL(localPlayer, Player*)->set(PLAYER_SETTLEMENTS, 55, 60, 0);
-	MODEL(localPlayer, Player*)->set(PLAYER_ROADS, -20, 55, 0);
+	MODEL(localPlayer, Player*)->set(PLAYER_SETTLEMENTS, 55, 70, 0);
+	MODEL(localPlayer, Player*)->set(PLAYER_ROADS, -20, 75, 0);
 	MODEL(localPlayer, Player*)->set(PLAYER_CITY, 130, 70, 0);
 	MODEL(localPlayer, Player*)->set(PLAYER_LONGEST_ROAD, 0, 0, 0);
 
@@ -104,20 +111,25 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI("gameWindow
 	******************************/
 	MODEL(remotePlayer, Player*)->setPosition(775, 400);
 	MODEL(remotePlayer, Player*)->set(PLAYER_NAME, 40 + PLAYER_TWO_OFFSET, 0, 0);
-	MODEL(remotePlayer, Player*)->set(PLAYER_VICTORY_POINTS, 165 + PLAYER_TWO_OFFSET, 20, 0);
+	MODEL(remotePlayer, Player*)->set(PLAYER_VICTORY_POINTS, 175 + PLAYER_TWO_OFFSET, 10, 0);
 	MODEL(remotePlayer, Player*)->set(PLAYER_ORE, 0, 150, 0);
 	MODEL(remotePlayer, Player*)->set(PLAYER_LUMBER, 60, 150, 0);
 	MODEL(remotePlayer, Player*)->set(PLAYER_BRICK, 120, 150, 0);
 	MODEL(remotePlayer, Player*)->set(PLAYER_WOOL, 180, 150, 0);
 	MODEL(remotePlayer, Player*)->set(PLAYER_GRAIN, 240, 150, 0);
-	MODEL(remotePlayer, Player*)->set(PLAYER_SETTLEMENTS, 55 + PLAYER_TWO_OFFSET, 60, 0);
-	MODEL(remotePlayer, Player*)->set(PLAYER_ROADS, -20 + PLAYER_TWO_OFFSET, 55, 0);
+	MODEL(remotePlayer, Player*)->set(PLAYER_SETTLEMENTS, 55 + PLAYER_TWO_OFFSET, 70, 0);
+	MODEL(remotePlayer, Player*)->set(PLAYER_ROADS, -20 + PLAYER_TWO_OFFSET, 75, 0);
 	MODEL(remotePlayer, Player*)->set(PLAYER_CITY, 130 + PLAYER_TWO_OFFSET, 70, 0);
 	MODEL(remotePlayer, Player*)->set(PLAYER_LONGEST_ROAD, 0 + PLAYER_TWO_OFFSET, 0, 0);
 
 	/****************************/
 	/* Configuracion de botones */
 	/****************************/
+	(*passButton)[0]->getImages().setConfig(MouseUI::Status::IDLE, GAMEWINDOW_PASS_NORMAL);
+	(*passButton)[0]->getImages().setConfig(MouseUI::Status::FOCUSED, GAMEWINDOW_PASS_FOCUSED);
+	(*passButton)[0]->getImages().setConfig(MouseUI::Status::SELECTED, GAMEWINDOW_PASS_SELECTED);
+	(*passButton)[0]->getImages().setConfig(MouseUI::Status::DRAGGED, GAMEWINDOW_PASS_SELECTED);
+
 	(*exitButton)[0]->getImages().setConfig(MouseUI::Status::IDLE, GAMEWINDOW_EXIT_NORMAL);
 	(*exitButton)[0]->getImages().setConfig(MouseUI::Status::FOCUSED, GAMEWINDOW_EXIT_FOCUSED);
 	(*exitButton)[0]->getImages().setConfig(MouseUI::Status::SELECTED, GAMEWINDOW_EXIT_SELECTED);
@@ -143,6 +155,7 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI("gameWindow
 	/***********************************
 	* Agrego componente a la interfaz  *
 	***********************************/
+	this->attachComponent(passButton);
 	this->attachComponent(exitButton);
 	this->attachComponent(discardButton);
 	this->attachComponent(tradeButton);
@@ -190,9 +203,10 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI("gameWindow
 	/**************************************
 	* Configuro posiciones de la interfaz *
 	**************************************/
-	MODEL(exitButton, MouseUI*)->setPosition(63, 240);
-	MODEL(discardButton, MouseUI*)->setPosition(63, 190);
-	MODEL(tradeButton, MouseUI*)->setPosition(63, 140);
+	MODEL(passButton, MouseUI*)->setPosition(63, 130);
+	MODEL(tradeButton, MouseUI*)->setPosition(63, 170);
+	MODEL(discardButton, MouseUI*)->setPosition(63, 210);
+	MODEL(exitButton, MouseUI*)->setPosition(63, 250);
 	MODEL(firstDice, Dice*)->setPosition(900, 20);
 	MODEL(secondDice, Dice*)->setPosition(950, 20);
 
@@ -211,6 +225,7 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI("gameWindow
 	this->setClickCursor(GAMEWINDOW_CLICK_CURSOR);
 	this->setGrabCursor(GAMEWINDOW_GRAB_CURSOR);
 	this->setCloseAction(bind(&GameWindow::onExit, this, _1));
+	this->mouse.set(BUILD_CURSOR_ID, GAMEWINDOW_BUILD_CURSOR);
 
 	/**************************
 	* Activo el layout actual *
@@ -266,14 +281,11 @@ GameWindow::onBuildingMove(void* data) {
 
 	for (auto pixel : pixels) {
 		if (positionDistance(mousePosition, pixel.second) < PLACING_RADIO) {
-
-			/*
-			* Se encuentra una coordenada para la cual puede funcionar... deberia informar
-			* algo o hacer algun chiche decorativo!
-			*/
-			cout << "Le pegaste a: " << pixel.first << endl;
+			this->mouse.force(BUILD_CURSOR_ID);
+			return;
 		}
 	}
+	this->mouse.release();
 }
 
 void
@@ -316,6 +328,7 @@ GameWindow::onExit(void* data) {
 
 void
 GameWindow::onBuildingDrop(void* data) {
+	this->mouse.release();
 
 	/* Se le pide a Sr.Mouse el controller que tenia
 	* agarrado en el proceso de grabbing y de el luego,
@@ -404,6 +417,11 @@ GameWindow::onTrade(void* data) {
 }
 
 void
+GameWindow::onPass(void* data) {
+	launcher.getGame().syncHandle(new CatanEvent(CatanEvent::Events::PASS, CatanEvent::Sources::GUI, PlayerId::PLAYER_ONE));
+}
+
+void
 GameWindow::acceptOffer(void* data) {
 	launcher.getGame().syncHandle(new CatanEvent(CatanEvent::Events::YES, CatanEvent::Sources::GUI, PlayerId::PLAYER_ONE));
 }
@@ -462,6 +480,8 @@ GameWindow::normal_layout(void) {
 	/************************
 	* Configuro los botones *
 	************************/
+	(*this)["pass"]->getModel()->setEnable(true);
+	(*this)["pass"]->getModel()->setVisible(true);
 	(*this)["exit"]->getModel()->setEnable(true);
 	(*this)["exit"]->getModel()->setVisible(true);
 	(*this)["discard"]->getModel()->setEnable(true);

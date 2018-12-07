@@ -22,8 +22,6 @@
 #define	TOKEN_11_IMG		"CatanGui\\GUIDesigns\\GameMenu\\tokens\\11token.png"
 #define	TOKEN_12_IMG		"CatanGui\\GUIDesigns\\GameMenu\\tokens\\12token.png"
 
-/******************************************COMPLETAR****************************************/
-
 #define NORMAL_SEA_IMG		"CatanGui\\GUIDesigns\\GameMenu\\sea\\normal_sea.png"
 #define	WHEAT_SEA_IMG		"CatanGui\\GUIDesigns\\GameMenu\\sea\\wheat_normal_sea.png"
 #define	SHEEP_SEA_IMG		"CatanGui\\GUIDesigns\\GameMenu\\sea\\wool_normal_sea.png"
@@ -32,6 +30,8 @@
 #define	WOOD_SEA_IMG		"CatanGui\\GUIDesigns\\GameMenu\\sea\\wood_sea.png"
 
 #define SEA_INDEX_OFFSET	1234
+
+#define RADIAN(x)	(((x)/360) * 3.1415 * 2)
 
 CatanMapView::CatanMapView(CatanMap * model_) : UIView(model_){
 	images.clear();
@@ -122,7 +122,7 @@ void CatanMapView::draw(void) {
 				}
 
 				if (btMap != nullptr) {
-					al_draw_rotated_bitmap(btMap, al_get_bitmap_width(btMap) / 2, al_get_bitmap_height(btMap) / 2, resourcePosition.x + catanMap->xPos(), resourcePosition.y + catanMap->yPos(), resourcePosition.info, 0);
+					al_draw_rotated_bitmap(btMap, al_get_bitmap_width(btMap) / 2, al_get_bitmap_height(btMap) / 2, resourcePosition.x + catanMap->xPos(), resourcePosition.y + catanMap->yPos(), RADIAN(resourcePosition.info), 0);
 				}
 				btMap = nullptr;
 			}

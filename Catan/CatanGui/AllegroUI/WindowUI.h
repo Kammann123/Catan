@@ -46,6 +46,7 @@ public:
 	static bool allegroWasInit;
 	static bool isAllegroInit(void);
 	static void InitAllegro(void);
+	static void CloseAllegro(void);
 
 	/*
 	* WindowUI

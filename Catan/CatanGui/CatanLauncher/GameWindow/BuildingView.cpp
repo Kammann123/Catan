@@ -5,152 +5,185 @@
 /**********************
 * Imagenes de la View *
 **********************/
-#define ROAD_0_0 "CatanGui\\GUIDesigns\\GameMenu\\buildings\\bridge_0_0.png"
-#define ROAD_30_0 "CatanGui\\GUIDesigns\\GameMenu\\buildings\\bridge_30_0.png"
-#define ROAD_90_0 "CatanGui\\GUIDesigns\\GameMenu\\buildings\\bridge_90_0.png"
-#define ROAD_150_0 "CatanGui\\GUIDesigns\\GameMenu\\buildings\\bridge_150_0.png"
-#define ROAD_0_0_FOCUS "CatanGui\\GUIDesigns\\GameMenu\\buildings\\bridge_0_0_focus.png"
-#define ROAD_30_0_FOCUS "CatanGui\\GUIDesigns\\GameMenu\\buildings\\bridge_30_0_focus.png"
-#define ROAD_90_0_FOCUS "CatanGui\\GUIDesigns\\GameMenu\\buildings\\bridge_90_0_focus.png"
-#define ROAD_150_0_FOCUS "CatanGui\\GUIDesigns\\GameMenu\\buildings\\bridge_150_0_focus.png"
+#define ROAD_30_NORMAL		"CatanGui\\GUIDesigns\\GameMenu\\buildings\\road_30_normal.png"
+#define ROAD_30_FOCUS		"CatanGui\\GUIDesigns\\GameMenu\\buildings\\road_30_focused.png"
+#define ROAD_30_OPONENT		"CatanGui\\GUIDesigns\\GameMenu\\buildings\\road_30_oponent.png"
+#define ROAD_90_NORMAL		"CatanGui\\GUIDesigns\\GameMenu\\buildings\\road_90_normal.png"
+#define ROAD_90_FOCUS		"CatanGui\\GUIDesigns\\GameMenu\\buildings\\road_90_focused.png"
+#define ROAD_90_OPONENT		"CatanGui\\GUIDesigns\\GameMenu\\buildings\\road_90_oponent.png"
+#define ROAD_150_NORMAL		"CatanGui\\GUIDesigns\\GameMenu\\buildings\\road_150_normal.png"
+#define ROAD_150_FOCUS		"CatanGui\\GUIDesigns\\GameMenu\\buildings\\road_150_focused.png"
+#define ROAD_150_OPONENT	"CatanGui\\GUIDesigns\\GameMenu\\buildings\\road_150_oponent.png"
 
-#define ROAD_0_1	"CatanGui\\GUIDesigns\\GameMenu\\buildings\\bridge_0_1.png"
-#define ROAD_30_1	"CatanGui\\GUIDesigns\\GameMenu\\buildings\\bridge_30_1.png"
-#define ROAD_90_1	"CatanGui\\GUIDesigns\\GameMenu\\buildings\\bridge_90_1.png"
-#define ROAD_150_1	"CatanGui\\GUIDesigns\\GameMenu\\buildings\\bridge_150_1.png"
+#define SETTLEMENT_NORMAL		"CatanGui\\GUIDesigns\\GameMenu\\buildings\\settlement_normal.png"
+#define SETTLEMENT_FOCUS		"CatanGui\\GUIDesigns\\GameMenu\\buildings\\settlement_focused.png"
+#define SETTLEMENT_SELECTED		"CatanGui\\GUIDesigns\\GameMenu\\buildings\\settlement_selected.png"
+#define SETTLEMENT_OPONENT		"CatanGui\\GUIDesigns\\GameMenu\\buildings\\settlement_oponent.png"
 
-#define SETTLEMENT_IMAGE		"CatanGui\\GUIDesigns\\GameMenu\\buildings\\remote_settlement.png"
-#define SETTLEMENT_FOCUSED_IMAGE	"CatanGui\\GUIDesigns\\GameMenu\\buildings\\remote_settlement_focused.png"
-#define SETTLEMENT_SELECTED_IMAGE "CatanGui\\GUIDesigns\\GameMenu\\buildings\\remote_settlement_selected.png"
-#define SETTLEMENT_OPONENT			"CatanGui\\GUIDesigns\\GameMenu\\buildings\\local_settlement.png"
-#define SETTLEMENT_OPONENT_ID	"enemy_settlement"
-
-#define CITY_IMAGE				"CatanGui\\GUIDesigns\\GameMenu\\buildings\\remote_city.png"
-#define CITY_FOCUSED_IMAGE		"CatanGui\\GUIDesigns\\GameMenu\\buildings\\remote_city_focused.png"
-#define CITY_SELECTED_IMAGE		"CatanGui\\GUIDesigns\\GameMenu\\buildings\\remote_city_selected.png"
-#define CITY_OPONENT		"CatanGui\\GUIDesigns\\GameMenu\\buildings\\local_city.png"
-#define CITY_OPONENT_ID		"enemy_city"
+#define CITY_NORMAL		"CatanGui\\GUIDesigns\\GameMenu\\buildings\\city_normal.png"
+#define CITY_FOCUS		"CatanGui\\GUIDesigns\\GameMenu\\buildings\\city_focused.png"
+#define CITY_SELECTED	"CatanGui\\GUIDesigns\\GameMenu\\buildings\\city_selected.png"
+#define CITY_OPONENT	"CatanGui\\GUIDesigns\\GameMenu\\buildings\\city_oponent.png"
 
 #define INDEX(_type, _state) string( to_string((int)BuildingType::_type) + "_" + to_string((int)MouseUI::Status::_state) )
 
-BuildingView::BuildingView(Building * model_) : UIView(model_)
-{
+BuildingView::BuildingView(Building * model_) : UIView(model_){
+	/* Se limpian las imagenes por defecto de la clase */
 	images.clear();
 
-	images.setConfig("0_0", ROAD_0_0);
-	images.setConfig("30_0", ROAD_30_0);
-	images.setConfig("90_0", ROAD_90_0);
-	images.setConfig("150_0", ROAD_150_0);
+	/**********************************************
+	* Se precargas las imagenes del building view *
+	**********************************************/
+	images.setConfig("road_30_normal", ROAD_30_NORMAL);
+	images.setConfig("road_30_focus", ROAD_30_FOCUS);
+	images.setConfig("road_30_oponent", ROAD_30_OPONENT);
+	images.setConfig("road_90_normal", ROAD_90_NORMAL);
+	images.setConfig("road_90_focus", ROAD_90_FOCUS);
+	images.setConfig("road_90_oponent", ROAD_90_OPONENT);
+	images.setConfig("road_150_normal", ROAD_150_NORMAL);
+	images.setConfig("road_150_focus", ROAD_150_FOCUS);
+	images.setConfig("road_150_oponent", ROAD_150_OPONENT);
 
-	images.setConfig("0_0_focus", ROAD_0_0_FOCUS);
-	images.setConfig("30_0_focus", ROAD_30_0_FOCUS);
-	images.setConfig("90_0_focus", ROAD_90_0_FOCUS);
-	images.setConfig("150_0_focus", ROAD_150_0_FOCUS);
+	images.setConfig("settlement_normal", SETTLEMENT_NORMAL);
+	images.setConfig("settlement_focus", SETTLEMENT_FOCUS);
+	images.setConfig("settlement_selected", SETTLEMENT_SELECTED);
+	images.setConfig("settlement_oponent", SETTLEMENT_OPONENT);
 
-	images.setConfig("0_1", ROAD_0_1);
-	images.setConfig("30_1", ROAD_30_1);
-	images.setConfig("90_1", ROAD_90_1);
-	images.setConfig("150_1", ROAD_150_1);
-
-	images.setConfig(INDEX(SETTLEMENT, IDLE), SETTLEMENT_IMAGE);
-	images.setConfig(INDEX(SETTLEMENT, FOCUSED), SETTLEMENT_FOCUSED_IMAGE);
-	images.setConfig(INDEX(SETTLEMENT, SELECTED), SETTLEMENT_SELECTED_IMAGE);
-	images.setConfig(INDEX(SETTLEMENT, DRAGGED), SETTLEMENT_SELECTED_IMAGE);
-	images.setConfig(SETTLEMENT_OPONENT_ID, SETTLEMENT_OPONENT);
-	images.setConfig(INDEX(CITY, IDLE), CITY_IMAGE);
-	images.setConfig(INDEX(CITY, FOCUSED), CITY_FOCUSED_IMAGE);
-	images.setConfig(INDEX(CITY, SELECTED), CITY_SELECTED_IMAGE);
-	images.setConfig(INDEX(CITY, DRAGGED), CITY_SELECTED_IMAGE);
-	images.setConfig(CITY_OPONENT_ID, CITY_OPONENT);
+	images.setConfig("city_normal", CITY_NORMAL);
+	images.setConfig("city_focus", CITY_FOCUS);
+	images.setConfig("city_selected", CITY_SELECTED);
+	images.setConfig("city_oponent", CITY_OPONENT);
 }
 
 void BuildingView::draw(void){
+
+	/**********************************************
+	* Recupero el modelo al cual observa la View
+	* y creo el bitmap vacio en el cual se cargara
+	* la imagen del building actual.
+	**********************************************/
 	Building* building = (Building*)model;
-	ALLEGRO_BITMAP * btMap = nullptr;
+	ALLEGRO_BITMAP* bitmap = nullptr;
+
+	/* Verifico que el modelo este visible */
 	if (model->getVisible()) {
+		/* Si la construccion es del primer o segundo jugador... */
 		if (building->getPlayer()->getPlayerId() == PlayerId::PLAYER_ONE) {
-			if (building->getType() != BuildingType::ROAD ) {
-				string index = to_string((unsigned int)building->getType()) + "_" + to_string((unsigned int)building->getStatus());
-				if (images.has(index)) {
-					btMap = images[index].bitmap;
-				}
-			}
-			else {
-				if (building->getStatus() == MouseUI::Status::IDLE) {
-					switch ((int)building->getAngle()) {
+			/* Veo que tipo de construccion es */
+			switch (building->getType()) {
+				case BuildingType::CITY:
+					switch (building->getStatus()) {
+					case MouseUI::Status::IDLE:
+						bitmap = images["city_normal"].bitmap;
+						break;
+					case MouseUI::Status::FOCUSED:
+						bitmap = images["city_focus"].bitmap;
+						break;
+					case MouseUI::Status::SELECTED:
+					case MouseUI::Status::DRAGGED:
+						bitmap = images["city_selected"].bitmap;
+						break;
+					}
+					break;
+				case BuildingType::SETTLEMENT:
+					switch (building->getStatus()) {
+						case MouseUI::Status::IDLE:
+							bitmap = images["settlement_normal"].bitmap;
+							break;
+						case MouseUI::Status::FOCUSED:
+							bitmap = images["settlement_focus"].bitmap;
+							break;
+						case MouseUI::Status::SELECTED:
+						case MouseUI::Status::DRAGGED:
+							bitmap = images["settlement_selected"].bitmap;
+							break;
+					}
+					break;
+				case BuildingType::ROAD:
+					/* Me fijo que orientacion tiene */
+					switch (building->getAngle()) {
+						case 240: case 60:
+							if (building->getStatus() == MouseUI::Status::IDLE) {
+								bitmap = images["road_30_normal"].bitmap;
+							}
+							else {
+								bitmap = images["road_30_focus"].bitmap;
+							}
+							break;
 						case 0:
-							btMap = images["90_0"].bitmap;
+							if (building->getStatus() == MouseUI::Status::IDLE) {
+								bitmap = images["road_90_normal"].bitmap;
+							}
+							else {
+								bitmap = images["road_90_focus"].bitmap;
+							}
 							break;
-						case 3:
-							btMap = images["0_0"].bitmap;
-							break;
-						case 1: case 4:
-							btMap = images["30_0"].bitmap;
-							break;
-						case 2: case 5:
-							btMap = images["150_0"].bitmap;
+						case 120: case 300:
+							if (building->getStatus() == MouseUI::Status::IDLE) {
+								bitmap = images["road_150_normal"].bitmap;
+							}
+							else {
+								bitmap = images["road_150_focus"].bitmap;
+							}
 							break;
 					}
-				}
-				else {
-					switch ((int)building->getAngle()) {
-					case 0:
-						btMap = images["90_0_focus"].bitmap;
-						break;
-					case 3:
-						btMap = images["0_0_focus"].bitmap;
-						break;
-					case 1: case 4:
-						btMap = images["30_0_focus"].bitmap;
-						break;
-					case 2: case 5:
-						btMap = images["150_0_focus"].bitmap;
-						break;
-					}
-				}
+					break;
 			}
 		}
 		else {
+			/* Verifico que tipo de construccion es para poder imprimir */
 			switch (building->getType()) {
-			case BuildingType::SETTLEMENT:
-				if (images.has(SETTLEMENT_OPONENT_ID)) {
-					btMap = images[SETTLEMENT_OPONENT_ID].bitmap;
-				}
-				break;
-			case BuildingType::ROAD:
-				switch ((int)building->getAngle()) {
-				case 0:
-					btMap = images["90_1"].bitmap;
+				case BuildingType::SETTLEMENT:
+					bitmap = images["settlement_oponent"].bitmap;
 					break;
-				case 3:
-					btMap = images["0_1"].bitmap;
+				case BuildingType::CITY:
+					bitmap = images["city_oponent"].bitmap;
 					break;
-				case 1: case 4:
-					btMap = images["30_1"].bitmap;
+				case BuildingType::ROAD:
+					/* Busco la orientacion del camino para deficir que bitmap uso */
+					switch (building->getAngle()) {
+						case 60: case 240:
+							bitmap = images["road_30_oponent"].bitmap;
+							break;
+						case 0:
+							bitmap = images["road_90_oponent"].bitmap;
+							break;
+							case 120: case 300:
+							bitmap = images["road_150_oponent"].bitmap;
+							break;
+					}
 					break;
-				case 2: case 5:
-					btMap = images["150_1"].bitmap;
-					break;
-				}
-				break;
-			case BuildingType::CITY:
-				if (images.has(CITY_OPONENT_ID)) {
-					btMap = images[CITY_OPONENT_ID].bitmap;
-				}
-				break;
 			}
 		}
-		
-		/*Dibujo la imagen*/
-		if (btMap != nullptr)
-			al_draw_rotated_bitmap(btMap, al_get_bitmap_width(btMap)/2, al_get_bitmap_height(btMap) / 2, building->xPos() + building->getWidth() / 2, building->yPos() + building->getHeight() / 2, building->getAngle(), 0);
 	}
+
+	/* Se dibuja la imagen correspondientemente en la ubicacion */
+	al_draw_bitmap(
+		bitmap,
+		building->xPos(),
+		building->yPos(),
+		0
+	);
 }
 
 void BuildingView::refactor(void) {
 	Building* building = (Building*)model;
-	string index = to_string((unsigned int)building->getType()) + "_" + to_string((unsigned int)building->getStatus());
+	string index;
 
+	/* Busco el tipo de imagen usada actualmente */
+	switch (building->getType()) {
+		case BuildingType::ROAD:
+			index = "road_90_normal";
+			break;
+		case BuildingType::SETTLEMENT:
+			index = "settlement_normal";
+			break;
+		case BuildingType::CITY:
+			index = "city_normal";
+			break;
+	}
+
+	/* Actualizo los tamaños en funcion del bitmpa obtenido! */
 	building->setHeight( al_get_bitmap_height(images[index].bitmap) );
 	building->setWidth( al_get_bitmap_width(images[index].bitmap) );
 }

@@ -72,9 +72,12 @@ UIModelContainer::setUIDestroy(bool destroys) {
 void
 UIModelContainer::refactor(void) {
 	for (auto model : models) {
+		/* Se refactorizan todos los modelos */
 		if (model.first) {
 			model.first->refactor();
 		}
+		/* Se reconstruyen las posiciones */
+		setPosition(x, y);
 	}
 }
 
