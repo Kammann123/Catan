@@ -23,7 +23,7 @@
 #include "LongestRoadView.h"
 #include "CatanMapView.h"
 
-#define GAMEWINDOW_CURSOR		"CatanGui\\Cursor\\cursor_normal.png"
+#define GAMEWINDOW_CURSOR			"CatanGui\\Cursor\\cursor_normal.png"
 #define GAMEWINDOW_CLICK_CURSOR		"CatanGui\\Cursor\\cursor_clicking.png"
 #define GAMEWINDOW_GRAB_CURSOR		"CatanGui\\Cursor\\cursor_grabbing.png"
 #define GAMEWINDOW_BUILD_CURSOR		"CatanGui\\Cursor\\cursor_building.png"
@@ -32,20 +32,20 @@
 
 #define GAMEWINDOW_BACKGROUND "CatanGui\\GUIDesigns\\GameMenu\\background.png"
 
-#define GAMEWINDOW_PASS_NORMAL	"CatanGui\\GUIDesigns\\GameMenu\\pass.png"
+#define GAMEWINDOW_PASS_NORMAL		"CatanGui\\GUIDesigns\\GameMenu\\pass.png"
 #define GAMEWINDOW_PASS_FOCUSED		"CatanGui\\GUIDesigns\\GameMenu\\pass_focused.png"
 #define GAMEWINDOW_PASS_SELECTED	"CatanGui\\GUIDesigns\\GameMenu\\pass_selected.png"
 
-#define GAMEWINDOW_EXIT_NORMAL "CatanGui\\GUIDesigns\\GameMenu\\exit_normal.png"
-#define GAMEWINDOW_EXIT_FOCUSED "CatanGui\\GUIDesigns\\GameMenu\\exit_focused.png"
+#define GAMEWINDOW_EXIT_NORMAL		"CatanGui\\GUIDesigns\\GameMenu\\exit_normal.png"
+#define GAMEWINDOW_EXIT_FOCUSED		"CatanGui\\GUIDesigns\\GameMenu\\exit_focused.png"
 #define GAMEWINDOW_EXIT_SELECTED	"CatanGui\\GUIDesigns\\GameMenu\\exit_selected.png"
 
-#define GAMEWINDOW_DISCARD_NORMAL "CatanGui\\GUIDesigns\\GameMenu\\discard_normal.png"
-#define GAMEWINDOW_DISCARD_FOCUSED "CatanGui\\GUIDesigns\\GameMenu\\discard_focused.png"
+#define GAMEWINDOW_DISCARD_NORMAL	"CatanGui\\GUIDesigns\\GameMenu\\discard_normal.png"
+#define GAMEWINDOW_DISCARD_FOCUSED	"CatanGui\\GUIDesigns\\GameMenu\\discard_focused.png"
 #define GAMEWINDOW_DISCARD_SELECTED	"CatanGui\\GUIDesigns\\GameMenu\\discard_selected.png"
 
-#define GAMEWINDOW_TRADE_NORMAL "CatanGui\\GUIDesigns\\GameMenu\\trade_normal.png"
-#define GAMEWINDOW_TRADE_FOCUSED "CatanGui\\GUIDesigns\\GameMenu\\trade_focused.png"
+#define GAMEWINDOW_TRADE_NORMAL		"CatanGui\\GUIDesigns\\GameMenu\\trade_normal.png"
+#define GAMEWINDOW_TRADE_FOCUSED	"CatanGui\\GUIDesigns\\GameMenu\\trade_focused.png"
 #define GAMEWINDOW_TRADE_SELECTED	"CatanGui\\GUIDesigns\\GameMenu\\trade_selected.png"
 
 #define PLACING_RADIO		10

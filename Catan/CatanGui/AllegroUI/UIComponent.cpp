@@ -1,11 +1,19 @@
 #include "UIComponent.h"
 
 UIComponent::
-UIComponent(UIModel* model_, vector<UIView*> view_, vector<UIController*> controllers_)
-{
+UIComponent(UIModel* model_, vector<UIView*> view_, vector<UIController*> controllers_){
+	buffId = model_->getId();
 	model = model_;
 	views = view_;
 	controllers = controllers_;
+}
+
+UIComponent::
+UIComponent(string id) {
+	buffId = id;
+	model = nullptr;
+	views = {};
+	controllers = {};
 }
 
 UIComponent::
@@ -67,6 +75,18 @@ UIView*
 UIComponent::operator[](unsigned int index) {
 	if (index < views.size()) {
 		return views[index];
+	}
+	return nullptr;
+}
+
+UIComponent*
+UIComponent::operator[](string id) {
+	string indexedId = getId() + "_" + id;
+
+	for (UIComponent* component : components) {
+		if (component->getId() == indexedId) {
+			return component;
+		}
 	}
 	return nullptr;
 }
@@ -140,4 +160,46 @@ string UIComponent::
 getId(void)
 {
 	return this->model->getId();
+}
+
+void
+UIComponent::attachComponent(UIComponent* component) {
+
+	/* Primero verifico que exista algun model container.
+	* En su defecto, creo uno, en caso de haberlo, y que
+	* no sea un model container ( pero si un model )
+	* habra un error, pues hay uso incorrecto de framework.
+	*/
+	if (model == nullptr ) {
+		model = new UIModelContainer(buffId);
+	}
+
+	/* Luego se agrega el componente al vecto de componentes
+	* y posteriormente se configura el modelo como un submodelo
+	* del mismo container.
+	*/
+	components.push_back(component);
+	FrameUI* frameModel = (FrameUI*)component->getModel();
+	((UIModelContainer*)model)->attachModel(frameModel, frameModel->xPos(), frameModel->yPos());
+}
+
+void
+UIComponent::detachComponent(UIComponent* component) {
+	/* Verifico que este en existencia dentro de los components
+	*/
+	vector<UIComponent*>::iterator it = find(components.begin(), components.end(), component);
+	if (it != components.end()) {
+		components.erase(it);
+		((UIModelContainer*)model)->detachModel((FrameUI*)component->getModel());
+	}
+}
+
+vector<UIComponent*>::iterator
+UIComponent::begin(void) {
+	return components.begin();
+}
+
+vector<UIComponent*>::iterator
+UIComponent::end(void) {
+	return components.end();
 }
