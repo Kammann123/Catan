@@ -1,5 +1,6 @@
 #pragma
 
+#include <exception>
 #include <functional>
 #include <vector>
 
@@ -71,11 +72,11 @@ private:
 	Mode mode;
 	T fixedArg;
 
-	static vector<ComponentConnector<T>> connectors;
+	static std::vector<ComponentConnector<T>> connectors;
 };
 
 template <class T>
-vector<ComponentConnector<T>> ComponentConnector<T>::connectors = {};
+std::vector<ComponentConnector<T>> ComponentConnector<T>::connectors = {};
 
 template <class T>
 ComponentConnector<T>* 
@@ -93,7 +94,7 @@ ComponentConnector<T>::ComponentConnector(std::function<void(T)> callback, Mode 
 	this->mode = mode;
 
 	if (this->mode == ComponentConnector::Mode::FIXED_ARG) {
-		throw exception("ComponentConnector - FixedArgs es un modo que debe recibir el value");
+		throw std::exception("ComponentConnector - FixedArgs es un modo que debe recibir el value");
 	}
 }
 
