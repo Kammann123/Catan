@@ -175,6 +175,7 @@
     <ClInclude Include="CatanGui\AllegroUI\AnimationUI.h" />
     <ClInclude Include="CatanGui\AllegroUI\ChildWindowUI.h" />
     <ClInclude Include="CatanGui\AllegroUI\ColorConfig.h" />
+    <ClInclude Include="CatanGui\AllegroUI\ComponentConnector.h" />
     <ClInclude Include="CatanGui\AllegroUI\Config.h" />
     <ClInclude Include="CatanGui\AllegroUI\ContainerUI.h" />
     <ClInclude Include="CatanGui\AllegroUI\CounterUI.h" />
