@@ -29,6 +29,10 @@
 
 #define GAMEWINDOW_BACKGROUND "CatanGui\\GUIDesigns\\GameMenu\\background.png"
 
+#define GAMEWINDOW_PASS_NORMAL	"CatanGui\\GUIDesigns\\GameMenu\\pass.png"
+#define GAMEWINDOW_PASS_FOCUSED		"CatanGui\\GUIDesigns\\GameMenu\\pass_focused.png"
+#define GAMEWINDOW_PASS_SELECTED	"CatanGui\\GUIDesigns\\GameMenu\\pass_selected.png"
+
 #define GAMEWINDOW_EXIT_NORMAL "CatanGui\\GUIDesigns\\GameMenu\\exit_normal.png"
 #define GAMEWINDOW_EXIT_FOCUSED "CatanGui\\GUIDesigns\\GameMenu\\exit_focused.png"
 #define GAMEWINDOW_EXIT_SELECTED	"CatanGui\\GUIDesigns\\GameMenu\\exit_selected.png"
@@ -46,7 +50,7 @@
 
 GameWindow::
 GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI("gameWindow", 1080, 640) {
-
+	UIComponent* passButton = UIBuilder::createButton("pass");
 	UIComponent* exitButton = UIBuilder::createButton("exit");
 	UIComponent* discardButton = UIBuilder::createButton("discard");
 	UIComponent* tradeButton = UIBuilder::createButton("trade");
@@ -118,6 +122,11 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI("gameWindow
 	/****************************/
 	/* Configuracion de botones */
 	/****************************/
+	(*passButton)[0]->getImages().setConfig(MouseUI::Status::IDLE, GAMEWINDOW_PASS_NORMAL);
+	(*passButton)[0]->getImages().setConfig(MouseUI::Status::FOCUSED, GAMEWINDOW_PASS_FOCUSED);
+	(*passButton)[0]->getImages().setConfig(MouseUI::Status::SELECTED, GAMEWINDOW_PASS_SELECTED);
+	(*passButton)[0]->getImages().setConfig(MouseUI::Status::DRAGGED, GAMEWINDOW_PASS_SELECTED);
+
 	(*exitButton)[0]->getImages().setConfig(MouseUI::Status::IDLE, GAMEWINDOW_EXIT_NORMAL);
 	(*exitButton)[0]->getImages().setConfig(MouseUI::Status::FOCUSED, GAMEWINDOW_EXIT_FOCUSED);
 	(*exitButton)[0]->getImages().setConfig(MouseUI::Status::SELECTED, GAMEWINDOW_EXIT_SELECTED);
@@ -143,6 +152,7 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI("gameWindow
 	/***********************************
 	* Agrego componente a la interfaz  *
 	***********************************/
+	this->attachComponent(passButton);
 	this->attachComponent(exitButton);
 	this->attachComponent(discardButton);
 	this->attachComponent(tradeButton);
@@ -190,9 +200,10 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI("gameWindow
 	/**************************************
 	* Configuro posiciones de la interfaz *
 	**************************************/
-	MODEL(exitButton, MouseUI*)->setPosition(63, 240);
-	MODEL(discardButton, MouseUI*)->setPosition(63, 190);
-	MODEL(tradeButton, MouseUI*)->setPosition(63, 140);
+	MODEL(passButton, MouseUI*)->setPosition(63, 130);
+	MODEL(tradeButton, MouseUI*)->setPosition(63, 170);
+	MODEL(discardButton, MouseUI*)->setPosition(63, 210);
+	MODEL(exitButton, MouseUI*)->setPosition(63, 250);
 	MODEL(firstDice, Dice*)->setPosition(900, 20);
 	MODEL(secondDice, Dice*)->setPosition(950, 20);
 
@@ -462,6 +473,8 @@ GameWindow::normal_layout(void) {
 	/************************
 	* Configuro los botones *
 	************************/
+	(*this)["pass"]->getModel()->setEnable(true);
+	(*this)["pass"]->getModel()->setVisible(true);
 	(*this)["exit"]->getModel()->setEnable(true);
 	(*this)["exit"]->getModel()->setVisible(true);
 	(*this)["discard"]->getModel()->setEnable(true);
