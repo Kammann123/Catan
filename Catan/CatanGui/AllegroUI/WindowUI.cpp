@@ -57,6 +57,11 @@ WindowUI::InitAllegro(void) {
 	}
 }
 
+void 
+WindowUI::CloseAllegro(void) {
+
+}
+
 WindowUI::
 WindowUI(string id, size_t width, size_t height, double fps ) {
 	this->id = id;

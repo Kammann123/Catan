@@ -1,6 +1,7 @@
 #pragma
 
 #include <functional>
+#include <vector>
 
 /*************************************************************************
 * Macros de utilizacion del ComponentConnector 
@@ -18,7 +19,7 @@
 * de alguna rutina de accion.
 *	+ myButton->setClickAction( ATTACH_CONNECTOR(myConnector, string) )
 *************************************************************************/
-#define CREATE_CONNECTOR(_method, _object, _type, ...)	new ComponentConnector<_type>(bind(&_method, _object, _1), __VA_ARGS__)
+#define CREATE_CONNECTOR(_method, _object, _type, ...)	ComponentConnector<T>::saveConnector(ComponentConnector<_type>(bind(&_method, _object, _1), __VA_ARGS__))
 #define ATTACH_CONNECTOR(_connector, _type)	bind(&ComponentConnector<_type>::execute, _connector, _1)
 /*
 * ComponentConnector
@@ -35,6 +36,14 @@
 template <class T>
 class ComponentConnector {
 public:
+
+	/**************************************************
+	* Interfaz de almacenamiento estatico de 
+	* los conectores para no recargar la programacion
+	* de la interfaz en su uso
+	**************************************************/
+	static ComponentConnector<T>* saveConnector(ComponentConnector<T> connector);
+
 	/*
 	* Mode - Se definen los modos de funcionamiento segun los cuales:
 	*	+	NO_ARG: Se hace un llamado del callback sin necesidad
@@ -61,7 +70,19 @@ private:
 	std::function<void(T)> callback;
 	Mode mode;
 	T fixedArg;
+
+	static vector<ComponentConnector<T>> connectors;
 };
+
+template <class T>
+vector<ComponentConnector<T>> ComponentConnector<T>::connectors = {};
+
+template <class T>
+ComponentConnector<T>* 
+ComponentConnector<T>::saveConnector(ComponentConnector<T> connector) {
+	ComponentConnector<T>::connectors.push_back(connector);
+	return &connector;
+}
 
 /**************************
 * Definicion del template *

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "ComponentConnector.h"
 #include "UIModelContainer.h"
 #include "UIController.h"
 #include "UIModel.h""
