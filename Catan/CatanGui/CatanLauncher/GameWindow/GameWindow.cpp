@@ -415,6 +415,11 @@ GameWindow::onTrade(void* data) {
 }
 
 void
+GameWindow::onPass(void* data) {
+	launcher.getGame().syncHandle(new CatanEvent(CatanEvent::Events::PASS, CatanEvent::Sources::GUI, PlayerId::PLAYER_ONE);
+}
+
+void
 GameWindow::acceptOffer(void* data) {
 	launcher.getGame().syncHandle(new CatanEvent(CatanEvent::Events::YES, CatanEvent::Sources::GUI, PlayerId::PLAYER_ONE));
 }

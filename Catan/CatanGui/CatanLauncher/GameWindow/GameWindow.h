@@ -10,10 +10,10 @@
 
 #include "../../../MVC/Observer.h"
 
-/*
-* Definicion de posiciones ordenadas dentro de los containers
-* de los jugadores y el juego o tablero
-*/
+/**************************************************************
+* Definicion de posiciones ordenadas dentro de los containers *
+* de los jugadores y el juego o tablero						  *
+**************************************************************/
 #define POSITION_ORE	"ore"
 #define POSITION_LUMBER	"lumber"
 #define POSITION_BRICK	"brick"
@@ -77,6 +77,7 @@ private:
 	void onTrade(void* data);
 	void onDice(void* data);
 	void onExit(void* data);
+	void onPass(void* data);
 	void acceptOffer(void* data);
 	void denyOffer(void* data);
 	void gameOver(void* data);
