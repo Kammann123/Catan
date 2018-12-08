@@ -6,7 +6,7 @@
 #include <vector>
 
 using namespace std;
-
+using namespace std::placeholders;
 /*************************************************************************
 * Macros de utilizacion del ComponentConnector 
 *
