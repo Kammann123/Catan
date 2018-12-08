@@ -1,8 +1,10 @@
 #include "../../AllegroUI/ChildWindowUI.h"
+#include "../../../CatanGame/CatanGame.h"
+
 
 class DiscardWindow : public ChildWindowUI {
 public:
-	DiscardWindow(string id);
+	DiscardWindow(string id, CatanGame& _game);
 
 private:
 	/***********************
@@ -10,4 +12,6 @@ private:
 	***********************/
 	void onClose(void* data);
 	void onDiscard(void* data);
+
+	CatanGame& game;
 };

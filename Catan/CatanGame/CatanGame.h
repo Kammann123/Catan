@@ -187,6 +187,8 @@ public:
 	/******************************************************************
 	* Interfaz para el manejo de los mazos de cartas dentro del juego
 	******************************************************************/
+	list<ResourceId> generateCards(ResourceId id, unsigned int qty);
+	list<ResourceId> generateCards(unsigned int wool, unsigned int grain, unsigned int brick, unsigned int ore, unsigned int lumber);
 	list<ResourceCard*> takeCards(ResourceId id, unsigned int qty);
 	void returnCards(list<ResourceCard*> cards);
 	void returnCards(ResourceCard* card);
@@ -284,7 +286,7 @@ public:
 	* la mitad de las que se tienen en mano
 	*/
 	bool validateRobberCards(list<ResourceId>& cards, PlayerId playerID);
-	
+
 	/*
 	* robberCards
 	* Un jugador dado entrega una lista de recursos que utilizan

@@ -65,6 +65,7 @@ class GameWindow : public WindowUI, public Observer {
 public:
 	/* Constructor */
 	GameWindow(CatanLauncher& _launcher);
+	void updateStatus(void);
 	void update(void);
 
 private:

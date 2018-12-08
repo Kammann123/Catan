@@ -71,7 +71,7 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI("gameWindow
 	UIComponent* statusBox = UIBuilder::createToggleInfoBox("status", 30, 160, 12);
 	UIComponent* costBox = UIBuilder::createToggleInfoBox("cost", 30, 160, 12);
 
-	ChildWindowUI* discardWindow = new DiscardWindow("discardWindow");
+	ChildWindowUI* discardWindow = new DiscardWindow("discardWindow", launcher.getGame());
 	ChildWindowUI* offerWindow = new OfferWindow("offerWindow");
 	ChildWindowUI* gandalf = new QuestionWindow("gandalf");
 
@@ -267,6 +267,15 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI("gameWindow
 }
 
 void
+GameWindow::updateStatus(void) {
+	/* Se despliegan mensajes correspondientes
+	*/
+	MODEL((*(*(*this)["status"])["infobox"])["title"], TextUI*)->setText(launcher.getGame().getStateString());
+	MODEL((*(*(*this)["status"])["infobox"])["info"], TextUI*)->setText(launcher.getGame().info());
+
+}
+
+void
 GameWindow::update(void) {
 
 	/* Siempre, por las dudas, confirmo recibida la accion
@@ -282,12 +291,8 @@ GameWindow::update(void) {
 	* informativo para guiar durante el juego al usuario
 	*/
 	CatanGame::State currState = launcher.getGame().getState();
-	this->prevState = currState;
-
-	/* Se despliegan mensajes correspondientes
-	*/
-	MODEL((*(*(*this)["status"])["infobox"])["title"], TextUI*)->setText(launcher.getGame().getStateString());
-	MODEL((*(*(*this)["status"])["infobox"])["info"], TextUI*)->setText(launcher.getGame().info());
+	prevState = currState;
+	updateStatus();
 
 	/* Se ejecuta el layout del estado actual
 	*/
@@ -405,12 +410,12 @@ GameWindow::onBuildingDrop(void* data) {
 	* traductor de coordenadas busco en el CatanMap!
 	*/
 	switch (building->getType()) {
-	case BuildingType::ROAD:
-		pixels = launcher.getGame().getCatanMap()->screenEdgeCoords();
-		break;
-	case BuildingType::CITY: case BuildingType::SETTLEMENT:
-		pixels = launcher.getGame().getCatanMap()->screenDotCoords();
-		break;
+		case BuildingType::ROAD:
+			pixels = launcher.getGame().getCatanMap()->screenEdgeCoords();
+			break;
+		case BuildingType::CITY: case BuildingType::SETTLEMENT:
+			pixels = launcher.getGame().getCatanMap()->screenDotCoords();
+			break;
 	}
 
 	for (auto pixel : pixels) {
@@ -424,6 +429,9 @@ GameWindow::onBuildingDrop(void* data) {
 
 			if (game.buildingOk(building->getType(), pixel.first, PlayerId::PLAYER_ONE)) {
 				game.syncHandle(new BuildingEvent(pixel.first, building->getType(), PlayerId::PLAYER_ONE));
+			}
+			else {
+				updateStatus();
 			}
 		}
 	}
@@ -458,6 +466,8 @@ GameWindow::onRobberDrop(void* data) {
 
 			if (game.validRobberMovement(pixel.first)) {
 				game.syncHandle(new RobberMoveEvent(pixel.first, PlayerId::PLAYER_ONE));
+			}else{
+				updateStatus();
 			}
 		}
 	}

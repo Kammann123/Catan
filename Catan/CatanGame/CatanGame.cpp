@@ -486,6 +486,42 @@ CatanGame::getCatanMap(void) {
 	return catanMap;
 }
 
+list<ResourceId> 
+CatanGame::generateCards(unsigned int wool, unsigned int grain, unsigned int brick, unsigned int ore, unsigned int lumber) {
+	list<ResourceId> cards;
+	/* Agrego lana */
+	for (ResourceId card : generateCards(ResourceId::PASTURES, wool)) {
+		cards.push_back(card);
+	}
+	/* Agrego trigo */
+	for (ResourceId card : generateCards(ResourceId::FIELD, grain)) {
+		cards.push_back(card);
+	}
+	/* Agrego ladrillo */
+	for (ResourceId card : generateCards(ResourceId::HILL, brick)) {
+		cards.push_back(card);
+	}
+	/* Agrego piedra */
+	for (ResourceId card : generateCards(ResourceId::MOUNTAIN, ore)) {
+		cards.push_back(card);
+	}
+	/* Agrego madera */
+	for (ResourceId card : generateCards(ResourceId::FOREST, lumber)) {
+		cards.push_back(card);
+	}
+	return cards;
+}
+
+list<ResourceId> 
+CatanGame::generateCards(ResourceId id, unsigned int qty) {
+	list<ResourceId> cards;
+	while (qty) {
+		cards.push_back(id);
+		qty--;
+	}
+	return cards;
+}
+
 list<ResourceCard*>
 CatanGame::takeCards(ResourceId id, unsigned int qty) {
 	list<ResourceCard*> taken;
