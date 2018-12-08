@@ -39,7 +39,7 @@ public:
 	* Configuracion del mouse decorator y sus callbacks
 	*/
 	void setFocusAction(Action focus);
-	void setExitACtion(Action exit);
+	void setExitAction(Action exit);
 	void setClickAction(Action click);
 	void setReleaseAction(Action release);
 	void setDragAction(Action drag);

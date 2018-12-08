@@ -608,6 +608,7 @@ Coord::_order_refactor(void) {
 				for (unsigned char c : coord) {
 					if (find(coords.begin(), coords.end(), c) == coords.end()) {
 						ok = false;
+						break;
 					}
 				}
 				if (ok) {
@@ -624,6 +625,7 @@ Coord::_order_refactor(void) {
 				for (unsigned char c : coord) {
 					if (find(coords.begin(), coords.end(), c) == coords.end()) {
 						ok = false;
+						break;
 					}
 				}
 				if (ok) {
@@ -638,6 +640,7 @@ Coord::_order_refactor(void) {
 				for (unsigned char c : coord) {
 					if (find(coords.begin(), coords.end(), c) == coords.end()) {
 						ok = false;
+						break;
 					}
 				}
 				if (ok) {

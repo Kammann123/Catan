@@ -19,8 +19,21 @@
 #include "../AllegroUI/MouseController.h"
 #include "../AllegroUI/TextController.h"
 
+/************************************
+* Layout por defecto del CounterBox *
+************************************/
 #define PLUS_IMG	"CatanGui\\Buttons\\plusButton.png"
 #define MINUS_IMG	"CatanGui\\Buttons\\minusButton.png"
+
+/*********************************
+* Layout por defecto del InfoBox *
+*********************************/
+#define INFO_FRAME	"CatanGui\\InfoBox\\frame_v3.png"
+#define INFO_TITLE_FONT	"CatanGui\\Fonts\\RifficFree-Bold.ttf"
+#define INFO_TITLE_SIZE	15
+#define INFO_INFO_FONT "CatanGui\\Fonts\\NewAmsterdam.ttf"
+#define INFO_INFO_SIZE	12
+#define INFO_BUTTON		"CatanGui\\InfoBox\\button_v2.png"
 
 UIComponent* UIBuilder::
 createSimpleButton(string id, const char* text, size_t height) {
@@ -242,4 +255,65 @@ UIBuilder::createMultiLabel(string id, double width, double height){
 UIComponent* 
 UIBuilder::createInfoBox(string id, size_t size, double width, double height) {
 
+	/* Creo los components */
+	UIComponent* frame = createImage(id + "_frame");
+	UIComponent* title = createLabel(id + "_title", size);
+	UIComponent* info = createMultiLabel(id + "_info", width, height);
+
+	/* Creo el component container */
+	UIComponent* infoBox = new UIComponent(id);
+
+	/* Posiciones relativas */
+	MODEL(frame, FrameUI*)->setPosition(0, 0);
+	MODEL(title, TextUI*)->setPosition(35, 8);
+	MODEL(info, TextUI*)->setPosition(15, 35);
+
+	/* Configuro los subcomponentes */
+	(*frame)[0]->getImages().setConfig(IV_BITMAP, INFO_FRAME);
+	(*title)[0]->getColors().setConfig(LA_TEXT_COLOR, 240, 170, 100);
+	(*title)[0]->getFonts().setConfig(LA_FONT, INFO_TITLE_FONT, INFO_TITLE_SIZE);
+	(*info)[0]->getColors().setConfig(MLA_TEXT_COLOR, 220, 190, 150);
+	(*info)[0]->getFonts().setConfig(MLA_FONT, INFO_INFO_FONT, INFO_INFO_SIZE);
+
+	/* Attachment de subcomponents */
+	infoBox->attachComponent(frame);
+	infoBox->attachComponent(title);
+	infoBox->attachComponent(info);
+
+	/* Devuelvo */
+	infoBox->refactor();
+	return infoBox;
+}
+
+UIComponent* 
+UIBuilder::createToggleInfoBox(string id, size_t size, double width, double height) {
+
+	/* Creo los componentes */
+	UIComponent* infoBox = createInfoBox(id + "_infobox", size, width, height);
+	UIComponent* toggleButton = createButton(id + "_button");
+
+	/* Creo el componente */
+	UIComponent* toggleComponent = new UIComponent(id);
+
+	/* Configuro los componentes */
+	(*toggleButton)[0]->getImages().setConfig((unsigned int)MouseUI::Status::IDLE, INFO_BUTTON);
+	(*toggleButton)[0]->getImages().setConfig((unsigned int)MouseUI::Status::FOCUSED, INFO_BUTTON);
+	(*toggleButton)[0]->getImages().setConfig((unsigned int)MouseUI::Status::SELECTED, INFO_BUTTON);
+	(*toggleButton)[0]->getImages().setConfig((unsigned int)MouseUI::Status::DRAGGED, INFO_BUTTON);
+	MODEL(infoBox, UIModel*)->setVisible(false);
+
+	/* Configuro las posiciones relativas */
+	MODEL(infoBox, UIModelContainer*)->setPosition(0, 5);
+	MODEL(toggleButton, MouseUI*)->setPosition(125, 5);
+
+	/* Hago un attachment de subcomponentes */
+	toggleComponent->attachComponent(toggleButton);
+	toggleComponent->attachComponent(infoBox);
+
+	/* Connector... :D */
+	MODEL(toggleButton, MouseUI*)->setFocusAction(CREATE_CONNECTOR(bool, bind(&UIModel::setVisible, infoBox->getModel(), _1), true));
+	MODEL(toggleButton, MouseUI*)->setExitAction(CREATE_CONNECTOR(bool, bind(&UIModel::setVisible, infoBox->getModel(), _1), false));
+
+	/* Devuelvo */
+	return toggleComponent;
 }

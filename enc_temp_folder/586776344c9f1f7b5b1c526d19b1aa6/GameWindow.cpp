@@ -77,7 +77,7 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI("gameWindow
 	* Configuracion de los mensajes *
 	********************************/
 	MODEL((*(*costBox)["infobox"])["title"], TextUI*)->setText("Building Costs"); 
-	MODEL((*(*costBox)["infobox"])["info"], TextUI*)->setText("+ Camino:\n \t1 madera\n \t1 ladrillo. \n\n+ Casa:\n \t1 madera\n \t1 ladrillo\n \t1 trigo\n \t1 lana. \n\n+ Ciudad: \n \t2 trigos\n \t3 piedras.");
+	MODEL((*(*costBox)["infobox"])["info"], TextUI*)->setText("+ Camino:\n \t1 madera\n \t1 ladrillo. \n\n+ Casa:\n \t1 madera\n \t1 ladrillo\n \t1 trigo\n \t1 lana. \n\n+ Ciudad: \n \t2 trigo\n \t3 piedras.");
 
 	/***********************************
 	* Creacion de componentes Building *

@@ -14,6 +14,7 @@ public:
 	static UIComponent* createTextField(string id, size_t size, TextUI::Mode mode=TextUI::Mode::EVERYTHING);
 	static UIComponent* createTextBox(string id, size_t size, TextUI::Mode mode = TextUI::Mode::EVERYTHING);
 	static UIComponent* createInfoBox(string id, size_t size, double width, double height);
+	static UIComponent* createToggleInfoBox(string id, size_t size, double width, double height);
 	static UIComponent* createSimpleButton(string id, const char* text, size_t height);
 	static UIComponent* createMultiLabel(string id, double width, double height);
 	static UIComponent* createCounterBox(string id, unsigned int max);

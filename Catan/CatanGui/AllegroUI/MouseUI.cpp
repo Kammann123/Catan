@@ -15,7 +15,7 @@ MouseUI::setFocusAction(Action focus) {
 }
 
 void
-MouseUI::setExitACtion(Action exit) {
+MouseUI::setExitAction(Action exit) {
 	this->onExit = exit;
 }
 

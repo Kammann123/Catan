@@ -92,7 +92,7 @@ CatanNetworking::setIp(string ip) {
 		}
 	}
 
-	srand(time(NULL) + what);
+	srand((unsigned int)time(NULL) + what);
 	this->ip = ip;
 }
 
