@@ -254,8 +254,6 @@ void
 GameWindow::onDice(void* data) {
 	MODEL((*this)["dice_one"], AnimationUI*)->start();
 	MODEL((*this)["dice_two"], AnimationUI*)->start();
-	(*(*this)["dice_one"])[UIController::Id::MOUSE]->setEnable(false);
-	(*(*this)["dice_two"])[UIController::Id::MOUSE]->setEnable(false);
 }
 
 void 
