@@ -281,6 +281,7 @@ GameWindow::onBuildingMove(void* data) {
 
 	for (auto pixel : pixels) {
 		if (positionDistance(mousePosition, pixel.second) < PLACING_RADIO) {
+			cout << pixel.first << endl;
 			this->mouse.force(BUILD_CURSOR_ID);
 			return;
 		}
