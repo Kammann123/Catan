@@ -110,7 +110,7 @@ void BuildingView::draw(void){
 								bitmap = images["road_30_focus"].bitmap;
 							}
 							break;
-						case 90:
+						case 90: case 0:
 							if (building->getStatus() == MouseUI::Status::IDLE) {
 								bitmap = images["road_90_normal"].bitmap;
 							}
@@ -145,7 +145,7 @@ void BuildingView::draw(void){
 						case 60: case 240:
 							bitmap = images["road_30_oponent"].bitmap;
 							break;
-						case 90:
+						case 90: case 0:
 							bitmap = images["road_90_oponent"].bitmap;
 							break;
 							case 120: case 300:
