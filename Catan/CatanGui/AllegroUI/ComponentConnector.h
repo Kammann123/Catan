@@ -1,8 +1,11 @@
-#pragma
+#pragma once
 
+#include <iterator>
 #include <exception>
 #include <functional>
 #include <vector>
+
+using namespace std;
 
 /*************************************************************************
 * Macros de utilizacion del ComponentConnector 
@@ -20,8 +23,8 @@
 * de alguna rutina de accion.
 *	+ myButton->setClickAction( ATTACH_CONNECTOR(myConnector, string) )
 *************************************************************************/
-#define CREATE_CONNECTOR(_method, _object, _type, ...)	ComponentConnector<T>::saveConnector(ComponentConnector<_type>(bind(&_method, _object, _1), __VA_ARGS__))
-#define ATTACH_CONNECTOR(_connector, _type)	bind(&ComponentConnector<_type>::execute, _connector, _1)
+#define CREATE_CONNECTOR(_type, ...) ComponentConnector<_type>::createConnector(new ComponentConnector<_type>(__VA_ARGS__))
+
 /*
 * ComponentConnector
 * 
@@ -43,7 +46,9 @@ public:
 	* los conectores para no recargar la programacion
 	* de la interfaz en su uso
 	**************************************************/
-	static ComponentConnector<T>* saveConnector(ComponentConnector<T> connector);
+	static function<void(void*)> createConnector(ComponentConnector<T>* connector){
+		return bind(&ComponentConnector<T>::execute, connector, _1);
+	}
 
 	/*
 	* Mode - Se definen los modos de funcionamiento segun los cuales:
@@ -60,48 +65,38 @@ public:
 	* ComponentConnector - Se lo construye con el modo, el callback
 	* y eventualmente la informacion de cada modo.
 	*/
-	ComponentConnector(std::function<void(T)> callback, Mode mode);
-	ComponentConnector(std::function<void(T)> callback, T fixedArg);
+	ComponentConnector(function<void(T)> callback);
+	ComponentConnector(function<void(void)> callback);
+	ComponentConnector(function<void(T)> callback, T fixedArg);
 
 	/*
 	* execute - Ejecuta el callback.
 	*/
 	void execute(void*);
+
 private:
-	std::function<void(T)> callback;
+	function<void(T)> callback;
+	function<void(void)> noArgCallback;
 	Mode mode;
 	T fixedArg;
-
-	static std::vector<ComponentConnector<T>> connectors;
 };
 
 template <class T>
-std::vector<ComponentConnector<T>> ComponentConnector<T>::connectors = {};
-
-template <class T>
-ComponentConnector<T>* 
-ComponentConnector<T>::saveConnector(ComponentConnector<T> connector) {
-	ComponentConnector<T>::connectors.push_back(connector);
-	return &connector;
-}
-
-/**************************
-* Definicion del template *
-**************************/
-template <class T>
-ComponentConnector<T>::ComponentConnector(std::function<void(T)> callback, Mode mode) {
+ComponentConnector<T>::ComponentConnector(function<void(T)> callback) {
 	this->callback = callback;
-	this->mode = mode;
-
-	if (this->mode == ComponentConnector::Mode::FIXED_ARG) {
-		throw std::exception("ComponentConnector - FixedArgs es un modo que debe recibir el value");
-	}
+	this->mode = Mode::ARG;
 }
 
 template <class T>
-ComponentConnector<T>::ComponentConnector(std::function<void(T)> callback, T fixedArg) {
+ComponentConnector<T>::ComponentConnector(function<void(void)> callback) {
+	this->noArgCallback = callback;
+	this->mode = Mode::NO_ARG;
+}
+
+template <class T>
+ComponentConnector<T>::ComponentConnector(function<void(T)> callback, T fixedArg) {
 	this->callback = callback;
-	this->mode = ComponentConnector::Mode::FIXED_ARG;
+	this->mode = Mode::FIXED_ARG;
 	this->fixedArg = fixedArg;
 }
 
@@ -109,10 +104,10 @@ template <class T>
 void ComponentConnector<T>::execute(void* data) {
 	switch (this->mode) {
 		case Mode::NO_ARG:
-			callback();
+			noArgCallback();
 			break;
 		case Mode::FIXED_ARG:
-			callback(*((T*)fixedArg));
+			callback(fixedArg);
 			break;
 		case Mode::ARG:
 			callback(*((T*)data));

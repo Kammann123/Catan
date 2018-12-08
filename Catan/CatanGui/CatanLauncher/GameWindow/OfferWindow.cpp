@@ -26,16 +26,16 @@ OfferWindow::
 OfferWindow(string id) : ChildWindowUI(id, 750, 700) {
 	UIComponent* tradeButton = UIBuilder::createButton("tradeButton");
 	UIComponent* exitButton = UIBuilder::createButton("exitButton");
-	UIComponent* wantedWool = UIBuilder::createCounter("wantedWool", 9);
-	UIComponent* wantedGrain = UIBuilder::createCounter("wantedGrain", 9);
-	UIComponent* wantedBrick = UIBuilder::createCounter("wantedBrick", 9);
-	UIComponent* wantedOre = UIBuilder::createCounter("wantedOre", 9);
-	UIComponent* wantedLumber = UIBuilder::createCounter("wantedLumber", 9);
-	UIComponent* givenWool = UIBuilder::createCounter("givenWool", 9);
-	UIComponent* givenGrain = UIBuilder::createCounter("givenGrain", 9);
-	UIComponent* givenBrick = UIBuilder::createCounter("givenBrick", 9);
-	UIComponent* givenOre = UIBuilder::createCounter("givenOre", 9);
-	UIComponent* givenLumber = UIBuilder::createCounter("givenLumber", 9);
+	UIComponent* wantedWool = UIBuilder::createCounterBox("wantedWool", 9);
+	UIComponent* wantedGrain = UIBuilder::createCounterBox("wantedGrain", 9);
+	UIComponent* wantedBrick = UIBuilder::createCounterBox("wantedBrick", 9);
+	UIComponent* wantedOre = UIBuilder::createCounterBox("wantedOre", 9);
+	UIComponent* wantedLumber = UIBuilder::createCounterBox("wantedLumber", 9);
+	UIComponent* givenWool = UIBuilder::createCounterBox("givenWool", 9);
+	UIComponent* givenGrain = UIBuilder::createCounterBox("givenGrain", 9);
+	UIComponent* givenBrick = UIBuilder::createCounterBox("givenBrick", 9);
+	UIComponent* givenOre = UIBuilder::createCounterBox("givenOre", 9);
+	UIComponent* givenLumber = UIBuilder::createCounterBox("givenLumber", 9);
 
 	UIComponent* bank = UIBuilder::createButton("bank");
 	UIComponent* dock = UIBuilder::createButton("dock");
@@ -101,17 +101,17 @@ OfferWindow(string id) : ChildWindowUI(id, 750, 700) {
 	MODEL(tradeButton, MouseUI*)->setPosition(550, 340);
 	MODEL(exitButton, MouseUI*)->setPosition(675, 14);
 
-	MODEL(wantedWool, CounterUI*)->setPosition(105, 125);
-	MODEL(wantedGrain, CounterUI*)->setPosition(100 + 125, 125);
-	MODEL(wantedBrick, CounterUI*)->setPosition(100 + 125 * 2, 125);
-	MODEL(wantedOre, CounterUI*)->setPosition(100 + 125 * 3, 125);
-	MODEL(wantedLumber, CounterUI*)->setPosition(100 + 125 * 4, 125);
+	MODEL(wantedWool, UIModelContainer*)->setPosition(80, 125);
+	MODEL(wantedGrain, UIModelContainer*)->setPosition(75 + 125, 125);
+	MODEL(wantedBrick, UIModelContainer*)->setPosition(75 + 125 * 2, 125);
+	MODEL(wantedOre, UIModelContainer*)->setPosition(75 + 125 * 3, 125);
+	MODEL(wantedLumber, UIModelContainer*)->setPosition(75 + 125 * 4, 125);
 
-	MODEL(givenWool, CounterUI*)->setPosition(105, 285);
-	MODEL(givenGrain, CounterUI*)->setPosition(100 + 125, 285);
-	MODEL(givenBrick, CounterUI*)->setPosition(100 + 125 * 2, 285);
-	MODEL(givenOre, CounterUI*)->setPosition(100 + 125 * 3, 285);
-	MODEL(givenLumber, CounterUI*)->setPosition(100 + 125 * 4, 285);
+	MODEL(givenWool, UIModelContainer*)->setPosition(80, 285);
+	MODEL(givenGrain, UIModelContainer*)->setPosition(75 + 125, 285);
+	MODEL(givenBrick, UIModelContainer*)->setPosition(75 + 125 * 2, 285);
+	MODEL(givenOre, UIModelContainer*)->setPosition(75 + 125 * 3, 285);
+	MODEL(givenLumber, UIModelContainer*)->setPosition(75 + 125 * 4, 285);
 
 	MODEL(bank, MouseUI*)->setPosition(300, 450);
 	MODEL(dock, MouseUI*)->setPosition(50, 465);

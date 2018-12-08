@@ -14,11 +14,11 @@ DiscardWindow::
 DiscardWindow(string id) : ChildWindowUI(id, 750, 471) {
 	UIComponent* discardButton = UIBuilder::createButton("discardButton");
 	UIComponent* exitButton = UIBuilder::createButton("exitButton");
-	UIComponent* wool = UIBuilder::createCounter("wool", 9);
-	UIComponent* grain = UIBuilder::createCounter("grain", 9);
-	UIComponent* brick = UIBuilder::createCounter("brick", 9);
-	UIComponent* ore = UIBuilder::createCounter("ore", 9);
-	UIComponent* lumber = UIBuilder::createCounter("lumber", 9);
+	UIComponent* wool = UIBuilder::createCounterBox("wool", 9);
+	UIComponent* grain = UIBuilder::createCounterBox("grain", 9);
+	UIComponent* brick = UIBuilder::createCounterBox("brick", 9);
+	UIComponent* ore = UIBuilder::createCounterBox("ore", 9);
+	UIComponent* lumber = UIBuilder::createCounterBox("lumber", 9);
 
 	/*******************************
 	* Configuracion de los botones *
@@ -50,11 +50,11 @@ DiscardWindow(string id) : ChildWindowUI(id, 750, 471) {
 	MODEL(discardButton, MouseUI*)->setPosition(550, 340);
 	MODEL(exitButton, MouseUI*)->setPosition(675, 14);
 
-	MODEL(wool, CounterUI*)->setPosition(105, 140);
-	MODEL(grain, CounterUI*)->setPosition(100 + 120, 140);
-	MODEL(brick, CounterUI*)->setPosition(100 + 120 * 2, 140);
-	MODEL(ore, CounterUI*)->setPosition(100 + 120 * 3, 140);
-	MODEL(lumber, CounterUI*)->setPosition(100 + 120 * 4, 140);
+	MODEL(wool, UIModelContainer*)->setPosition(80, 140);
+	MODEL(grain, UIModelContainer*)->setPosition(75 + 120, 140);
+	MODEL(brick, UIModelContainer*)->setPosition(75 + 120 * 2, 140);
+	MODEL(ore, UIModelContainer*)->setPosition(75 + 120 * 3, 140);
+	MODEL(lumber, UIModelContainer*)->setPosition(75 + 120 * 4, 140);
 
 	/************
 	* Callbacks *

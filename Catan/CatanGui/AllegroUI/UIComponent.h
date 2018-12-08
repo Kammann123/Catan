@@ -3,7 +3,7 @@
 #include "ComponentConnector.h"
 #include "UIModelContainer.h"
 #include "UIController.h"
-#include "UIModel.h""
+#include "UIModel.h"
 #include "UIView.h"
 
 #include <iterator>

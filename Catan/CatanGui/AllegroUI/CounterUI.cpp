@@ -1,7 +1,7 @@
 #include "CounterUI.h"
 
 CounterUI::
-CounterUI(string id, unsigned int max) : UIModelContainer(id) {
+CounterUI(string id, unsigned int max) : FrameUI(id, 0, 0) {
 	this->counter = 0;
 	this->max = max;
 }
@@ -12,20 +12,20 @@ CounterUI::getValue(void) {
 }
 
 void
-CounterUI::reset(void* data) {
+CounterUI::reset(void) {
 	counter = 0;
 }
 
 void
-CounterUI::plusValue(void* data) {
+CounterUI::plusValue(unsigned int value) {
 	if (counter < max) {
-		counter++;
+		counter += value;
 	}
 }
 
 void
-CounterUI::minusValue(void* data) {
+CounterUI::minusValue(unsigned int value) {
 	if (counter) {
-		counter--;
+		counter -= value;
 	}
 }

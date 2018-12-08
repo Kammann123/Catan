@@ -12,7 +12,9 @@
 
 #include "../AllegroUI/MouseUI.h"
 #include "../AllegroUI/TextUI.h"
+#include "../AllegroUI/ComponentConnector.h"
 #include "../AllegroUI/CounterUI.h"
+#include "../AllegroUI/WindowUI.h"
 
 #include "../AllegroUI/MouseController.h"
 #include "../AllegroUI/TextController.h"
@@ -167,43 +169,56 @@ createImage(string id)
 UIComponent* 
 UIBuilder::createCounter(string id, unsigned int max) {
 
-	/* Creo los modelos que necesito! */
+	/* Creo el modelo */
 	UIModel* counterModel = new CounterUI(id, max);
 
-	/* Creo el view que necesito */
+	/* Creo el view y hago un attach */
 	UIView* counterView = new CounterView((CounterUI*)counterModel);
 	counterModel->attach(counterView);
 
-	/* Creo los otros componentes que necesito */
-	UIComponent* plus = UIBuilder::createButton(id + string("_plus"));
-	UIComponent* minus = UIBuilder::createButton(id + string("_minus"));
-
-	/* Configuro los componentes con sus imagenes */
-	(*plus)[0]->getImages().setConfig((unsigned int)MouseUI::Status::IDLE, PLUS_IMG);
-	(*plus)[0]->getImages().setConfig((unsigned int)MouseUI::Status::FOCUSED, PLUS_IMG);
-	(*plus)[0]->getImages().setConfig((unsigned int)MouseUI::Status::SELECTED, PLUS_IMG);
-	(*plus)[0]->getImages().setConfig((unsigned int)MouseUI::Status::DRAGGED, PLUS_IMG);
-
-	(*minus)[0]->getImages().setConfig((unsigned int)MouseUI::Status::IDLE, MINUS_IMG);
-	(*minus)[0]->getImages().setConfig((unsigned int)MouseUI::Status::FOCUSED, MINUS_IMG);
-	(*minus)[0]->getImages().setConfig((unsigned int)MouseUI::Status::SELECTED, MINUS_IMG);
-	(*minus)[0]->getImages().setConfig((unsigned int)MouseUI::Status::DRAGGED, MINUS_IMG);
-
-	/* Configuro los componentes con sus callbacks */
-	((MouseUI*)plus->getModel())->setClickAction(bind(&CounterUI::plusValue, (CounterUI*)counterModel, _1));
-	((MouseUI*)minus->getModel())->setClickAction(bind(&CounterUI::minusValue, (CounterUI*)counterModel, _1));
-
-	/* Creo el model container */
-	((UIModelContainer*)counterModel)->attachModel((FrameUI*)plus->getModel(), -30, 0);
-	((UIModelContainer*)counterModel)->attachModel((FrameUI*)minus->getModel(), 30, 0);
-
-	/* Creo el componente final */
-	UIComponent* counterComponent = new UIComponent(counterModel, {counterView, (*plus)[0] , (*minus)[0] }, { (*plus)[UIController::Id::MOUSE], (*minus)[UIController::Id::MOUSE] });
-
-	/* Configuro destroy y despues devuelvo! */
-	plus->getModel()->setUIDestroy(false);
-	minus->getModel()->setUIDestroy(false);
+	/* Creo el component */
+	UIComponent* counterComponent = new UIComponent(counterModel, { counterView }, {});
 	return counterComponent;
+}
+
+UIComponent* 
+UIBuilder::createCounterBox(string id, unsigned int max) {
+
+	/* Creo el component */
+	UIComponent* box = new UIComponent(id);
+
+	/* Creo los subcomponents */
+	UIComponent* plusButton = createButton(id + "_plus");
+	UIComponent* counter = createCounter(id + "_counter", max);
+	UIComponent* minusButton = createButton(id + "_minus");
+
+	/* Configuro frames de botones */
+	(*plusButton)[0]->getImages().setConfig((unsigned int)MouseUI::Status::IDLE, PLUS_IMG);
+	(*plusButton)[0]->getImages().setConfig((unsigned int)MouseUI::Status::FOCUSED, PLUS_IMG);
+	(*plusButton)[0]->getImages().setConfig((unsigned int)MouseUI::Status::SELECTED, PLUS_IMG);
+	(*plusButton)[0]->getImages().setConfig((unsigned int)MouseUI::Status::DRAGGED, PLUS_IMG);
+
+	(*minusButton)[0]->getImages().setConfig((unsigned int)MouseUI::Status::IDLE, MINUS_IMG);
+	(*minusButton)[0]->getImages().setConfig((unsigned int)MouseUI::Status::FOCUSED, MINUS_IMG);
+	(*minusButton)[0]->getImages().setConfig((unsigned int)MouseUI::Status::SELECTED, MINUS_IMG);
+	(*minusButton)[0]->getImages().setConfig((unsigned int)MouseUI::Status::DRAGGED, MINUS_IMG);
+
+	/* Configuro las posiciones relativas dentro del component */
+	MODEL(plusButton, FrameUI*)->setPosition(0, 0);
+	MODEL(counter, FrameUI*)->setPosition(30, 0);
+	MODEL(minusButton, FrameUI*)->setPosition(60, 0);
+
+	/* Agrego los subcomponents */
+	box->attachComponent(plusButton);
+	box->attachComponent(counter);
+	box->attachComponent(minusButton);
+
+	/* Creo los pipes o connectores :D !! */
+	MODEL(plusButton, MouseUI*)->setClickAction(CREATE_CONNECTOR(unsigned int, std::bind(&CounterUI::plusValue, (CounterUI*)counter->getModel(), _1), 1));
+	MODEL(minusButton, MouseUI*)->setClickAction(CREATE_CONNECTOR(unsigned int, std::bind(&CounterUI::minusValue, (CounterUI*)counter->getModel(), _1), 1));
+	
+	/* Devuelvo */
+	return box;
 }
 
 UIComponent*
