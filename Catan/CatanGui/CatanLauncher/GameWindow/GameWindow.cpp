@@ -402,7 +402,8 @@ GameWindow::onRobberDrop(void* data) {
 	* y buscar una compatibilidad dentro del mapa de pixeles del mapa
 	*/
 	Robber* robber = launcher.getGame().getCatanMap()->getRobber();
-	position_t robberPosition = { robber->xPos(), robber->yPos(), 0 };
+	ALLEGRO_EVENT* event = (ALLEGRO_EVENT*)data;
+	position_t robberPosition = { event->mouse.x - MODEL((*this)[MAP_ID], FrameUI*)->xPos(), event->mouse.y - MODEL((*this)[MAP_ID], FrameUI*)->yPos() };
 
 	map<string, position_t> pixels = launcher.getGame().getCatanMap()->screenHexCoords();
 	for (auto pixel : pixels) {
