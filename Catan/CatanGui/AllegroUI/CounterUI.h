@@ -2,7 +2,7 @@
 
 #include "UIModelContainer.h"
 
-class CounterUI : public UIModelContainer {
+class CounterUI : public FrameUI {
 public:
 
 	/*
@@ -15,9 +15,9 @@ public:
 	* Interfaz de acceso *
 	*********************/
 	unsigned int getValue(void);
-	void reset(void* data);
-	void plusValue(void* data);
-	void minusValue(void* data);
+	void reset(void);
+	void plusValue(unsigned int value);
+	void minusValue(unsigned int value);
 
 private:
 	unsigned int counter;

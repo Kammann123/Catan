@@ -66,7 +66,6 @@ void PlayerView::draw(void)
 	ALLEGRO_FONT * fontVP;
 	ALLEGRO_COLOR color = colors[PLAYER_FONT_COLOR].color;
 	PlayerId playerId = player->getPlayerId();
-	unsigned int resourceAmount;
 	ALLEGRO_COLOR nameColor = playerId == PlayerId::PLAYER_ONE ? colors[LOCAL_COLOR].color : colors[REMOTE_COLOR].color;
 
 	/* Se dibuja el nombre del jugador */
