@@ -72,7 +72,7 @@ void CatanMapView::draw(void) {
 	CatanMap* catanMap = (CatanMap*)model;
 	ALLEGRO_BITMAP * btMap = nullptr;
 	ALLEGRO_BITMAP * tokenBtMap = nullptr;
-	std::map<string, position_t> mymap = catanMap->screen();
+	std::map<string, position_t> mymap = catanMap->screenHexCoords();
 	std::map<string, position_t>::iterator it;
 	std::map<Coord, unsigned char> tokenMap = catanMap->getTokens();
 	std::map<Coord, unsigned char>::iterator tokenIt;

@@ -129,7 +129,7 @@ CatanMap::_destroy_robber(void) {
 
 void
 CatanMap::_init_coords(void) {
-	screenCoords = {
+	edgeCoords = {
 		/* Sides (Roads) */
 		{ "0A5",{ 211.71,73,MAP_ALPHA } },{ "0AB",{ 261.71,73,MAP_BETA } },{ "0BA",{ 312.55,73,MAP_ALPHA } },{ "0BC",{ 363.05,73,MAP_BETA } },{ "0C",{ 413.21,73,MAP_ALPHA } },{ "1C0",{ 463.21,73,MAP_BETA } },{ "5A",{ 187.42,117.165,MAP_VERTICAL } },{ "AB",{ 287.42,117.165,MAP_VERTICAL } },{ "BC",{ 388.42,117.165,MAP_VERTICAL } },{ "1CG",{ 488.42,117.165,MAP_VERTICAL } },
 		{ "5DA",{ 161.59,161.335,MAP_ALPHA } },{ "AD",{ 211.71,161.335,MAP_BETA } },{ "AE",{ 261.71,161.335,MAP_ALPHA } },{ "BE",{ 312.55,161.335,MAP_BETA } },{ "BF",{ 363.05,161.335,MAP_ALPHA } },{ "CF",{ 413.21,161.335,MAP_BETA } },{ "CG",{ 463.21,161.335,MAP_ALPHA } },{ "1GC",{ 513.55,161.335,MAP_BETA } },{ "5DH",{ 135.75,204.835,MAP_VERTICAL } },{ "DE",{ 236,204.835,MAP_VERTICAL } },
@@ -138,16 +138,20 @@ CatanMap::_init_coords(void) {
 		{ "HM",{ 161.59,337,MAP_ALPHA } },{ "IM",{ 211.71,337,MAP_BETA } },{ "IN",{ 261.71,337,MAP_ALPHA } },{ "JN",{ 312.55,337,MAP_BETA } },{ "JO",{ 363.05,337,MAP_ALPHA } },{ "KO",{ 413.21,337,MAP_BETA } },{ "KP",{ 463.21,337,MAP_ALPHA } },{ "LP",{ 513.55,337,MAP_BETA } },{ "2LP",{ 563.55,337,MAP_ALPHA } },{ "4MH",{ 135.75,380.165,MAP_VERTICAL } },
 		{ "MN",{ 236,380.165,MAP_VERTICAL } },{ "NO",{ 337.67,380.165,MAP_VERTICAL } },{ "OP",{ 438,380.165,MAP_VERTICAL } },{ "2PL",{ 538.67,380.165,MAP_VERTICAL } },{ "4MQ",{ 161.59,423.5,MAP_BETA } },{ "MQ",{ 211.71,423.5,MAP_ALPHA } },{ "NQ",{ 261.71,423.5,MAP_BETA } },{ "NR",{ 312.55,423.5,MAP_ALPHA } },{ "OR",{ 363.05,423.5,MAP_BETA } },{ "OS",{ 413.21,423.5 } },
 		{ "PS",{ 463.21,423.5,MAP_BETA } },{ "2PS",{ 513.55,423.5,MAP_ALPHA } },{ "4QM",{ 187.42,466.665,MAP_VERTICAL } },{ "QR",{ 287.42,466.665,MAP_VERTICAL } },{ "RS",{ 388.42,466.665,MAP_VERTICAL } },{ "2S",{ 488.42,466.665,MAP_VERTICAL } },{ "4Q3",{ 211.71,510.5,MAP_BETA } },{ "3Q",{ 261.71,510.5,MAP_ALPHA } },{ "3RQ",{ 312.55,510.5,MAP_BETA } },{ "3RS",{ 363.05,510.5,MAP_ALPHA } },
-		{ "3SR",{ 413.21,510.5,MAP_BETA } },{ "3S2",{ 463.21,510.5,MAP_ALPHA } },
+		{ "3SR",{ 413.21,510.5,MAP_BETA } },{ "3S2",{ 463.21,510.5,MAP_ALPHA } }
+	};
 
+	dotCoords = {
 		/* Vertex (Settlements/Cities) */
 		{ "0A",{ 236,58.67,MAP_NONE } },{ "0B",{ 337.67,58.67,MAP_NONE } },{ "01C",{ 438,58.67,MAP_NONE } },{ "05A",{ 187.42,87.33,MAP_NONE } },{ "0AB",{ 287.42,87.33,MAP_NONE } },{ "0BC",{ 388.42,87.33,MAP_NONE } },{ "1C",{ 488.42,87.33,MAP_NONE } },{ "5AD",{ 187.42,147,MAP_NONE } },{ "ABE",{ 287.42,147,MAP_NONE } },{ "BCF", {388.42,147,MAP_NONE} },
 		{ "1CG",{ 488.42,147,MAP_NONE} },{ "5D",{ 135.75,175.67,MAP_NONE } },{ "ADE",{ 236,175.67,MAP_NONE } },{ "BEF",{ 337.67,175.67,MAP_NONE } },{ "CFG",{ 438,175.67,MAP_NONE } },{ "1G",{ 538.67,175.67,MAP_NONE } },{ "5DH",{ 135.75,234,MAP_NONE } },{ "DEI",{ 236,234,MAP_NONE } },{ "EFJ",{ 337.67,234,MAP_NONE } },{ "FGK",{ 438,234,MAP_NONE } },
 		{ "5H", { 84.67,262.67,MAP_NONE} },{ "DHI",{187.42,262.67,MAP_NONE} },{"EIJ",{287.42,262.67,MAP_NONE}},{"FJK",{388.42,262.67,MAP_NONE}},
 		{ "GKL",{ 488.42,262.67,MAP_NONE } },{ "12L",{ 588.42,262.67,MAP_NONE } },{ "45H",{ 84.67,322.67,MAP_NONE } },{ "HIM",{ 187.42,322.67,MAP_NONE } },{ "IJN",{ 287.42,322.67,MAP_NONE } },{ "JKO",{ 388.42,322.67,MAP_NONE } },{ "KLP",{ 488.42,322.67,MAP_NONE } },{ "2L",{ 588.42,322.67,MAP_NONE } },{ "4HM",{ 135.75,351.33,MAP_NONE } },{ "IMN",{ 236,351.33,MAP_NONE } },
 		{ "JNO",{ 337.67,351.33,MAP_NONE } },{ "KOP",{ 438,351.33,MAP_NONE } },{ "2LP",{ 538.67,351.33,MAP_NONE } },{ "4M",{ 135.75,409,MAP_NONE } },{ "NMQ",{ 236,409,MAP_NONE } },{ "MOR",{ 337.67,409,MAP_NONE } },{ "OPS",{ 438,409,MAP_NONE } },{ "2P",{ 538.67,409,MAP_NONE } },{ "4MQ",{ 187.42,438,MAP_NONE } },{ "NQR",{ 287.42,438,MAP_NONE } },
-		{ "ORS",{ 388.42,438,MAP_NONE } },{ "2PS",{ 488.42,438,MAP_NONE } },{ "4Q",{ 187.42,495.33,MAP_NONE } },{ "MQR",{ 287.42,495.33,MAP_NONE } },{ "3RS",{ 388.42,495.33,MAP_NONE } },{ "23S",{ 488.42,495.33,MAP_NONE } },{ "34Q",{ 236,525.67,MAP_NONE } },{ "3R",{ 337.67,525.67,MAP_NONE } },{ "3S",{ 438,525.67,MAP_NONE } },
+		{ "ORS",{ 388.42,438,MAP_NONE } },{ "2PS",{ 488.42,438,MAP_NONE } },{ "4Q",{ 187.42,495.33,MAP_NONE } },{ "MQR",{ 287.42,495.33,MAP_NONE } },{ "3RS",{ 388.42,495.33,MAP_NONE } },{ "23S",{ 488.42,495.33,MAP_NONE } },{ "34Q",{ 236,525.67,MAP_NONE } },{ "3R",{ 337.67,525.67,MAP_NONE } },{ "3S",{ 438,525.67,MAP_NONE } }
+	};
 
+	screenCoords = {
 		/* Hexagons */
 		{ "A",{ 236,117.165,MAP_NONE } },{ "B",{ 337.67,117.165,MAP_NONE } },{ "C",{ 438,117.165,MAP_NONE } },{ "D",{ 187.42,204.835,MAP_NONE } },{ "E",{ 287.42,204.835,MAP_NONE } },{ "F",{ 388.42,204.835,MAP_NONE } },{ "G",{ 488.42,204.835,MAP_NONE } },{ "H",{ 135.75,292.67,MAP_NONE } },{ "I",{ 236,292.67,MAP_NONE } },{ "J",{ 337.67,292.67 } },
 		{ "K",{ 438,292.67,MAP_NONE } },{ "L",{ 538.67,292.67,MAP_NONE } },{ "M",{ 187.42,380.165,MAP_NONE } },{ "N",{ 287.42,380.165,MAP_NONE } },{ "O",{ 388.42,380.165,MAP_NONE } },{ "P",{ 488.42,380.165,MAP_NONE } },{ "Q",{ 236,466.665,MAP_NONE } },{ "R",{ 337.67,466.665,MAP_NONE } },{ "S",{ 438,466.665,MAP_NONE } },
@@ -427,7 +431,15 @@ CatanMap::build(Building* building, Coord coord) {
 	/* Ubico la posicion del building en la pantalla
 	* y su locacion logica dentro del juego
 	*/
-	position_t pos = screenCoords[coord.getCoords()];
+	position_t pos;
+	switch (building->getType()) {
+		case BuildingType::SETTLEMENT: case BuildingType::CITY:
+			pos = dotCoords[coord.getCoords()];
+			break;
+		case BuildingType::ROAD:
+			pos = edgeCoords[coord.getCoords()];
+			break;
+	}
 	building->build(coord, pos.x + x, pos.y + y, pos.info);
 
 	/* Agrego el building al conjunto de construcciones
@@ -533,7 +545,17 @@ CatanMap::sea(Coord coord) {
 	return nullptr;
 }
 
-map<string, position_t>
-CatanMap::screen(void) {
+map<string, position_t> 
+CatanMap::screenHexCoords(void) {
 	return screenCoords;
+}
+
+map<string, position_t>
+CatanMap::screenDotCoords(void) {
+	return dotCoords;
+}
+
+map<string, position_t>
+CatanMap::screenEdgeCoords(void) {
+	return edgeCoords;	
 }

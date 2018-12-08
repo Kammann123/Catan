@@ -238,3 +238,8 @@ UIBuilder::createMultiLabel(string id, double width, double height){
 	UIComponent* component = new UIComponent(labelModel, { labelView }, {});
 	return component;
 }
+
+UIComponent* 
+UIBuilder::createInfoBox(string id, size_t size, double width, double height) {
+
+}

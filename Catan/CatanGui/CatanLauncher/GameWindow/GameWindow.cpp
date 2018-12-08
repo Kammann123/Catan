@@ -48,7 +48,7 @@
 #define GAMEWINDOW_TRADE_FOCUSED	"CatanGui\\GUIDesigns\\GameMenu\\trade_focused.png"
 #define GAMEWINDOW_TRADE_SELECTED	"CatanGui\\GUIDesigns\\GameMenu\\trade_selected.png"
 
-#define PLACING_RADIO		10
+#define PLACING_RADIO		15
 #define PLAYER_TWO_OFFSET	25
 
 GameWindow::
@@ -277,7 +277,19 @@ GameWindow::onBuildingMove(void* data) {
 	*/
 	ALLEGRO_EVENT* event = (ALLEGRO_EVENT*)data;
 	position_t mousePosition = { event->mouse.x - MODEL((*this)[MAP_ID], FrameUI*)->xPos(), event->mouse.y - MODEL((*this)[MAP_ID], FrameUI*)->yPos() };
-	map<string, position_t> pixels = launcher.getGame().getCatanMap()->screen();
+	map<string, position_t> pixels;
+	
+	/* En funcion del tipo de construccion, elijo que tipo de
+	* traductor de coordenadas busco en el CatanMap!
+	*/
+	switch (building->getType()) {
+		case BuildingType::ROAD:
+			pixels = launcher.getGame().getCatanMap()->screenEdgeCoords();
+			break;
+		case BuildingType::CITY: case BuildingType::SETTLEMENT:
+			pixels = launcher.getGame().getCatanMap()->screenDotCoords();
+			break;
+	}
 
 	for (auto pixel : pixels) {
 		if (positionDistance(mousePosition, pixel.second) < PLACING_RADIO) {
@@ -347,7 +359,19 @@ GameWindow::onBuildingDrop(void* data) {
 	*/
 	ALLEGRO_EVENT* event = (ALLEGRO_EVENT*)data;
 	position_t mousePosition = { event->mouse.x - MODEL((*this)[MAP_ID], FrameUI*)->xPos(), event->mouse.y - MODEL((*this)[MAP_ID], FrameUI*)->yPos() };
-	map<string, position_t> pixels = launcher.getGame().getCatanMap()->screen();
+	map<string, position_t> pixels;
+
+	/* En funcion del tipo de construccion, elijo que tipo de
+	* traductor de coordenadas busco en el CatanMap!
+	*/
+	switch (building->getType()) {
+	case BuildingType::ROAD:
+		pixels = launcher.getGame().getCatanMap()->screenEdgeCoords();
+		break;
+	case BuildingType::CITY: case BuildingType::SETTLEMENT:
+		pixels = launcher.getGame().getCatanMap()->screenDotCoords();
+		break;
+	}
 
 	for (auto pixel : pixels) {
 		if (positionDistance(mousePosition, pixel.second) < PLACING_RADIO) {
@@ -382,7 +406,7 @@ GameWindow::onRobberDrop(void* data) {
 	Robber* robber = launcher.getGame().getCatanMap()->getRobber();
 	position_t robberPosition = { robber->xPos(), robber->yPos(), 0 };
 
-	map<string, position_t> pixels = launcher.getGame().getCatanMap()->screen();
+	map<string, position_t> pixels = launcher.getGame().getCatanMap()->screenHexCoords();
 	for (auto pixel : pixels) {
 
 		if (positionDistance(robberPosition, pixel.second) < PLACING_RADIO) {
