@@ -11,6 +11,7 @@
 #include "../../../CatanEvents/RobberCardEvent.h"
 #include "../../../CatanEvents/RobberMoveEvent.h"
 #include "../../../CatanEvents/DicesEvent.h"
+#include "../../../CatanEvents/OfferEvent.h"
 
 #include "OfferWindow.h"
 #include "DiscardWindow.h"
@@ -682,6 +683,67 @@ GameWindow::turn(void) {
 
 void
 GameWindow::offer_answer(void) {
+
+	/**************************
+	* Gandalf! Venite papa... *
+	**************************/
+	if (launcher.getGame().getTurn() == PlayerId::PLAYER_TWO) {
+		/* Busco el evento del juego */
+		OfferEvent* offer = (OfferEvent*)launcher.getGame().getNextEvent();
+
+		/* Le doy formato a la propuesta! */
+		string msg = launcher.getGame().getRemotePlayer()->getName() + " quiere hacer un intercambio.\n";
+
+		list<ResourceId> givenCards = offer->getGiven();
+		unsigned int woolGiven = count(givenCards.begin(), givenCards.end(), ResourceId::PASTURES);
+		unsigned int grainGiven = count(givenCards.begin(), givenCards.end(), ResourceId::FIELD);
+		unsigned int brickGiven = count(givenCards.begin(), givenCards.end(), ResourceId::HILL);
+		unsigned int oreGiven = count(givenCards.begin(), givenCards.end(), ResourceId::MOUNTAIN);
+		unsigned int lumberGiven = count(givenCards.begin(), givenCards.end(), ResourceId::FOREST);
+
+		list<ResourceId> recvCards = offer->getRecv();
+		unsigned int woolRecv = count(recvCards.begin(), recvCards.end(), ResourceId::PASTURES);
+		unsigned int grainRecv = count(recvCards.begin(), recvCards.end(), ResourceId::FIELD);
+		unsigned int brickRecv = count(recvCards.begin(), recvCards.end(), ResourceId::HILL);
+		unsigned int oreRecv = count(recvCards.begin(), recvCards.end(), ResourceId::MOUNTAIN);
+		unsigned int lumberRecv = count(recvCards.begin(), recvCards.end(), ResourceId::FOREST);
+
+		if (woolGiven) {
+			msg += "Ofrece " + to_string(woolGiven) + " lana/s.\n";
+		}
+		if (grainGiven) {
+			msg += "Ofrece " + to_string(grainGiven) + " trigo/s.\n";
+		}
+		if (brickGiven) {
+			msg += "Ofrece " + to_string(brickGiven) + " ladrillo/s.\n";
+		}
+		if (oreGiven) {
+			msg += "Ofrece " + to_string(oreGiven) + " piedra/s.\n";
+		}
+		if (lumberGiven) {
+			msg += "Ofrece " + to_string(lumberGiven) + " madera/s.\n";
+		}
+
+		if (woolRecv) {
+			msg += "Pide " + to_string(woolRecv) + " lana/s.\n";
+		}
+		if (grainRecv) {
+			msg += "Pide " + to_string(grainRecv) + " trigo/s.\n";
+		}
+		if (brickRecv) {
+			msg += "Pide " + to_string(brickRecv) + " ladrillo/s.\n";
+		}
+		if (oreRecv) {
+			msg += "Pide " + to_string(oreRecv) + " piedra/s.\n";
+		}
+		if (lumberRecv) {
+			msg += "Pide " + to_string(lumberRecv) + " madera/s.\n";
+		}
+
+		/* Hago aparecer la ventana de gandalf */
+		((QuestionWindow*)this->child("gandalf"))->question(msg, bind(&GameWindow::acceptOffer, this, _1), bind(&GameWindow::denyOffer, this, _1));
+	}
+
 	/**********************
 	* Configuro el robber *
 	**********************/
@@ -709,6 +771,15 @@ GameWindow::offer_answer(void) {
 
 void
 GameWindow::winner(void) {
+
+	/********************
+	* Gandalf!!! Veni!! *
+	********************/
+	if (launcher.getGame().getWinner() == PlayerId::PLAYER_TWO) {
+		/* Hago aparecer la ventana de gandalf */
+		((QuestionWindow*)this->child("gandalf"))->question("Has perdido esta batalla, no te rindas Pequeño Hobbit. Deseas jugar de nuevo?", bind(&GameWindow::playAgain, this, _1), bind(&GameWindow::gameOver, this, _1));
+	}
+
 	/**********************
 	* Configuro el robber *
 	**********************/
