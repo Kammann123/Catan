@@ -28,6 +28,8 @@
 #define GAMEWINDOW_GRAB_CURSOR		"CatanGui\\Cursor\\cursor_grabbing.png"
 #define GAMEWINDOW_BUILD_CURSOR		"CatanGui\\Cursor\\cursor_building.png"
 
+#define ICON_IMAGE	"CatanGui\\GUIDesigns\\icon.png"
+
 #define BUILD_CURSOR_ID		10
 
 #define GAMEWINDOW_BACKGROUND "CatanGui\\GUIDesigns\\GameMenu\\background.png"
@@ -220,8 +222,8 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI("gameWindow
 	MODEL(exitButton, MouseUI*)->setPosition(63, 250);
 	MODEL(firstDice, Dice*)->setPosition(800, 20);
 	MODEL(secondDice, Dice*)->setPosition(850, 20);
-	MODEL(statusBox, UIModelContainer*)->setPosition(900, 50);
-	MODEL(costBox, UIModelContainer*)->setPosition(900, 110);
+	MODEL(statusBox, UIModelContainer*)->setPosition(920, 30);
+	MODEL(costBox, UIModelContainer*)->setPosition(920, 90);
 
 	/*************************
 	* Posicion de las Childs *
@@ -234,6 +236,8 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI("gameWindow
 	* Configuro general de la interfaz *
 	***********************************/
 	this->setBackground(GAMEWINDOW_BACKGROUND);
+	this->setIcon(ICON_IMAGE);
+	this->setTitle("Fondue Catan v1.0");
 	this->setCursor(GAMEWINDOW_CURSOR);
 	this->setClickCursor(GAMEWINDOW_CLICK_CURSOR);
 	this->setGrabCursor(GAMEWINDOW_GRAB_CURSOR);

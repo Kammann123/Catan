@@ -2,8 +2,6 @@
 
 #include "ChildWindowUI.h"
 
-
-#define ICON_IMAGE	"CatanGui\\GUIDesigns\\icon.png"
 /* Configuraciones e inicializacion estaticas de la clase WindowUI
 *  configurar correctamente la inicializacion de allegro
 */
@@ -73,6 +71,7 @@ WindowUI(string id, size_t width, size_t height, double fps ) {
 	this->display = nullptr;
 	this->queue = nullptr;
 	this->started = false;
+	this->title = "";
 	this->components.clear();
 	colors.clear();
 	images.clear();
@@ -97,8 +96,6 @@ WindowUI::_init_display(void) {
 	if (display == nullptr) {
 		this->display = al_create_display(this->width, this->height);
 		mouse.setDisplay(this->display);
-		al_set_display_icon(display, al_load_bitmap(ICON_IMAGE));
-		al_set_window_title(display, "Fondue Catan");
 	}
 }
 
@@ -244,6 +241,12 @@ WindowUI::start(void) {
 		}
 	}
 
+	/* Cargo el contenido del icono */
+	al_set_display_icon(display, images[WINDOW_ICON].bitmap);
+
+	/* Cargo contenido titulo */
+	al_set_window_title(display, title.c_str());
+
 	/* Inicio el timer */
 	al_start_timer(timer);
 
@@ -259,6 +262,16 @@ WindowUI::start(void) {
 	/* Inicio el dibujo */
 	started = true;
 	draw();
+}
+
+void
+WindowUI::setIcon(const char* image) {
+	images.setConfig(WINDOW_ICON, image);
+}
+
+void
+WindowUI::setTitle(const char* title) {
+	this->title = title;
 }
 
 void

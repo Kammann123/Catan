@@ -11,8 +11,7 @@ CatanLauncher() : game(), networking(game), mainmenu(*this), gamewindow(*this) {
 	game.attach(&gamewindow);
 
 	/* Cambio de estado inicial */
-	game.getCatanMap()->generateLand();
-	change(States::MAIN_MENU);
+	change(States::GAME_WINDOW);
 }
 
 void 

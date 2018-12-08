@@ -30,8 +30,13 @@ using namespace std;
 #define MAINMENU_CANCEL_FOCUS	"CatanGui\\GUIDesigns\\MainMenu\\cancel_focused.png"
 #define MAINMENU_CANCEL_SELECTED	"CatanGui\\GUIDesigns\\MainMenu\\cancel_selected.png"
 
+#define MAINMENU_SOUND_ON		"CatanGui\\GUIDesigns\\MainMenu\\sound_on.png"
+#define MAINMENU_SOUND_OFF		"CatanGui\\GUIDesigns\\MainMenu\\sound_off.png"
+
 #define CONNECT_FOCUS_SOUND "CatanGui\\Sounds\\button_focus.wav"
 #define CONNECT_SELECT_SOUND "CatanGui\\Sounds\\press.wav"
+
+#define ICON_IMAGE	"CatanGui\\GUIDesigns\\icon.png"
 
 #define CANCEL_FOCUS_SOUND CONNECT_FOCUS_SOUND
 #define CANCEL_SELECT_SOUND CONNECT_SELECT_SOUND
@@ -48,6 +53,7 @@ MainMenu(CatanLauncher& _launcher) : WindowUI("mainWindow", 1080, 640), launcher
 	UIComponent* cancelButton = UIBuilder::attachSample(UIBuilder::createButton("cancel"));
 	UIComponent* status = UIBuilder::createImage("status");
 	UIComponent* message = UIBuilder::createLabel("message", 100);
+	UIComponent* mute = UIBuilder::createButton("mute");
 
 	/* Configuro los labels */
 	MODEL(message, TextUI*)->setText("[CatanGame]: Test!");
@@ -55,7 +61,6 @@ MainMenu(CatanLauncher& _launcher) : WindowUI("mainWindow", 1080, 640), launcher
 	/* Configuro las imagenes */
 	(*status)[0]->getImages().setConfig(IV_BITMAP, MAINMENU_STATUS_CLOSED);
 
-	/* Configuro los botones! */
 	(*connectButton)[0]->getImages().setConfig(MouseUI::Status::IDLE, MAINMENU_CONNECT_IDLE);
 	(*connectButton)[0]->getImages().setConfig(MouseUI::Status::FOCUSED, MAINMENU_CONNECT_FOCUS);
 	(*connectButton)[0]->getImages().setConfig(MouseUI::Status::SELECTED, MAINMENU_CONNECT_SELECTED);
@@ -117,7 +122,9 @@ MainMenu(CatanLauncher& _launcher) : WindowUI("mainWindow", 1080, 640), launcher
 
 	/* Configuro ventana general */
 	this->setBackground(MAINMENU_BACKGROUND);
-	//this->setMusic(MAINMENU_MUSIC);
+	this->setIcon(ICON_IMAGE);
+	this->setTitle("Fondue Catan v1.0");
+	this->setMusic(MAINMENU_MUSIC);
 	this->setCloseAction(bind(&MainMenu::onExit, this, _1));
 	this->setCursor(MAINMENU_CURSOR);
 	this->setClickCursor(MAINMENU_CLICK_CURSOR);

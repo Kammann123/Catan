@@ -21,6 +21,7 @@
 #define DEFAULT_FPS 1.0/50
 
 #define WINDOW_BACKGROUND	"background" 
+#define WINDOW_ICON			"icon"
 #define WINDOW_MUSIC		"music"
 
 #define MODEL(_component, _cast)	((_cast)(_component->getModel()))
@@ -102,6 +103,8 @@ public:
 	* Interfaz de configuracion de la WindowUI *
 	*******************************************/
 	void setBackground(unsigned char red, unsigned char green, unsigned char blue);
+	void setIcon(const char* image);
+	void setTitle(const char* title);
 	void setClickCursor(const char* image);
 	void setGrabCursor(const char* image);
 	void setBackground(const char* image);
@@ -129,6 +132,7 @@ protected:
 	double fps;
 	bool started;
 	string id;
+	string title;
 	bool musicPlaying;
 
 	ALLEGRO_DISPLAY * display;
