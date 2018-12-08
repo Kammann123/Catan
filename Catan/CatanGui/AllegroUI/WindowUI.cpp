@@ -98,7 +98,7 @@ WindowUI::_init_display(void) {
 		this->display = al_create_display(this->width, this->height);
 		mouse.setDisplay(this->display);
 		al_set_display_icon(display, al_load_bitmap(ICON_IMAGE));
-		al_set_new_window_title(display, "Fondue Catan");
+		al_set_window_title(display, "Fondue Catan");
 	}
 }
 
