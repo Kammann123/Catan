@@ -11,6 +11,16 @@ SoundConfig::
 
 void
 SoundConfig::clear(void) {
+	for (auto value : intConfig) {
+		if (value.second.sample) {
+			al_destroy_sample(value.second.sample);
+		}
+	}
+	for (auto value : stringConfig) {
+		if (value.second.sample) {
+			al_destroy_sample(value.second.sample);
+		}
+	}
 	stringConfig.clear();
 	intConfig.clear();
 }

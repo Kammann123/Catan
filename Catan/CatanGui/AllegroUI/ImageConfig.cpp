@@ -11,11 +11,17 @@ ImageConfig::
 void
 ImageConfig::clear(void) {
 	for (auto value : intConfig) {
-		remove(value.first);
+		if (value.second.bitmap ) {
+			al_destroy_bitmap(value.second.bitmap);
+		}
 	}
 	for (auto value : stringConfig) {
-		remove(value.first);
+		if (value.second.bitmap) {
+			al_destroy_bitmap(value.second.bitmap);
+		}
 	}
+	intConfig.clear();
+	stringConfig.clear();
 }
 
 void
