@@ -10,6 +10,9 @@
 
 #include "../../../MVC/Observer.h"
 
+#include <functional>
+#include <map>
+
 /**************************************************************
 * Definicion de posiciones ordenadas dentro de los containers *
 * de los jugadores y el juego o tablero						  *
@@ -86,6 +89,17 @@ private:
 	/*******************
 	* Layouts de la UI *
 	*******************/
+	void game_sync(void);
+	void first_builds(void);
+	void throw_dices(void);
+	void robber_card(void);
+	void robber_move(void);
+	void turn(void);
+	void offer_answer(void);
+	void winner(void);
+	void game_end(void);
+	void game_error();
+
 	void normal_layout(void);
 
 	/****************************************
@@ -106,4 +120,5 @@ private:
 
 	CatanLauncher& launcher;
 	CatanGame::State prevState;
+	std::map<CatanGame::State, std::function<void(void)>> layouts;
 };
