@@ -230,7 +230,6 @@ Player::giveCard(ResourceId id) {
 	for (ResourceCard* card : resourceCards) {
 		if (card->getResourceId() == id) {
 			card->assign();
-			resourceCards.remove(card);
 			notifyObservers();
 			return card;
 		}
