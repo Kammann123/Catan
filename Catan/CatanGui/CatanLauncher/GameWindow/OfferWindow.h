@@ -1,8 +1,9 @@
 #include "../../AllegroUI/ChildWindowUI.h"
+#include "../../../CatanGame/CatanGame.h"
 
 class OfferWindow : public ChildWindowUI {
 public:
-	OfferWindow(string id);
+	OfferWindow(string id, CatanGame& _game);
 
 private:
 	/***********************
@@ -10,4 +11,6 @@ private:
 	***********************/
 	void onClose(void* data);
 	void onTrade(void* data);
+
+	CatanGame& game;
 };

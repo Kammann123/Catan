@@ -1271,12 +1271,17 @@ CatanGame::accepts(list<ResourceId>& cards, unsigned int qty) {
 }
 
 bool
-CatanGame::isValidDockExchange(list<ResourceId>& offeredCards, PlayerId playerId) {
+CatanGame::isValidDockExchange(list<ResourceId>& offeredCards, list<ResourceId>& requestedCards, PlayerId playerId) {
 
 	/*
 	* Primero verifico que tenga docks disponibles, luego reviso en cada uno de ellos
 	* segun su tipo, si la accion del usuario es valida
 	*/
+	if (!exchangeHasSense(offeredCards, requestedCards)) {
+		setInfo("[CatanGame] No podes intercambiar y pedir las mismas cartas que das...");
+		return false;
+	}
+
 	list<SeaId>& docks = playerDocks[playerId];
 	if (docks.size()) {
 		for (SeaId seaId : docks) {
@@ -1333,7 +1338,13 @@ CatanGame::isValidPlayerExchange(list<ResourceId>& offeredCards, list<ResourceId
 	}
 
 	if (canPlayerAccept(offeredCards, srcPlayerID) && canPlayerAccept(requestedCards, (OPONENT_ID(srcPlayerID)))) {
-		return true;
+		if (exchangeHasSense(offeredCards, requestedCards)) {
+			return true;
+		}
+		else {
+			setInfo("[CatanGame] No podes intercambiar y pedir las mismas cartas que das...");
+			return false;
+		}
 	}
 	else {
 		setInfo("[CatanGame] No es posible realizar ese intercambio.");
@@ -1342,15 +1353,31 @@ CatanGame::isValidPlayerExchange(list<ResourceId>& offeredCards, list<ResourceId
 }
 
 bool
-CatanGame::isValidBankExchange(list<ResourceId>& offeredCards, PlayerId playerID) {
+CatanGame::isValidBankExchange(list<ResourceId>& offeredCards, list<ResourceId>& requestedCards, PlayerId playerID) {
 
 	if (accepts(offeredCards, BANK_TRANSACTION_CARDS_COUNT) && canPlayerAccept(offeredCards, playerID)) {
-		return true;
+		if (exchangeHasSense(offeredCards, requestedCards)) {
+			return true;
+		}
+		else {
+			setInfo("[CatanGame] No podes intercambiar y pedir las mismas cartas que das...");
+			return false;
+		}
 	}
 	else {
 		setInfo("[CatanGame] Transaccion con el Banco invalida! Revise cantidad y tipo de cartas.");
 		return false;
 	}
+}
+
+bool
+CatanGame::exchangeHasSense(list<ResourceId>& given, list<ResourceId>& wanted) {
+	for (ResourceId card : given) {
+		if (find(wanted.begin(), wanted.end(), card) != wanted.end()) {
+			return false;
+		}
+	}
+	return true;
 }
 
 bool

@@ -386,9 +386,10 @@ public:
 	* alguno de los muelles o bien el banco del juego. Estas validaciones implican verificar que sea posible la transaccion
 	* , que tenga los recursos para hacerla, y que tenga disponible las opciones de hacerla, por los muelles por ejemplo.
 	*/
-	bool isValidDockExchange(list<ResourceId>& offeredCards, PlayerId playerId);
+	bool isValidDockExchange(list<ResourceId>& offeredCards, list<ResourceId>& requestedCards, PlayerId playerId);
 	bool isValidPlayerExchange(list<ResourceId>& offeredCards, list<ResourceId>& requestedCards, PlayerId srcPlayerID);
-	bool isValidBankExchange(list<ResourceId>& offeredCards, PlayerId playerID);
+	bool isValidBankExchange(list<ResourceId>& offeredCards, list<ResourceId>& requestedCards, PlayerId playerID);
+	bool exchangeHasSense(list<ResourceId>& given, list<ResourceId>& wanted);
 
 	/*
 	* canPlayerAccept

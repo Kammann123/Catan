@@ -136,7 +136,7 @@ Turn::handle(CatanEvent* event) {
 				* y en caso de cumplir, lo ejecuto
 				*/
 				if (bank->isBankTrade()) {
-					if (game.isValidBankExchange(bank->getGiven(), bank->getPlayer())) {
+					if (game.isValidBankExchange(bank->getGiven(), bank->getRecv(), bank->getPlayer())) {
 						/* Ejecuto la accion de intercambio */
 						game.Exchange(bank->getGiven(), bank->getRecv().front(), bank->getPlayer());
 
@@ -147,7 +147,7 @@ Turn::handle(CatanEvent* event) {
 					}
 				}
 				else if (bank->isDockTrade()) {
-					if (game.isValidDockExchange(bank->getGiven(), bank->getPlayer())) {
+					if (game.isValidDockExchange(bank->getGiven(), bank->getRecv(), bank->getPlayer())) {
 						/* Ejecuto la accion de intercambio */
 						game.Exchange(bank->getGiven(), bank->getRecv().front(), bank->getPlayer());
 

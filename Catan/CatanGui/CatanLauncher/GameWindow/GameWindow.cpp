@@ -72,7 +72,7 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI("gameWindow
 	UIComponent* costBox = UIBuilder::createToggleInfoBox("cost", 30, 160, 12);
 
 	ChildWindowUI* discardWindow = new DiscardWindow("discardWindow", launcher.getGame());
-	ChildWindowUI* offerWindow = new OfferWindow("offerWindow");
+	ChildWindowUI* offerWindow = new OfferWindow("offerWindow", launcher.getGame());
 	ChildWindowUI* gandalf = new QuestionWindow("gandalf");
 
 	/********************************

@@ -1,5 +1,9 @@
 #include "OfferWindow.h"
 #include "../../AllegroWidgets/UIBuilder.h"
+#include "../../AllegroWidgets/MultiLabelView.h"
+
+#include "../../../CatanEvents/BankEvent.h"
+#include "../../../CatanEvents/OfferEvent.h"
 
 #define TRADE_BACKGROUND "CatanGui\\GUIDesigns\\OfferWindow\\exchange_screen_background_v2.png"
 
@@ -23,7 +27,7 @@
 #define BANK_SELECTED "CatanGui\\GUIDesigns\\OfferWindow\\bank_selected.png"
 
 OfferWindow::
-OfferWindow(string id) : ChildWindowUI(id, 750, 700) {
+OfferWindow(string id, CatanGame& _game) : ChildWindowUI(id, 750, 700), game(_game) {
 	UIComponent* tradeButton = UIBuilder::createButton("tradeButton");
 	UIComponent* exitButton = UIBuilder::createButton("exitButton");
 	UIComponent* wantedWool = UIBuilder::createCounterBox("wantedWool", 9);
@@ -36,6 +40,12 @@ OfferWindow(string id) : ChildWindowUI(id, 750, 700) {
 	UIComponent* givenBrick = UIBuilder::createCounterBox("givenBrick", 9);
 	UIComponent* givenOre = UIBuilder::createCounterBox("givenOre", 9);
 	UIComponent* givenLumber = UIBuilder::createCounterBox("givenLumber", 9);
+	UIComponent* label = UIBuilder::createMultiLabel("status", 600, 15);
+
+	/**************************
+	* Configuracion del label *
+	**************************/
+	(*label)[0]->getColors().setConfig(MLA_TEXT_COLOR, 200, 150, 150);
 
 	UIComponent* bank = UIBuilder::createButton("bank");
 	UIComponent* dock = UIBuilder::createButton("dock");
@@ -94,6 +104,7 @@ OfferWindow(string id) : ChildWindowUI(id, 750, 700) {
 	this->attachComponent(bank);
 	this->attachComponent(dock);
 	this->attachComponent(player);
+	this->attachComponent(label);
 
 	/**************************
 	* Posicion de componentes *
@@ -116,6 +127,7 @@ OfferWindow(string id) : ChildWindowUI(id, 750, 700) {
 	MODEL(bank, MouseUI*)->setPosition(300, 450);
 	MODEL(dock, MouseUI*)->setPosition(50, 465);
 	MODEL(player, MouseUI*)->setPosition(550, 475);
+	MODEL(label, TextUI*)->setPosition(100, 300);
 
 	/************
 	* Callbacks *
@@ -161,6 +173,8 @@ OfferWindow(string id) : ChildWindowUI(id, 750, 700) {
 	this->enableComponent("player", true);
 	this->visibleComponent("bank", true);
 	this->enableComponent("bank", true);
+	this->visibleComponent("status", true);
+	this->enableComponent("status", true);
 }
 
 void
@@ -170,5 +184,51 @@ OfferWindow::onClose(void* data) {
 
 void
 OfferWindow::onTrade(void* data) {
+	/* Busco las cantidades de recursos seleccionadas por
+	* el jugador. Buscando los models counters
+	*/
+	unsigned int woolGiven = MODEL((*(*this)["givenWool"])["counter"], CounterUI*)->getValue();
+	unsigned int grainGiven = MODEL((*(*this)["givenGrain"])["counter"], CounterUI*)->getValue();
+	unsigned int brickGiven = MODEL((*(*this)["givenBrick"])["counter"], CounterUI*)->getValue();
+	unsigned int oreGiven = MODEL((*(*this)["givenOre"])["counter"], CounterUI*)->getValue();
+	unsigned int lumberGiven = MODEL((*(*this)["givenLumber"])["counter"], CounterUI*)->getValue();
 
+	unsigned int woolWanted = MODEL((*(*this)["wantedWool"])["counter"], CounterUI*)->getValue();
+	unsigned int grainWanted = MODEL((*(*this)["wantedGrain"])["counter"], CounterUI*)->getValue();
+	unsigned int brickWanted = MODEL((*(*this)["wantedBrick"])["counter"], CounterUI*)->getValue();
+	unsigned int oreWanted = MODEL((*(*this)["wantedOre"])["counter"], CounterUI*)->getValue();
+	unsigned int lumberWanted = MODEL((*(*this)["wantedLumber"])["counter"], CounterUI*)->getValue();
+
+	/* Valido la accion, en funcion de lo cual, notifico un error, o bien
+	* ejecuto la accion. En caso de ejecutar la accion, cierro la ventana
+	*/
+	list<ResourceId> givenCards = game.generateCards(woolGiven, grainGiven, brickGiven, oreGiven, lumberGiven);
+	list<ResourceId> wantedCards = game.generateCards(woolWanted, grainWanted, brickWanted, oreWanted, lumberWanted);
+	if (MODEL((*this)["bank"], MouseUI*)->getStatus() == MouseUI::Status::HOLDING) {
+		if (game.isValidBankExchange(givenCards, wantedCards, PlayerId::PLAYER_ONE)) {
+			game.syncHandle(new BankEvent(givenCards, wantedCards, PlayerId::PLAYER_ONE));
+			this->setEnable(false);
+		}
+		else {
+			MODEL((*this)["status"], TextUI*)->setText(game.info());
+		}
+	}
+	else if (MODEL((*this)["dock"], MouseUI*)->getStatus() == MouseUI::Status::HOLDING) {
+		if (game.isValidDockExchange(givenCards, wantedCards, PlayerId::PLAYER_ONE)) {
+			game.syncHandle(new BankEvent(givenCards, wantedCards, PlayerId::PLAYER_ONE));
+			this->setEnable(false);
+		}
+		else {
+			MODEL((*this)["status"], TextUI*)->setText(game.info());
+		}
+	}
+	else if (MODEL((*this)["player"], MouseUI*)->getStatus() == MouseUI::Status::HOLDING) {
+		if (game.isValidPlayerExchange(givenCards, wantedCards, PlayerId::PLAYER_ONE)) {
+			game.syncHandle(new OfferEvent(givenCards, wantedCards, PlayerId::PLAYER_ONE));
+			this->setEnable(false);
+		}
+		else {
+			MODEL((*this)["status"], TextUI*)->setText(game.info());
+		}
+	}
 }
