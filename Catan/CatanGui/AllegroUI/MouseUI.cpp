@@ -20,6 +20,7 @@ MouseUI::setEnable(bool enableStatus) {
 		clear();
 	}
 	this->enable = enableStatus;
+	notifyObservers();
 }
 
 void
