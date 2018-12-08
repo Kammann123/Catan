@@ -197,11 +197,11 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI("gameWindow
 	MODEL(firstDice, Dice*)->setClickAction(bind(&GameWindow::onDice, this, _1));
 	MODEL(secondDice, Dice*)->setClickAction(bind(&GameWindow::onDice, this, _1));
 	MODEL(firstDice, Dice*)->setLoopEndAction(bind(&GameWindow::onDicesThrown, this, _1));
-	MODEL(secondDice, Dice*)->setLoopEndAction(bind(&GameWindow::onDicesThrown, this, _1));
 	MODEL(exitButton, MouseUI*)->setClickAction(bind(&GameWindow::onExit, this, _1));
 	MODEL(robber, Robber*)->setDropAction(bind(&GameWindow::onRobberDrop, this, _1));
 	MODEL(tradeButton, MouseUI*)->setClickAction(bind(&GameWindow::onTrade, this, _1));
 	MODEL(discardButton, MouseUI*)->setClickAction(bind(&GameWindow::onDiscard, this, _1));
+	MODEL(passButton, MouseUI*)->setClickAction(bind(&GameWindow::onPass, this, _1));
 
 	/*************************************
 	* Configuro acciones de los Building *
@@ -267,8 +267,6 @@ void
 GameWindow::onDice(void* data) {
 	MODEL((*this)["dice_one"], AnimationUI*)->start();
 	MODEL((*this)["dice_two"], AnimationUI*)->start();
-	(*(*this)["dice_one"])[UIController::Id::MOUSE]->setEnable(false);
-	(*(*this)["dice_two"])[UIController::Id::MOUSE]->setEnable(false);
 }
 
 void 
@@ -417,7 +415,8 @@ GameWindow::onRobberDrop(void* data) {
 	* y buscar una compatibilidad dentro del mapa de pixeles del mapa
 	*/
 	Robber* robber = launcher.getGame().getCatanMap()->getRobber();
-	position_t robberPosition = { robber->xPos(), robber->yPos(), 0 };
+	ALLEGRO_EVENT* event = (ALLEGRO_EVENT*)data;
+	position_t robberPosition = { event->mouse.x - MODEL((*this)[MAP_ID], FrameUI*)->xPos(), event->mouse.y - MODEL((*this)[MAP_ID], FrameUI*)->yPos() };
 
 	map<string, position_t> pixels = launcher.getGame().getCatanMap()->screenHexCoords();
 	for (auto pixel : pixels) {

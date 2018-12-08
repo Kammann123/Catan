@@ -284,12 +284,12 @@ Coord::isLand(void) {
 
 bool
 Coord::isDot(void) {
-	return type == DOT && _is_valid_dot();
+	return type == DOT;
 }
 
 bool
 Coord::isEdge(void) {
-	return type == EDGE && _is_valid_edges();
+	return type == EDGE;
 }
 
 bool
@@ -603,6 +603,7 @@ Coord::_order_refactor(void) {
 	bool ok = true;
 
 	if (isEdge()) {
+		ok = true;
 		for (string coord : edges) {
 			if (coords.size() == coord.size()) {
 				for (unsigned char c : coord) {
@@ -620,6 +621,7 @@ Coord::_order_refactor(void) {
 		}
 	}
 	else if (isDot()) {
+		ok = true;
 		for (string coord : externalDots) {
 			if (coords.size() == coord.size()) {
 				for (unsigned char c : coord) {
@@ -635,6 +637,7 @@ Coord::_order_refactor(void) {
 				ok = true;
 			}
 		}
+		ok = true;
 		for (string coord : internalDots) {
 			if (coords.size() == coord.size()) {
 				for (unsigned char c : coord) {

@@ -102,7 +102,7 @@ void BuildingView::draw(void){
 				case BuildingType::ROAD:
 					/* Me fijo que orientacion tiene */
 					switch (building->getAngle()) {
-						case 240: case 60:
+						case 120: case 300:
 							if (building->getStatus() == MouseUI::Status::IDLE) {
 								bitmap = images["road_30_normal"].bitmap;
 							}
@@ -110,7 +110,7 @@ void BuildingView::draw(void){
 								bitmap = images["road_30_focus"].bitmap;
 							}
 							break;
-						case 0:
+						case 90: case 0:
 							if (building->getStatus() == MouseUI::Status::IDLE) {
 								bitmap = images["road_90_normal"].bitmap;
 							}
@@ -118,7 +118,7 @@ void BuildingView::draw(void){
 								bitmap = images["road_90_focus"].bitmap;
 							}
 							break;
-						case 120: case 300:
+						case 240: case 60:
 							if (building->getStatus() == MouseUI::Status::IDLE) {
 								bitmap = images["road_150_normal"].bitmap;
 							}
@@ -142,13 +142,13 @@ void BuildingView::draw(void){
 				case BuildingType::ROAD:
 					/* Busco la orientacion del camino para deficir que bitmap uso */
 					switch (building->getAngle()) {
-						case 60: case 240:
+						case 120: case 300:
 							bitmap = images["road_30_oponent"].bitmap;
 							break;
-						case 0:
+						case 90: case 0:
 							bitmap = images["road_90_oponent"].bitmap;
 							break;
-							case 120: case 300:
+							case 60: case 240:
 							bitmap = images["road_150_oponent"].bitmap;
 							break;
 					}
