@@ -191,6 +191,7 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI("gameWindow
 	MODEL(robber, Robber*)->setDropAction(bind(&GameWindow::onRobberDrop, this, _1));
 	MODEL(tradeButton, MouseUI*)->setClickAction(bind(&GameWindow::onTrade, this, _1));
 	MODEL(discardButton, MouseUI*)->setClickAction(bind(&GameWindow::onDiscard, this, _1));
+	MODEL(passButton, MouseUI*)->setClickAction(bind(&GameWindow::onPass, this, _1));
 
 	/*************************************
 	* Configuro acciones de los Building *

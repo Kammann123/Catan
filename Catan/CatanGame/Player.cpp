@@ -111,10 +111,10 @@ list<Building*>
 Player::buildings(void) {
 	list<Building*> buildings;
 
-	for (Building* building : settlements) {
+	for (Building* building : roads) {
 		buildings.push_back(building);
 	}
-	for (Building* building : roads) {
+	for (Building* building : settlements) {
 		buildings.push_back(building);
 	}
 	for (Building* building : cities) {
