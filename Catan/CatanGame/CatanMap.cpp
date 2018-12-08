@@ -467,6 +467,11 @@ CatanMap::buildings(void) {
 }
 
 void
+CatanMap::refactor(void) {
+	robber->refactor();
+}
+
+void
 CatanMap::moveRobber(Coord coord) {
 	/* Muevo el robber a la nueva ubicacion, pero previo a ello
 	* busco la posicion en pixeles dentro de la ventana segun

@@ -82,6 +82,7 @@ Coord(Coord c1, Coord c2) {
 		}
 		type = Type::DOT;
 		_order_refactor();
+		return;
 	}
 	else if (c1.isDot() && c2.isDot()) {
 		this->coords = c1.coords + c2.coords;
@@ -95,6 +96,7 @@ Coord(Coord c1, Coord c2) {
 		}
 		type = Type::EDGE;
 		_order_refactor();
+		return;
 	}
 
 	this->type = NONE;

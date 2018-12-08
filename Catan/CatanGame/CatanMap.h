@@ -57,6 +57,8 @@ public:
 	CatanMap(CatanGame* game);
 	~CatanMap(void);
 
+	void refactor(void);
+
 	/*************************
 	* Generators del mapa
 	*************************/

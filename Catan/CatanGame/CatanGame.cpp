@@ -695,7 +695,9 @@ CatanGame::updateLongestRoad(void) {
 	* habiendo tenido una longitud nula. Quedan despues guardados los caminos.
 	*/
 	for (Building* building : catanMap->buildings()) {
-		seekLongestRoad(building);
+		if (building->getNeighbours().size() == 1) {
+			seekLongestRoad(building);
+		}
 	}
 
 	/*
