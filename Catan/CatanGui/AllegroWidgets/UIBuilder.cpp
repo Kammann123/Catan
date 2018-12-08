@@ -241,5 +241,5 @@ UIBuilder::createMultiLabel(string id, double width, double height){
 
 UIComponent* 
 UIBuilder::createInfoBox(string id, size_t size, double width, double height) {
-
+	return nullptr;
 }
