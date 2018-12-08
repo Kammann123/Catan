@@ -951,7 +951,7 @@ CatanGame::isValidSettlement(Coord coords, PlayerId playerID) {
 				if (building->getType() == BuildingType::ROAD) {
 
 					/* Encuentro un camino que conecte a ese settlement */
-					if (coords.isEdgeOf(building->getPlace())) {
+					if (building->getPlace().isEdgeOf(coords)) {
 
 						/* Verifico la regla de la distancia */
 						for (Building* building : catanMap->buildings()) {
