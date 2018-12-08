@@ -58,6 +58,8 @@ public:
 	void move(void* data);
 
 	/* Habilitacion del modo dragging con el mouse */
+	virtual void setEnable(bool enableStatus);
+
 	void setEnableDrag(bool dragStatus);
 	bool getEnableDrag(void);
 
@@ -66,6 +68,8 @@ public:
 
 	void setStatus(Status status);
 	Status getStatus(void);
+
+	void clear(void);
 
 protected:
 

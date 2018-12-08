@@ -10,6 +10,19 @@ MouseUI::
 ~MouseUI(void) {}
 
 void
+MouseUI::clear(void) {
+	this->status = Status::IDLE;
+}
+
+void 
+MouseUI::setEnable(bool enableStatus) {
+	if (enableStatus == false) {
+		clear();
+	}
+	this->enable = enableStatus;
+}
+
+void
 MouseUI::setFocusAction(Action focus) {
 	this->onFocus = focus;
 }
