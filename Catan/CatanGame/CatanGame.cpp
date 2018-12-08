@@ -578,7 +578,7 @@ CatanGame::toggleTurn(void) {
 
 bool
 CatanGame::validDices(unsigned int dices) {
-	return (dices > 2 && dices < 12);
+	return (dices >= 2 && dices <= 12);
 }
 
 bool
