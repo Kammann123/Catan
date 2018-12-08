@@ -186,7 +186,6 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI("gameWindow
 	MODEL(firstDice, Dice*)->setClickAction(bind(&GameWindow::onDice, this, _1));
 	MODEL(secondDice, Dice*)->setClickAction(bind(&GameWindow::onDice, this, _1));
 	MODEL(firstDice, Dice*)->setLoopEndAction(bind(&GameWindow::onDicesThrown, this, _1));
-	MODEL(secondDice, Dice*)->setLoopEndAction(bind(&GameWindow::onDicesThrown, this, _1));
 	MODEL(exitButton, MouseUI*)->setClickAction(bind(&GameWindow::onExit, this, _1));
 	MODEL(robber, Robber*)->setDropAction(bind(&GameWindow::onRobberDrop, this, _1));
 	MODEL(tradeButton, MouseUI*)->setClickAction(bind(&GameWindow::onTrade, this, _1));
