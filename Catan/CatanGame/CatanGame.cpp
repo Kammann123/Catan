@@ -677,7 +677,7 @@ CatanGame::assignResources(PlayerId player, ResourceId resource, unsigned int qt
 	*/
 	Player* playerObject = getPlayer(player);
 	playerObject->addCard(takeCards(resource, qty));
-	setInfo("[CatanGame] Se han asignado los recursos de la jugada actual!");
+	setInfo("Se han asignado nuevos recursos a los jugadores.");
 }
 
 void
@@ -734,7 +734,7 @@ CatanGame::updateLongestRoad(void) {
 		longestRoad->assign();
 	}
 
-	setInfo("[CatanGame] La carga de Longest Road ha sido asignada a un nuevo jugador!");
+	setInfo("Hubo un cambio en la pertenencia del Longest Road, y la carta ha sido movida.");
 }
 
 bool
@@ -815,7 +815,7 @@ CatanGame::validateRobberCards(list<ResourceId>& cards, PlayerId playerID) {
 		return true;
 	}
 	else {
-		setInfo("[CatanGame] Las cartas elegidas a descartar son invalidas, no cumplen con la cantidad debida.");
+		setInfo("Las cartas elegidas a descartar son invalidas, no cumplen con la cantidad debida.");
 		return false;
 	}
 }
@@ -839,13 +839,14 @@ CatanGame::validRobberMovement(Coord coord) {
 		}
 	}
 
-	setInfo("[CatanGame] El Robber no puede mantenerse en la misma posicion! Y debe ir siempre en tierra.");
+	setInfo("El Robber no puede mantenerse en la misma posicion! Y debe ir siempre en tierra.");
 	return false;
 }
 
 void
 CatanGame::moveRobber(Coord newCoords) {
 	catanMap->moveRobber(newCoords);
+	setInfo("El Robber ha sido movido de posicion correctamente.");
 }
 
 void
@@ -866,6 +867,7 @@ CatanGame::updateDocks(Coord coord, PlayerId playerId) {
 				SeaId seaId = hex->dockType(coord);
 				if (find(playerDocks[playerId].begin(), playerDocks[playerId].end(), seaId) == playerDocks[playerId].end()) {
 					playerDocks[playerId].push_back(seaId);
+					setInfo( getPlayer(playerId)->getName() + " a adquirido un nuevo puerto." );
 				}
 				break;
 			}
@@ -884,7 +886,7 @@ CatanGame::isValidRoad(Coord coords, PlayerId playerID) {
 
 		for (Building* building : catanMap->buildings()) {
 			if (building->getPlace() == coords) {
-				setInfo("[CatanGame] Ubicacion ocupada por otra construccion!");
+				setInfo("Ubicacion ocupada por otra construccion!");
 				return nullptr;
 			}
 		}
@@ -910,7 +912,7 @@ CatanGame::isValidRoad(Coord coords, PlayerId playerID) {
 						for (Building* otherBuilding : catanMap->buildings()) {
 							if (otherBuilding->getPlayer()->getPlayerId() == OPONENT_ID(playerID)) {
 								if (otherBuilding->getPlace() == checkCoord) {
-									setInfo("[CatanGame] Esa construccion no cumple la regla de la distancia!");
+									setInfo("No se puede construir si hay un settlement/city enemigo en medio.");
 									return nullptr;
 								}
 							}
@@ -928,7 +930,7 @@ CatanGame::isValidRoad(Coord coords, PlayerId playerID) {
 		}
 	}
 
-	setInfo("[CatanGame] Para construir un Road es necesario continuar a otra construccion.");
+	setInfo("Para construir un Road es necesario continuar a otra construccion.");
 	return nullptr;
 }
 
@@ -952,7 +954,7 @@ CatanGame::isValidCity(Coord coords, PlayerId playerID) {
 						return building;
 					}
 					else {
-						setInfo("[CatanGame] Una City solo puede ubicarse donde haya un Settlement.");
+						setInfo("Una City solo puede ubicarse donde haya un Settlement.");
 						return nullptr;
 					}
 				}
@@ -960,7 +962,7 @@ CatanGame::isValidCity(Coord coords, PlayerId playerID) {
 		}
 	}
 
-	setInfo("[CatanGame] Una City solo puede ubicarse donde haya un Settlement.");
+	setInfo("Una City solo puede ubicarse donde haya un Settlement.");
 	return nullptr;
 }
 
@@ -975,7 +977,7 @@ CatanGame::isValidSettlement(Coord coords, PlayerId playerID) {
 	if (coords.isDot()) {
 		for (Building* building : catanMap->buildings()) {
 			if (building->getPlace() == coords) {
-				setInfo("[CatanGame] Ubicacion ocupada por otra construccion!");
+				setInfo("Ubicacion ocupada por otra construccion!");
 				return nullptr;
 			}
 		}
@@ -999,6 +1001,7 @@ CatanGame::isValidSettlement(Coord coords, PlayerId playerID) {
 							if (building->getType() != BuildingType::ROAD) {
 
 								if (coords.isAdjacentDot(building->getPlace())) {
+									setInfo("Esa construccion no cumple con la Regla de la Distancia.");
 									return nullptr;
 								}
 							}
@@ -1011,7 +1014,7 @@ CatanGame::isValidSettlement(Coord coords, PlayerId playerID) {
 		}
 	}
 
-	setInfo("[CatanGame] Un Settlemente debe colocarse continuando alguna construccion realizada.");
+	setInfo("Un Settlemente debe colocarse continuando alguna construccion realizada.");
 	return nullptr;
 }
 
@@ -1025,14 +1028,14 @@ CatanGame::validFirstSettlement(Coord coords, PlayerId playerId) {
 	if (coords.isDot()) {
 		for (Building* building : catanMap->buildings()) {
 			if (building->getPlace() == coords) {
-				setInfo("[CatanGame] Ubicacion ocupada por otra construccion!");
+				setInfo("Ubicacion ocupada por otra construccion!");
 				return false;
 			}
 		}
 		return true;
 	}
 
-	setInfo("[CatanGame] Solo puede construirse en esquinas!");
+	setInfo("Solo puede construirse en esquinas!");
 	return false;
 }
 
@@ -1044,7 +1047,7 @@ CatanGame::hasCityResources(PlayerId playerID) {
 		return true;
 	}
 	else {
-		setInfo("[CatanGame] No tenes suficientes recursos para hacer eso!");
+		setInfo("No tenes suficientes recursos para hacer eso!");
 		return false;
 	}
 }
@@ -1057,7 +1060,7 @@ CatanGame::hasSettlementResources(PlayerId playerID) {
 		return true;
 	}
 	else {
-		setInfo("[CatanGame] No tenes suficientes recursos para hacer eso!");
+		setInfo("No tenes suficientes recursos para hacer eso!");
 		return false;
 	}
 }
@@ -1070,7 +1073,7 @@ CatanGame::hasRoadResources(PlayerId playerID) {
 		return true;
 	}
 	else {
-		setInfo("[CatanGame] No tenes suficientes recursos para hacer eso!");
+		setInfo("No tenes suficientes recursos para hacer eso!");
 		return false;
 	}
 }
@@ -1148,7 +1151,7 @@ CatanGame::buildRoad(Building* building, Coord coords, PlayerId playerID)
 	*/
 	catanMap->build(newRoad, coords);
 	getPlayer(playerID)->addPoints(ROAD_BUILT_POINTS);
-	setInfo("[CatanGame] Un nuevo Road ha sido colocado!");
+	setInfo(getPlayer(playerID)->getName() + " ha colocado un nuevo Road.");
 
 	/* Actualizo camino mas largo */
 	updateLongestRoad();
@@ -1183,7 +1186,7 @@ CatanGame::buildCity(Building* building, Coord coords, PlayerId playerID)
 	getPlayer(playerID)->giveBackBuilding(building);
 	getPlayer(playerID)->removePoints(SETTLEMENT_BUILT_POINTS);
 	getPlayer(playerID)->addPoints(CITY_BUILT_POINTS);
-	setInfo("[CatanGame] Una nueva ciudad ha sido colocada!");
+	setInfo(getPlayer(playerID)->getName() + " ha colocado una nueva City.");
 
 	/* Actualizo los puntos y veo ganador */
 	updateWinner();
@@ -1206,7 +1209,7 @@ CatanGame::buildSettlement(Building* building, Coord coords, PlayerId playerID)
 	*/
 	catanMap->build(newSettlement, coords);
 	getPlayer(playerID)->addPoints(SETTLEMENT_BUILT_POINTS);
-	setInfo("[CatanGame] Un nuevo Settlement ha sido colocado!");
+	setInfo(getPlayer(playerID)->getName() + " ha colocado un nuevo Settlement.");
 
 	/* Verifico si la construccion nueva no rompe con algun camino */
 	for (Building* old : catanMap->buildings()) {
@@ -1294,7 +1297,7 @@ CatanGame::isValidDockExchange(list<ResourceId>& offeredCards, list<ResourceId>&
 	* segun su tipo, si la accion del usuario es valida
 	*/
 	if (!exchangeHasSense(offeredCards, requestedCards)) {
-		setInfo("[CatanGame] No podes intercambiar y pedir las mismas cartas que das...");
+		setInfo("No podes intercambiar y pedir las mismas cartas que das...");
 		return false;
 	}
 
@@ -1336,7 +1339,7 @@ CatanGame::isValidDockExchange(list<ResourceId>& offeredCards, list<ResourceId>&
 		}
 	}
 
-	setInfo("[CatanGame] Ningun muelle acepta esa cantidad de cartas!");
+	setInfo("Ningun muelle acepta esa cantidad de cartas!");
 	return false;
 }
 
@@ -1349,7 +1352,7 @@ CatanGame::isValidPlayerExchange(list<ResourceId>& offeredCards, list<ResourceId
 	* no se pase del maximo valor de transacciones posibles
 	*/
 	if (offeredCards.size() > 9 || requestedCards.size() > 9) {
-		setInfo("[CatanGame] Maximo de cartas para intercambios superado!");
+		setInfo("Maximo de cartas para intercambios superado!");
 		return false;
 	}
 
@@ -1358,12 +1361,12 @@ CatanGame::isValidPlayerExchange(list<ResourceId>& offeredCards, list<ResourceId
 			return true;
 		}
 		else {
-			setInfo("[CatanGame] No podes intercambiar y pedir las mismas cartas que das...");
+			setInfo("No podes intercambiar y pedir las mismas cartas que das...");
 			return false;
 		}
 	}
 	else {
-		setInfo("[CatanGame] No es posible realizar ese intercambio.");
+		setInfo("No es posible realizar ese intercambio.");
 		return false;
 	}
 }
@@ -1376,12 +1379,12 @@ CatanGame::isValidBankExchange(list<ResourceId>& offeredCards, list<ResourceId>&
 			return true;
 		}
 		else {
-			setInfo("[CatanGame] No podes intercambiar y pedir las mismas cartas que das...");
+			setInfo("No podes intercambiar y pedir las mismas cartas que das...");
 			return false;
 		}
 	}
 	else {
-		setInfo("[CatanGame] Transaccion con el Banco invalida! Revise cantidad y tipo de cartas.");
+		setInfo("Transaccion con el Banco invalida! Revise cantidad y tipo de cartas.");
 		return false;
 	}
 }
@@ -1426,7 +1429,7 @@ CatanGame::Exchange(list<ResourceId>& offered, ResourceId wanted, PlayerId playe
 	* Creo la carta pedida y se la entrego al jugador en cuestion
 	*/
 	getPlayer(playerID)->addCard(takeCards(wanted, 1));
-	setInfo("[CatanGame] Intercambio de cartas realizado exitosamente!");
+	setInfo("Intercambio de cartas realizado exitosamente!");
 }
 
 void
@@ -1444,13 +1447,13 @@ CatanGame::playerExchange(list<ResourceId>& offered, list<ResourceId>& wanted, P
 	* al que las recibe
 	*/
 	getPlayer(srcPlayerID)->addCard(getPlayer(oponent)->giveCards(wanted));
-	setInfo("[CatanGame] Intercambio de cartas realizado exitosamente!");
+	setInfo("Intercambio de cartas realizado exitosamente!");
 }
 
 void
 CatanGame::pass() {
+	setInfo(getPlayer(this->turn)->getName() + " ha pasado de turno.");
 	this->turn = OPONENT_ID(this->turn);
-	setInfo("[CatanGame] Ha pasado de turno.");
 }
 
 bool
