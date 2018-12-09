@@ -35,6 +35,8 @@ using namespace std;
 #define	VICTORY_PTS_SIZE	25
 #define	PLAYER_FONT_COLOR	"fontColor"
 
+#define NAME_STRING_MAX_LENGHT 15
+
 PlayerView::PlayerView(Player * model_) : UIView(model_)
 {
 	images.clear();
@@ -70,7 +72,20 @@ void PlayerView::draw(void)
 
 	/* Se dibuja el nombre del jugador */
 	fontPlayer = fonts[NAME_FONT_ID].font;
-	al_draw_text(fontPlayer, nameColor, (*player)[PLAYER_NAME].x + player->xPos(), (*player)[PLAYER_NAME].y + player->yPos(), 0, player->getName().c_str());
+	string playerName = player->getName();
+
+	if (playerName.length() > (NAME_STRING_MAX_LENGHT + 3))
+	{
+		while (playerName.length() > NAME_STRING_MAX_LENGHT)
+		{
+			playerName.pop_back();
+		}
+
+		playerName += "...";
+	}
+	
+
+	al_draw_text(fontPlayer, nameColor, (*player)[PLAYER_NAME].x + player->xPos(), (*player)[PLAYER_NAME].y + player->yPos(), 0, playerName.c_str());
 
 	/* Se dibujan los victory points del jugador */
 	btMap = images[VICTORY_POINTS_ID].bitmap;
