@@ -15,9 +15,16 @@ Dice(string id) : AnimationUI(id, 6) {
 	this->setFrameAction(bind(&Dice::random, this, _1));
 }
 
+void
+Dice::setValue(unsigned int value) {
+	this->value = value;
+	notifyObservers();
+}
+
 void 
 Dice::random(void* data) {
 	this->value = RANDOM_DICE;
+	notifyObservers();
 }
 
 unsigned int
