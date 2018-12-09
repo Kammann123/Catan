@@ -690,21 +690,24 @@ CatanGame::updateLongestRoad(void) {
 	playerLongestRoad[PlayerId::PLAYER_TWO] = 0;
 
 	/*
-	* Pruebo hacer recorrido desde todos los buildings posibles,
-	* en cada caso si ya fue visitado, directamente el algoritmo saldra
-	* habiendo tenido una longitud nula. Quedan despues guardados los caminos.
+	* Busco todos los Buildings construidos y voy creando una lista con
+	* aquellos que son heads, o sea, puntas de los caminos.
 	*/
+	list<Building*> heads;
 	for (Building* building : catanMap->buildings()) {
-		if (building->getNeighbours().size() == 1) {
-			seekLongestRoad(building);
+		if (building->isHead()) {
+			heads.push_back(building);
 		}
 	}
 
 	/*
-	* Limpio las marcas realizadas en todos los buildings y reviso si los
-	* resultados de los recorridos superaron el valor actual 
+	* Para cada uno de los heads, puntas de los caminos, ejecuto los recorridos
+	* y luego limpio las marcas para el siguiente head.
 	*/
-	for (Building* building : catanMap->buildings()) building->visit(false);
+	for (Building* building : heads) {
+		seekLongestRoad(building);
+		for (Building* building : catanMap->buildings()) building->visit(false);
+	}
 
 	/*
 	* Verifico si con los nuevos resultados cambia el estado del longest road y luego
@@ -728,7 +731,7 @@ CatanGame::updateLongestRoad(void) {
 		longestRoad->assign(getPlayer(PlayerId::PLAYER_TWO));
 	}
 	else {
-		return;
+		longestRoad->assign();
 	}
 
 	setInfo("[CatanGame] La carga de Longest Road ha sido asignada a un nuevo jugador!");
@@ -1204,6 +1207,18 @@ CatanGame::buildSettlement(Building* building, Coord coords, PlayerId playerID)
 	catanMap->build(newSettlement, coords);
 	getPlayer(playerID)->addPoints(SETTLEMENT_BUILT_POINTS);
 	setInfo("[CatanGame] Un nuevo Settlement ha sido colocado!");
+
+	/* Verifico si la construccion nueva no rompe con algun camino */
+	for (Building* old : catanMap->buildings()) {
+		if (old->getPlayer()->getPlayerId() != building->getPlayer()->getPlayerId()) {
+			if (old->getType() == BuildingType::ROAD) {
+				if (old->cutsRoad(building)) {
+					updateLongestRoad();
+					break;
+				}
+			}
+		}
+	}
 
 	/* Actualizo los docks disponibles del usuario/jugador */
 	updateDocks(coords, playerID);
