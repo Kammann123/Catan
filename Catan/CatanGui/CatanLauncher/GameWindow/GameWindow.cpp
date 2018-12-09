@@ -574,7 +574,9 @@ GameWindow::first_builds(void) {
 	for (UIComponent* buildings : (*this)(BUILDING_ID)) {
 		if (MODEL(buildings, Building*)->getPlayer()->getPlayerId() == PlayerId::PLAYER_ONE) {
 			if (launcher.getGame().getTurn() == PlayerId::PLAYER_ONE) {
-				buildings->getModel()->setEnable(true);
+				if (!MODEL(buildings, Building*)->isBuilt()) {
+					buildings->getModel()->setEnable(true);
+				}
 			}
 			else {
 				buildings->getModel()->setEnable(false);
@@ -686,7 +688,9 @@ GameWindow::turn(void) {
 	**************************/
 	for (UIComponent* buildings : (*this)(BUILDING_ID)) {
 		if (MODEL(buildings, Building*)->getPlayer()->getPlayerId() == PlayerId::PLAYER_ONE) {
-			buildings->getModel()->setEnable(true);
+			if (!MODEL(buildings, Building*)->isBuilt()) {
+				buildings->getModel()->setEnable(true);
+			}
 		}
 	}
 
