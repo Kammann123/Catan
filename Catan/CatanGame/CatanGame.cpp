@@ -861,9 +861,8 @@ CatanGame::updateDocks(Coord coord, PlayerId playerId) {
 		for (SeaHex* hex : catanMap->seas()) {
 			if (hex->hasDock(coord)) {
 				SeaId seaId = hex->dockType(coord);
-				list<SeaId>& dockList = playerDocks[playerId];
-				if (find(dockList.begin(), dockList.end(), seaId) == dockList.end()) {
-					dockList.push_back(seaId);
+				if (find(playerDocks[playerId].begin(), playerDocks[playerId].end(), seaId) == playerDocks[playerId].end()) {
+					playerDocks[playerId].push_back(seaId);
 				}
 				break;
 			}

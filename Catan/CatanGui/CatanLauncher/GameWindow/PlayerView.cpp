@@ -36,7 +36,7 @@ using namespace std;
 #define	PLAYER_FONT_COLOR	"fontColor"
 
 #define NAME_STRING_MAX_LENGHT 15
-#define TRIANGLE_WIDTH 10
+#define TRIANGLE_WIDTH 15
 
 PlayerView::PlayerView(Player * model_) : UIView(model_)
 {
@@ -93,11 +93,11 @@ void PlayerView::draw(void)
 	if (player->getPlayerId() == player->getGame()->getTurn())
 	{
 		al_draw_filled_triangle(
-			(*player)[PLAYER_NAME].x + player->xPos() - TRIANGLE_WIDTH / 2, (*player)[PLAYER_NAME].y + player->yPos(),
-			(*player)[PLAYER_NAME].x + player->xPos(), (*player)[PLAYER_NAME].y + player->yPos() + al_get_font_line_height(fontPlayer),
-			(*player)[PLAYER_NAME].x + player->xPos() - TRIANGLE_WIDTH, (*player)[PLAYER_NAME].y + player->yPos() + al_get_font_line_height(fontPlayer),
+			(*player)[PLAYER_NAME].x + player->xPos() - TRIANGLE_WIDTH, (*player)[PLAYER_NAME].y + player->yPos() + 11,
+			(*player)[PLAYER_NAME].x + player->xPos(), (*player)[PLAYER_NAME].y + player->yPos() + al_get_font_line_height(fontPlayer) / 2,
+			(*player)[PLAYER_NAME].x + player->xPos() - TRIANGLE_WIDTH, (*player)[PLAYER_NAME].y + player->yPos() + al_get_font_line_height(fontPlayer) - 11,
 			color
-			);
+			); 
 	}
 
 	/* Se dibujan los victory points del jugador */

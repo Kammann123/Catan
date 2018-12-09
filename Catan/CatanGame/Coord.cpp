@@ -15,11 +15,11 @@ extern const string edges[72] = {
 };
 
 extern const string externalDots[30] = {
-	"0A", "0AB", "0B", "0BC", "01C", "1C",
+	"05A", "0A", "0AB", "0B", "0BC", "01C", "1C",
 	"1CG", "1G", "1GL", "12L", "2L", "2LP",
 	"2P", "2PS", "23S", "3S", "3SR", "3R",
 	"3RQ", "34Q", "4Q", "4MQ", "4M", "4HM",
-	"45H", "5H", "5DH", "5D", "5AD", "05A"
+	"45H", "5H", "5DH", "5D", "5AD"
 };
 
 extern const string internalDots[24] = {
