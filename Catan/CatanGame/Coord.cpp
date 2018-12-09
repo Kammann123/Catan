@@ -139,7 +139,7 @@ Coord::operator==(string coordsCmp) {
 
 bool
 Coord::operator==(Coord copy) {
-	return this->coords == copy.coords;
+	return this->coords == copy.coords && this->type == copy.type;
 }
 
 bool
