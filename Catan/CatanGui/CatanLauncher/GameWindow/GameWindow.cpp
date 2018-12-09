@@ -434,8 +434,17 @@ GameWindow::onBuildingDrop(void* data) {
 			*/
 			CatanGame& game = launcher.getGame();
 
-			if (game.buildingOk(building->getType(), pixel.first, PlayerId::PLAYER_ONE)) {
-				game.syncHandle(new BuildingEvent(pixel.first, building->getType(), PlayerId::PLAYER_ONE));
+			/* Fuerzo las coordenadas... */
+			Coord coords = pixel.first;
+			if (building->getType() == BuildingType::ROAD) {
+				coords.forceEdge();
+			}
+			else {
+				coords.forceDot();
+			}
+
+			if (game.buildingOk(building->getType(), coords, PlayerId::PLAYER_ONE)) {
+				game.syncHandle(new BuildingEvent(coords, building->getType(), PlayerId::PLAYER_ONE));
 			}
 			else {
 				updateStatus();
