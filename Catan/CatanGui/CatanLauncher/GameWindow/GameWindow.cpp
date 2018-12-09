@@ -105,7 +105,7 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI("gameWindow
 	/****************************
 	* Configuracion del tablero *
 	****************************/
-	MODEL(game, CatanGame*)->set(POSITION_LONGEST_ROAD, 860, 10, 0);
+	MODEL(game, CatanGame*)->set(POSITION_LONGEST_ROAD, 875, 10, 0);
 	MODEL(map, CatanMap*)->setPosition(180, 20);
 
 	/******************************
@@ -227,10 +227,10 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI("gameWindow
 	MODEL(tradeButton, MouseUI*)->setPosition(63, 170);
 	MODEL(discardButton, MouseUI*)->setPosition(63, 210);
 	MODEL(exitButton, MouseUI*)->setPosition(63, 250);
-	MODEL(firstDice, Dice*)->setPosition(700, 20);
-	MODEL(secondDice, Dice*)->setPosition(750, 20);
+	MODEL(firstDice, Dice*)->setPosition(730, 20);
+	MODEL(secondDice, Dice*)->setPosition(780, 20);
 	MODEL(statusBox, UIModelContainer*)->setPosition(860, 180);
-	MODEL(costs, UIModelContainer*)->setPosition(795, 0);
+	MODEL(costs, UIModelContainer*)->setPosition(805, 0);
 
 	/*************************
 	* Posicion de las Childs *
@@ -922,8 +922,6 @@ GameWindow::normal_layout(void) {
 	(*this)["dice_two"]->getModel()->setVisible(true);
 	(*this)["costs"]->getModel()->setEnable(true);
 	(*this)["costs"]->getModel()->setVisible(true);
-	(*this)["status"]->getModel()->setVisible(true);
-	(*this)["status"]->getModel()->setEnable(true);
 }
 
 /****************************/

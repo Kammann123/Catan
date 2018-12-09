@@ -329,6 +329,7 @@ UIBuilder::createToggleImage(string id) {
 	MODEL(button, MouseUI*)->setPosition(220, 10);
 
 	MODEL(image, FrameUI*)->setVisible(false);
+	MODEL(button, MouseUI*)->setVisible(true);
 
 	/* Creo el componente padre y los agrego */
 	UIComponent* toggleImage = new UIComponent(id);

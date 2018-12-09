@@ -124,7 +124,7 @@ MainMenu(CatanLauncher& _launcher) : WindowUI("mainWindow", 1080, 640), launcher
 	this->setBackground(MAINMENU_BACKGROUND);
 	this->setIcon(ICON_IMAGE);
 	this->setTitle("Fondue Catan v1.0");
-	this->setMusic(MAINMENU_MUSIC);
+	//this->setMusic(MAINMENU_MUSIC);
 	this->setCloseAction(bind(&MainMenu::onExit, this, _1));
 	this->setCursor(MAINMENU_CURSOR);
 	this->setClickCursor(MAINMENU_CLICK_CURSOR);
