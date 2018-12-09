@@ -62,6 +62,7 @@ public:
 	void removeNeighbour(void);
 
 	list<Building*> getNeighbours(void);
+	bool cutsRoad(Building* building);
 	void visit(bool status = true);
 	bool hasNeighbours(void);
 	bool wasVisited(void);

@@ -179,3 +179,31 @@ Building::isBuildingSide(list<Building*> side, Building* building) {
 	}
 	return false;
 }
+
+bool 
+Building::cutsRoad(Building* building) {
+
+	/* Me fijo, si soy un Building de tipo Road, pues
+	* mi coordenada es Edge, entonces puedo verificar si
+	* este Building, que debe ser City o Settlement,
+	* puede cortarme la secuencia */
+	if (coord.isEdge()) {
+
+		/* Verifico si existe algun neighbour (vecino) que sea Edge
+		* con el cual se forme continuidad desde este edge, y obviamente
+		* se vea cortado por el building */
+		for (Building* neighbour : neighbours) {
+
+			if (neighbour->getPlace().isEdge()) {
+				if (coord.isEdgeOf(building->getPlace()) && neighbour->getPlace().isEdgeOf(building->getPlace())) {
+
+					/* Corto el camino. */
+					removeNeighbour(neighbour);
+					neighbour->removeNeighbour(this);
+					return true;
+				}
+			}
+		}
+	}
+	return false;
+}
