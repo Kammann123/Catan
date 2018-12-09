@@ -304,6 +304,19 @@ GameWindow::update(void) {
 	/* Se ejecuta el layout del estado actual
 	*/
 	this->layouts[currState]();
+
+	/* Actualizacion de objetos en funcion de los eventos que se reciben.
+	*/
+	CatanEvent* event = launcher.getGame().getNextEvent();
+	if (event) {
+		switch (event->getEvent()) {
+			case CatanEvent::Events::THROW_DICES:
+				DicesEvent * dices = (DicesEvent*)event;
+				MODEL((*this)["dice_one"], Dice*)->setValue(dices->getFirstDice());
+				MODEL((*this)["dice_two"], Dice*)->setValue(dices->getSecondDice());
+				break;
+		}
+	}
 }
 
 void
@@ -580,11 +593,10 @@ GameWindow::first_builds(void) {
 			if (launcher.getGame().getTurn() == PlayerId::PLAYER_ONE) {
 				if (!MODEL(buildings, Building*)->isBuilt()) {
 					buildings->getModel()->setEnable(true);
+					continue;
 				}
 			}
-			else {
-				buildings->getModel()->setEnable(false);
-			}
+			buildings->getModel()->setEnable(false);
 		}
 	}
 
@@ -618,12 +630,18 @@ GameWindow::throw_dices(void){
 	/************************
 	* Configuro los botones *
 	************************/
+	if (launcher.getGame().getTurn() == PlayerId::PLAYER_ONE) {
+		(*this)["dice_one"]->getModel()->setEnable(true);
+		(*this)["dice_two"]->getModel()->setEnable(true);
+	}
+	else {
+		(*this)["dice_one"]->getModel()->setEnable(false);
+		(*this)["dice_two"]->getModel()->setEnable(false);
+	}
 	(*this)["pass"]->getModel()->setEnable(false);
 	(*this)["exit"]->getModel()->setEnable(true);
 	(*this)["discard"]->getModel()->setEnable(false);
 	(*this)["trade"]->getModel()->setEnable(false);
-	(*this)["dice_one"]->getModel()->setEnable(true);
-	(*this)["dice_two"]->getModel()->setEnable(true);
 }
 
 void
@@ -658,7 +676,12 @@ GameWindow::robber_move(void) {
 	/**********************
 	* Configuro el robber *
 	**********************/
-	(*this)[ROBBER_ID]->getModel()->setEnable(true);
+	if (launcher.getGame().getTurn() == PlayerId::PLAYER_ONE) {
+		(*this)[ROBBER_ID]->getModel()->setEnable(true);
+	}
+	else {
+		(*this)[ROBBER_ID]->getModel()->setEnable(false);
+	}
 
 	/**************************
 	* Configuro los buildings *
@@ -693,18 +716,28 @@ GameWindow::turn(void) {
 	for (UIComponent* buildings : (*this)(BUILDING_ID)) {
 		if (MODEL(buildings, Building*)->getPlayer()->getPlayerId() == PlayerId::PLAYER_ONE) {
 			if (!MODEL(buildings, Building*)->isBuilt()) {
-				buildings->getModel()->setEnable(true);
+				if (launcher.getGame().getTurn() == PlayerId::PLAYER_ONE) {
+					buildings->getModel()->setEnable(true);
+					continue;
+				}
 			}
+			buildings->getModel()->setEnable(false);
 		}
 	}
 
 	/************************
 	* Configuro los botones *
 	************************/
-	(*this)["pass"]->getModel()->setEnable(true);
+	if (launcher.getGame().getTurn() == PlayerId::PLAYER_ONE) {
+		(*this)["pass"]->getModel()->setEnable(true);
+		(*this)["trade"]->getModel()->setEnable(true);
+	}
+	else {
+		(*this)["pass"]->getModel()->setEnable(false);
+		(*this)["trade"]->getModel()->setEnable(false);
+	}
 	(*this)["exit"]->getModel()->setEnable(true);
 	(*this)["discard"]->getModel()->setEnable(false);
-	(*this)["trade"]->getModel()->setEnable(true);
 	(*this)["dice_one"]->getModel()->setEnable(false);
 	(*this)["dice_two"]->getModel()->setEnable(false);
 }

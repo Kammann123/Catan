@@ -14,6 +14,7 @@ public:
 	* Interfaz de acceso, lectura y escritura, de los valores
 	* del dado, SETTERS y GETTERS
 	**********************************************************/
+	void setValue(unsigned int value);
 	unsigned int getValue(void);
 	void random(void* data);
 
