@@ -6,6 +6,7 @@
 #include "../../../CatanGame/Dice.h"
 #include "../CatanLauncher.h"
 
+#include "../../AllegroWidgets/ImageView.h"
 #include "../../AllegroUI/CounterUI.h"
 #include "../../../CatanEvents/BuildingEvent.h"
 #include "../../../CatanEvents/RobberCardEvent.h"
@@ -51,6 +52,10 @@
 #define GAMEWINDOW_TRADE_FOCUSED	"CatanGui\\GUIDesigns\\GameMenu\\trade_focused.png"
 #define GAMEWINDOW_TRADE_SELECTED	"CatanGui\\GUIDesigns\\GameMenu\\trade_selected.png"
 
+#define GAMEWINDOW_SIGN_NORMAL	"CatanGui\\GUIDesigns\\GameMenu\\sign.png"
+#define GAMEWINDOW_SIGN_FOCUS	"CatanGui\\GUIDesigns\\GameMenu\\sign_focus.png"
+#define GAMEWINDOW_COSTS_IMAGE	"CatanGui\\GUIDesigns\\GameMenu\\costs.png"
+
 #define PLACING_RADIO		15
 #define PLAYER_TWO_OFFSET	25
 
@@ -68,19 +73,20 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI("gameWindow
 	UIComponent* game = GameBuilder::createCatanGame(&launcher.getGame());
 	UIComponent* longestRoad = GameBuilder::createLongestRoad(launcher.getGame().getLongestRoad());
 	UIComponent* map = GameBuilder::createMap(launcher.getGame().getCatanMap());
-
-	UIComponent* statusBox = UIBuilder::createToggleInfoBox("status", 30, 160, 12);
-	UIComponent* costBox = UIBuilder::createToggleInfoBox("cost", 30, 160, 12);
+	UIComponent* statusBox = UIBuilder::createInfoBox("status", 30, 160, 12);
+	UIComponent* costs = UIBuilder::createToggleImage("costs");
 
 	ChildWindowUI* discardWindow = new DiscardWindow("discardWindow", launcher.getGame());
 	ChildWindowUI* offerWindow = new OfferWindow("offerWindow", launcher.getGame());
 	ChildWindowUI* gandalf = new QuestionWindow("gandalf");
 
-	/********************************
-	* Configuracion de los mensajes *
-	********************************/
-	MODEL((*(*costBox)["infobox"])["title"], TextUI*)->setText("Building Costs"); 
-	MODEL((*(*costBox)["infobox"])["info"], TextUI*)->setText("+ Camino:\n \t1 madera\n \t1 ladrillo. \n\n+ Casa:\n \t1 madera\n \t1 ladrillo\n \t1 trigo\n \t1 lana. \n\n+ Ciudad: \n \t2 trigos\n \t3 piedras.");
+	/**********************
+	* Configuro Costs Box *
+	**********************/
+	(*(*costs)["image"])[0]->getImages().setConfig(IV_BITMAP, GAMEWINDOW_COSTS_IMAGE);
+	(*(*costs)["button"])[0]->getImages().setConfig(MouseUI::Status::IDLE, GAMEWINDOW_SIGN_NORMAL);
+	(*(*costs)["button"])[0]->getImages().setConfig(MouseUI::Status::FOCUSED, GAMEWINDOW_SIGN_FOCUS);
+	(*(*costs)["button"])[0]->getImages().setConfig(MouseUI::Status::SELECTED, GAMEWINDOW_SIGN_FOCUS);
 
 	/***********************************
 	* Creacion de componentes Building *
@@ -99,7 +105,7 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI("gameWindow
 	/****************************
 	* Configuracion del tablero *
 	****************************/
-	MODEL(game, CatanGame*)->set(POSITION_LONGEST_ROAD, 820, 85, 0);
+	MODEL(game, CatanGame*)->set(POSITION_LONGEST_ROAD, 860, 10, 0);
 	MODEL(map, CatanMap*)->setPosition(180, 20);
 
 	/******************************
@@ -179,8 +185,8 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI("gameWindow
 	this->attachComponent(game);
 	this->attachComponent(map);
 	this->attachComponent(robber);
-	this->attachComponent(costBox);
 	this->attachComponent(statusBox);
+	this->attachComponent(costs);
 
 	/********************************************
 	* Agrego componentes Building a la interfaz *
@@ -221,10 +227,10 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI("gameWindow
 	MODEL(tradeButton, MouseUI*)->setPosition(63, 170);
 	MODEL(discardButton, MouseUI*)->setPosition(63, 210);
 	MODEL(exitButton, MouseUI*)->setPosition(63, 250);
-	MODEL(firstDice, Dice*)->setPosition(800, 20);
-	MODEL(secondDice, Dice*)->setPosition(850, 20);
-	MODEL(statusBox, UIModelContainer*)->setPosition(920, 30);
-	MODEL(costBox, UIModelContainer*)->setPosition(920, 90);
+	MODEL(firstDice, Dice*)->setPosition(700, 20);
+	MODEL(secondDice, Dice*)->setPosition(750, 20);
+	MODEL(statusBox, UIModelContainer*)->setPosition(860, 180);
+	MODEL(costs, UIModelContainer*)->setPosition(795, 0);
 
 	/*************************
 	* Posicion de las Childs *
@@ -271,8 +277,8 @@ void
 GameWindow::updateStatus(void) {
 	/* Se despliegan mensajes correspondientes
 	*/
-	MODEL((*(*(*this)["status"])["infobox"])["title"], TextUI*)->setText(launcher.getGame().getStateString());
-	MODEL((*(*(*this)["status"])["infobox"])["info"], TextUI*)->setText(launcher.getGame().info());
+	MODEL((*(*this)["status"])["title"], TextUI*)->setText(launcher.getGame().getStateString());
+	MODEL((*(*this)["status"])["info"], TextUI*)->setText(launcher.getGame().info());
 
 }
 
@@ -914,10 +920,10 @@ GameWindow::normal_layout(void) {
 	(*this)["dice_one"]->getModel()->setVisible(true);
 	(*this)["dice_two"]->getModel()->setEnable(true);
 	(*this)["dice_two"]->getModel()->setVisible(true);
-	(*(*this)["status"])["button"]->getModel()->setVisible(true);
-	(*(*this)["status"])["button"]->getModel()->setEnable(true);
-	(*(*this)["cost"])["button"]->getModel()->setVisible(true);
-	(*(*this)["cost"])["button"]->getModel()->setEnable(true);
+	(*this)["costs"]->getModel()->setEnable(true);
+	(*this)["costs"]->getModel()->setVisible(true);
+	(*this)["status"]->getModel()->setVisible(true);
+	(*this)["status"]->getModel()->setEnable(true);
 }
 
 /****************************/

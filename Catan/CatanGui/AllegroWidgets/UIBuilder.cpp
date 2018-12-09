@@ -9,7 +9,6 @@
 #include "../AllegroWidgets/ImageView.h"
 #include "../AllegroWidgets/CounterView.h"
 #include "../AllegroWidgets/MultiLabelView.h"
-
 #include "../AllegroUI/MouseUI.h"
 #include "../AllegroUI/TextUI.h"
 #include "../AllegroUI/ComponentConnector.h"
@@ -316,4 +315,30 @@ UIBuilder::createToggleInfoBox(string id, size_t size, double width, double heig
 
 	/* Devuelvo */
 	return toggleComponent;
+}
+
+UIComponent* 
+UIBuilder::createToggleImage(string id) {
+
+	/* Creo los componentes */
+	UIComponent* image = createImage(id + "_image");
+	UIComponent* button = createButton(id + "_button");
+
+	/* Configuro posiciones relativas */
+	MODEL(image, FrameUI*)->setPosition(0, 0);
+	MODEL(button, MouseUI*)->setPosition(220, 10);
+
+	MODEL(image, FrameUI*)->setVisible(false);
+
+	/* Creo el componente padre y los agrego */
+	UIComponent* toggleImage = new UIComponent(id);
+
+	toggleImage->attachComponent(image);
+	toggleImage->attachComponent(button);
+
+	/* Connector... :D */
+	MODEL(button, MouseUI*)->setFocusAction(CREATE_CONNECTOR(bool, bind(&UIModel::setVisible, image->getModel(), _1), true));
+	MODEL(button, MouseUI*)->setExitAction(CREATE_CONNECTOR(bool, bind(&UIModel::setVisible, image->getModel(), _1), false));
+
+	return toggleImage;
 }

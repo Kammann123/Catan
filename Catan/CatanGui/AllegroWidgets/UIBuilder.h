@@ -20,6 +20,7 @@ public:
 	static UIComponent* createCounterBox(string id, unsigned int max);
 	static UIComponent* createCounter(string id, unsigned int max);
 	static UIComponent* createLabel(string id, size_t size);
+	static UIComponent* createToggleImage(string id);
 	static UIComponent* createButton(string id);
 	static UIComponent* createImage(string id);
 	
