@@ -513,26 +513,22 @@ GameWindow::onPass(void* data) {
 void
 GameWindow::acceptOffer(void* data) {
 	launcher.getGame().syncHandle(new CatanEvent(CatanEvent::Events::YES, CatanEvent::Sources::GUI, PlayerId::PLAYER_ONE));
-	this->child("gandalf")->setEnable(false);
 }
 
 void
 GameWindow::denyOffer(void* data) {
 	launcher.getGame().syncHandle(new CatanEvent(CatanEvent::Events::NO, CatanEvent::Sources::GUI, PlayerId::PLAYER_ONE));
-	this->child("gandalf")->setEnable(false);
 }
 
 void
 GameWindow::gameOver(void* data) {
 	launcher.getGame().syncHandle(new CatanEvent(CatanEvent::Events::GAME_OVER, CatanEvent::Sources::GUI, PlayerId::PLAYER_ONE));
-	this->child("gandalf")->setEnable(false);
 	launcher.change(CatanLauncher::States::MAIN_MENU);
 }
 
 void
 GameWindow::playAgain(void* data) {
 	launcher.getGame().syncHandle(new CatanEvent(CatanEvent::Events::PLAY_AGAIN, CatanEvent::Sources::GUI, PlayerId::PLAYER_ONE));
-	this->child("gandalf")->setEnable(false);
 }
 
 /**********
