@@ -36,6 +36,27 @@ class ChildWindowUI;
 /*
 * WindowUI
 * Modelizacion de una ventana como interfaz grafica
+*
+* + Se agrega la capacidad de que se pueda configurar a la ventana,
+*	ya sea un color o una imagen para definir el fondo de la misma
+*
+* + Se agrega la capacidad de correr una musica de fondo en la ventana.
+*
+* + Se agrega la capacidad de definir diferentes estilos de cursores
+*   para la ventana, asi como el tratamiento a nivel objeto del mismo
+*   para mantener un control sobre la interaccion de este con los controllers
+*   principalmente para que no agarra mas de un objeto.
+*
+* + Se agregan los WindowChilds! Ventanas heredadas de WindowUI que pueden
+*   existir dentro de la WindowUI, pertenecen a ella, y al habilitarse
+*	reciben privilegio de eventos
+*
+* + Se añaden los iconos y el titulo de una ventana.
+*
+* + Se agrega el RefreshLocking system. Basicamente bloquea y guarda
+*   la peticion de refresco de pantalla para limitar un tiempo de 
+*   actualizacion que no puede disminuirse, pero si superarse...
+*
 */
 class WindowUI {
 
@@ -72,6 +93,16 @@ public:
 	void start(void);
 	void stop(void);
 	void refactor(void);
+
+	/*****************************
+	* Interfaz de RefreshLocking *
+	*****************************/
+	bool hasRefreshRequest(void);
+	bool isRefreshLocked(void);
+	void releaseRefreshRequest(void);
+	void requestRefresh(void);
+	void unlockRefresh(void);
+	void lockRefresh(void);
 
 	/***********************
 	* Interfaz para Childs *
@@ -148,6 +179,9 @@ protected:
 	Action onClose;
 
 	Mouse mouse;
+
+	bool refreshRequested;
+	bool refreshLocked;
 
 	list<UIComponent*> components;
 	list<ChildWindowUI*> childs;

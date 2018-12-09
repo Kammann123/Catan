@@ -181,7 +181,13 @@ WindowUI::process(void) {}
 
 void
 WindowUI::refresh(void) {
-	this->draw();
+	if (this->isRefreshLocked()) {
+		this->requestRefresh();
+	}
+	else {
+		this->lockRefresh();
+		this->draw();
+	}
 }
 
 void
@@ -311,8 +317,21 @@ WindowUI::run(void) {
 		if (event.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
 			this->stop();
 			this->close(&event);
-		}
-		else {
+		}else {
+
+			/* Verifico si es un evento de timer FPS para habilitar
+			* y desbloquear el lock de refresh, permitiendo
+			* las actualizaciones
+			*/
+			if (event.type == ALLEGRO_EVENT_TIMER) {
+				if (this->isRefreshLocked()) {
+					this->unlockRefresh();
+					if (this->hasRefreshRequest()) {
+						this->releaseRefreshRequest();
+						this->refresh();
+					}
+				}
+			}
 
 			/* Primero verifico si tengo alguna ventana hija, y dentro de esas
 			* me fijo cual esta activada, en dicho caso, se le pasa el evento a ella
@@ -324,6 +343,11 @@ WindowUI::run(void) {
 				}
 			}
 
+			/* Se revisa si el tipo de evento recibido es de
+			* mouse, para poder hacer el control de parseo y validar
+			* que la interaccion del cursor no se de con mas de un
+			* objeto!!
+			*/
 			if (mouse.isMouse(&event)) {
 				mouse.parse(&event);
 
@@ -525,4 +549,34 @@ WindowUI::setClickCursor(const char* image) {
 void 
 WindowUI::setGrabCursor(const char* image) {
 	mouse.set(Mouse::States::GRABBING, image);
+}
+
+bool 
+WindowUI::hasRefreshRequest(void) {
+	return refreshRequested;
+}
+
+bool
+WindowUI::isRefreshLocked(void) {
+	return refreshLocked;
+}
+
+void
+WindowUI::releaseRefreshRequest(void) {
+	this->refreshRequested = false;
+}
+
+void
+WindowUI::requestRefresh(void) {
+	this->refreshRequested = true;
+}
+
+void
+WindowUI::unlockRefresh(void) {
+	this->refreshLocked = false;
+}
+
+void
+WindowUI::lockRefresh(void) {
+	this->refreshLocked = true;
 }
