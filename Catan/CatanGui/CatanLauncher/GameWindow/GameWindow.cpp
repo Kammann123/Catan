@@ -718,14 +718,14 @@ GameWindow::offer_answer(void) {
 		/* Le doy formato a la propuesta! */
 		string msg = launcher.getGame().getRemotePlayer()->getName() + " quiere hacer un intercambio.\n";
 
-		list<ResourceId> givenCards = offer->getGiven();
+		list<ResourceId>& givenCards = offer->getGiven();
 		unsigned int woolGiven = count(givenCards.begin(), givenCards.end(), ResourceId::PASTURES);
 		unsigned int grainGiven = count(givenCards.begin(), givenCards.end(), ResourceId::FIELD);
 		unsigned int brickGiven = count(givenCards.begin(), givenCards.end(), ResourceId::HILL);
 		unsigned int oreGiven = count(givenCards.begin(), givenCards.end(), ResourceId::MOUNTAIN);
 		unsigned int lumberGiven = count(givenCards.begin(), givenCards.end(), ResourceId::FOREST);
 
-		list<ResourceId> recvCards = offer->getRecv();
+		list<ResourceId>& recvCards = offer->getRecv();
 		unsigned int woolRecv = count(recvCards.begin(), recvCards.end(), ResourceId::PASTURES);
 		unsigned int grainRecv = count(recvCards.begin(), recvCards.end(), ResourceId::FIELD);
 		unsigned int brickRecv = count(recvCards.begin(), recvCards.end(), ResourceId::HILL);

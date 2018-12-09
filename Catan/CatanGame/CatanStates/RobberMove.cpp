@@ -19,11 +19,11 @@ RobberMove::handle(CatanEvent* event) {
 				/* Ejecuto la accion de mover el robber */
 				game.moveRobber(robberMove->getCoord());
 
-				/* Cambio de estado */
-				game.changeState(new Turn(game), "RobberMove - Robber movido correctamente!");
-
 				/* Notifico el evento */
 				game.addNewEvent(event);
+
+				/* Cambio de estado */
+				game.changeState(new Turn(game), "RobberMove - Robber movido correctamente!");
 
 				return;
 			}

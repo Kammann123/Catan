@@ -31,13 +31,22 @@ ThrowDices::handle(CatanEvent* event) {
 				if (game.isRobberDices(dices->getDices())) {
 
 					if ( game.hasRobberCards(OPONENT_ID(game.getTurn())) ) {
+
+						/* Notifico la accion a los observers */
+						game.addNewEvent(event);
 						game.changeState(new RobberCards(game, game.getTurn()), "ThrowDices - El primer jugador debe descartar cartas!");
 					}
 					else {
 						if (game.hasRobberCards(game.getTurn())) {
+
+							/* Notifico la accion a los observers */
+							game.addNewEvent(event);
 							game.changeState(new RobberCards(game, game.getTurn()), "ThrowDices - El segundo jugador debe descartar cartas!");
 						}
 						else {
+
+							/* Notifico la accion a los observers */
+							game.addNewEvent(event);
 							game.changeState(new RobberMove(game), "ThrowDices - Nadie debe descartar cartas.");
 						}
 					}
@@ -49,11 +58,11 @@ ThrowDices::handle(CatanEvent* event) {
 					* del turo del jugador
 					*/
 					game.assignResources(dices->getDices());
+
+					/* Notifico la accion a los observers */
+					game.addNewEvent(event);
 					game.changeState(new Turn(game), "ThrowDices - El jugador ha tirado los dados! Ahora debe actuar en su turno.");
 				}
-
-				/* Notifico la accion a los observers */
-				game.addNewEvent(event);
 
 				return;
 			}

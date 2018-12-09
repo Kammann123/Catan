@@ -25,14 +25,14 @@ Winner::handle(CatanEvent* event) {
 					if (event->getEvent() == CatanEvent::Events::PLAY_AGAIN) {
 						/* Cambio de estado a WINNER_ANSWER y notifico lo respondido */
 						state = WINNER_ANSWER;
-						game.setInfo("Winner - El jugador perdedor desea jugar una revancha!");
 						game.addNewEvent(event);
+						game.setInfo("Winner - El jugador perdedor desea jugar una revancha!");
 						return;
 					}
 					else if (event->getEvent() == CatanEvent::Events::GAME_OVER) {
 						/* Cambio de estado a GAME_END, el juego termina y lo notifico */
-						game.changeState(new GameEnd(game), "Winner - El jugador perdedor no desea jugar una revancha.");
 						game.addNewEvent(event);
+						game.changeState(new GameEnd(game), "Winner - El jugador perdedor no desea jugar una revancha.");
 						return;
 					}
 				}
@@ -53,8 +53,8 @@ Winner::handle(CatanEvent* event) {
 					}
 					else if (event->getEvent() == CatanEvent::Events::GAME_OVER) {
 						/* Cambio de estado a GAME_END, el juego termina y lo notifico */
-						game.changeState(new GameEnd(game), "Winner - El jugador ganador no desea jugar una revancha.");
 						game.addNewEvent(event);
+						game.changeState(new GameEnd(game), "Winner - El jugador ganador no desea jugar una revancha.");
 						return;
 					}
 				}

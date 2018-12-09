@@ -167,11 +167,12 @@ Turn::handle(CatanEvent* event) {
 				* cambio de estado en caso de serla, a la espera de una respuesta
 				*/
 				if (game.isValidPlayerExchange(offer->getGiven(), offer->getRecv(), offer->getPlayer())) {
-					/* Cambio de estado a esperar la respuesta del otro jugador */
-					game.changeState(new OfferAnswer(game, *offer), "Turn - Oferta de intercambio ok! Esperando respuesta...");
 
 					/* Notifico */
 					game.addNewEvent(event);
+
+					/* Cambio de estado a esperar la respuesta del otro jugador */
+					game.changeState(new OfferAnswer(game, *offer), "Turn - Oferta de intercambio ok! Esperando respuesta...");
 					return;
 				}
 				break;
@@ -181,8 +182,8 @@ Turn::handle(CatanEvent* event) {
 				* a esperar sus dices, y finalmente notifico el cambio
 				*/
 				game.toggleTurn();
-				game.changeState(new ThrowDices(game), "Turn - Cambio de turno!");
 				game.addNewEvent(event);
+				game.changeState(new ThrowDices(game), "Turn - Cambio de turno!");
 				return;
 
 				break;
