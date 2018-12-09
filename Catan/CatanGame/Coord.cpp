@@ -261,10 +261,10 @@ Coord::getSeaCoords(void) {
 
 string::iterator 
 Coord::begin(void) {
-	return coords.begin();
+return coords.begin();
 }
 
-string::iterator 
+string::iterator
 Coord::end(void) {
 	return coords.end();
 }
@@ -302,7 +302,7 @@ Coord::nearCoast(void) {
 bool
 Coord::nearCoast(Coord coord) {
 	if (coord.isSea()) {
-		if (_has(coord.coords[0]) ) {
+		if (_has(coord.coords[0])) {
 			return true;
 		}
 	}
@@ -317,6 +317,10 @@ Coord::nearCoast(unsigned char coord) {
 
 bool
 Coord::isVertexOf(Coord coord) {
+	if (!coord.isLand() && !this->isLand()) {
+		return false;
+	}
+
 	if (coord.isLand()) {
 		if (isDot()) {
 			if (_has(coord.coords[0])) {
@@ -324,6 +328,10 @@ Coord::isVertexOf(Coord coord) {
 			}
 		}
 	}
+	else if (coord.isVertexOf(*this)) {
+		return true;
+	}
+
 	return false;
 }
 
@@ -339,6 +347,10 @@ Coord::isVertexOf(unsigned char coord) {
 
 bool
 Coord::isEdgeOf(Coord coord) {
+	if (!coord.isEdge() && !this->isEdge()) {
+		return false;
+	}
+
 	if (isEdge()) {
 		if (coord.isDot()) {
 			if (coord.coords.size() == 3) {
@@ -359,6 +371,10 @@ Coord::isEdgeOf(Coord coord) {
 			}
 		}
 	}
+	else if (coord.isEdgeOf(*this)){
+		return true;
+	}
+
 	return false;
 }
 
@@ -369,12 +385,20 @@ Coord::isEdgeOf(unsigned char coord) {
 
 bool
 Coord::edgeContinuity(Coord coord) {
+	if (!coord.isEdge() && !this->isEdge()) {
+		return false;
+	}
+
 	if (isEdge()) {
 		if (coord.isEdge()) {
 			Coord myCoord(*this, coord);
 			return this->isEdgeOf(myCoord) && coord.isEdgeOf(myCoord);
 		}
 	}
+	else if (coord.edgeContinuity(*this)) {
+		return true;
+	}
+
 	return false;
 }
 
@@ -385,12 +409,20 @@ Coord::edgeContinuity(unsigned char coord) {
 
 bool
 Coord::isAdjacentDot(Coord coord) {
+	if (!coord.isDot() && !this->isDot()) {
+		return false;
+	}
+
 	if (isDot()) {
 		if (coord.isDot()) {
 			Coord myCoord(*this, coord);
 			return myCoord.isEdgeOf(*this) && myCoord.isEdgeOf(coord);
 		}
 	}
+	else if (coord.isAdjacentDot(*this)) {
+		return true;
+	}
+
 	return false;
 }
 

@@ -1450,11 +1450,11 @@ CatanGame::getWinner(void) {
 
 void
 CatanGame::updateWinner(void) {
-	if (localPlayer->getVictoryPoints() == WINNER_POINTS) {
+	if (localPlayer->getVictoryPoints() >= WINNER_POINTS) {
 		winner = PlayerId::PLAYER_ONE;
 		setInfo("[CatanGame] ENHORABUENA, has ganado la partida!");
 	}
-	else if (remotePlayer->getVictoryPoints() == WINNER_POINTS) {
+	else if (remotePlayer->getVictoryPoints() >= WINNER_POINTS) {
 		winner = PlayerId::PLAYER_TWO;
 		setInfo("[CatanGame] UUUF CASI! La proxima sera campeon, perdiste...");
 	}
