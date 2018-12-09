@@ -172,7 +172,7 @@ Coord::operator=(string coords) {
 Coord&
 Coord::operator=(Coord coords) {
 	this->coords = coords.coords;
-	_update_coord();
+	this->type = coords.type;
 	return *this;
 }
 
