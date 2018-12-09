@@ -41,6 +41,7 @@ public:
 	unsigned int hasRoads(void);
 	PlayerId getPlayerId(void);
 	string getName(void);
+	CatanGame* getGame(void);
 
 	/********************************
 	* Interfaz de manejo del puntaje

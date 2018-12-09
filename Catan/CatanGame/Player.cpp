@@ -181,6 +181,11 @@ string Player::getName()
 	return name;
 }
 
+CatanGame * Player::getGame(void)
+{
+	return game;
+}
+
 void Player::removePoints(unsigned int points)
 {
 	victoryPoints -= points;
