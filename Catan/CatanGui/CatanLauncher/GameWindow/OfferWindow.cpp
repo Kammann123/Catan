@@ -127,7 +127,7 @@ OfferWindow(string id, CatanGame& _game) : ChildWindowUI(id, 750, 700), game(_ga
 	MODEL(bank, MouseUI*)->setPosition(300, 450);
 	MODEL(dock, MouseUI*)->setPosition(50, 465);
 	MODEL(player, MouseUI*)->setPosition(550, 475);
-	MODEL(label, TextUI*)->setPosition(100, 300);
+	MODEL(label, TextUI*)->setPosition(100, 315);
 
 	/************
 	* Callbacks *
