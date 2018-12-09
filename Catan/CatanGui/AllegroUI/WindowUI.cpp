@@ -241,6 +241,7 @@ WindowUI::start(void) {
 	* Se hace refactorizacion de todos los componentes
 	*/
 	refactor();
+	refactor();
 	for (ChildWindowUI* child : childs) {
 		if (child) {
 			child->refactor();

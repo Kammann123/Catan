@@ -921,7 +921,8 @@ GameWindow::normal_layout(void) {
 	(*this)["dice_two"]->getModel()->setEnable(true);
 	(*this)["dice_two"]->getModel()->setVisible(true);
 	(*this)["costs"]->getModel()->setEnable(true);
-	(*this)["costs"]->getModel()->setVisible(true);
+	(*this)["status"]->getModel()->setEnable(true);
+	(*this)["status"]->getModel()->setVisible(true);
 }
 
 /****************************/
