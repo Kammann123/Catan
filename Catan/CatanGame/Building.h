@@ -61,32 +61,20 @@ public:
 	void removeNeighbour(Building* building);
 	void removeNeighbour(void);
 
-	/*
-	* getNeighbours
-	* Devuelve la lista de vecinos, para ir visitandolos a cada
-	* uno de ellos y llevar la cuenta de las visitas
-	*/
 	list<Building*> getNeighbours(void);
-
-	/*
-	* hasNeighbours
-	* Devuelve true si el building tiene vecinos agregados
-	*/
-	bool hasNeighbours(void);
-
-	/*
-	* wasVisited
-	* Consulta si ya fue visitada la construccion en particular
-	*/
-	bool wasVisited(void);
-
-	/*
-	* visit
-	* Marca el estado de la visita en esta construccion
-	*/
 	void visit(bool status = true);
+	bool hasNeighbours(void);
+	bool wasVisited(void);
+	bool isHead(void);
 
 private:
+
+	/* isBuildingSide - Se busca determinar si el building pertenece
+	* al lado conjunto por los demas buildings en la lista, para clasificar
+	* los lados de un road.
+	*/
+	bool isBuildingSide(list<Building*> side, Building* building);
+
 	list<Building*> neighbours;
 	BuildingType type;
 	Player* player;

@@ -120,3 +120,62 @@ bool
 Building::hasNeighbours(void) {
 	return !neighbours.empty();
 }
+
+bool 
+Building::isHead(void) {
+	/* Se agrega logica para determinar si el nodo del grafo
+	* es un cabeza del mismo, para determinar si los recorridos
+	* se comienzan desde aqui
+	*/
+	if (coord.isDot()) {
+		return neighbours.size() == 1;
+	}
+	else {
+
+		/* Creo las dos listas de cada lado del road, para clasificar
+		* sus vecinos a medida que los busco a cada uno de ellos  */
+		list<Building*> firstSide;
+		list<Building*> secondSide;
+
+		for (Building* neighbour : neighbours) {
+			/* Verifico que no esten inicialmente vacios las listas
+			* que clasifican los buildings segun lados */
+			if (firstSide.empty() && secondSide.empty()) {
+				firstSide.push_back(neighbour);
+				continue;
+			}
+
+			/* Me fijo a cual de los dos lados pertenece el nuevo vecino
+			* y cuando lo logro determinar, lo agrego a cada uno de esos
+			* lados */
+			if (isBuildingSide(firstSide, neighbour)) {
+				firstSide.push_back(neighbour);
+			}
+			else if (isBuildingSide(secondSide, neighbour)) {
+				secondSide.push_back(neighbour);
+			}
+
+			/* Si detecto que se agruparon vecinos a ambos lados, entonces
+			* no es un head, es decir, la punta de camino */
+			if (firstSide.size() && secondSide.size()) {
+				return false;
+			}
+		}
+
+		/* Si nunca detecte vecinos a ambos lados... es punta de camino! */
+		return true;
+	}
+}
+
+bool
+Building::isBuildingSide(list<Building*> side, Building* building) {
+	for (Building* sideBuilding : side) {
+		if (sideBuilding->getPlace().isEdgeOf(building->getPlace())) {
+			return true;
+		}
+		else if (sideBuilding->getPlace().edgeContinuity(building->getPlace())) {
+			return true;
+		}
+	}
+	return false;
+}
