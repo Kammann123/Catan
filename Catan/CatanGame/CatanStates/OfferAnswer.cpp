@@ -22,7 +22,7 @@ OfferAnswer::handle(CatanEvent* event) {
 			game.playerExchange(offer.getGiven(), offer.getRecv(), offer.getPlayer());
 
 			game.addNewEvent(event);
-			game.changeState(new Turn(game), "Turn - El jugador acepto la oferta.");
+			game.changeState(new Turn(game), game.getPlayer(OPONENT_ID(game.getTurn()))->getName() + " acepto la oferta.");
 			return;
 
 		}
@@ -33,7 +33,7 @@ OfferAnswer::handle(CatanEvent* event) {
 			* al estado de turno, a esperar nuevas acciones del jugador.
 			*/
 			game.addNewEvent(event);
-			game.changeState(new Turn(game), "OfferAnswer - El jugador rechazo la oferta.");
+			game.changeState(new Turn(game), game.getPlayer(OPONENT_ID(game.getTurn()))->getName() + " rechazo la oferta.");
 			return;
 		}
 	}

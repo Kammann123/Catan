@@ -26,22 +26,20 @@ RobberCards::handle(CatanEvent* event) {
 				if (player == game.getTurn()) {
 					/* Notifico el evento */
 					game.addNewEvent(event);
-					game.changeState(new RobberMove(game), "RobberCards - El segundo jugador descarto cartas correctamente!");
+					game.changeState(new RobberMove(game), game.getPlayer(game.getTurn())->getName() + " debe mover el Robber de posicion.");
 				}
 				else {
 					if (game.hasRobberCards(game.getTurn())) {
 						/* Notifico el evento */
 						game.addNewEvent(event);
-						game.changeState(new RobberCards(game, game.getTurn()), "RobberCards - El primer jugador descarto cartas correctamente!");
+						game.changeState(new RobberCards(game, game.getTurn()), game.getPlayer(game.getTurn())->getName() + " debe mover descartar cartas.");
 					}
 					else {
 						/* Notifico el evento */
 						game.addNewEvent(event);
-						game.changeState(new RobberMove(game), "RobberCards - El segundo jugador no tenia cartas para descartar!");
+						game.changeState(new RobberMove(game), game.getPlayer(game.getTurn())->getName() + " debe mover el Robber de posicion.");
 					}
 				}
-
-
 				return;
 			}
 		}
@@ -60,4 +58,9 @@ RobberCards::handle(CatanEvent* event) {
 		*/
 		game.changeState(new GameError(game), "RobberCards - Se esperaba accion ROBBER_CARDS.");
 	}
+}
+
+PlayerId
+RobberCards::getPlayerId(void) {
+	return player;
 }

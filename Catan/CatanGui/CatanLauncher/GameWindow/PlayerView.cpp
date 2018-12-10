@@ -123,8 +123,8 @@ void PlayerView::draw(void)
 	if (player->getPlayerId() == PlayerId::PLAYER_ONE) {
 		al_draw_text(fontCounter, color, (*player)[PLAYER_ORE].x + player->xPos(), (*player)[PLAYER_ORE].y - counterOffset + player->yPos(), 0, to_string(player->getResourceCount(ResourceId::MOUNTAIN)).c_str());
 		al_draw_text(fontCounter, color, (*player)[PLAYER_BRICK].x + player->xPos(), (*player)[PLAYER_BRICK].y - counterOffset + player->yPos(), 0, to_string(player->getResourceCount(ResourceId::HILL)).c_str());
-		al_draw_text(fontCounter, color, (*player)[PLAYER_WOOL].x + player->xPos(), (*player)[PLAYER_WOOL].y - counterOffset + player->yPos(), 0, to_string(player->getResourceCount(ResourceId::FIELD)).c_str());
-		al_draw_text(fontCounter, color, (*player)[PLAYER_GRAIN].x + player->xPos(), (*player)[PLAYER_GRAIN].y - counterOffset + player->yPos(), 0, to_string(player->getResourceCount(ResourceId::PASTURES)).c_str());
+		al_draw_text(fontCounter, color, (*player)[PLAYER_WOOL].x + player->xPos(), (*player)[PLAYER_WOOL].y - counterOffset + player->yPos(), 0, to_string(player->getResourceCount(ResourceId::PASTURES)).c_str());
+		al_draw_text(fontCounter, color, (*player)[PLAYER_GRAIN].x + player->xPos(), (*player)[PLAYER_GRAIN].y - counterOffset + player->yPos(), 0, to_string(player->getResourceCount(ResourceId::FIELD)).c_str());
 		al_draw_text(fontCounter, color, (*player)[PLAYER_LUMBER].x + player->xPos(), (*player)[PLAYER_LUMBER].y - counterOffset + player->yPos(), 0, to_string(player->getResourceCount(ResourceId::FOREST)).c_str());
 	}
 	

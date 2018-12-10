@@ -14,6 +14,8 @@
 #include "../../../CatanEvents/DicesEvent.h"
 #include "../../../CatanEvents/OfferEvent.h"
 
+#include "../../../CatanGame/CatanStates/RobberCards.h"
+
 #include "OfferWindow.h"
 #include "DiscardWindow.h"
 #include "QuestionWindow.h"
@@ -74,7 +76,7 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI("gameWindow
 	UIComponent* game = GameBuilder::createCatanGame(&launcher.getGame());
 	UIComponent* longestRoad = GameBuilder::createLongestRoad(launcher.getGame().getLongestRoad());
 	UIComponent* map = GameBuilder::createMap(launcher.getGame().getCatanMap());
-	UIComponent* statusBox = UIBuilder::createInfoBox("status", 30, 160, 12);
+	UIComponent* statusBox = UIBuilder::createInfoBox("status", 30, 140, 12);
 	UIComponent* costs = UIBuilder::createToggleImage("costs");
 
 	ChildWindowUI* discardWindow = new DiscardWindow("discardWindow", launcher.getGame());
@@ -119,12 +121,12 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI("gameWindow
 	MODEL(localPlayer, Player*)->set(PLAYER_ORE, 0, 150, 0);
 	MODEL(localPlayer, Player*)->set(PLAYER_LUMBER, 60, 150, 0);
 	MODEL(localPlayer, Player*)->set(PLAYER_BRICK, 120, 150, 0);
-	MODEL(localPlayer, Player*)->set(PLAYER_WOOL, 180, 150, 0);
-	MODEL(localPlayer, Player*)->set(PLAYER_GRAIN, 240, 150, 0);
+	MODEL(localPlayer, Player*)->set(PLAYER_GRAIN, 180, 150, 0);
+	MODEL(localPlayer, Player*)->set(PLAYER_WOOL, 240, 150, 0);
 	MODEL(localPlayer, Player*)->set(PLAYER_SETTLEMENTS, 55, 70, 0);
 	MODEL(localPlayer, Player*)->set(PLAYER_ROADS, -20, 75, 0);
 	MODEL(localPlayer, Player*)->set(PLAYER_CITY, 130, 70, 0);
-	MODEL(localPlayer, Player*)->set(PLAYER_LONGEST_ROAD, 0, 0, 0);
+	MODEL(localPlayer, Player*)->set(PLAYER_LONGEST_ROAD, 300, 225, 0);
 
 	/******************************
 	* Configuracion de player two *
@@ -135,12 +137,12 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI("gameWindow
 	MODEL(remotePlayer, Player*)->set(PLAYER_ORE, 0, 150, 0);
 	MODEL(remotePlayer, Player*)->set(PLAYER_LUMBER, 60, 150, 0);
 	MODEL(remotePlayer, Player*)->set(PLAYER_BRICK, 120, 150, 0);
-	MODEL(remotePlayer, Player*)->set(PLAYER_WOOL, 180, 150, 0);
-	MODEL(remotePlayer, Player*)->set(PLAYER_GRAIN, 240, 150, 0);
+	MODEL(remotePlayer, Player*)->set(PLAYER_GRAIN, 180, 150, 0);
+	MODEL(remotePlayer, Player*)->set(PLAYER_WOOL, 240, 150, 0);
 	MODEL(remotePlayer, Player*)->set(PLAYER_SETTLEMENTS, 55 + PLAYER_TWO_OFFSET, 70, 0);
 	MODEL(remotePlayer, Player*)->set(PLAYER_ROADS, -20 + PLAYER_TWO_OFFSET, 75, 0);
 	MODEL(remotePlayer, Player*)->set(PLAYER_CITY, 130 + PLAYER_TWO_OFFSET, 70, 0);
-	MODEL(remotePlayer, Player*)->set(PLAYER_LONGEST_ROAD, 0 + PLAYER_TWO_OFFSET, 0, 0);
+	MODEL(remotePlayer, Player*)->set(PLAYER_LONGEST_ROAD, -60 + PLAYER_TWO_OFFSET, 225, 0);
 
 	/****************************/
 	/* Configuracion de botones */
@@ -667,9 +669,15 @@ GameWindow::robber_card(void) {
 	/************************
 	* Configuro los botones *
 	************************/
+	RobberCards* state = (RobberCards*)launcher.getGame().getCurrentState();
+	if (state->getPlayerId() == PlayerId::PLAYER_ONE) {
+		(*this)["discard"]->getModel()->setEnable(true);
+	}
+	else {
+		(*this)["discard"]->getModel()->setEnable(false);
+	}
 	(*this)["pass"]->getModel()->setEnable(false);
 	(*this)["exit"]->getModel()->setEnable(true);
-	(*this)["discard"]->getModel()->setEnable(true);
 	(*this)["trade"]->getModel()->setEnable(false);
 	(*this)["dice_one"]->getModel()->setEnable(false);
 	(*this)["dice_two"]->getModel()->setEnable(false);

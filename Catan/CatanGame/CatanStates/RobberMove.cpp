@@ -23,7 +23,7 @@ RobberMove::handle(CatanEvent* event) {
 				game.addNewEvent(event);
 
 				/* Cambio de estado */
-				game.changeState(new Turn(game), "RobberMove - Robber movido correctamente!");
+				game.changeState(new Turn(game), game.getPlayer(game.getTurn())->getName() + " ha movido el Robber de posicion.");
 
 				return;
 			}

@@ -25,13 +25,13 @@ Winner::handle(CatanEvent* event) {
 						/* Cambio de estado a WINNER_ANSWER y notifico lo respondido */
 						state = WINNER_ANSWER;
 						game.addNewEvent(event);
-						game.setInfo("Winner - El jugador perdedor desea jugar una revancha!");
+						game.setInfo( game.getPlayer(OPONENT_ID(game.getWinner()))->getName() + " desea jugar una revancha!");
 						return;
 					}
 					else if (event->getEvent() == CatanEvent::Events::GAME_OVER) {
 						/* Cambio de estado a GAME_END, el juego termina y lo notifico */
 						game.addNewEvent(event);
-						game.changeState(new GameEnd(game), "Winner - El jugador perdedor no desea jugar una revancha.");
+						game.changeState(new GameEnd(game), game.getPlayer(OPONENT_ID(game.getWinner()))->getName() + " no desea jugar una revancha.");
 						return;
 					}
 				}
@@ -46,14 +46,14 @@ Winner::handle(CatanEvent* event) {
 				if (event->getPlayer() == game.getWinner()) {
 					if (event->getEvent() == CatanEvent::Events::PLAY_AGAIN) {
 						/* Cambio de estado a GAME_SYNC y notifico lo respondido */
-						game.changeState(new GameSync(game), "Winner - El jugador ganador acepta jugar una revancha!");
+						game.changeState(new GameSync(game), game.getPlayer(game.getWinner())->getName() + " acepta jugar una revancha!");
 						game.addNewEvent(event);
 						return;
 					}
 					else if (event->getEvent() == CatanEvent::Events::GAME_OVER) {
 						/* Cambio de estado a GAME_END, el juego termina y lo notifico */
 						game.addNewEvent(event);
-						game.changeState(new GameEnd(game), "Winner - El jugador ganador no desea jugar una revancha.");
+						game.changeState(new GameEnd(game), game.getPlayer(game.getWinner())->getName() + " no desea jugar una revancha.");
 						return;
 					}
 				}

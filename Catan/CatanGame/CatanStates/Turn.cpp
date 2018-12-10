@@ -55,12 +55,12 @@ Turn::handle(CatanEvent* event) {
 									game.addNewEvent(new CatanEvent(endingEvent, CatanEvent::Sources::NETWORKING, PlayerId::PLAYER_ONE));
 
 									/* Cambio de estado a ganador */
-									game.changeState(new Winner(game), "Turn - Un jugador ha ganado la partida!");
+									game.changeState(new Winner(game), game.getPlayer(game.getWinner())->getName() + " ha ganado la partida!");
 								}
 								else {
 
 									/* Notifico */
-									game.setInfo("Turn - El jugador ha colocado ciudad correctamente!");
+									game.setInfo(game.getPlayer(game.getTurn())->getName() + " ha colocado una ciudad.");
 								}
 								return;
 							}
@@ -84,12 +84,12 @@ Turn::handle(CatanEvent* event) {
 									game.addNewEvent(new CatanEvent(endingEvent, CatanEvent::Sources::NETWORKING, PlayerId::PLAYER_ONE));
 
 									/* Cambio de estado a ganador */
-									game.changeState(new Winner(game), "Turn - Un jugador ha ganado la partida!");
+									game.changeState(new Winner(game), game.getPlayer(game.getWinner())->getName() + " ha ganado la partida!");
 								}
 								else {
 
 									/* Notifico */
-									game.setInfo("Turn - El jugador ha colocado road correctamente!");
+									game.setInfo(game.getPlayer(game.getTurn())->getName() + " ha colocado un road.");
 								}
 								return;
 							}
@@ -113,12 +113,12 @@ Turn::handle(CatanEvent* event) {
 									game.addNewEvent(new CatanEvent(endingEvent, CatanEvent::Sources::NETWORKING, PlayerId::PLAYER_ONE));
 
 									/* Cambio de estado a ganador */
-									game.changeState(new Winner(game), "Turn - Un jugador ha ganado la partida!");
+									game.changeState(new Winner(game), game.getPlayer(game.getWinner())->getName() + " ha ganado la partida!");
 								}
 								else {
 
 									/* Notifico */
-									game.setInfo("Turn - El jugador ha colocado settlement correctamente!");
+									game.setInfo(game.getPlayer(game.getTurn())->getName() + " ha colocado settlement.");
 								}
 								return;
 							}
@@ -141,7 +141,7 @@ Turn::handle(CatanEvent* event) {
 						game.Exchange(bank->getGiven(), bank->getRecv().front(), bank->getPlayer());
 
 						/* Notifico accion */
-						game.setInfo("Turn - Intercambio con el banco realizado correctamente!");
+						game.setInfo(game.getPlayer(game.getTurn())->getName() + " ha intercambiado con el banco.");
 						game.addNewEvent(event);
 						return;
 					}
@@ -152,7 +152,7 @@ Turn::handle(CatanEvent* event) {
 						game.Exchange(bank->getGiven(), bank->getRecv().front(), bank->getPlayer());
 
 						/* Notifico accion */
-						game.setInfo("Turn - Intercambio con puerto realizado correctamente!");
+						game.setInfo(game.getPlayer(game.getTurn())->getName() + " ha intercambiado con un muelle.");
 						game.addNewEvent(event);
 						return;
 					}
@@ -172,7 +172,7 @@ Turn::handle(CatanEvent* event) {
 					game.addNewEvent(event);
 
 					/* Cambio de estado a esperar la respuesta del otro jugador */
-					game.changeState(new OfferAnswer(game, *offer), "Turn - Oferta de intercambio ok! Esperando respuesta...");
+					game.changeState(new OfferAnswer(game, *offer), game.getPlayer(game.getTurn())->getName() + " ha solicitado hacer un cambio con " + game.getPlayer(OPONENT_ID(game.getTurn()))->getName());
 					return;
 				}
 				break;
@@ -183,7 +183,7 @@ Turn::handle(CatanEvent* event) {
 				*/
 				game.toggleTurn();
 				game.addNewEvent(event);
-				game.changeState(new ThrowDices(game), "Turn - Cambio de turno!");
+				game.changeState(new ThrowDices(game), "El jugador ha pasado de turno. Ahora le toca a " + game.getPlayer(game.getTurn())->getName());
 				return;
 
 				break;
