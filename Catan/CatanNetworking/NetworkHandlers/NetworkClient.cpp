@@ -91,8 +91,20 @@ void NetworkClient::
 sconnect(string ip, unsigned int port) {
 
 	if (!isConnected()) {
-		boost::asio::ip::tcp::endpoint endpoint = boost::asio::ip::tcp::endpoint(boost::asio::ip::address::from_string(ip), port);
+		boost::asio::ip::tcp::endpoint endpoint;
 		boost::system::error_code error;
+
+		/* Se intenta abrir el endpoint de comunicacion para
+		* establecer la conexion del socket. */
+		try {	
+			endpoint = boost::asio::ip::tcp::endpoint(boost::asio::ip::address::from_string(ip), port);
+		}
+		catch (...) {
+			/* En caso de ser invalido el endpoint. Se levanta el error */
+			this->status = false;
+			this->error = "Informacion para conexion invalida.";
+			return;
+		}
 
 		/* Intento conectar el socket */
 		socket->connect(endpoint, error);
