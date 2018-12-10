@@ -61,10 +61,10 @@ DiscardWindow(string id, CatanGame& _game) : ChildWindowUI(id, 750, 471), game(_
 	MODEL(exitButton, MouseUI*)->setPosition(675, 14);
 
 	MODEL(wool, UIModelContainer*)->setPosition(80, 140);
-	MODEL(grain, UIModelContainer*)->setPosition(75 + 115, 140);
-	MODEL(brick, UIModelContainer*)->setPosition(75 + 115 * 2, 140);
-	MODEL(ore, UIModelContainer*)->setPosition(75 + 115 * 3, 140);
-	MODEL(lumber, UIModelContainer*)->setPosition(75 + 115 * 4, 140);
+	MODEL(grain, UIModelContainer*)->setPosition(80 + 115, 140);
+	MODEL(brick, UIModelContainer*)->setPosition(80 + 115 * 2, 140);
+	MODEL(ore, UIModelContainer*)->setPosition(80 + 115 * 3, 140);
+	MODEL(lumber, UIModelContainer*)->setPosition(80 + 115 * 4, 140);
 	MODEL(label, TextUI*)->setPosition(100, 300);
 
 	/************

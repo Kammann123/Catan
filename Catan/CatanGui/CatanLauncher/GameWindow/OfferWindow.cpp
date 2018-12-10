@@ -109,20 +109,20 @@ OfferWindow(string id, CatanGame& _game) : ChildWindowUI(id, 750, 700), game(_ga
 	/**************************
 	* Posicion de componentes *
 	**************************/
-	MODEL(tradeButton, MouseUI*)->setPosition(550, 360);
+	MODEL(tradeButton, MouseUI*)->setPosition(550, 340);
 	MODEL(exitButton, MouseUI*)->setPosition(675, 14);
 
 	MODEL(wantedWool, UIModelContainer*)->setPosition(80, 125);
-	MODEL(wantedGrain, UIModelContainer*)->setPosition(75 + 120, 125);
-	MODEL(wantedBrick, UIModelContainer*)->setPosition(75 + 120 * 2, 125);
-	MODEL(wantedOre, UIModelContainer*)->setPosition(75 + 120 * 3, 125);
-	MODEL(wantedLumber, UIModelContainer*)->setPosition(75 + 120 * 4, 125);
+	MODEL(wantedGrain, UIModelContainer*)->setPosition(80 + 120, 125);
+	MODEL(wantedBrick, UIModelContainer*)->setPosition(80 + 120 * 2, 125);
+	MODEL(wantedOre, UIModelContainer*)->setPosition(80 + 120 * 3, 125);
+	MODEL(wantedLumber, UIModelContainer*)->setPosition(80 + 120 * 4, 125);
 
 	MODEL(givenWool, UIModelContainer*)->setPosition(80, 285);
-	MODEL(givenGrain, UIModelContainer*)->setPosition(75 + 120, 285);
-	MODEL(givenBrick, UIModelContainer*)->setPosition(75 + 120 * 2, 285);
-	MODEL(givenOre, UIModelContainer*)->setPosition(75 + 120 * 3, 285);
-	MODEL(givenLumber, UIModelContainer*)->setPosition(75 + 120 * 4, 285);
+	MODEL(givenGrain, UIModelContainer*)->setPosition(80 + 120, 285);
+	MODEL(givenBrick, UIModelContainer*)->setPosition(80 + 120 * 2, 285);
+	MODEL(givenOre, UIModelContainer*)->setPosition(80 + 120 * 3, 285);
+	MODEL(givenLumber, UIModelContainer*)->setPosition(80 + 120 * 4, 285);
 
 	MODEL(bank, MouseUI*)->setPosition(300, 450);
 	MODEL(dock, MouseUI*)->setPosition(50, 465);

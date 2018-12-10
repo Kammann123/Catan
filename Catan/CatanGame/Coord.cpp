@@ -75,7 +75,12 @@ Coord(Coord c1, Coord c2) {
 	if (c1.isEdge() && c2.isEdge()) {
 		this->coords = c1.coords + c2.coords;
 		if (c1.nearCoast() && c2.nearCoast()) {
-			_handle_repetition_intersection();
+			if (c1.coords.size() == c2.coords.size()) {
+				_handle_repetition_intersection();
+			}
+			else {
+				_handle_repetition();
+			}
 		}
 		else {
 			_handle_repetition();
