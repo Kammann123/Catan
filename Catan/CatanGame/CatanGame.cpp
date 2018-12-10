@@ -84,7 +84,7 @@ CatanGame::_destroy_remote_player(void) {
 	if (remotePlayer) {
 		delete remotePlayer;
 	}
-
+}
 
 void
 CatanGame::_destroy_longest_road(void) {
@@ -547,6 +547,24 @@ CatanGame::returnCards(list<ResourceCard*> cards) {
 	for (ResourceCard* card : cards) {
 		if (card) {
 			returnCards(card);
+		}
+	}
+}
+
+void
+CatanGame::notifyHasWinner(void) {
+	if (getState() != CatanGame::State::WINNER) {
+		/* Verifico si gano... */
+		if (hasWinner()) {
+			/* Mando el evento de ganador/perdedor */
+			CatanEvent::Events endingEvent = PlayerId::PLAYER_ONE == getWinner() ? CatanEvent::Events::WON : CatanEvent::Events::LOST;
+			addNewEvent(new CatanEvent(endingEvent, CatanEvent::Sources::GAME, PlayerId::PLAYER_ONE));
+
+			/* Cambio de estado a ganador */
+			changeState(new Winner(*this), getPlayer(getWinner())->getName() + " ha ganado la partida!");
+
+			/* Notifico */
+			notifyChange();
 		}
 	}
 }

@@ -91,6 +91,11 @@ CatanLauncher::run() {
 			networking.run();
 		}
 	}
+
+	/* Verifico si el estado de Networking es IDLE, para notificar el nuevo ganador */
+	if (state == CatanNetworking::States::IDLE) {
+		game.notifyHasWinner();
+	}
 }
 
 bool

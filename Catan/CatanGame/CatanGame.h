@@ -421,6 +421,7 @@ public:
 	PlayerId getWinner(void);
 	void updateWinner(void);
 	bool hasWinner(void);
+	void notifyHasWinner(void);
 
 	/*
 	* Notificacion de cambios a los observers
