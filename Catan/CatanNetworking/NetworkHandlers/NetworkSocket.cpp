@@ -156,7 +156,6 @@ sendPacket(void) {
 			/* Espero a que se mande todo el paquete de datos */
 			do {
 				count = this->socket->write_some(boost::asio::buffer(data, length), error);
-
 			} while (count < length && error == boost::asio::error::would_block);
 
 			/* Libero el data stream */

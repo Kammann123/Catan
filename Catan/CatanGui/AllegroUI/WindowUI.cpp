@@ -308,6 +308,7 @@ WindowUI::stop(void) {
 
 void
 WindowUI::run(void) {
+	bool skip = false;
 
 	/*
 	* Busco en la cola de eventos si existen nuevos,
@@ -347,38 +348,41 @@ WindowUI::run(void) {
 			for (ChildWindowUI* child : childs) {
 				if (child->isEnabled()) {
 					child->run(&event);
-					return;
+					skip = true;
+					break;
 				}
 			}
 
-			/* Se revisa si el tipo de evento recibido es de
-			* mouse, para poder hacer el control de parseo y validar
-			* que la interaccion del cursor no se de con mas de un
-			* objeto!!
-			*/
-			if (mouse.isMouse(&event)) {
-				mouse.parse(&event);
+			if (!skip) {
+				/* Se revisa si el tipo de evento recibido es de
+				* mouse, para poder hacer el control de parseo y validar
+				* que la interaccion del cursor no se de con mas de un
+				* objeto!!
+				*/
+				if (mouse.isMouse(&event)) {
+					mouse.parse(&event);
 
-				if (mouse.isGrabbing()) {
-					mouse.privilege(&event);
-				}
-				else {
-					for (UIComponent* component : components) {
-						component->parse(&event);
+					if (mouse.isGrabbing()) {
+						mouse.privilege(&event);
+					}
+					else {
+						for (UIComponent* component : components) {
+							component->parse(&event);
 
-						MouseController* controller = (MouseController*)(*component)[UIController::Id::MOUSE];
-						if (controller) {
-							if (MODEL(controller, MouseUI*)->getStatus() == MouseUI::Status::DRAGGED) {
-								mouse.grab(controller);
-								break;
+							MouseController* controller = (MouseController*)(*component)[UIController::Id::MOUSE];
+							if (controller) {
+								if (MODEL(controller, MouseUI*)->getStatus() == MouseUI::Status::DRAGGED) {
+									mouse.grab(controller);
+									break;
+								}
 							}
 						}
 					}
 				}
-			}
-			else {
-				for (UIComponent* component : components) {
-					component->parse(&event);
+				else {
+					for (UIComponent* component : components) {
+						component->parse(&event);
+					}
 				}
 			}
 
