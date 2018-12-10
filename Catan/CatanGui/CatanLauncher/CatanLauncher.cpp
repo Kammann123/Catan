@@ -74,6 +74,7 @@ CatanLauncher::run() {
 
 		case GAME_WINDOW:
 			gamewindow.run();
+			game.run();
 			break;
 	}
 
