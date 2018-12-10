@@ -79,20 +79,6 @@ CatanNetworking::
 
 void
 CatanNetworking::setIp(string ip) {
-	/* No podemos permitir que dos ip distintas
-	* tengan el mismo valor de delay si lo corren al
-	* mismo tiempo.
-	*/
-	unsigned long int what = 0;
-	unsigned int i = 1;
-	for (unsigned char c : ip) {
-		if (c != '.') {
-			what += (c - '0') * i;
-			i *= 10;
-		}
-	}
-
-	srand(what);
 	this->ip = ip;
 }
 

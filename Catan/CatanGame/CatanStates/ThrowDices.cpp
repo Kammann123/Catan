@@ -47,7 +47,7 @@ ThrowDices::handle(CatanEvent* event) {
 
 							/* Notifico la accion a los observers */
 							game.addNewEvent(event);
-							game.changeState(new RobberMove(game), "Nadie debe descartar cartas.");
+							game.changeState(new RobberMove(game), game.getPlayer(game.getTurn())->getName() + " debe mover el Robber de posicion.");
 						}
 					}
 				}
