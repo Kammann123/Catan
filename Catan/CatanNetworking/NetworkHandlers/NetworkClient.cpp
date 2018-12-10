@@ -62,7 +62,7 @@ aconnect(string ip, unsigned int port) {
 		/* Configuro el timer deadline con un tiempo determinado al cual
 		* se debera ejecutar el metodo handler para comunicar un timeout
 		*/
-		deadline.expires_from_now(boost::posix_time::milliseconds(150));
+		deadline.expires_from_now(boost::posix_time::milliseconds(450));
 
 		/* Mando al thread pool dos async tasks para que se ejecuten
 		* en el io service, a cada uno le configuro su correspondiente

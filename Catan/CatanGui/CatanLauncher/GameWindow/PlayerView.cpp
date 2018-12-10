@@ -35,7 +35,7 @@ using namespace std;
 #define	VICTORY_PTS_SIZE	25
 #define	PLAYER_FONT_COLOR	"fontColor"
 
-#define NAME_STRING_MAX_LENGHT 15
+#define NAME_STRING_MAX_LENGHT 10
 #define TRIANGLE_WIDTH 15
 
 PlayerView::PlayerView(Player * model_) : UIView(model_)

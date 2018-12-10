@@ -127,7 +127,7 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI("gameWindow
 	MODEL(localPlayer, Player*)->set(PLAYER_SETTLEMENTS, 55, 70, 0);
 	MODEL(localPlayer, Player*)->set(PLAYER_ROADS, -20, 75, 0);
 	MODEL(localPlayer, Player*)->set(PLAYER_CITY, 130, 70, 0);
-	MODEL(localPlayer, Player*)->set(PLAYER_LONGEST_ROAD, 300, 225, 0);
+	MODEL(localPlayer, Player*)->set(PLAYER_LONGEST_ROAD, 300, 205, 0);
 
 	/******************************
 	* Configuracion de player two *
@@ -143,7 +143,7 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI("gameWindow
 	MODEL(remotePlayer, Player*)->set(PLAYER_SETTLEMENTS, 55 + PLAYER_TWO_OFFSET, 70, 0);
 	MODEL(remotePlayer, Player*)->set(PLAYER_ROADS, -20 + PLAYER_TWO_OFFSET, 75, 0);
 	MODEL(remotePlayer, Player*)->set(PLAYER_CITY, 130 + PLAYER_TWO_OFFSET, 70, 0);
-	MODEL(remotePlayer, Player*)->set(PLAYER_LONGEST_ROAD, -60 + PLAYER_TWO_OFFSET, 225, 0);
+	MODEL(remotePlayer, Player*)->set(PLAYER_LONGEST_ROAD, -240 + PLAYER_TWO_OFFSET, 205, 0);
 
 	/****************************/
 	/* Configuracion de botones */
