@@ -19,8 +19,6 @@ GameSync::handle(CatanEvent* event) {
 		game.getCatanMap()->generateTokens();
 		game.generateTurn();
 
-		game.addNewEvent(event);
-
 		/* Paso a nuevo estado de primeras construcciones */
 		game.changeState(new FirstBuilds(game), "GameSync - Se genero el entorno del juego correctamente!");
 		return;
@@ -48,8 +46,6 @@ GameSync::handle(CatanEvent* event) {
 				game.getCatanMap()->loadMap(map.getMap());
 				game.getCatanMap()->loadTokens(tokens.getTokens());
 				game.setTurn(turn);
-
-				game.addNewEvent(event);
 
 				/* Paso a nuevo estado de primeras construcciones */
 				game.changeState(new FirstBuilds(game), "GameSync - Sincronizacion recibida exitosamente!");

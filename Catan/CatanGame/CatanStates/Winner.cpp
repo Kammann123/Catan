@@ -26,6 +26,7 @@ Winner::handle(CatanEvent* event) {
 						state = WINNER_ANSWER;
 						game.addNewEvent(event);
 						game.setInfo( game.getPlayer(OPONENT_ID(game.getWinner()))->getName() + " desea jugar una revancha!");
+						game.notifyChange();
 						return;
 					}
 					else if (event->getEvent() == CatanEvent::Events::GAME_OVER) {
