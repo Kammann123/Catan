@@ -250,7 +250,6 @@ CatanNetworking::run() {
 
 void
 CatanNetworking::update() {
-
 	/* Verifico estado del Networking */
 	verifyStatus();
 

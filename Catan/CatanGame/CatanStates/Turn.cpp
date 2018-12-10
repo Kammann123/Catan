@@ -48,20 +48,9 @@ Turn::handle(CatanEvent* event) {
 								game.payCity(building->getPlayer());
 								game.addNewEvent(event);
 
-								/* Verifico si gano... */
-								if (game.hasWinner()) {
-									/* Mando el evento de ganador/perdedor */
-									CatanEvent::Events endingEvent = PlayerId::PLAYER_ONE == game.getWinner() ? CatanEvent::Events::WON : CatanEvent::Events::LOST;
-									game.addNewEvent(new CatanEvent(endingEvent, CatanEvent::Sources::GAME, PlayerId::PLAYER_ONE));
-
-									/* Cambio de estado a ganador */
-									game.changeState(new Winner(game), game.getPlayer(game.getWinner())->getName() + " ha ganado la partida!");
-								}
-								else {
-
-									/* Notifico */
-									game.setInfo(game.getPlayer(game.getTurn())->getName() + " ha colocado una ciudad.");
-								}
+								/* Notifico */
+								game.setInfo(game.getPlayer(game.getTurn())->getName() + " ha colocado una ciudad.");
+								game.notifyChange();
 								return;
 							}
 						}
@@ -77,20 +66,9 @@ Turn::handle(CatanEvent* event) {
 								game.payRoad(building->getPlayer());
 								game.addNewEvent(event);
 
-								/* Verifico si gano... */
-								if (game.hasWinner()) {
-									/* Mando el evento de ganador/perdedor */
-									CatanEvent::Events endingEvent = PlayerId::PLAYER_ONE == game.getWinner() ? CatanEvent::Events::WON : CatanEvent::Events::LOST;
-									game.addNewEvent(new CatanEvent(endingEvent, CatanEvent::Sources::GAME, PlayerId::PLAYER_ONE));
-
-									/* Cambio de estado a ganador */
-									game.changeState(new Winner(game), game.getPlayer(game.getWinner())->getName() + " ha ganado la partida!");
-								}
-								else {
-
-									/* Notifico */
-									game.setInfo(game.getPlayer(game.getTurn())->getName() + " ha colocado un road.");
-								}
+								/* Notifico */
+								game.setInfo(game.getPlayer(game.getTurn())->getName() + " ha colocado un road.");
+								game.notifyChange();
 								return;
 							}
 						}
@@ -105,21 +83,10 @@ Turn::handle(CatanEvent* event) {
 								game.buildSettlement(neighbour, building->getCoords(), building->getPlayer());
 								game.paySettlement(building->getPlayer());
 								game.addNewEvent(event);
-
-								/* Verifico si gano... */
-								if (game.hasWinner()) {
-									/* Mando el evento de ganador/perdedor */
-									CatanEvent::Events endingEvent = PlayerId::PLAYER_ONE == game.getWinner() ? CatanEvent::Events::WON : CatanEvent::Events::LOST;
-									game.addNewEvent(new CatanEvent(endingEvent, CatanEvent::Sources::GAME, PlayerId::PLAYER_ONE));
-
-									/* Cambio de estado a ganador */
-									game.changeState(new Winner(game), game.getPlayer(game.getWinner())->getName() + " ha ganado la partida!");
-								}
-								else {
-
-									/* Notifico */
-									game.setInfo(game.getPlayer(game.getTurn())->getName() + " ha colocado settlement.");
-								}
+								/* Notifico */
+								game.setInfo(game.getPlayer(game.getTurn())->getName() + " ha colocado settlement.");
+								game.notifyChange();
+								
 								return;
 							}
 						}
@@ -143,6 +110,7 @@ Turn::handle(CatanEvent* event) {
 						/* Notifico accion */
 						game.setInfo(game.getPlayer(game.getTurn())->getName() + " ha intercambiado con el banco.");
 						game.addNewEvent(event);
+						game.notifyChange();
 						return;
 					}
 				}
@@ -154,6 +122,7 @@ Turn::handle(CatanEvent* event) {
 						/* Notifico accion */
 						game.setInfo(game.getPlayer(game.getTurn())->getName() + " ha intercambiado con un muelle.");
 						game.addNewEvent(event);
+						game.notifyChange();
 						return;
 					}
 				}
