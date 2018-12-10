@@ -232,15 +232,19 @@ Player::giveCards(ResourceId id, unsigned int qty) {
 
 ResourceCard*
 Player::giveCard(ResourceId id) {
+	ResourceCard* chosen = nullptr;
 	for (ResourceCard* card : resourceCards) {
 		if (card->getResourceId() == id) {
-			card->assign();
-			resourceCards.remove(card);
-			notifyObservers();
-			return card;
+			chosen = card;
+			break;
 		}
 	}
-	return nullptr;
+	if (chosen) {
+		chosen->assign();
+		resourceCards.remove(chosen);
+		notifyObservers();
+	}
+	return chosen;
 }
 
 void
