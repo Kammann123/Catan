@@ -810,10 +810,18 @@ CatanGame::validateRobberCards(list<ResourceId>& cards, PlayerId playerID) {
 	unsigned int shouldGive = getPlayer(playerID)->getResourceCount() / 2;
 
 	/*
-	* Valido la cantidad de cartas entregadas
+	* Valido la cantidad de cartas entregadas, pero tambien
+	* verifico que la cantidad y tipo de cartas las tenga 
+	* el jugador...
 	*/
 	if (cards.size() == shouldGive) {
-		return true;
+		if (canPlayerAccept(cards, playerID)) {
+			return true;
+		}
+		else {
+			setInfo("Las cartas elegidas son invalidas, no posees tales recursos.");
+			return false;
+		}
 	}
 	else {
 		setInfo("Las cartas elegidas a descartar son invalidas, no cumplen con la cantidad debida.");
