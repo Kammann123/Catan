@@ -79,14 +79,6 @@ Player(PlayerId player, CatanGame* game) : ContainerUI(player == PlayerId::PLAYE
 	_create_settlements();
 	_create_cities();
 	_create_roads();
-
-	for (unsigned int i = 0; i < 50; i++) {
-		resourceCards.push_back(new ResourceCard(ResourceId::FIELD, game));
-		resourceCards.push_back(new ResourceCard(ResourceId::FOREST, game));
-		resourceCards.push_back(new ResourceCard(ResourceId::PASTURES, game));
-		resourceCards.push_back(new ResourceCard(ResourceId::HILL, game));
-		resourceCards.push_back(new ResourceCard(ResourceId::MOUNTAIN, game));
-	}
 }
 
 Player::
