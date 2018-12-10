@@ -109,6 +109,7 @@ CatanLauncher::change(States newState) {
 	*/
 	switch (state) {
 	case MAIN_MENU:
+		networking.reset();
 		gamewindow.shutdown();
 		mainmenu.start();
 		break;

@@ -66,6 +66,7 @@ public:
 	/* Constructor */
 	GameWindow(CatanLauncher& _launcher);
 	void updateStatus(void);
+	void process(void);
 	void update(void);
 
 private:

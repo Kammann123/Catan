@@ -996,6 +996,16 @@ GameWindow::normal_layout(void) {
 	(*this)["status"]->getModel()->setVisible(true);
 }
 
+void
+GameWindow::process(void) {
+	/* Estoy constantemente viendo el estado de Networking, para que en 
+	* caso de que haya algun error, notificarlo, y cerrar el juego
+	*/
+	if (!launcher.getNetworking().good()) {
+		game_error();
+	}
+}
+
 /****************************/
 /* Nested Class GameBuilder */
 /****************************/

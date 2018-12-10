@@ -154,6 +154,9 @@ Building::isHead(void) {
 			else if (isBuildingSide(secondSide, neighbour)) {
 				secondSide.push_back(neighbour);
 			}
+			else if( secondSide.empty() ){
+				secondSide.push_back(neighbour);
+			}
 
 			/* Si detecto que se agruparon vecinos a ambos lados, entonces
 			* no es un head, es decir, la punta de camino */
