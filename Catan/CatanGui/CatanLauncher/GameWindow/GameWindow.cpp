@@ -649,10 +649,14 @@ GameWindow::throw_dices(void){
 	if (launcher.getGame().getTurn() == PlayerId::PLAYER_ONE) {
 		(*this)["dice_one"]->getModel()->setEnable(true);
 		(*this)["dice_two"]->getModel()->setEnable(true);
+		(*(*this)["dice_one"])[UIController::Id::MOUSE]->setEnable(true);
+		(*(*this)["dice_two"])[UIController::Id::MOUSE]->setEnable(true);
 	}
 	else {
 		(*this)["dice_one"]->getModel()->setEnable(false);
 		(*this)["dice_two"]->getModel()->setEnable(false);
+		(*(*this)["dice_one"])[UIController::Id::MOUSE]->setEnable(false);
+		(*(*this)["dice_two"])[UIController::Id::MOUSE]->setEnable(false);
 	}
 	(*this)["pass"]->getModel()->setEnable(false);
 	(*this)["exit"]->getModel()->setEnable(true);
