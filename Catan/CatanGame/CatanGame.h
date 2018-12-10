@@ -423,11 +423,10 @@ public:
 	bool hasWinner(void);
 
 	/*
-	* Notificacion de cambios a los observers
-	* eliminando los eventos que ya fueron
-	* revisados
+	* Se notifican y ejecutan eventos sobre los
+	* observers del juego.
 	*/
-	void notifyChange(void);
+	void run(void);
 
 private:
 

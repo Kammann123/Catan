@@ -136,15 +136,21 @@ CatanGame::_destroy_map(void) {
 }
 
 void
-CatanGame::notifyChange(void) {
-	/* Notifico a los observers */
-	notifyObservers();
+CatanGame::run(void) {
+	/* Si ya me confirmo el jugador remoto! */
+	if (confirmationPlayer != PlayerId::PLAYER_TWO) {
 
-	/* Elimino el ultimo evento leido */
-	if (hasEvents()) {
-		CatanEvent* event = this->eventQueue.front();
-		this->eventQueue.pop_front();
-		delete event;
+		/* Me fijo si tengo eventos */
+		if (hasEvents()) {
+
+			/* Notifico a los observers */
+			notifyObservers();
+
+			/* Remuevo el ultimo evento */
+			CatanEvent* event = this->eventQueue.front();
+			this->eventQueue.pop_front();
+			delete event;
+		}
 	}
 }
 
@@ -218,9 +224,6 @@ CatanGame::syncHandle(CatanEvent* event) {
 				if (getState() != GAME_SYNC && getState() != GAME_END && getState() != GAME_ERROR) {
 					waitConfirmation(OPONENT_ID(event->getPlayer()));
 				}
-
-				/* Notifico el cambio de estado a los observers */
-				notifyChange();
 			}
 		}
 	}else {
@@ -276,9 +279,6 @@ CatanGame::handle(CatanEvent* event) {
 		else {
 			this->state->handle(event);
 		}
-
-		/* Notifico el cambio de estado a los observers */
-		notifyChange();
 	}
 }
 
@@ -348,9 +348,6 @@ CatanGame::changeState(CatanState* newState) {
 
 	/* Actualizo y cambio */
 	state = newState;
-
-	/* Notifico el cambio de estado a los observers */
-	notifyChange();
 }
 
 CatanEvent*
