@@ -277,8 +277,10 @@ CatanGame::handle(CatanEvent* event) {
 			this->state->handle(event);
 		}
 
-		/* Notifico el cambio de estado a los observers */
-		notifyChange();
+		if (event->getEvent() != CatanEvent::Events::ASK_SYNC) {
+			/* Notifico el cambio de estado a los observers */
+			notifyChange();
+		}
 	}
 }
 
