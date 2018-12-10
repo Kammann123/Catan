@@ -51,6 +51,7 @@ void NetworkClient::
 aconnect(string ip, unsigned int port) {
 
 	if (!isConnected()) {
+		boost::asio::ip::tcp::resolver::iterator endpoint;
 
 		/* Almaceno la informacion del intento de conexion
 		* para establecer un vinculo con los handlers hasta
@@ -73,7 +74,16 @@ aconnect(string ip, unsigned int port) {
 		if (state == States::IDLE) {
 
 			/* Envio la tarea de conectarse al io_service, y paso a estado de connecting */
-			boost::asio::ip::tcp::resolver::iterator endpoint = resolver->resolve(boost::asio::ip::tcp::resolver::query(ip, to_string(port)));
+			try {
+				endpoint = resolver->resolve(boost::asio::ip::tcp::resolver::query(ip, to_string(port)));
+			}
+			catch (...) {
+				/* En caso de ser invalido el endpoint. Se levanta el error */
+				this->status = false;
+				this->error = "Informacion para conexion invalida.";
+				return;
+			}
+
 			boost::asio::async_connect(*socket, endpoint, bind(&NetworkClient::connect_fist, this, _1, _2));
 			state = States::CONNECTING;
 		}

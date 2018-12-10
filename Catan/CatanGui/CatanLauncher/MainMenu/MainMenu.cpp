@@ -112,9 +112,9 @@ MainMenu(CatanLauncher& _launcher) : WindowUI("mainWindow", 1080, 640), launcher
 	this->attachComponent(message);
 
 	/* Posicion de componentes */
-	MODEL(nameBox, TextUI*)->setPosition(365, 230);
-	MODEL(ipBox, TextUI*)->setPosition(365, 300);
-	MODEL(portBox, TextUI*)->setPosition(365, 370);
+	MODEL(nameBox, TextUI*)->setPosition(330, 230);
+	MODEL(ipBox, TextUI*)->setPosition(330, 300);
+	MODEL(portBox, TextUI*)->setPosition(330, 370);
 	MODEL(connectButton, MouseUI*)->setPosition(400, 440);
 	MODEL(cancelButton, MouseUI*)->setPosition(400, 440);
 	MODEL(status, FrameUI*)->setPosition(0, 0);

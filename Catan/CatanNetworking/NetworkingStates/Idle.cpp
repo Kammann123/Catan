@@ -93,20 +93,23 @@ Idle::update(void) {
 	CatanEvent* event = networking.getGame().getNextEvent();
 	NetworkPacket* packet = networking.getEventPacket(event);
 
-	/* Veo si alguno puede manejar */
-	for (HandshakingState* state : handlers) {
+	/* Valido que sea de interes el evento */
+	if (packet) {
+		/* Veo si alguno puede manejar */
+		for (HandshakingState* state : handlers) {
 
-		/* Verifico que el handler sea teller o both */
-		if (state->isHeader(packet->getHeader(), ProtocolState::ProtocolType::TELLER) || state->isHeader(packet->getHeader(), ProtocolState::ProtocolType::BOTH)) {
+			/* Verifico que el handler sea teller o both */
+			if (state->isHeader(packet->getHeader(), ProtocolState::ProtocolType::TELLER) || state->isHeader(packet->getHeader(), ProtocolState::ProtocolType::BOTH)) {
 
-			/* Paso a ese estado! */
-			networking.changeState(state, "[Networking] - Idle -> Evento recibido con la rutina update. Dispatching...");
-			networking.update();
-			return;
+				/* Paso a ese estado! */
+				networking.changeState(state, "[Networking] - Idle -> Evento recibido con la rutina update. Dispatching...");
+				networking.update();
+				return;
+			}
 		}
-	}
 
-	/* No detecto nada! Error :'( */
-	networking.setError("[Networking] - Idle -> Hubo un error en el protocolo, peticion no reconocida.");
-	networking.changeState(CatanNetworking::States::NET_ERROR);
+		/* No detecto nada! Error :'( */
+		networking.setError("[Networking] - Idle -> Hubo un error en el protocolo, peticion no reconocida.");
+		networking.changeState(CatanNetworking::States::NET_ERROR);
+	}
 }
