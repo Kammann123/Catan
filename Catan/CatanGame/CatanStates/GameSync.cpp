@@ -25,6 +25,7 @@ GameSync::handle(CatanEvent* event) {
 		return;
 	}
 	else if (event->getEvent() == CatanEvent::Events::SYNC) {
+		game.resetGame();
 
 		/* Extraigo del evento informacion de configuracion */
 		SyncEvent* sync = (SyncEvent*)event;
