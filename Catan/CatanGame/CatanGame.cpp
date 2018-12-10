@@ -23,9 +23,9 @@
 #include <time.h>
 
 const char* CatanGame::StateString[10] = { 
-	"GAME_SYNC", "FIRST_BUILDS", "THROW_DICES", 
-	"ROBBER_CARD", "ROBBER_MOVE", "TURN", 
-	"OFFER_ANSWER", "WINNER", "GAME_END", "GAME_ERROR"
+	"GAME SYNC", "FIRST BUILDS", "THROW DICES", 
+	"ROBBER CARDS", "ROBBER MOVE", "TURN", 
+	"TRADE ANSWER", "WINNER", "GAME END", "GAME ERROR"
 };
 
 void 

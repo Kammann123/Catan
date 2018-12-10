@@ -31,7 +31,7 @@
 #define INFO_TITLE_FONT	"CatanGui\\Fonts\\RifficFree-Bold.ttf"
 #define INFO_TITLE_SIZE	15
 #define INFO_INFO_FONT "CatanGui\\Fonts\\NewAmsterdam.ttf"
-#define INFO_INFO_SIZE	12
+#define INFO_INFO_SIZE	13
 #define INFO_BUTTON		"CatanGui\\InfoBox\\button_v2.png"
 
 UIComponent* UIBuilder::
