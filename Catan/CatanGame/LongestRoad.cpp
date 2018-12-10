@@ -47,8 +47,8 @@ void
 LongestRoad::refactor(void) {
 	if (player) {
 		this->setPosition(
-			(*player)[POSITION_LONGEST_ROAD].x,
-			(*player)[POSITION_LONGEST_ROAD].y
+			(*player)[POSITION_LONGEST_ROAD].x + player->xPos(),
+			(*player)[POSITION_LONGEST_ROAD].y + player->yPos()
 		);
 	}
 	else {
