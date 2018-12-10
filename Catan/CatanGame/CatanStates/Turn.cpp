@@ -98,7 +98,7 @@ Turn::handle(CatanEvent* event) {
 
 					case BuildingType::SETTLEMENT:
 						if (game.hasSettlementResources(building->getPlayer())) {
-							neighbour = game.isValidCity(building->getCoords(), building->getPlayer());
+							neighbour = game.isValidSettlement(building->getCoords(), building->getPlayer());
 							if (neighbour) {
 
 								/* Ejecuto acciones construccion y cobro */
