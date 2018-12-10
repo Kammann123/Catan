@@ -1035,6 +1035,18 @@ CatanGame::validFirstSettlement(Coord coords, PlayerId playerId) {
 				return false;
 			}
 		}
+
+		/* Verifico la regla de la distancia */
+		for (Building* building : catanMap->buildings()) {
+
+			if (building->getType() != BuildingType::ROAD) {
+
+				if (coords.isAdjacentDot(building->getPlace())) {
+					setInfo("Esa construccion no cumple con la Regla de la Distancia.");
+					return false;
+				}
+			}
+		}
 		return true;
 	}
 
