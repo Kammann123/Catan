@@ -7,7 +7,7 @@ TellEnd(CatanNetworking& net) : HandshakingState(net, CatanNetworking::States::T
 		socket_send(networking.getSocket()),
 		"I_WON",
 		TIMEOUT_TIME,
-		p_send("I_WON", tag("REMOTE_DECIDE"), PacketHeader::I_WON),
+		p_wait_send("I_WON", tag("REMOTE_DECIDE"), PacketHeader::I_WON),
 		p_if_recv("REMOTE_DECIDE",
 			p_recv("WANTS_AGAIN", tag("AGAIN_ANSWER"), bind(&TellEnd::playAgain, this, _1), PacketHeader::PLAY_AGAIN),
 			p_recv("WANTS_OVER", tag("OVER_ACK"), bind(&TellEnd::gameOver, this, _1), PacketHeader::GAME_OVER),
