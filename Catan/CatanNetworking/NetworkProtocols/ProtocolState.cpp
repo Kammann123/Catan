@@ -75,7 +75,9 @@ ProtocolState::notify(NetworkPacket* packet) {
 		throw exception("ProtocolState - notify - Configuracion de protocolo erronea, no deberia notificar!");
 	}
 
-	return this->notifyCallback(packet);
+	if (this->notifyCallback) {
+		this->notifyCallback(packet);
+	}
 }
 
 void
