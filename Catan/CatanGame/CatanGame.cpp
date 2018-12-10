@@ -589,8 +589,8 @@ CatanGame::resetGame() {
 	remotePlayer->resetVictoryPoints();
 
 	/* Pido que devuelvan las cartas */
-	returnCards(localPlayer->giveAllCards());
-	returnCards(remotePlayer->giveAllCards());
+	//returnCards(localPlayer->giveAllCards());
+	//returnCards(remotePlayer->giveAllCards());
 
 	/* Devuelvo las construcciones */
 	for (Building* building : catanMap->buildings()) {
