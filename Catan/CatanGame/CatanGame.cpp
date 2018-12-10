@@ -1201,14 +1201,16 @@ CatanGame::buildingOk(BuildingType type, Coord coords, PlayerId player) {
 			}
 			break;
 		case BuildingType::ROAD:
-			if (hasRoadResources(player)) {
-				if (isValidRoad(coords, player)) {
+			if (getState() == State::FIRST_BUILDS) {
+				if (validFirstRoad(coords, player)) {
 					return true;
 				}
 			}
-			else if (getState() == State::FIRST_BUILDS) {
-				if (validFirstRoad(coords, player)) {
-					return true;
+			else {
+				if (hasRoadResources(player)) {
+					if (isValidRoad(coords, player)) {
+						return true;
+					}
 				}
 			}
 			break;

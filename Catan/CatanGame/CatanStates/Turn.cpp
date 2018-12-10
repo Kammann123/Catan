@@ -52,7 +52,7 @@ Turn::handle(CatanEvent* event) {
 								if (game.hasWinner()) {
 									/* Mando el evento de ganador/perdedor */
 									CatanEvent::Events endingEvent = PlayerId::PLAYER_ONE == game.getWinner() ? CatanEvent::Events::WON : CatanEvent::Events::LOST;
-									game.addNewEvent(new CatanEvent(endingEvent, CatanEvent::Sources::NETWORKING, PlayerId::PLAYER_ONE));
+									game.addNewEvent(new CatanEvent(endingEvent, CatanEvent::Sources::GAME, PlayerId::PLAYER_ONE));
 
 									/* Cambio de estado a ganador */
 									game.changeState(new Winner(game), game.getPlayer(game.getWinner())->getName() + " ha ganado la partida!");
@@ -81,7 +81,7 @@ Turn::handle(CatanEvent* event) {
 								if (game.hasWinner()) {
 									/* Mando el evento de ganador/perdedor */
 									CatanEvent::Events endingEvent = PlayerId::PLAYER_ONE == game.getWinner() ? CatanEvent::Events::WON : CatanEvent::Events::LOST;
-									game.addNewEvent(new CatanEvent(endingEvent, CatanEvent::Sources::NETWORKING, PlayerId::PLAYER_ONE));
+									game.addNewEvent(new CatanEvent(endingEvent, CatanEvent::Sources::GAME, PlayerId::PLAYER_ONE));
 
 									/* Cambio de estado a ganador */
 									game.changeState(new Winner(game), game.getPlayer(game.getWinner())->getName() + " ha ganado la partida!");
@@ -110,7 +110,7 @@ Turn::handle(CatanEvent* event) {
 								if (game.hasWinner()) {
 									/* Mando el evento de ganador/perdedor */
 									CatanEvent::Events endingEvent = PlayerId::PLAYER_ONE == game.getWinner() ? CatanEvent::Events::WON : CatanEvent::Events::LOST;
-									game.addNewEvent(new CatanEvent(endingEvent, CatanEvent::Sources::NETWORKING, PlayerId::PLAYER_ONE));
+									game.addNewEvent(new CatanEvent(endingEvent, CatanEvent::Sources::GAME, PlayerId::PLAYER_ONE));
 
 									/* Cambio de estado a ganador */
 									game.changeState(new Winner(game), game.getPlayer(game.getWinner())->getName() + " ha ganado la partida!");
