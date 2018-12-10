@@ -15,7 +15,7 @@ ListenDices(CatanNetworking& net) : HandshakingState(net, CatanNetworking::State
 		p_wait_send("SEND_CARDS", tag("SEND_ACK"), PacketHeader::ROBBER_CARDS),
 		p_send("WAIT_CARDS", tag("SEND_ACK"), PacketHeader::ACK),
 		p_if_recv("SEND_ACK",
-			p_recv("REMOVE_MOVE", tag("DICES_ACK"), bind(&ListenDices::setRobberMove, this, _1), PacketHeader::ROBBER_MOVE),
+			p_recv("REMOTE_MOVE", tag("DICES_ACK"), bind(&ListenDices::setRobberMove, this, _1), PacketHeader::ROBBER_MOVE),
 			p_recv("REMOTE_CARDS", tag("REMOTE_ACK"), bind(&ListenDices::setRemoteCards, this, _1), PacketHeader::ROBBER_CARDS)
 		),
 		p_send("REMOTE_ACK", tag("REMOTE_MOVE"), PacketHeader::ACK),
