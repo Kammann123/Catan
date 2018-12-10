@@ -102,6 +102,7 @@ DiscardWindow(string id, CatanGame& _game) : ChildWindowUI(id, 750, 471), game(_
 void
 DiscardWindow::onClose(void* data) {
 	this->setEnable(false);
+	this->reset();
 }
 
 void

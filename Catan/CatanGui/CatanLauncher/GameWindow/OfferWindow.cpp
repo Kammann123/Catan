@@ -45,7 +45,7 @@ OfferWindow(string id, CatanGame& _game) : ChildWindowUI(id, 750, 700), game(_ga
 	/**************************
 	* Configuracion del label *
 	**************************/
-	(*label)[0]->getColors().setConfig(MLA_TEXT_COLOR, 200, 150, 150);
+	(*label)[0]->getColors().setConfig(MLA_TEXT_COLOR, 0, 0, 0);
 
 	UIComponent* bank = UIBuilder::createButton("bank");
 	UIComponent* dock = UIBuilder::createButton("dock");
@@ -180,6 +180,7 @@ OfferWindow(string id, CatanGame& _game) : ChildWindowUI(id, 750, 700), game(_ga
 void
 OfferWindow::onClose(void* data) {
 	this->setEnable(false);
+	this->reset();
 }
 
 void
