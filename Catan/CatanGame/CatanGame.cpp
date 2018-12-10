@@ -591,8 +591,8 @@ CatanGame::resetGame() {
 	remotePlayer->resetVictoryPoints();
 
 	/* Pido que devuelvan las cartas */
-	//returnCards(localPlayer->giveAllCards());
-	//returnCards(remotePlayer->giveAllCards());
+	returnCards(localPlayer->giveAllCards());
+	returnCards(remotePlayer->giveAllCards());
 
 	/* Devuelvo las construcciones */
 	for (Building* building : catanMap->buildings()) {
@@ -609,6 +609,7 @@ CatanGame::resetGame() {
 	this->winner = PlayerId::PLAYER_NONE;
 	this->prevState = nullptr;
 	this->state = new GameSync(*this);
+	this->longestRoad->assign();
 	playerLongestRoad.clear();
 	playerDocks.clear();
 	playerLongestRoad.insert(pair<PlayerId, unsigned int>(PlayerId::PLAYER_ONE, 0));
