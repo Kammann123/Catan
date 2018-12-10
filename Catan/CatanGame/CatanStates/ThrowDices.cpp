@@ -34,7 +34,7 @@ ThrowDices::handle(CatanEvent* event) {
 
 						/* Notifico la accion a los observers */
 						game.addNewEvent(event);
-						game.changeState(new RobberCards(game, game.getTurn()), game.getPlayer(OPONENT_ID(game.getTurn()))->getName() + " debe descartar cartas!");
+						game.changeState(new RobberCards(game, OPONENT_ID(game.getTurn())), game.getPlayer(OPONENT_ID(game.getTurn()))->getName() + " debe descartar cartas!");
 					}
 					else {
 						if (game.hasRobberCards(game.getTurn())) {
