@@ -12,6 +12,7 @@ GameSync::handle(CatanEvent* event) {
 	* y el otro entrega la informacion del mismo. Cualquier otra cosa es error.
 	*/
 	if (event->getEvent() == CatanEvent::Events::ASK_SYNC) {
+		game.resetGame();
 
 		/* Ejecuto rutinas de generacion del entorno de juego */
 		game.getCatanMap()->generateLand();

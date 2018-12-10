@@ -16,6 +16,7 @@
 
 #include "../../../CatanGame/CatanStates/RobberCards.h"
 #include "../../../CatanGame/CatanStates/FirstBuilds.h"
+#include "../../../CatanGame/CatanStates/Winner.h"
 
 #include "OfferWindow.h"
 #include "DiscardWindow.h"
@@ -871,9 +872,18 @@ GameWindow::winner(void) {
 	* porque solo se debe llamar a la ventana la primera vez!!!
 	*/
 	if (!this->child("gandalf")->isEnabled()) {
-		if (launcher.getGame().getWinner() == PlayerId::PLAYER_TWO) {
-			/* Hago aparecer la ventana de gandalf */
-			((QuestionWindow*)this->child("gandalf"))->question("Has perdido esta batalla, no te rindas Gran Hobbit. Deseas jugar de nuevo?", bind(&GameWindow::playAgain, this, _1), bind(&GameWindow::gameOver, this, _1));
+		Winner* winnerStatus = (Winner*)launcher.getGame().getCurrentState();
+		if (winnerStatus->getState() == Winner::WStates::LOSER_REMATCH) {
+			if (launcher.getGame().getWinner() == PlayerId::PLAYER_TWO) {
+				/* Hago aparecer la ventana de gandalf */
+				((QuestionWindow*)this->child("gandalf"))->question("Has perdido esta batalla, no te rindas Gran Hobbit. Deseas jugar de nuevo?", bind(&GameWindow::playAgain, this, _1), bind(&GameWindow::gameOver, this, _1));
+			}
+		}
+		else if (winnerStatus->getState() == Winner::WStates::WINNER_ANSWER) {
+			if (launcher.getGame().getWinner() == PlayerId::PLAYER_ONE) {
+				/* Hago aparecer la ventana de gandalf */
+				((QuestionWindow*)this->child("gandalf"))->question("El perdedor quiere jugar de nuevo, aceptas?", bind(&GameWindow::playAgain, this, _1), bind(&GameWindow::gameOver, this, _1));
+			}
 		}
 	}
 

@@ -67,3 +67,8 @@ Winner::handle(CatanEvent* event) {
 	*/
 	game.changeState(new GameError(game), "Winner - Se esperaba PLAY_AGAIN o GAME_OVER.");
 }
+
+Winner::WStates 
+Winner::getState(void) {
+	return state;
+}
