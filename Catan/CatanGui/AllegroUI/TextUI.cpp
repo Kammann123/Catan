@@ -1,5 +1,7 @@
 #include "TextUI.h"
 
+#include <cstring>
+
 TextUI::
 TextUI(string id, size_t width, size_t height, size_t size, Mode mode) : MouseUI(id, width, height, false, true) {
 	this->text = "";
@@ -44,7 +46,7 @@ TextUI::getMode(void) {
 void
 TextUI::append(unsigned char value) {
 	/* Verifico no llegar al limite */
-	if ((text.length() == size) && size) {
+	if ((strlen(text.c_str()) == size) && size) {
 		return;
 	}
 

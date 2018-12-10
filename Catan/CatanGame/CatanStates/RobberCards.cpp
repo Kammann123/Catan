@@ -8,7 +8,7 @@ RobberCards::handle(CatanEvent* event) {
 
 	/*
 	* Este estado se construye siempre guardando el id
-	* del jugador del cual se espera que robe cartas,
+	* del jugador del cual se espe	ra que robe cartas,
 	* de esa forma, se reutiliza la misma logica de estado
 	* tomando como id alguno distinto.
 	*

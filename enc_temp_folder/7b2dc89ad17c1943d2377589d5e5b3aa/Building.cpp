@@ -185,7 +185,7 @@ Building::cutsRoad(Building* building) {
 
 	/* Valido que la construccion no sea del mismo */
 	if (building->getPlayer()->getPlayerId() == player->getPlayerId()) {
-		return false;º	1
+		return false;
 	}
 
 	/* Me fijo, si soy un Building de tipo Road, pues

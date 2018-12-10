@@ -1213,7 +1213,7 @@ CatanGame::buildSettlement(Building* building, Coord coords, PlayerId playerID)
 
 	/* Verifico si la construccion nueva no rompe con algun camino */
 	for (Building* old : catanMap->buildings()) {
-		if (old->getPlayer()->getPlayerId() != building->getPlayer()->getPlayerId()) {
+		if (old->getPlayer()->getPlayerId() != playerID) {
 			if (old->getType() == BuildingType::ROAD) {
 				if (old->cutsRoad(building)) {
 					updateLongestRoad();
