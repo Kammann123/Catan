@@ -535,6 +535,9 @@ CatanGame::takeCards(ResourceId id, unsigned int qty) {
 			}
 		}
 	}
+	for (ResourceCard* takenCard : taken) {
+		cards.remove(takenCard);
+	}
 	return taken;
 }
 
