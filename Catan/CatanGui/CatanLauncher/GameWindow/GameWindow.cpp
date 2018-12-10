@@ -330,6 +330,8 @@ void
 GameWindow::onDice(void* data) {
 	MODEL((*this)["dice_one"], AnimationUI*)->start();
 	MODEL((*this)["dice_two"], AnimationUI*)->start();
+	(*(*this)["dice_one"])[UIController::Id::MOUSE]->setEnable(false);
+	(*(*this)["dice_two"])[UIController::Id::MOUSE]->setEnable(false);
 }
 
 void 
@@ -602,11 +604,12 @@ GameWindow::first_builds(void) {
 				if (!MODEL(buildings, Building*)->isBuilt()) {
 					if (state->getState() == FirstBuilds::FBStates::BUILD_ROAD && MODEL(buildings, Building*)->getType() == BuildingType::ROAD) {
 						buildings->getModel()->setEnable(true);
+						continue;
 					}
 					else if (state->getState() == FirstBuilds::FBStates::BUILD_SETTLEMENT && MODEL(buildings, Building*)->getType() == BuildingType::SETTLEMENT) {
-						buildings->getModel()->setEnable(false);
+						buildings->getModel()->setEnable(true);
+						continue;
 					}
-					continue;
 				}
 			}
 			buildings->getModel()->setEnable(false);
