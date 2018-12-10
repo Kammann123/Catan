@@ -334,6 +334,7 @@ public:
 	Building* isValidSettlement(Coord coords, PlayerId playerID);
 	bool validFirstSettlement(Coord coords, PlayerId playerId);
 	Building* isValidRoad(Coord coords, PlayerId playerID);
+	Building* validFirstRoad(Coord coords, PlayerId playerID);
 	Building* isValidCity(Coord coords, PlayerId playerID);
 
 	/*

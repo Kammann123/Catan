@@ -891,6 +891,48 @@ CatanGame::updateDocks(Coord coord, PlayerId playerId) {
 	}
 }
 
+Building* 
+CatanGame::validFirstRoad(Coord coords, PlayerId playerID) {
+
+	/* Valido que la coordenada sea valida, verificando que sea
+	* de tipo EDGE, y luego chequeo si no esta ocupada aun por otra
+	* construccion de algun jugador o el mismo
+	*/
+	if (coords.isEdge()) {
+
+		for (Building* building : catanMap->buildings()) {
+			if (building->getPlace() == coords) {
+				setInfo("Ubicacion ocupada por otra construccion!");
+				return nullptr;
+			}
+		}
+
+		/*
+		* A continuacion, si no fallo la validacion previa, se verifica
+		* que exista algun punto o linea a la cual adherir el camino,
+		* para continuar el camino, en caso encontrarlo se devuelve el puntero
+		*/
+		for (Building* building : catanMap->buildings()) {
+			/* En las construcciones del jugador */
+			if (building->getPlayer()->getPlayerId() == playerID) {
+				/* Que sean settlements */
+				if (building->getType() == BuildingType::SETTLEMENT) {
+					/* Que se conecten con el camino */
+					if (coords.isEdgeOf(building->getPlace())) {
+						/* Que no tengan camino puesto */
+						if (!building->getNeighbours().size()) {
+							return building;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	setInfo("Esa no es una ubicacion valida para los primeros Roads.");
+	return nullptr;
+}
+
 Building*
 CatanGame::isValidRoad(Coord coords, PlayerId playerID) {
 
@@ -1165,7 +1207,7 @@ CatanGame::buildingOk(BuildingType type, Coord coords, PlayerId player) {
 				}
 			}
 			else if (getState() == State::FIRST_BUILDS) {
-				if (isValidRoad(coords, player)) {
+				if (validFirstRoad(coords, player)) {
 					return true;
 				}
 			}
@@ -1267,7 +1309,7 @@ CatanGame::buildSettlement(Building* building, Coord coords, PlayerId playerID)
 	for (Building* old : catanMap->buildings()) {
 		if (old->getPlayer()->getPlayerId() != playerID) {
 			if (old->getType() == BuildingType::ROAD) {
-				if (old->cutsRoad(building)) {
+				if (old->cutsRoad(newSettlement)) {
 					updateLongestRoad();
 					break;
 				}

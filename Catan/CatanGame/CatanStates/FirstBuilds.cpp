@@ -73,7 +73,7 @@ FirstBuilds::handle(CatanEvent* event) {
 					* y que ademas cumpla las reglas de construccion
 					*/
 					if (building->getPlayer() == game.getTurn()) {
-						Building* neighbour = game.isValidRoad(building->getCoords(), building->getPlayer());
+						Building* neighbour = game.validFirstRoad(building->getCoords(), building->getPlayer());
 						if (neighbour) {
 
 							/* Realizo la construccion */
