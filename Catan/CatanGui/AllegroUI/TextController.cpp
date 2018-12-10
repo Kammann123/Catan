@@ -27,7 +27,9 @@ TextController::parse(ALLEGRO_EVENT* event) {
 							text->remove();
 							break;
 						default:
-							text->append(event->keyboard.unichar);
+							if (event->keyboard.unichar >= 32 && event->keyboard.unichar <= 126) {
+								text->append(event->keyboard.unichar);
+							}
 							break;
 					}
 				}

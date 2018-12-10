@@ -328,6 +328,7 @@ WindowUI::run(void) {
 			* las actualizaciones
 			*/
 			if (event.type == ALLEGRO_EVENT_TIMER) {
+				/* Hago un control del refresh lock */
 				if (this->isRefreshLocked()) {
 					this->unlockRefresh();
 					if (this->hasRefreshRequest()) {
@@ -335,6 +336,9 @@ WindowUI::run(void) {
 						this->refresh();
 					}
 				}
+
+				/* Paro el timer para evitar una generacion de mas eventos de timer... */
+				al_stop_timer(timer);
 			}
 
 			/* Primero verifico si tengo alguna ventana hija, y dentro de esas
@@ -376,6 +380,11 @@ WindowUI::run(void) {
 				for (UIComponent* component : components) {
 					component->parse(&event);
 				}
+			}
+
+			/* Verifico que fuera el timer, y lo reinicio */
+			if (event.type == ALLEGRO_EVENT_TIMER) {
+				al_start_timer(timer);
 			}
 		}
 	}

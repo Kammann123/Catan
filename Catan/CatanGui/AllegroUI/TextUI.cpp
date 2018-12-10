@@ -46,7 +46,7 @@ TextUI::getMode(void) {
 void
 TextUI::append(unsigned char value) {
 	/* Verifico no llegar al limite */
-	if ((strlen(text.c_str()) == size) && size) {
+	if ((text.size() == size) && size) {
 		return;
 	}
 
