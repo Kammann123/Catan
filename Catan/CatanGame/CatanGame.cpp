@@ -736,8 +736,6 @@ CatanGame::updateLongestRoad(void) {
 	else {
 		longestRoad->assign();
 	}
-
-	setInfo("Hubo un cambio en la pertenencia del Longest Road, y la carta ha sido movida.");
 }
 
 bool

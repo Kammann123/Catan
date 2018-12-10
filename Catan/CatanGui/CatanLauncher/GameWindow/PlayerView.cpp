@@ -133,9 +133,9 @@ void PlayerView::draw(void)
 	al_draw_bitmap(btMap, (*player)[PLAYER_ORE].x + player->xPos(), (*player)[PLAYER_ORE].y + player->yPos(), 0);
 	btMap = player->getPlayerId() == PlayerId::PLAYER_ONE ? images[(unsigned int)ResourceId::HILL].bitmap : images[CARD_BACK_ID].bitmap;
 	al_draw_bitmap(btMap, (*player)[PLAYER_BRICK].x + player->xPos(), (*player)[PLAYER_BRICK].y + player->yPos(), 0);
-	btMap = player->getPlayerId() == PlayerId::PLAYER_ONE ? images[(unsigned int)ResourceId::FIELD].bitmap : images[CARD_BACK_ID].bitmap;
-	al_draw_bitmap(btMap, (*player)[PLAYER_WOOL].x + player->xPos(), (*player)[PLAYER_WOOL].y + player->yPos(), 0);
 	btMap = player->getPlayerId() == PlayerId::PLAYER_ONE ? images[(unsigned int)ResourceId::PASTURES].bitmap : images[CARD_BACK_ID].bitmap;
+	al_draw_bitmap(btMap, (*player)[PLAYER_WOOL].x + player->xPos(), (*player)[PLAYER_WOOL].y + player->yPos(), 0);
+	btMap = player->getPlayerId() == PlayerId::PLAYER_ONE ? images[(unsigned int)ResourceId::FIELD].bitmap : images[CARD_BACK_ID].bitmap;
 	al_draw_bitmap(btMap, (*player)[PLAYER_GRAIN].x + player->xPos(), (*player)[PLAYER_GRAIN].y + player->yPos(), 0);
 	btMap = player->getPlayerId() == PlayerId::PLAYER_ONE ? images[(unsigned int)ResourceId::FOREST].bitmap : images[CARD_BACK_ID].bitmap;
 	al_draw_bitmap(btMap, (*player)[PLAYER_LUMBER].x + player->xPos(), (*player)[PLAYER_LUMBER].y + player->yPos(), 0);
