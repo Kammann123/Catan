@@ -15,6 +15,7 @@
 #include "../../../CatanEvents/OfferEvent.h"
 
 #include "../../../CatanGame/CatanStates/RobberCards.h"
+#include "../../../CatanGame/CatanStates/FirstBuilds.h"
 
 #include "OfferWindow.h"
 #include "DiscardWindow.h"
@@ -594,11 +595,17 @@ GameWindow::first_builds(void) {
 	/**************************
 	* Configuro los buildings *
 	**************************/
+	FirstBuilds* state = (FirstBuilds*)launcher.getGame().getCurrentState();
 	for (UIComponent* buildings : (*this)(BUILDING_ID)) {
 		if (MODEL(buildings, Building*)->getPlayer()->getPlayerId() == PlayerId::PLAYER_ONE) {
 			if (launcher.getGame().getTurn() == PlayerId::PLAYER_ONE) {
 				if (!MODEL(buildings, Building*)->isBuilt()) {
-					buildings->getModel()->setEnable(true);
+					if (state->getState() == FirstBuilds::FBStates::BUILD_ROAD && MODEL(buildings, Building*)->getType() == BuildingType::ROAD) {
+						buildings->getModel()->setEnable(true);
+					}
+					else if (state->getState() == FirstBuilds::FBStates::BUILD_SETTLEMENT && MODEL(buildings, Building*)->getType() == BuildingType::SETTLEMENT) {
+						buildings->getModel()->setEnable(false);
+					}
 					continue;
 				}
 			}
