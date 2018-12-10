@@ -408,7 +408,7 @@ GameWindow::onExit(void* data) {
 		launcher.getGame().syncHandle(new CatanEvent(CatanEvent::Events::QUIT, CatanEvent::Sources::GUI, PlayerId::PLAYER_ONE));
 
 		/* Luego finalmente, lo que hago es cambiar de estado */
-		launcher.change(CatanLauncher::States::MAIN_MENU);
+		launcher.change(CatanLauncher::States::LAUNCHER_CLOSE);
 	}
 }
 

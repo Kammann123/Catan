@@ -1065,6 +1065,30 @@ CatanGame::validFirstSettlement(Coord coords, PlayerId playerId) {
 	return false;
 }
 
+void
+CatanGame::connectBuildings(Building* newBuilding, Building* avoidBuilding) {
+	
+	/* Lo que voy a hacer es revisar todas las construcciones realizadas
+	* por el jugador que pone newBuilding, evitando la que ya se tomo antes
+	* como avoidBuilding, y revisar que cumpla ser isEdgeOf o edgeContinuity */
+	for (Building* oldBuilding : catanMap->buildings()) {
+		if (oldBuilding != avoidBuilding) {
+			if (newBuilding->getPlayer()->getPlayerId() == oldBuilding->getPlayer()->getPlayerId()) {
+				Coord oldCoord = oldBuilding->getPlace();
+				Coord newCoord = newBuilding->getPlace();
+				if (oldCoord.isEdgeOf(newCoord)) {
+					newBuilding->addNeighbour(oldBuilding);
+					oldBuilding->addNeighbour(newBuilding);
+				}
+				else if (oldCoord.edgeContinuity(newCoord)) {
+					newBuilding->addNeighbour(oldBuilding);
+					oldBuilding->addNeighbour(newBuilding);
+				}
+			}
+		}
+	}
+}
+
 bool
 CatanGame::hasCityResources(PlayerId playerID) {
 	Player* player = getPlayer(playerID);
@@ -1170,6 +1194,7 @@ CatanGame::buildRoad(Building* building, Coord coords, PlayerId playerID)
 	Building* newRoad = getPlayer(playerID)->popRoad();
 	newRoad->addNeighbour(building);
 	building->addNeighbour(newRoad);
+	connectBuildings(newRoad, building);
 	
 	/*
 	* Agrego la ficha al tablero del mapa de construcciones realizadas
@@ -1228,6 +1253,7 @@ CatanGame::buildSettlement(Building* building, Coord coords, PlayerId playerID)
 	if (building) {
 		newSettlement->addNeighbour(building);
 		building->addNeighbour(newSettlement);
+		connectBuildings(newSettlement, building);
 	}
 
 	/*

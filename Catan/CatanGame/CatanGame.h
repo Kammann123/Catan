@@ -261,6 +261,7 @@ public:
 	bool isLongestRoad(PlayerId player);
 	void updateLongestRoad(void);
 	void cleanBuildingMarks(void);
+	void connectBuildings(Building* newBuilding, Building* avoidBuilding);
 
 	/*
 	* isRobberDices
