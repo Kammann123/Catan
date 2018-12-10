@@ -183,6 +183,11 @@ Building::isBuildingSide(list<Building*> side, Building* building) {
 bool 
 Building::cutsRoad(Building* building) {
 
+	/* Valido que la construccion no sea del mismo */
+	if (building->getPlayer()->getPlayerId() == player->getPlayerId()) {
+		return false;
+	}
+
 	/* Me fijo, si soy un Building de tipo Road, pues
 	* mi coordenada es Edge, entonces puedo verificar si
 	* este Building, que debe ser City o Settlement,
