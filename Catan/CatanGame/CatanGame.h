@@ -255,12 +255,12 @@ public:
 	void assignResources(unsigned int dices);
 
 	/*
-	* updateLongestRoad
-	* Actualiza el estado actual del longest road.
+	* Metodos de tratamiento del grafo de construcciones
 	*/
 	void seekLongestRoad(Building* building, unsigned int length = 0);
 	bool isLongestRoad(PlayerId player);
 	void updateLongestRoad(void);
+	void cleanBuildingMarks(void);
 
 	/*
 	* isRobberDices
@@ -420,6 +420,13 @@ public:
 	void updateWinner(void);
 	bool hasWinner(void);
 
+	/*
+	* Notificacion de cambios a los observers
+	* eliminando los eventos que ya fueron
+	* revisados
+	*/
+	void notifyChange(void);
+
 private:
 
 	/************************************************
@@ -439,13 +446,6 @@ private:
 	void _destroy_events(void);
 	void _destroy_cards(void);
 	void _destroy_map(void);
-
-	/*
-	* Notificacion de cambios a los observers
-	* eliminando los eventos que ya fueron 
-	* revisados
-	*/
-	void notifyChange(void);
 
 private:
 	list<ResourceCard*> cards;

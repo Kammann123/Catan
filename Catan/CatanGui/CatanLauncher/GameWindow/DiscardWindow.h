@@ -13,6 +13,7 @@ private:
 	***********************/
 	void onClose(void* data);
 	void onDiscard(void* data);
+	void reset(void);
 
 	CatanGame& game;
 };

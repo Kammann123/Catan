@@ -109,7 +109,7 @@ OfferWindow(string id, CatanGame& _game) : ChildWindowUI(id, 750, 700), game(_ga
 	/**************************
 	* Posicion de componentes *
 	**************************/
-	MODEL(tradeButton, MouseUI*)->setPosition(550, 340);
+	MODEL(tradeButton, MouseUI*)->setPosition(550, 360);
 	MODEL(exitButton, MouseUI*)->setPosition(675, 14);
 
 	MODEL(wantedWool, UIModelContainer*)->setPosition(80, 125);
@@ -127,7 +127,7 @@ OfferWindow(string id, CatanGame& _game) : ChildWindowUI(id, 750, 700), game(_ga
 	MODEL(bank, MouseUI*)->setPosition(300, 450);
 	MODEL(dock, MouseUI*)->setPosition(50, 465);
 	MODEL(player, MouseUI*)->setPosition(550, 475);
-	MODEL(label, TextUI*)->setPosition(100, 315);
+	MODEL(label, TextUI*)->setPosition(100, 320);
 
 	/************
 	* Callbacks *
@@ -208,6 +208,7 @@ OfferWindow::onTrade(void* data) {
 		if (game.isValidBankExchange(givenCards, wantedCards, PlayerId::PLAYER_ONE)) {
 			game.syncHandle(new BankEvent(givenCards, wantedCards, PlayerId::PLAYER_ONE));
 			this->setEnable(false);
+			this->reset();
 		}
 		else {
 			MODEL((*this)["status"], TextUI*)->setText(game.info());
@@ -217,6 +218,7 @@ OfferWindow::onTrade(void* data) {
 		if (game.isValidDockExchange(givenCards, wantedCards, PlayerId::PLAYER_ONE)) {
 			game.syncHandle(new BankEvent(givenCards, wantedCards, PlayerId::PLAYER_ONE));
 			this->setEnable(false);
+			this->reset();
 		}
 		else {
 			MODEL((*this)["status"], TextUI*)->setText(game.info());
@@ -226,9 +228,30 @@ OfferWindow::onTrade(void* data) {
 		if (game.isValidPlayerExchange(givenCards, wantedCards, PlayerId::PLAYER_ONE)) {
 			game.syncHandle(new OfferEvent(givenCards, wantedCards, PlayerId::PLAYER_ONE));
 			this->setEnable(false);
+			this->reset();
 		}
 		else {
 			MODEL((*this)["status"], TextUI*)->setText(game.info());
 		}
 	}
+	else {
+		MODEL((*this)["status"], TextUI*)->setText("Tenes que seleccionar con quien queres hacer el intercambio.");
+	}
+}
+
+void
+OfferWindow::reset(void) {
+	MODEL((*(*this)["givenWool"])["counter"], CounterUI*)->reset();
+	MODEL((*(*this)["givenGrain"])["counter"], CounterUI*)->reset();
+	MODEL((*(*this)["givenBrick"])["counter"], CounterUI*)->reset();
+	MODEL((*(*this)["givenOre"])["counter"], CounterUI*)->reset();
+	MODEL((*(*this)["givenLumber"])["counter"], CounterUI*)->reset();
+
+	MODEL((*(*this)["wantedWool"])["counter"], CounterUI*)->reset();
+	MODEL((*(*this)["wantedGrain"])["counter"], CounterUI*)->reset();
+	MODEL((*(*this)["wantedBrick"])["counter"], CounterUI*)->reset();
+	MODEL((*(*this)["wantedOre"])["counter"], CounterUI*)->reset();
+	MODEL((*(*this)["wantedLumber"])["counter"], CounterUI*)->reset();
+
+	MODEL((*this)["status"], TextUI*)->setText("");
 }

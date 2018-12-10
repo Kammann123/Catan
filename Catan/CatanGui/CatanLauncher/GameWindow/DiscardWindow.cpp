@@ -122,8 +122,19 @@ DiscardWindow::onDiscard(void* data) {
 	if (game.validateRobberCards(cards, PlayerId::PLAYER_ONE)) {
 		game.syncHandle(new RobberCardEvent(cards, PlayerId::PLAYER_ONE));
 		this->setEnable(false);
+		this->reset();
 	}
 	else {
 		MODEL((*this)["status"], TextUI*)->setText( game.info() );
 	}
+}
+
+void
+DiscardWindow::reset(void) {
+	MODEL((*(*this)["wool"])["counter"], CounterUI*)->reset();
+	MODEL((*(*this)["grain"])["counter"], CounterUI*)->reset();
+	MODEL((*(*this)["brick"])["counter"], CounterUI*)->reset();
+	MODEL((*(*this)["ore"])["counter"], CounterUI*)->reset();
+	MODEL((*(*this)["lumber"])["counter"], CounterUI*)->reset(); 
+	MODEL((*this)["status"], TextUI*)->setText("");
 }

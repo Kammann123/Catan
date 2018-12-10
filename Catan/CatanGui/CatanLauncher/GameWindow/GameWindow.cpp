@@ -873,7 +873,7 @@ GameWindow::winner(void) {
 	if (!this->child("gandalf")->isEnabled()) {
 		if (launcher.getGame().getWinner() == PlayerId::PLAYER_TWO) {
 			/* Hago aparecer la ventana de gandalf */
-			((QuestionWindow*)this->child("gandalf"))->question("Has perdido esta batalla, no te rindas Pequeño Hobbit. Deseas jugar de nuevo?", bind(&GameWindow::playAgain, this, _1), bind(&GameWindow::gameOver, this, _1));
+			((QuestionWindow*)this->child("gandalf"))->question("Has perdido esta batalla, no te rindas Gran Hobbit. Deseas jugar de nuevo?", bind(&GameWindow::playAgain, this, _1), bind(&GameWindow::gameOver, this, _1));
 		}
 	}
 

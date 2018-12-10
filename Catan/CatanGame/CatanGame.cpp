@@ -684,6 +684,13 @@ CatanGame::assignResources(PlayerId player, ResourceId resource, unsigned int qt
 }
 
 void
+CatanGame::cleanBuildingMarks(void) {
+	for (Building* building : catanMap->buildings()) {
+		building->visit(false);
+	}
+}
+
+void
 CatanGame::updateLongestRoad(void) {
 	/*
 	* Inicializo los valores del longest road de cada jugador y asumo
@@ -707,9 +714,9 @@ CatanGame::updateLongestRoad(void) {
 	* Para cada uno de los heads, puntas de los caminos, ejecuto los recorridos
 	* y luego limpio las marcas para el siguiente head.
 	*/
-	for (Building* building : heads) {
-		seekLongestRoad(building);
-		for (Building* building : catanMap->buildings()) building->visit(false);
+	for (Building* head : heads) {
+		seekLongestRoad(head);
+		cleanBuildingMarks();
 	}
 
 	/*
@@ -991,6 +998,18 @@ CatanGame::isValidSettlement(Coord coords, PlayerId playerID) {
 			}
 		}
 
+		/* Verifico la regla de la distancia */
+		for (Building* building : catanMap->buildings()) {
+
+			if (building->getType() != BuildingType::ROAD) {
+
+				if (coords.isAdjacentDot(building->getPlace())) {
+					setInfo("Esa construccion no cumple con la Regla de la Distancia.");
+					return nullptr;
+				}
+			}
+		}
+
 		/*
 		* Busco entre los roads construidos del jugador, a ver si alguno
 		* se conecta con el punto de interes, y luego verifico que ningun otro
@@ -1000,22 +1019,8 @@ CatanGame::isValidSettlement(Coord coords, PlayerId playerID) {
 			/* Busco caminos del jugador en cuestion */
 			if (building->getPlayer()->getPlayerId() == playerID) {
 				if (building->getType() == BuildingType::ROAD) {
-
 					/* Encuentro un camino que conecte a ese settlement */
 					if (building->getPlace().isEdgeOf(coords)) {
-
-						/* Verifico la regla de la distancia */
-						for (Building* building : catanMap->buildings()) {
-
-							if (building->getType() != BuildingType::ROAD) {
-
-								if (coords.isAdjacentDot(building->getPlace())) {
-									setInfo("Esa construccion no cumple con la Regla de la Distancia.");
-									return nullptr;
-								}
-							}
-						}
-
 						return building;
 					}
 				}
@@ -1023,7 +1028,7 @@ CatanGame::isValidSettlement(Coord coords, PlayerId playerID) {
 		}
 	}
 
-	setInfo("Un Settlemente debe colocarse continuando alguna construccion realizada.");
+	setInfo("Un Settlement debe colocarse siguiente a un camino y a una distancia dos de un settlement.");
 	return nullptr;
 }
 

@@ -12,6 +12,7 @@ private:
 	***********************/
 	void onClose(void* data);
 	void onTrade(void* data);
+	void reset(void);
 
 	CatanGame& game;
 };
