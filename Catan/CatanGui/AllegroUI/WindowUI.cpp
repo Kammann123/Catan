@@ -127,6 +127,7 @@ void
 WindowUI::_destroy_display(void) {
 	if (display) {
 		al_destroy_display(display);
+		display = nullptr;
 	}
 	mouse.setDisplay(nullptr);
 }
@@ -135,6 +136,7 @@ void
 WindowUI::_destroy_queue(void) {
 	if (queue) {
 		al_destroy_event_queue(queue);
+		queue = nullptr;
 	}
 }
 
@@ -142,6 +144,7 @@ void
 WindowUI::_destroy_timer(void) {
 	if (timer) {
 		al_destroy_timer(timer);
+		timer = nullptr;
 	}
 }
 

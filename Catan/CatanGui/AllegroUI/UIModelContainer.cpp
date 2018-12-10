@@ -7,7 +7,9 @@ UIModelContainer::
 ~UIModelContainer() {
 	for (auto model : models) {
 		if (model.first) {
-			delete model.first;
+			if (!model.first->shouldUIDestroy()) {
+				delete model.first;
+			}
 		}
 	}
 }

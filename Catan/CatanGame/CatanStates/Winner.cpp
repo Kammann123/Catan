@@ -14,7 +14,6 @@ Winner::handle(CatanEvent* event) {
 	if (event->getEvent() == CatanEvent::Events::PLAY_AGAIN || event->getEvent() == CatanEvent::Events::GAME_OVER) {
 
 		switch (state) {
-
 			/*
 			* En el estado de LOSER_REMATCH espero la decision del perdedor
 			* verificando que el evento sea del mismo, y luego si quiere jugar devuelta

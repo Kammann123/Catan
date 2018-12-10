@@ -1,3 +1,4 @@
+#pragma once
 #include "../../AllegroUI/ChildWindowUI.h"
 #include "../../../CatanGame/CatanGame.h"
 

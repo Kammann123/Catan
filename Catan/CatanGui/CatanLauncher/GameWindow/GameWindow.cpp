@@ -17,6 +17,7 @@
 #include "OfferWindow.h"
 #include "DiscardWindow.h"
 #include "QuestionWindow.h"
+#include "ErrorWindow.h"
 
 #include "PlayerView.h"
 #include "RobberView.h"
@@ -79,6 +80,7 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI("gameWindow
 	ChildWindowUI* discardWindow = new DiscardWindow("discardWindow", launcher.getGame());
 	ChildWindowUI* offerWindow = new OfferWindow("offerWindow", launcher.getGame());
 	ChildWindowUI* gandalf = new QuestionWindow("gandalf");
+	ChildWindowUI* error = new ErrorWindow("error", launcher);
 
 	/**********************
 	* Configuro Costs Box *
@@ -169,6 +171,7 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI("gameWindow
 	this->attachChild(discardWindow);
 	this->attachChild(offerWindow);
 	this->attachChild(gandalf);
+	this->attachChild(error);
 
 	/***********************************
 	* Agrego componente a la interfaz  *
@@ -238,6 +241,7 @@ GameWindow(CatanLauncher& _launcher) : launcher(_launcher), WindowUI("gameWindow
 	this->child("discardWindow")->setPosition(150, 70);
 	this->child("offerWindow")->setPosition(150, 40);
 	this->child("gandalf")->setPosition(95, 40);
+	this->child("error")->setPosition(220, 100);
 
 	/***********************************
 	* Configuro general de la interfaz *
@@ -879,33 +883,18 @@ GameWindow::winner(void) {
 
 void
 GameWindow::game_end(void) {
-	/**********************
-	* Configuro el robber *
-	**********************/
-	(*this)[ROBBER_ID]->getModel()->setEnable(false);
-
-	/**************************
-	* Configuro los buildings *
-	**************************/
-	for (UIComponent* buildings : (*this)(BUILDING_ID)) {
-		if (MODEL(buildings, Building*)->getPlayer()->getPlayerId() == PlayerId::PLAYER_ONE) {
-			buildings->getModel()->setEnable(false);
-		}
-	}
-
-	/************************
-	* Configuro los botones *
-	************************/
-	(*this)["pass"]->getModel()->setEnable(false);
-	(*this)["exit"]->getModel()->setEnable(true);
-	(*this)["discard"]->getModel()->setEnable(false);
-	(*this)["trade"]->getModel()->setEnable(false);
-	(*this)["dice_one"]->getModel()->setEnable(false);
-	(*this)["dice_two"]->getModel()->setEnable(false);
+	/* Cierro el juego. Por lo menos interfaz... */
+	launcher.change(CatanLauncher::States::MAIN_MENU);
 }
 
 void
 GameWindow::game_error() {
+
+	/* Ventana de error! */
+	if (!this->child("error")->isEnabled()) {
+		this->child("error")->setEnable(true);
+	}
+
 	/**********************
 	* Configuro el robber *
 	**********************/

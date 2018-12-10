@@ -21,17 +21,22 @@ UIComponent::
 	if (model) {
 		if (model->shouldUIDestroy()) {
 			delete model;
+			model = nullptr;
 		}
 	}
 	
 	for (UIView* view : views) {
-		if (view)
+		if (view) {
 			delete view;
+			view = nullptr;
+		}
 	}
 	
 	for (UIController* controller : controllers) {
-		if(controller)
+		if (controller) {
 			delete controller;
+			controller = nullptr;
+		}
 	}
 }
 
