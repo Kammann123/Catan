@@ -238,16 +238,6 @@ void
 CatanGame::confirm(PlayerId player) {
 	if (player == confirmationPlayer) {
 		confirmationPlayer = PlayerId::PLAYER_NONE;
-
-		/* Verifico si gano... */
-		if (hasWinner()) {
-			/* Mando el evento de ganador/perdedor */
-			CatanEvent::Events endingEvent = PlayerId::PLAYER_ONE == getWinner() ? CatanEvent::Events::WON : CatanEvent::Events::LOST;
-			addNewEvent(new CatanEvent(endingEvent, CatanEvent::Sources::GAME, PlayerId::PLAYER_ONE));
-
-			/* Cambio de estado a ganador */
-			changeState(new Winner(*this), getPlayer(getWinner())->getName() + " ha ganado la partida!");
-		}
 	}
 }
 
