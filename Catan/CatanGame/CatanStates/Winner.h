@@ -13,7 +13,7 @@ public:
 
 	Winner(CatanGame& _game) : CatanState(_game, CatanGame::State::WINNER), state(LOSER_REMATCH) {}
 	void handle(CatanEvent* event);
-	WStates getState(void);
+	unsigned int getState(void);
 
 private:
 	WStates state;
