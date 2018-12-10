@@ -84,7 +84,7 @@ CatanGame::_destroy_remote_player(void) {
 	if (remotePlayer) {
 		delete remotePlayer;
 	}
-}
+
 
 void
 CatanGame::_destroy_longest_road(void) {
