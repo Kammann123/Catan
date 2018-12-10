@@ -22,6 +22,7 @@ public:
 	* Devuelve el tipo de NetworkSocket como servidor
 	*/
 	Types getType(void);
+	void reset(void);
 
 	/*
 	* listen

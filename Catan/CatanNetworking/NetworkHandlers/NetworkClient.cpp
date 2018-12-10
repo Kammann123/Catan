@@ -4,7 +4,8 @@
 #include "boost/chrono.hpp"
 
 using boost::lambda::var;
-using boost::lambda::_1;
+
+using namespace std::placeholders;
 
 NetworkClient::
 NetworkClient(void) : NetworkSocket() , deadline(*handler) {
@@ -18,6 +19,11 @@ NetworkClient(void) : NetworkSocket() , deadline(*handler) {
 		if (!this->resolver) {
 			this->status = false;
 			this->error = "NetworkClient - init - No se pudo abrir el resolver.";
+		}
+		else {
+
+			/* Estado inicial */
+			state = States::IDLE;
 		}
 	}
 }
@@ -46,37 +52,37 @@ aconnect(string ip, unsigned int port) {
 
 	if (!isConnected()) {
 
-		/*
-		* Abro los elementos necesarios para poder correr
-		* el async_connect de boost asio
+		/* Almaceno la informacion del intento de conexion
+		* para establecer un vinculo con los handlers hasta
+		* lograr haber conectado
 		*/
-		boost::asio::ip::tcp::resolver::iterator endpoint = resolver->resolve(boost::asio::ip::tcp::resolver::query(ip, to_string(port)));
-		err = boost::asio::error::would_block;
+		this->ip = ip;
+		this->port = port;
 
-		/*
-		* Configuro el deadline y el async_connect
+		/* Configuro el timer deadline con un tiempo determinado al cual
+		* se debera ejecutar el metodo handler para comunicar un timeout
 		*/
-		socket->cancel();
 		deadline.expires_from_now(boost::posix_time::milliseconds(150));
-		boost::asio::async_connect(*socket, endpoint, var(err) = _1);
+
+		/* Mando al thread pool dos async tasks para que se ejecuten
+		* en el io service, a cada uno le configuro su correspondiente
+		* handler.
+		*/
 		deadline.async_wait(bind(&NetworkClient::deadline_first, this));
-		handler->run_one();
+		
+		if (state == States::IDLE) {
 
-		/*
-		* Hago que boost espere a terminar el deadline ejecutando en el
-		* medio todos los connect posibles.
-		*/
+			/* Envio la tarea de conectarse al io_service, y paso a estado de connecting */
+			boost::asio::ip::tcp::resolver::iterator endpoint = resolver->resolve(boost::asio::ip::tcp::resolver::query(ip, to_string(port)));
+			boost::asio::async_connect(*socket, endpoint, bind(&NetworkClient::connect_fist, this, _1, _2));
+			state = States::CONNECTING;
+		}
+		else if (state == States::CONNECTING) {
 
-		/*
-		* Termino de ejecutarse porque hubo algun tipo de error
-		* o mismo porque se llego al timeout o deadline configurado
-		* entonces se revisa el error para definir
-		*/
-		if (!handleConnection(err)) {
-			if (!err) {
-				toggleConnection();
-				nonBlocking();
-			}
+			/* Ejecuto o corro el handler de io_service hasta que alguna
+			* tarea, una sola, se haya ejecutado, sea la conexion o le timeout
+			*/
+			handler->run_one();
 		}
 	}
 }
@@ -86,11 +92,14 @@ sconnect(string ip, unsigned int port) {
 
 	if (!isConnected()) {
 		boost::asio::ip::tcp::endpoint endpoint = boost::asio::ip::tcp::endpoint(boost::asio::ip::address::from_string(ip), port);
+		boost::system::error_code error;
 
-		socket->connect(endpoint, err);
-
-		if (!handleConnection(err)) {
-			if (!err) {
+		/* Intento conectar el socket */
+		socket->connect(endpoint, error);
+		
+		/* Evaluo el estado del codigo de error de Boost Asio */
+		if (!handleConnection(error)) {
+			if (!error) {
 				toggleConnection();
 				nonBlocking();
 			}
@@ -100,5 +109,38 @@ sconnect(string ip, unsigned int port) {
 
 void 
 NetworkClient::deadline_first(void) {
-	err = boost::asio::error::timed_out;
+	/* Se ejecuta el handler de timeout... podria hacer algo
+	* y en versiones anteriores se grababa el timeout en error_code
+	* pero por el momento no tiene sentido. 
+	*/
+}
+
+void 
+NetworkClient::connect_fist(const boost::system::error_code& error, boost::asio::ip::tcp::resolver::iterator iterator) {
+	/* Verifico que tipo de error llego,
+	* y en funcion de eso determino si es necesario haberse conectado
+	* o mandar una nueva tarea de conexion 
+	*/
+	if (!handleConnection(error)) {
+		if (!error) {
+			toggleConnection();
+			nonBlocking();
+		}
+		else {
+			boost::asio::ip::tcp::resolver::iterator endpoint = resolver->resolve(boost::asio::ip::tcp::resolver::query(ip, to_string(port)));
+			boost::asio::async_connect(*socket, endpoint, bind(&NetworkClient::connect_fist, this, _1, _2));
+		}
+	}
+}
+
+void
+NetworkClient::reset(void) {
+	this->state = States::IDLE;
+	this->status = false;
+	this->error = "";
+
+	if (connected) {
+		this->socket->close();
+		this->connected = false;
+	}
 }

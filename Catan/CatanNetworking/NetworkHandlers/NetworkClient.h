@@ -11,6 +11,8 @@
 class NetworkClient : public NetworkSocket {
 public:
 
+	enum States : unsigned int {IDLE, CONNECTING};
+
 	/*
 	* Constructores y destructores
 	*/
@@ -22,6 +24,7 @@ public:
 	* Implementacion de la verificacion del tipo de socket
 	*/
 	Types getType(void);
+	void reset(void);
 
 	/*
 	* connect
@@ -36,8 +39,12 @@ public:
 private:
 
 	void deadline_first(void);
+	void connect_fist(const boost::system::error_code& error, boost::asio::ip::tcp::resolver::iterator iterator);
 
 	boost::asio::ip::tcp::resolver* resolver;
-	boost::system::error_code err;
 	boost::asio::deadline_timer deadline;
+
+	string ip;
+	unsigned int port;
+	States state;
 };

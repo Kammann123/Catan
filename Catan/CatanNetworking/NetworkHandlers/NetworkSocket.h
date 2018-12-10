@@ -112,6 +112,7 @@ public:
 	* cliente o server, segun la implementacion
 	*/
 	virtual Types getType(void) = 0;
+	virtual void reset(void) = 0;
 
 protected:
 

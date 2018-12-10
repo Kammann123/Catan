@@ -56,3 +56,14 @@ listen(void) {
 		}
 	}
 }
+
+void
+NetworkServer::reset(void) {
+	this->status = false;
+	this->error = "";
+
+	if (connected) {
+		this->socket->close();
+		this->connected = false;
+	}
+}
